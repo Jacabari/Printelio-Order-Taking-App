@@ -1,27 +1,29 @@
 /**
  * Printelio - Custom Stationery Order Request Application
- * Front-end Logic, Dynamic Design Code Filtering, Mockup Preview,
- * Dynamic Pricing Logic, Single-Field Text Customization & Job Order Generation.
+ * Complete Front-end Integration: Dynamic Design Code Filtering,
+ * Mockup Preview with Image Fallback, Dynamic Pricing, Customization & Job Order Generation.
  */
 
 // ============================================================================
-// 1. Data Models & Pricing Constants
+// 1. Data Models & Constants
 // ============================================================================
 
+// Exact A5 Notepad Design Codes
 const A5_NOTEPAD_DESIGNS = [
-  { code: 'Blue DP_A5', name: 'Blue Daily Planner A5', desc: 'Bespoke Blue Daily Planner layout with daily schedule & task sections.' },
-  { code: 'Pink DP_A5', name: 'Pink Daily Planner A5', desc: 'Elegant Pink Daily Planner format with priorities & habit tracker.' },
-  { code: 'Yellow DP_A5', name: 'Yellow Daily Planner A5', desc: 'Vibrant Yellow Daily Planner with notes & daily agenda columns.' },
-  { code: 'WP1_A5', name: 'Weekly Planner Motif 1 A5', desc: 'Clean weekly overview motif with structured daily planning blocks.' },
-  { code: 'WP2_A5', name: 'Weekly Planner Motif 2 A5', desc: 'Minimalist weekly schedule with goals and habit tracking margins.' },
-  { code: 'WP3_A5', name: 'Weekly Planner Motif 3 A5', desc: 'Pastel aesthetic weekly layout with task priority markers.' },
-  { code: 'WP4_A5', name: 'Weekly Planner Motif 4 A5', desc: 'Modern geometric weekly planner with generous notes space.' },
-  { code: 'WP5_A5', name: 'Weekly Planner Motif 5 A5', desc: 'Executive weekly focus layout with structured checklist.' },
-  { code: 'WP6_A5', name: 'Weekly Planner Motif 6 A5', desc: 'Earthy botanical weekly design with gentle lined columns.' },
-  { code: 'WP7_A5', name: 'Weekly Planner Motif 7 A5', desc: 'Soft gradient weekly planner with top priority highlight box.' },
-  { code: 'WP8_A5', name: 'Weekly Planner Motif 8 A5', desc: 'Classic atelier weekly planner with memo and notes section.' }
+  'Blue DP_A5',
+  'Pink DP_A5',
+  'Yellow DP_A5',
+  'WP1_A5',
+  'WP2_A5',
+  'WP3_A5',
+  'WP4_A5',
+  'WP5_A5',
+  'WP6_A5',
+  'WP7_A5',
+  'WP8_A5'
 ];
 
+// Product Catalog & Pricing Matrix
 const PRODUCTS_DATA = {
   notepads: {
     categoryName: 'Notepads',
@@ -33,30 +35,25 @@ const PRODUCTS_DATA = {
         name: 'Square Notepad (3 x 3 in)',
         shortName: 'Square Notepad',
         dimensions: '3 × 3 in',
-        prices: { '30': 29, '50': 39 }
+        prices: { '30': 29, '50': 39 },
+        designs: ['NP-SQ01', 'NP-SQ02', 'NP-SQ03', 'NP-SQ04']
       },
       {
         id: 'np-a6',
         name: 'A6 Notepad (4 x 5.8 in)',
         shortName: 'A6 Notepad',
         dimensions: '4 × 5.8 in',
-        prices: { '30': 49, '50': 69 }
+        prices: { '30': 49, '50': 69 },
+        designs: ['NP-A601', 'NP-A602', 'NP-A603', 'NP-A604']
       },
       {
         id: 'np-a5',
         name: 'A5 Notepad (5.8 x 8.3 in)',
         shortName: 'A5 Notepad',
         dimensions: '5.8 × 8.3 in',
-        prices: { '30': 79, '50': 99 }
+        prices: { '30': 79, '50': 99 },
+        designs: A5_NOTEPAD_DESIGNS
       }
-    ],
-    designs: [
-      { code: 'NP-001', name: 'Botanical Monogram', desc: 'Minimalist luxury border with delicate botanical wreath.' },
-      { code: 'NP-002', name: 'Modern Dot Grid', desc: 'Crisp layout with classic serif title and subtle margins.' },
-      { code: 'NP-003', name: 'Pastel Wave Accent', desc: 'Soft pastel wave contour with gold typography.' },
-      { code: 'NP-004', name: 'Classic Roman Double Border', desc: 'Timeless double line frame with vintage Roman monogram.' },
-      { code: 'NP-005', name: 'Executive Memo', desc: 'Refined checklist structure with generous writing space.' },
-      { code: 'NP-006', name: 'Earthy Arch Minimalist', desc: 'Warm neutral arch silhouette with hand-drawn leaf stem.' }
     ]
   },
   notecards: {
@@ -69,21 +66,17 @@ const PRODUCTS_DATA = {
         name: '2 x 3.5 in (Portrait)',
         shortName: 'Portrait Notecard',
         dimensions: '2 × 3.5 in',
-        prices: null
+        prices: null,
+        designs: ['NC-001', 'NC-002', 'NC-003', 'NC-004']
       },
       {
         id: 'nc-landscape',
         name: '3.5 x 2 in (Landscape)',
         shortName: 'Landscape Notecard',
         dimensions: '3.5 × 2 in',
-        prices: null
+        prices: null,
+        designs: ['NC-005', 'NC-006', 'NC-007', 'NC-008']
       }
-    ],
-    designs: [
-      { code: 'NC-001', name: 'Gold Foil Serif Crest', desc: 'Regal monogram crest with luxury metallic gold finish.' },
-      { code: 'NC-002', name: 'Floral Frame Watercolor', desc: 'Romantic botanical border on textured heavy cardstock.' },
-      { code: 'NC-003', name: 'Monochrome Line Art', desc: 'High-contrast editorial silhouette with crisp lettering.' },
-      { code: 'NC-004', name: 'Modern Typography Luxe', desc: 'Contemporary serif lettering with ample white space.' }
     ]
   },
   envelopes: {
@@ -96,19 +89,14 @@ const PRODUCTS_DATA = {
         name: 'Standard Size (3.5 x 6.5 in)',
         shortName: 'Standard Money Envelope',
         dimensions: '3.5 × 6.5 in',
-        prices: null
+        prices: null,
+        designs: ['ME-001', 'ME-002', 'ME-003', 'ME-004']
       }
-    ],
-    designs: [
-      { code: 'ME-001', name: 'Golden Geometric Lattice', desc: 'Opulent interlocking geometric pattern with seal flap.' },
-      { code: 'ME-002', name: 'Festive Blossom Foil', desc: 'Rich celebratory gold foil floral motif with calligraphy.' },
-      { code: 'ME-003', name: 'Opulent Botanical Wreath', desc: 'Deep black and gold organic botanical wreath engraving.' },
-      { code: 'ME-004', name: 'Modern Family Crest', desc: 'Minimalist envelope with custom surname imprint.' }
     ]
   }
 };
 
-const CUSTOMIZATION_FEE = 10; // ₱10 per unit
+const CUSTOMIZATION_FEE = 10; // ₱10.00 per item
 
 // ============================================================================
 // 2. Application State
@@ -116,9 +104,9 @@ const CUSTOMIZATION_FEE = 10; // ₱10 per unit
 
 const appState = {
   currentCategory: 'notepads',
-  selectedSizeId: 'np-square',
+  selectedSizeId: 'np-a5', // Default to A5 Notepad
   selectedSheetCount: '30',
-  selectedDesignCode: 'NP-001',
+  selectedDesignCode: '',
   isCustomized: false,
   customText: '',
   quantity: 1,
@@ -132,15 +120,6 @@ const appState = {
     targetDate: '',
     courier: '',
     payment: ''
-  }
-};
-
-// Global fallback handler for missing mockup image
-window.handleImageError = function(imgElement) {
-  const fallback = document.getElementById('mockupCanvasFallback');
-  if (fallback) {
-    imgElement.style.display = 'none';
-    fallback.style.display = 'flex';
   }
 };
 
@@ -162,10 +141,10 @@ const DOM = {
   radioSheet30: document.getElementById('radioSheet30'),
   radioSheet50: document.getElementById('radioSheet50'),
   
-  // Design & Mockup
+  // Design & Mockup Preview Elements
   selectDesignCode: document.getElementById('selectDesignCode'),
   designDescriptionText: document.getElementById('designDescriptionText'),
-  mockupPreviewImg: document.getElementById('mockupPreviewImg'),
+  designMockupImg: document.getElementById('designMockupImg'),
   mockupCanvasFallback: document.getElementById('mockupCanvasFallback'),
   canvasBadgeCode: document.getElementById('canvasBadgeCode'),
   canvasMetaTitle: document.getElementById('canvasMetaTitle'),
@@ -230,30 +209,10 @@ const DOM = {
 };
 
 // ============================================================================
-// 4. Design Code Resolution Helper
+// 4. Vector SVG Fallback Generator for Missing Physical Images
 // ============================================================================
 
-/**
- * Returns available design choices based on selected category and size.
- * For A5 Notepad (np-a5), returns the 11 designated planner designs.
- */
-function getAvailableDesigns() {
-  const categoryData = PRODUCTS_DATA[appState.currentCategory];
-  if (!categoryData) return [];
-
-  // Special Design Codes for A5 Notepads
-  if (appState.currentCategory === 'notepads' && appState.selectedSizeId === 'np-a5') {
-    return A5_NOTEPAD_DESIGNS;
-  }
-
-  return categoryData.designs || [];
-}
-
-// ============================================================================
-// 5. Mockup SVG Generator (Creates high-res artwork preview fallback)
-// ============================================================================
-
-function generateMockupSvgDataUrl(designCode, designName, category) {
+function generateMockupSvgFallback(designCode, category) {
   const isNotepad = category === 'notepads';
   const isEnvelope = category === 'envelopes';
   
@@ -266,59 +225,48 @@ function generateMockupSvgDataUrl(designCode, designName, category) {
     accentColor = '#ffde59';
   }
 
-  const cleanName = designName || designCode;
-
-  const svgContent = `
+  const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
       <defs>
         <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="${bgColor}" />
           <stop offset="100%" stop-color="#000000" />
         </linearGradient>
-        <pattern id="dotPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <pattern id="dotPattern" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
           <circle cx="2" cy="2" r="1" fill="rgba(0,0,0,0.12)" />
         </pattern>
       </defs>
       
-      <!-- Backdrop -->
       <rect width="600" height="450" fill="url(#bgGrad)"/>
-      <circle cx="510" cy="80" r="160" fill="rgba(203,108,230,0.08)" />
-      <circle cx="90" cy="380" r="150" fill="rgba(61,255,255,0.07)" />
+      <circle cx="510" cy="80" r="160" fill="rgba(203,108,230,0.09)" />
+      <circle cx="90" cy="380" r="150" fill="rgba(61,255,255,0.08)" />
       
-      <!-- Stationery Mockup Base Sheet -->
       <g transform="translate(110, 42)">
-        <rect x="0" y="0" width="380" height="356" rx="12" fill="#ffffff" filter="drop-shadow(0px 18px 30px rgba(0,0,0,0.5))" />
-        
-        <!-- Border Frame -->
+        <rect x="0" y="0" width="380" height="356" rx="12" fill="#ffffff" filter="drop-shadow(0px 18px 30px rgba(0,0,0,0.45))" />
         <rect x="18" y="18" width="344" height="320" rx="8" fill="none" stroke="${accentColor}" stroke-width="1.8" stroke-dasharray="${isEnvelope ? '4,3' : 'none'}" />
         
-        <!-- Paper Dots if Notepad -->
         ${isNotepad ? '<rect x="24" y="90" width="332" height="236" fill="url(#dotPattern)"/>' : ''}
         
-        <!-- Brand Title in *The Seasons* / Playfair Italic -->
-        <text x="190" y="58" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="22" font-weight="700" fill="#000000" text-anchor="middle" letter-spacing="1">
+        <text x="190" y="58" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="24" font-weight="700" fill="#000000" text-anchor="middle" letter-spacing="1">
           Printelio
         </text>
         <line x1="120" y1="68" x2="260" y2="68" stroke="${accentColor}" stroke-width="1.5" />
         
-        <!-- Center Motif -->
         <g transform="translate(190, 165)">
-          <circle cx="0" cy="0" r="42" fill="none" stroke="${secondaryColor}" stroke-width="2" stroke-opacity="0.8"/>
-          <circle cx="0" cy="0" r="35" fill="rgba(203,108,230,0.08)" />
-          <text x="0" y="8" font-family="'Raleway', sans-serif" font-size="16" font-weight="800" fill="#000000" text-anchor="middle">
+          <circle cx="0" cy="0" r="44" fill="none" stroke="${secondaryColor}" stroke-width="2" stroke-opacity="0.85"/>
+          <circle cx="0" cy="0" r="36" fill="rgba(203,108,230,0.08)" />
+          <text x="0" y="7" font-family="'Raleway', sans-serif" font-size="14" font-weight="800" fill="#000000" text-anchor="middle">
             ${designCode}
           </text>
         </g>
         
-        <!-- Design Name in Raleway -->
-        <text x="190" y="248" font-family="'Raleway', sans-serif" font-size="13" font-weight="700" fill="#333344" text-anchor="middle" letter-spacing="1.2">
-          ${cleanName.toUpperCase()}
+        <text x="190" y="248" font-family="'Raleway', sans-serif" font-size="13" font-weight="700" fill="#222233" text-anchor="middle" letter-spacing="1">
+          DESIGN MOTIF PREVIEW
         </text>
-        <text x="190" y="268" font-family="'Raleway', sans-serif" font-size="11" font-weight="500" fill="#777788" text-anchor="middle">
+        <text x="190" y="268" font-family="'Raleway', sans-serif" font-size="11" font-weight="500" fill="#666677" text-anchor="middle">
           Bespoke Custom Stationery
         </text>
         
-        <!-- Footer Atelier Watermark -->
         <text x="190" y="322" font-family="'Raleway', sans-serif" font-size="9" font-weight="600" fill="#9999aa" text-anchor="middle" letter-spacing="2">
           ATELIER COLLECTION • MANILA
         </text>
@@ -326,11 +274,106 @@ function generateMockupSvgDataUrl(designCode, designName, category) {
     </svg>
   `;
 
-  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgContent)}`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
 // ============================================================================
-// 6. Category & Size Selection Handlers (Clean UI - NO PRICES IN LABELS)
+// 5. Dynamic Design Code Dropdown Population & Image Preview
+// ============================================================================
+
+/**
+ * Returns available design choices based on current category and selected size.
+ * For A5 Notepad (np-a5), returns the 11 designated planner codes.
+ */
+function getDesignCodesForCurrentSelection() {
+  const categoryData = PRODUCTS_DATA[appState.currentCategory];
+  if (!categoryData) return [];
+
+  const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId);
+  if (sizeObj && sizeObj.designs) {
+    return sizeObj.designs;
+  }
+
+  // If A5 Notepad
+  if (appState.currentCategory === 'notepads' && appState.selectedSizeId === 'np-a5') {
+    return A5_NOTEPAD_DESIGNS;
+  }
+
+  return [];
+}
+
+/**
+ * Populates the Design Motif Code dropdown. Starts with empty placeholder option.
+ */
+function populateDesignDropdown() {
+  const designCodes = getDesignCodesForCurrentSelection();
+  
+  DOM.selectDesignCode.innerHTML = '';
+
+  // 1. Initial Empty / Placeholder Option
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = '-- Select Design Code --';
+  DOM.selectDesignCode.appendChild(defaultOption);
+
+  // 2. Populate dynamic design options
+  designCodes.forEach(code => {
+    const opt = document.createElement('option');
+    opt.value = code;
+    opt.textContent = code;
+    DOM.selectDesignCode.appendChild(opt);
+  });
+
+  // Preserve selection if it still exists in the new list, otherwise reset
+  if (designCodes.includes(appState.selectedDesignCode)) {
+    DOM.selectDesignCode.value = appState.selectedDesignCode;
+  } else {
+    appState.selectedDesignCode = '';
+    DOM.selectDesignCode.value = '';
+  }
+
+  updatePreviewImage();
+}
+
+/**
+ * Updates the mockup preview image based on the selected design code.
+ * Loads from `images/${selectedCode}.png` with an onerror fallback.
+ */
+function updatePreviewImage() {
+  const selectedCode = appState.selectedDesignCode;
+
+  if (!selectedCode) {
+    // Show placeholder canvas when nothing is selected
+    DOM.designMockupImg.style.display = 'none';
+    DOM.designMockupImg.src = '';
+    DOM.mockupCanvasFallback.style.display = 'flex';
+    DOM.canvasBadgeCode.textContent = '-- Select Design --';
+    DOM.canvasMetaTitle.textContent = 'Choose a motif code above to view preview';
+    DOM.designDescriptionText.textContent = 'Please select a design motif code to load the preview image.';
+    return;
+  }
+
+  // Update description text
+  DOM.designDescriptionText.textContent = `Previewing design code: ${selectedCode}`;
+  DOM.canvasBadgeCode.textContent = selectedCode;
+  DOM.canvasMetaTitle.textContent = `Design Motif: ${selectedCode}`;
+
+  const imagePath = `images/${selectedCode}.png`;
+  
+  DOM.designMockupImg.style.display = 'block';
+  DOM.mockupCanvasFallback.style.display = 'none';
+
+  // Handle missing image gracefully with vector SVG fallback
+  DOM.designMockupImg.onerror = function() {
+    this.onerror = null; // Prevent infinite error loops
+    this.src = generateMockupSvgFallback(selectedCode, appState.currentCategory);
+  };
+
+  DOM.designMockupImg.src = imagePath;
+}
+
+// ============================================================================
+// 6. Category & Size Selection (Clean UI: No Prices in Labels)
 // ============================================================================
 
 function switchCategory(categoryKey) {
@@ -356,13 +399,13 @@ function switchCategory(categoryKey) {
     DOM.sheetCountGroup.style.display = 'none';
   }
 
-  // Populate Clean Sizes (no prices in labels)
+  // Render Clean Size Cards (No prices in labels)
   renderSizeOptions();
 
-  // Populate Design Code dropdown for current category/size
+  // Populate dynamic design dropdown for current category/size
   populateDesignDropdown();
 
-  // Recalculate and display Unit Price
+  // Update pricing calculation display
   updatePricePreview();
 }
 
@@ -370,18 +413,18 @@ function renderSizeOptions() {
   const categoryData = PRODUCTS_DATA[appState.currentCategory];
   DOM.sizeCardsGrid.innerHTML = '';
 
-  // Select first size by default if previous size is not valid for category
+  // Validate selected size ID
   if (!categoryData.sizes.some(s => s.id === appState.selectedSizeId)) {
     appState.selectedSizeId = categoryData.sizes[0].id;
   }
 
-  // Set grid layout class based on option count
+  // Responsive grid class
   DOM.sizeCardsGrid.className = `cards-grid ${categoryData.sizes.length === 3 ? 'three-col' : categoryData.sizes.length === 2 ? 'two-col' : ''}`;
 
   categoryData.sizes.forEach(size => {
     const isChecked = size.id === appState.selectedSizeId;
     
-    // Clean UI: Label displays ONLY name and dimensions (NO PRICES!)
+    // Clean UI: Display name only, NO PRICES in labels
     const cardHtml = `
       <label class="radio-card-label" for="size-${size.id}">
         <input type="radio" name="sizeOption" id="size-${size.id}" value="${size.id}" class="radio-card-input" ${isChecked ? 'checked' : ''}>
@@ -394,11 +437,10 @@ function renderSizeOptions() {
     DOM.sizeCardsGrid.insertAdjacentHTML('beforeend', cardHtml);
   });
 
-  // Attach change listeners to new radio options
+  // Attach change listeners to size radio inputs
   DOM.sizeCardsGrid.querySelectorAll('input[name="sizeOption"]').forEach(input => {
     input.addEventListener('change', (e) => {
       appState.selectedSizeId = e.target.value;
-      // Re-populate designs when size changes (e.g. switching to/from A5 Notepad)
       populateDesignDropdown();
       updatePricePreview();
     });
@@ -406,72 +448,7 @@ function renderSizeOptions() {
 }
 
 // ============================================================================
-// 7. Dynamic Design Code Selection & Mockup Image Rendering (.png pathing)
-// ============================================================================
-
-function populateDesignDropdown() {
-  const designs = getAvailableDesigns();
-  DOM.selectDesignCode.innerHTML = '';
-
-  const isA5Notepad = (appState.currentCategory === 'notepads' && appState.selectedSizeId === 'np-a5');
-
-  designs.forEach(design => {
-    const option = document.createElement('option');
-    option.value = design.code;
-    
-    // For A5 Notepad, display exact option text as requested
-    if (isA5Notepad) {
-      option.textContent = design.code;
-    } else {
-      option.textContent = design.name ? `${design.code} - ${design.name}` : design.code;
-    }
-    
-    DOM.selectDesignCode.appendChild(option);
-  });
-
-  // Ensure valid selection within the available set
-  const exists = designs.some(d => d.code === appState.selectedDesignCode);
-  if (!exists && designs.length > 0) {
-    appState.selectedDesignCode = designs[0].code;
-  }
-  
-  DOM.selectDesignCode.value = appState.selectedDesignCode;
-
-  updateMockupPreview();
-}
-
-function updateMockupPreview() {
-  const designs = getAvailableDesigns();
-  const design = designs.find(d => d.code === appState.selectedDesignCode) || designs[0];
-  
-  if (!design) return;
-
-  // Update description text
-  DOM.designDescriptionText.textContent = design.desc || `Selected design motif: ${design.code}`;
-
-  // Update Canvas Fallback metadata
-  DOM.canvasBadgeCode.textContent = design.code;
-  DOM.canvasMetaTitle.textContent = design.name || design.code;
-
-  // Dynamic Image File Pathing: images/{selectedCode}.png
-  const imageSrcPath = `images/${design.code}.png`;
-  
-  DOM.mockupPreviewImg.style.display = 'block';
-  DOM.mockupCanvasFallback.style.display = 'none';
-
-  // Dynamic vector artwork fallback for smooth preview in case physical PNG file is not found
-  const svgDataUrl = generateMockupSvgDataUrl(design.code, design.name || design.code, appState.currentCategory);
-  
-  DOM.mockupPreviewImg.onerror = function() {
-    this.onerror = null;
-    this.src = svgDataUrl;
-  };
-  
-  DOM.mockupPreviewImg.src = imageSrcPath;
-}
-
-// ============================================================================
-// 8. Unit Price Calculation Engine
+// 7. Dynamic Price Calculation Engine
 // ============================================================================
 
 function calculateCurrentItemPrice() {
@@ -488,23 +465,13 @@ function calculateCurrentItemPrice() {
   }
 
   // Notepads pricing calculation
-  if (!appState.selectedSizeId || !appState.selectedSheetCount) {
-    return {
-      isTba: false,
-      isPendingSelection: true,
-      unitPrice: 0,
-      breakdownText: 'Please select size & sheet count',
-      displayPrice: 'Select Options'
-    };
-  }
-
   const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId);
   if (!sizeObj || !sizeObj.prices) {
     return {
       isTba: false,
       isPendingSelection: true,
       unitPrice: 0,
-      breakdownText: 'Please select size',
+      breakdownText: 'Please select a size format',
       displayPrice: 'Select Size'
     };
   }
@@ -560,14 +527,19 @@ function updatePricePreview() {
 }
 
 // ============================================================================
-// 9. Order Item Management & Cart
+// 8. Order Item Cart Management
 // ============================================================================
 
 function addItemToCart() {
+  // Validate design code selection
+  if (!appState.selectedDesignCode) {
+    showToast('Please select a Design Motif Code before adding to order.');
+    DOM.selectDesignCode.focus();
+    return;
+  }
+
   const categoryData = PRODUCTS_DATA[appState.currentCategory];
   const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId) || categoryData.sizes[0];
-  const designs = getAvailableDesigns();
-  const designObj = designs.find(d => d.code === appState.selectedDesignCode) || { code: appState.selectedDesignCode, name: appState.selectedDesignCode };
   const priceInfo = calculateCurrentItemPrice();
   const qty = parseInt(DOM.inputQuantity.value, 10) || 1;
 
@@ -576,7 +548,7 @@ function addItemToCart() {
     return;
   }
 
-  // Check custom text if customization is active
+  // Validate custom text if customization is active
   if (appState.isCustomized && !DOM.inputCustomText.value.trim()) {
     showToast('Please enter the custom name/text to be printed.');
     DOM.inputCustomText.focus();
@@ -593,10 +565,9 @@ function addItemToCart() {
     dimensions: sizeObj.dimensions,
     hasSheets: categoryData.hasSheets,
     sheetCount: categoryData.hasSheets ? appState.selectedSheetCount : null,
-    designCode: designObj.code,
-    designName: designObj.name || designObj.code,
-    imagePath: `images/${designObj.code}.png`,
-    mockupImgSvg: generateMockupSvgDataUrl(designObj.code, designObj.name || designObj.code, appState.currentCategory),
+    designCode: appState.selectedDesignCode,
+    imagePath: `images/${appState.selectedDesignCode}.png`,
+    mockupSvgFallback: generateMockupSvgFallback(appState.selectedDesignCode, appState.currentCategory),
     isCustomized: appState.isCustomized,
     customText: appState.isCustomized ? DOM.inputCustomText.value.trim() : '',
     isTba: priceInfo.isTba,
@@ -672,7 +643,7 @@ function renderCart() {
     itemCard.innerHTML = `
       <div class="cart-item-main">
         <div class="cart-item-thumb-wrapper">
-          <img src="images/${item.designCode}.png" alt="${item.designCode}" onerror="this.onerror=null; this.src='${item.mockupImgSvg}';">
+          <img src="images/${item.designCode}.png" alt="${item.designCode}" onerror="this.onerror=null; this.src='${item.mockupSvgFallback}';">
         </div>
         <div class="cart-item-details">
           <div class="cart-item-title">${item.sizeName}</div>
@@ -697,7 +668,7 @@ function renderCart() {
     DOM.cartItemsList.appendChild(itemCard);
   });
 
-  // Update Summary Card Financial Totals
+  // Update Totals Card
   DOM.summarySubtotalAmount.textContent = `₱${numericTotal.toFixed(2)}`;
   DOM.summaryTbaCount.textContent = `${tbaCount} item${tbaCount === 1 ? '' : 's'}`;
   DOM.summaryGrandTotal.textContent = `₱${numericTotal.toFixed(2)}`;
@@ -712,7 +683,7 @@ function renderCart() {
 window.removeCartItem = removeCartItem;
 
 // ============================================================================
-// 10. Customer Form Validation & Sync
+// 9. Customer Form Validation & Sync
 // ============================================================================
 
 function syncCustomerSummaryDisplay() {
@@ -775,7 +746,7 @@ function attachValidationClearListeners() {
 }
 
 // ============================================================================
-// 11. Job Order Slip Generation & Modal Dialog
+// 10. Job Order Slip Generation & Modal Dialog
 // ============================================================================
 
 function generateReferenceNumber() {
@@ -785,14 +756,12 @@ function generateReferenceNumber() {
 }
 
 function submitJobOrder() {
-  // Check Cart
   if (appState.cart.length === 0) {
     showToast('Your order is empty. Please add items before submitting.');
     DOM.btnAddToCart.scrollIntoView({ behavior: 'smooth' });
     return;
   }
 
-  // Validate Form
   const isFormValid = validateCustomerForm();
   if (!isFormValid) {
     showToast('Please complete all required customer details.');
@@ -800,7 +769,6 @@ function submitJobOrder() {
     return;
   }
 
-  // Save Customer State
   appState.customer = {
     fullName: DOM.inputFullName.value.trim(),
     contactNumber: DOM.inputContactNumber.value.trim(),
@@ -812,7 +780,6 @@ function submitJobOrder() {
     payment: DOM.selectPayment.value
   };
 
-  // Populate Modal Slip
   const refNo = generateReferenceNumber();
   DOM.joReferenceNumber.textContent = refNo;
   
@@ -828,7 +795,6 @@ function submitJobOrder() {
   DOM.joCourier.textContent = appState.customer.courier;
   DOM.joPayment.textContent = appState.customer.payment;
 
-  // Render Table
   DOM.joTableBody.innerHTML = '';
   let grandTotalNumeric = 0;
 
@@ -862,14 +828,12 @@ function submitJobOrder() {
 
   DOM.joModalGrandTotal.textContent = `₱${grandTotalNumeric.toFixed(2)}`;
 
-  // Payment Note in Job Order
   DOM.paymentInstructionsText.innerHTML = `
     <p>1. <strong>Payment Privacy:</strong> Official payment details and QR code will be shared separately and privately via your provided email or social account (<strong>${appState.customer.socialHandle}</strong>).</p>
     <p>2. Please reference Job Order No. <strong>${refNo}</strong> when sending proof of payment.</p>
     <p>3. Production starts upon payment confirmation. Standard lead time is 3–5 business days before courier dispatch (${appState.customer.courier}).</p>
   `;
 
-  // Open Modal
   DOM.jobOrderModal.classList.add('active');
 }
 
@@ -887,7 +851,7 @@ function startNewOrder() {
 }
 
 // ============================================================================
-// 12. Toast Notifications Utility
+// 11. Toast Notifications
 // ============================================================================
 
 function showToast(message) {
@@ -904,7 +868,7 @@ function showToast(message) {
 }
 
 // ============================================================================
-// 13. Event Listeners & Initialization
+// 12. Event Listeners & Bootstrapping
 // ============================================================================
 
 function initEventListeners() {
@@ -926,10 +890,10 @@ function initEventListeners() {
   // Design Dropdown Change
   DOM.selectDesignCode.addEventListener('change', (e) => {
     appState.selectedDesignCode = e.target.value;
-    updateMockupPreview();
+    updatePreviewImage();
   });
 
-  // Customization Checkbox
+  // Customization Checkbox (+₱10)
   DOM.checkCustomization.addEventListener('change', (e) => {
     appState.isCustomized = e.target.checked;
     DOM.customizationContainer.classList.toggle('active', appState.isCustomized);

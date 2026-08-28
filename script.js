@@ -145,9 +145,6 @@ const DOM = {
   selectDesignCode: document.getElementById('selectDesignCode'),
   designDescriptionText: document.getElementById('designDescriptionText'),
   designMockupImg: document.getElementById('designMockupImg'),
-  mockupCanvasFallback: document.getElementById('mockupCanvasFallback'),
-  canvasBadgeCode: document.getElementById('canvasBadgeCode'),
-  canvasMetaTitle: document.getElementById('canvasMetaTitle'),
   
   // Customization
   customizationContainer: document.getElementById('customizationContainer'),
@@ -209,76 +206,7 @@ const DOM = {
 };
 
 // ============================================================================
-// 4. Vector SVG Fallback Generator for Missing Physical Images
-// ============================================================================
-
-function generateMockupSvgFallback(designCode, category) {
-  const isNotepad = category === 'notepads';
-  const isEnvelope = category === 'envelopes';
-  
-  let accentColor = '#cb6ce6';
-  let secondaryColor = '#3dffff';
-  let bgColor = '#14141d';
-  
-  if (isEnvelope) {
-    bgColor = '#0a0a0f';
-    accentColor = '#ffde59';
-  }
-
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
-      <defs>
-        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="${bgColor}" />
-          <stop offset="100%" stop-color="#000000" />
-        </linearGradient>
-        <pattern id="dotPattern" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1" fill="rgba(0,0,0,0.12)" />
-        </pattern>
-      </defs>
-      
-      <rect width="600" height="450" fill="url(#bgGrad)"/>
-      <circle cx="510" cy="80" r="160" fill="rgba(203,108,230,0.09)" />
-      <circle cx="90" cy="380" r="150" fill="rgba(61,255,255,0.08)" />
-      
-      <g transform="translate(110, 42)">
-        <rect x="0" y="0" width="380" height="356" rx="12" fill="#ffffff" filter="drop-shadow(0px 18px 30px rgba(0,0,0,0.45))" />
-        <rect x="18" y="18" width="344" height="320" rx="8" fill="none" stroke="${accentColor}" stroke-width="1.8" stroke-dasharray="${isEnvelope ? '4,3' : 'none'}" />
-        
-        ${isNotepad ? '<rect x="24" y="90" width="332" height="236" fill="url(#dotPattern)"/>' : ''}
-        
-        <text x="190" y="58" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="24" font-weight="700" fill="#000000" text-anchor="middle" letter-spacing="1">
-          Printelio
-        </text>
-        <line x1="120" y1="68" x2="260" y2="68" stroke="${accentColor}" stroke-width="1.5" />
-        
-        <g transform="translate(190, 165)">
-          <circle cx="0" cy="0" r="44" fill="none" stroke="${secondaryColor}" stroke-width="2" stroke-opacity="0.85"/>
-          <circle cx="0" cy="0" r="36" fill="rgba(203,108,230,0.08)" />
-          <text x="0" y="7" font-family="'Raleway', sans-serif" font-size="14" font-weight="800" fill="#000000" text-anchor="middle">
-            ${designCode}
-          </text>
-        </g>
-        
-        <text x="190" y="248" font-family="'Raleway', sans-serif" font-size="13" font-weight="700" fill="#222233" text-anchor="middle" letter-spacing="1">
-          DESIGN MOTIF PREVIEW
-        </text>
-        <text x="190" y="268" font-family="'Raleway', sans-serif" font-size="11" font-weight="500" fill="#666677" text-anchor="middle">
-          Bespoke Custom Stationery
-        </text>
-        
-        <text x="190" y="322" font-family="'Raleway', sans-serif" font-size="9" font-weight="600" fill="#9999aa" text-anchor="middle" letter-spacing="2">
-          ATELIER COLLECTION • MANILA
-        </text>
-      </g>
-    </svg>
-  `;
-
-  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-}
-
-// ============================================================================
-// 5. Dynamic Design Code Dropdown Population & Image Preview
+// 4. Dynamic Design Code Dropdown Population & Image Preview
 // ============================================================================
 
 /**
@@ -337,39 +265,48 @@ function populateDesignDropdown() {
 
 /**
  * Updates the mockup preview image based on the selected design code.
- * Loads from `images/${selectedCode}.png` with an onerror fallback.
+ * Loads actual PNG images from 'images/' safely using encodeURIComponent.
  */
 function updatePreviewImage() {
   const selectedCode = appState.selectedDesignCode;
 
   if (!selectedCode) {
-    // Show placeholder canvas when nothing is selected
-    DOM.designMockupImg.style.display = 'none';
-    DOM.designMockupImg.src = '';
-    DOM.mockupCanvasFallback.style.display = 'flex';
-    DOM.canvasBadgeCode.textContent = '-- Select Design --';
-    DOM.canvasMetaTitle.textContent = 'Choose a motif code above to view preview';
-    DOM.designDescriptionText.textContent = 'Please select a design motif code to load the preview image.';
+    if (DOM.designMockupImg) {
+      DOM.designMockupImg.style.display = 'none';
+      DOM.designMockupImg.src = '';
+    }
+    if (DOM.mockupCanvasFallback) {
+      DOM.mockupCanvasFallback.style.display = 'none';
+    }
+    if (DOM.designDescriptionText) {
+      DOM.designDescriptionText.textContent = 'Please select a design motif code to load the preview image.';
+    }
     return;
   }
 
-  // Update description text
-  DOM.designDescriptionText.textContent = `Previewing design code: ${selectedCode}`;
-  DOM.canvasBadgeCode.textContent = selectedCode;
-  DOM.canvasMetaTitle.textContent = `Design Motif: ${selectedCode}`;
+  if (DOM.mockupCanvasFallback) {
+    DOM.mockupCanvasFallback.style.display = 'none';
+  }
 
-  const imagePath = `images/${selectedCode}.png`;
+  if (DOM.designDescriptionText) {
+    DOM.designDescriptionText.textContent = `Previewing design code: ${selectedCode}`;
+  }
+
+  const imagePath = 'images/' + encodeURIComponent(selectedCode) + '.png';
   
-  DOM.designMockupImg.style.display = 'block';
-  DOM.mockupCanvasFallback.style.display = 'none';
+  if (DOM.designMockupImg) {
+    DOM.designMockupImg.style.display = 'block';
+    
+    DOM.designMockupImg.onerror = function() {
+      this.onerror = null;
+      this.style.display = 'none';
+      if (DOM.designDescriptionText) {
+        DOM.designDescriptionText.textContent = `Preview image for "${selectedCode}" could not be loaded.`;
+      }
+    };
 
-  // Handle missing image gracefully with vector SVG fallback
-  DOM.designMockupImg.onerror = function() {
-    this.onerror = null; // Prevent infinite error loops
-    this.src = generateMockupSvgFallback(selectedCode, appState.currentCategory);
-  };
-
-  DOM.designMockupImg.src = imagePath;
+    DOM.designMockupImg.src = imagePath;
+  }
 }
 
 // ============================================================================
@@ -566,8 +503,7 @@ function addItemToCart() {
     hasSheets: categoryData.hasSheets,
     sheetCount: categoryData.hasSheets ? appState.selectedSheetCount : null,
     designCode: appState.selectedDesignCode,
-    imagePath: `images/${appState.selectedDesignCode}.png`,
-    mockupSvgFallback: generateMockupSvgFallback(appState.selectedDesignCode, appState.currentCategory),
+    imagePath: 'images/' + encodeURIComponent(appState.selectedDesignCode) + '.png',
     isCustomized: appState.isCustomized,
     customText: appState.isCustomized ? DOM.inputCustomText.value.trim() : '',
     isTba: priceInfo.isTba,
@@ -643,7 +579,7 @@ function renderCart() {
     itemCard.innerHTML = `
       <div class="cart-item-main">
         <div class="cart-item-thumb-wrapper">
-          <img src="images/${item.designCode}.png" alt="${item.designCode}" onerror="this.onerror=null; this.src='${item.mockupSvgFallback}';">
+          <img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" onerror="this.onerror=null; this.style.display='none';">
         </div>
         <div class="cart-item-details">
           <div class="cart-item-title">${item.sizeName}</div>

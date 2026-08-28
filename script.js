@@ -265,48 +265,37 @@ function populateDesignDropdown() {
 
 /**
  * Updates the mockup preview image based on the selected design code.
- * Loads actual PNG images from 'images/' safely using encodeURIComponent.
+ * Directly updates the standard <img> element's src using encodeURIComponent.
  */
 function updatePreviewImage() {
   const selectedCode = appState.selectedDesignCode;
 
+  if (!DOM.designMockupImg) return;
+
   if (!selectedCode) {
-    if (DOM.designMockupImg) {
-      DOM.designMockupImg.style.display = 'none';
-      DOM.designMockupImg.src = '';
-    }
-    if (DOM.mockupCanvasFallback) {
-      DOM.mockupCanvasFallback.style.display = 'none';
-    }
+    DOM.designMockupImg.src = '';
+    DOM.designMockupImg.alt = 'Select a design code to view preview';
     if (DOM.designDescriptionText) {
       DOM.designDescriptionText.textContent = 'Please select a design motif code to load the preview image.';
     }
     return;
   }
 
-  if (DOM.mockupCanvasFallback) {
-    DOM.mockupCanvasFallback.style.display = 'none';
-  }
-
   if (DOM.designDescriptionText) {
     DOM.designDescriptionText.textContent = `Previewing design code: ${selectedCode}`;
   }
 
-  const imagePath = 'images/' + encodeURIComponent(selectedCode) + '.png';
-  
-  if (DOM.designMockupImg) {
-    DOM.designMockupImg.style.display = 'block';
-    
-    DOM.designMockupImg.onerror = function() {
-      this.onerror = null;
-      this.style.display = 'none';
-      if (DOM.designDescriptionText) {
-        DOM.designDescriptionText.textContent = `Preview image for "${selectedCode}" could not be loaded.`;
-      }
-    };
+  DOM.designMockupImg.alt = `Design Preview: ${selectedCode}`;
 
-    DOM.designMockupImg.src = imagePath;
-  }
+  DOM.designMockupImg.onerror = function() {
+    this.onerror = null;
+    this.alt = 'Image not found';
+    if (DOM.designDescriptionText) {
+      DOM.designDescriptionText.textContent = `Preview image for "${selectedCode}" could not be loaded.`;
+    }
+  };
+
+  DOM.designMockupImg.src = 'images/' + encodeURIComponent(selectedCode) + '.png';
 }
 
 // ============================================================================

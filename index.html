@@ -216,13 +216,8 @@
 
                 <!-- Right: Mockup Image Container loading images/{selectedCode}.png -->
                 <div class="mockup-preview-container" id="mockupPreviewWrapper">
-                  <img id="designMockupImg" class="mockup-preview-img" src="" alt="Select a design code to view preview">
-                  <!-- Fallback Visual Canvas if Image is Missing or Unselected -->
-                  <div class="mockup-placeholder-canvas" id="mockupCanvasFallback">
-                    <span class="canvas-badge" id="canvasBadgeCode">-- Select Design --</span>
-                    <span class="canvas-meta" id="canvasMetaTitle">Choose a motif code to view preview</span>
-                    <div class="canvas-brand-watermark"><span class="brand-name-word">Printelio</span> Studio</div>
-                  </div>
+                  <img id="designMockupImg" src="" alt="Select a design code to view preview" style="max-width: 100%; height: auto; border-radius: 8px; display: block;">
+                  <span id="designPreviewCaption" class="form-hint" style="margin-top: 8px; font-size: 0.8rem; text-align: center; display: block;">Select a design code to preview</span>
                 </div>
               </div>
             </div>

@@ -8,6 +8,20 @@
 // 1. Data Models & Pricing Constants
 // ============================================================================
 
+const A5_NOTEPAD_DESIGNS = [
+  { code: 'Blue DP_A5', name: 'Blue Daily Planner A5', desc: 'Bespoke Blue Daily Planner layout with daily schedule & task sections.' },
+  { code: 'Pink DP_A5', name: 'Pink Daily Planner A5', desc: 'Elegant Pink Daily Planner format with priorities & habit tracker.' },
+  { code: 'Yellow DP_A5', name: 'Yellow Daily Planner A5', desc: 'Vibrant Yellow Daily Planner with notes & daily agenda columns.' },
+  { code: 'WP1_A5', name: 'Weekly Planner Motif 1 A5', desc: 'Clean weekly overview motif with structured daily planning blocks.' },
+  { code: 'WP2_A5', name: 'Weekly Planner Motif 2 A5', desc: 'Minimalist weekly schedule with goals and habit tracking margins.' },
+  { code: 'WP3_A5', name: 'Weekly Planner Motif 3 A5', desc: 'Pastel aesthetic weekly layout with task priority markers.' },
+  { code: 'WP4_A5', name: 'Weekly Planner Motif 4 A5', desc: 'Modern geometric weekly planner with generous notes space.' },
+  { code: 'WP5_A5', name: 'Weekly Planner Motif 5 A5', desc: 'Executive weekly focus layout with structured checklist.' },
+  { code: 'WP6_A5', name: 'Weekly Planner Motif 6 A5', desc: 'Earthy botanical weekly design with gentle lined columns.' },
+  { code: 'WP7_A5', name: 'Weekly Planner Motif 7 A5', desc: 'Soft gradient weekly planner with top priority highlight box.' },
+  { code: 'WP8_A5', name: 'Weekly Planner Motif 8 A5', desc: 'Classic atelier weekly planner with memo and notes section.' }
+];
+
 const PRODUCTS_DATA = {
   notepads: {
     categoryName: 'Notepads',
@@ -171,6 +185,7 @@ const DOM = {
   btnAddToCart: document.getElementById('btnAddToCart'),
   
   // Customer Form
+  customerDetailsCard: document.getElementById('customerDetailsCard'),
   customerForm: document.getElementById('customerForm'),
   inputFullName: document.getElementById('inputFullName'),
   inputContactNumber: document.getElementById('inputContactNumber'),
@@ -215,7 +230,27 @@ const DOM = {
 };
 
 // ============================================================================
-// 4. Mockup SVG Generator (Creates real-time stationery artwork)
+// 4. Design Code Resolution Helper
+// ============================================================================
+
+/**
+ * Returns available design choices based on selected category and size.
+ * For A5 Notepad (np-a5), returns the 11 designated planner designs.
+ */
+function getAvailableDesigns() {
+  const categoryData = PRODUCTS_DATA[appState.currentCategory];
+  if (!categoryData) return [];
+
+  // Special Design Codes for A5 Notepads
+  if (appState.currentCategory === 'notepads' && appState.selectedSizeId === 'np-a5') {
+    return A5_NOTEPAD_DESIGNS;
+  }
+
+  return categoryData.designs || [];
+}
+
+// ============================================================================
+// 5. Mockup SVG Generator (Creates high-res artwork preview fallback)
 // ============================================================================
 
 function generateMockupSvgDataUrl(designCode, designName, category) {
@@ -230,6 +265,8 @@ function generateMockupSvgDataUrl(designCode, designName, category) {
     bgColor = '#0a0a0f';
     accentColor = '#ffde59';
   }
+
+  const cleanName = designName || designCode;
 
   const svgContent = `
     <svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
@@ -268,14 +305,14 @@ function generateMockupSvgDataUrl(designCode, designName, category) {
         <g transform="translate(190, 165)">
           <circle cx="0" cy="0" r="42" fill="none" stroke="${secondaryColor}" stroke-width="2" stroke-opacity="0.8"/>
           <circle cx="0" cy="0" r="35" fill="rgba(203,108,230,0.08)" />
-          <text x="0" y="8" font-family="'Raleway', sans-serif" font-size="20" font-weight="800" fill="#000000" text-anchor="middle">
+          <text x="0" y="8" font-family="'Raleway', sans-serif" font-size="16" font-weight="800" fill="#000000" text-anchor="middle">
             ${designCode}
           </text>
         </g>
         
         <!-- Design Name in Raleway -->
         <text x="190" y="248" font-family="'Raleway', sans-serif" font-size="13" font-weight="700" fill="#333344" text-anchor="middle" letter-spacing="1.2">
-          ${designName.toUpperCase()}
+          ${cleanName.toUpperCase()}
         </text>
         <text x="190" y="268" font-family="'Raleway', sans-serif" font-size="11" font-weight="500" fill="#777788" text-anchor="middle">
           Bespoke Custom Stationery
@@ -293,7 +330,7 @@ function generateMockupSvgDataUrl(designCode, designName, category) {
 }
 
 // ============================================================================
-// 5. Category & Size Selection Handlers (Clean UI - NO PRICES IN LABELS)
+// 6. Category & Size Selection Handlers (Clean UI - NO PRICES IN LABELS)
 // ============================================================================
 
 function switchCategory(categoryKey) {
@@ -322,7 +359,7 @@ function switchCategory(categoryKey) {
   // Populate Clean Sizes (no prices in labels)
   renderSizeOptions();
 
-  // Populate Design Code dropdown for current category
+  // Populate Design Code dropdown for current category/size
   populateDesignDropdown();
 
   // Recalculate and display Unit Price
@@ -361,68 +398,80 @@ function renderSizeOptions() {
   DOM.sizeCardsGrid.querySelectorAll('input[name="sizeOption"]').forEach(input => {
     input.addEventListener('change', (e) => {
       appState.selectedSizeId = e.target.value;
+      // Re-populate designs when size changes (e.g. switching to/from A5 Notepad)
+      populateDesignDropdown();
       updatePricePreview();
     });
   });
 }
 
 // ============================================================================
-// 6. Dynamic Design Code Selection & Mockup Image Rendering
+// 7. Dynamic Design Code Selection & Mockup Image Rendering (.png pathing)
 // ============================================================================
 
 function populateDesignDropdown() {
-  const categoryData = PRODUCTS_DATA[appState.currentCategory];
+  const designs = getAvailableDesigns();
   DOM.selectDesignCode.innerHTML = '';
 
-  categoryData.designs.forEach(design => {
+  const isA5Notepad = (appState.currentCategory === 'notepads' && appState.selectedSizeId === 'np-a5');
+
+  designs.forEach(design => {
     const option = document.createElement('option');
     option.value = design.code;
-    option.textContent = `${design.code} - ${design.name}`;
+    
+    // For A5 Notepad, display exact option text as requested
+    if (isA5Notepad) {
+      option.textContent = design.code;
+    } else {
+      option.textContent = design.name ? `${design.code} - ${design.name}` : design.code;
+    }
+    
     DOM.selectDesignCode.appendChild(option);
   });
 
-  // Default to first design in list
-  appState.selectedDesignCode = categoryData.designs[0].code;
+  // Ensure valid selection within the available set
+  const exists = designs.some(d => d.code === appState.selectedDesignCode);
+  if (!exists && designs.length > 0) {
+    appState.selectedDesignCode = designs[0].code;
+  }
+  
   DOM.selectDesignCode.value = appState.selectedDesignCode;
 
   updateMockupPreview();
 }
 
 function updateMockupPreview() {
-  const categoryData = PRODUCTS_DATA[appState.currentCategory];
-  const design = categoryData.designs.find(d => d.code === appState.selectedDesignCode) || categoryData.designs[0];
+  const designs = getAvailableDesigns();
+  const design = designs.find(d => d.code === appState.selectedDesignCode) || designs[0];
   
   if (!design) return;
 
   // Update description text
-  DOM.designDescriptionText.textContent = design.desc;
+  DOM.designDescriptionText.textContent = design.desc || `Selected design motif: ${design.code}`;
 
   // Update Canvas Fallback metadata
   DOM.canvasBadgeCode.textContent = design.code;
-  DOM.canvasMetaTitle.textContent = design.name;
+  DOM.canvasMetaTitle.textContent = design.name || design.code;
 
-  // Mockup image path: images/{selectedCode}.jpg
-  const imageSrcPath = `images/${design.code}.jpg`;
+  // Dynamic Image File Pathing: images/{selectedCode}.png
+  const imageSrcPath = `images/${design.code}.png`;
   
   DOM.mockupPreviewImg.style.display = 'block';
   DOM.mockupCanvasFallback.style.display = 'none';
 
-  // High quality dynamic vector artwork fallback
-  const svgDataUrl = generateMockupSvgDataUrl(design.code, design.name, appState.currentCategory);
+  // Dynamic vector artwork fallback for smooth preview in case physical PNG file is not found
+  const svgDataUrl = generateMockupSvgDataUrl(design.code, design.name || design.code, appState.currentCategory);
   
-  // Test image existence, fall back seamlessly if physical image is not found
-  const testImg = new Image();
-  testImg.onload = function() {
-    DOM.mockupPreviewImg.src = imageSrcPath;
+  DOM.mockupPreviewImg.onerror = function() {
+    this.onerror = null;
+    this.src = svgDataUrl;
   };
-  testImg.onerror = function() {
-    DOM.mockupPreviewImg.src = svgDataUrl;
-  };
-  testImg.src = imageSrcPath;
+  
+  DOM.mockupPreviewImg.src = imageSrcPath;
 }
 
 // ============================================================================
-// 7. Unit Price Calculation Engine
+// 8. Unit Price Calculation Engine
 // ============================================================================
 
 function calculateCurrentItemPrice() {
@@ -439,7 +488,6 @@ function calculateCurrentItemPrice() {
   }
 
   // Notepads pricing calculation
-  // Check if both Size and Sheet options are selected
   if (!appState.selectedSizeId || !appState.selectedSheetCount) {
     return {
       isTba: false,
@@ -512,13 +560,14 @@ function updatePricePreview() {
 }
 
 // ============================================================================
-// 8. Order Item Management & Cart
+// 9. Order Item Management & Cart
 // ============================================================================
 
 function addItemToCart() {
   const categoryData = PRODUCTS_DATA[appState.currentCategory];
   const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId) || categoryData.sizes[0];
-  const designObj = categoryData.designs.find(d => d.code === appState.selectedDesignCode) || categoryData.designs[0];
+  const designs = getAvailableDesigns();
+  const designObj = designs.find(d => d.code === appState.selectedDesignCode) || { code: appState.selectedDesignCode, name: appState.selectedDesignCode };
   const priceInfo = calculateCurrentItemPrice();
   const qty = parseInt(DOM.inputQuantity.value, 10) || 1;
 
@@ -545,8 +594,9 @@ function addItemToCart() {
     hasSheets: categoryData.hasSheets,
     sheetCount: categoryData.hasSheets ? appState.selectedSheetCount : null,
     designCode: designObj.code,
-    designName: designObj.name,
-    mockupImg: generateMockupSvgDataUrl(designObj.code, designObj.name, appState.currentCategory),
+    designName: designObj.name || designObj.code,
+    imagePath: `images/${designObj.code}.png`,
+    mockupImgSvg: generateMockupSvgDataUrl(designObj.code, designObj.name || designObj.code, appState.currentCategory),
     isCustomized: appState.isCustomized,
     customText: appState.isCustomized ? DOM.inputCustomText.value.trim() : '',
     isTba: priceInfo.isTba,
@@ -622,12 +672,12 @@ function renderCart() {
     itemCard.innerHTML = `
       <div class="cart-item-main">
         <div class="cart-item-thumb-wrapper">
-          <img src="${item.mockupImg}" alt="${item.designCode}">
+          <img src="images/${item.designCode}.png" alt="${item.designCode}" onerror="this.onerror=null; this.src='${item.mockupImgSvg}';">
         </div>
         <div class="cart-item-details">
           <div class="cart-item-title">${item.sizeName}</div>
           <div class="cart-item-spec-line">${specDetails}</div>
-          <div class="cart-item-design-badge">Design: ${item.designCode} (${item.designName})</div>
+          <div class="cart-item-design-badge">Design: ${item.designCode}</div>
           ${customDetailsBadge}
         </div>
       </div>
@@ -662,7 +712,7 @@ function renderCart() {
 window.removeCartItem = removeCartItem;
 
 // ============================================================================
-// 9. Customer Form Validation & Sync
+// 10. Customer Form Validation & Sync
 // ============================================================================
 
 function syncCustomerSummaryDisplay() {
@@ -725,7 +775,7 @@ function attachValidationClearListeners() {
 }
 
 // ============================================================================
-// 10. Job Order Slip Generation & Modal Dialog
+// 11. Job Order Slip Generation & Modal Dialog
 // ============================================================================
 
 function generateReferenceNumber() {
@@ -837,7 +887,7 @@ function startNewOrder() {
 }
 
 // ============================================================================
-// 11. Toast Notifications Utility
+// 12. Toast Notifications Utility
 // ============================================================================
 
 function showToast(message) {
@@ -854,7 +904,7 @@ function showToast(message) {
 }
 
 // ============================================================================
-// 12. Event Listeners & Initialization
+// 13. Event Listeners & Initialization
 // ============================================================================
 
 function initEventListeners() {

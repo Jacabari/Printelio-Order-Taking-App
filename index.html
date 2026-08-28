@@ -1,1 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Printelio - Custom Stationery Order Request</title>
+  <meta name="description" content="Mobile-responsive custom stationery order-taking web application for Printelio with dynamic design code mockups, dynamic pricing, and job order generation.">
+  <meta property="og:title" content="Printelio - Custom Stationery Order Request">
+  <meta property="og:description" content="Mobile-responsive custom stationery order-taking web application for Printelio with dynamic design code mockups, dynamic pricing, and job order generation.">
+  
+  <!-- Google Fonts: Playfair Display (Italic for *Printelio*) & Raleway (Clean sans-serif for all other UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700;1,800&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <div class="app-container" id="appRoot">
+    <!-- Header -->
+    <header class="site-header" id="siteHeader">
+      <div class="header-brand-container" id="headerBrandContainer">
+        <h1 class="brand-title-main" id="mainBrandTitle">
+          <span class="brand-name-word">Printelio</span>
+        </h1>
+        <p class="brand-subtitle-main" id="mainBrandSubtitle">Order request form</p>
+      </div>
+    </header>
+
+    <!-- Main Order Workflow Grid -->
+    <main class="order-workflow-grid" id="orderWorkflow">
+      
+      <!-- Left Column: Customer Details + Product Configuration Form -->
+      <div class="workflow-column" id="leftWorkflowCol">
+        
+        <!-- Step 1: Customer & Order Details -->
+        <section class="card" id="customerDetailsCard">
+          <div class="card-header" id="customerCardHeader">
+            <div class="card-title-group">
+              <div class="step-indicator" id="step1Indicator">1</div>
+              <div>
+                <h2 class="card-title" id="customerCardTitle">Customer &amp; Order Details</h2>
+                <p class="card-subtitle">Required information for order processing and delivery</p>
+              </div>
+            </div>
+          </div>
+
+          <form id="customerForm" class="form-grid two-col" novalidate>
+            <!-- Full Name -->
+            <div class="form-group" id="groupFullName">
+              <label for="inputFullName" class="form-label">
+                Full Name <span class="required-star">*</span>
+              </label>
+              <input type="text" id="inputFullName" class="form-control" placeholder="e.g. Maria Clara Santos" required autocomplete="name">
+              <span class="form-error-msg" id="errorFullName">Please enter your full name.</span>
+            </div>
+
+            <!-- Contact Number -->
+            <div class="form-group" id="groupContactNumber">
+              <label for="inputContactNumber" class="form-label">
+                Contact Number <span class="required-star">*</span>
+              </label>
+              <input type="tel" id="inputContactNumber" class="form-control" placeholder="e.g. 0917 123 4567" required autocomplete="tel">
+              <span class="form-error-msg" id="errorContactNumber">Please provide a valid contact number.</span>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group" id="groupEmail">
+              <label for="inputEmail" class="form-label">
+                Email Address <span class="required-star">*</span>
+              </label>
+              <input type="email" id="inputEmail" class="form-control" placeholder="e.g. maria@example.com" required autocomplete="email">
+              <span class="form-error-msg" id="errorEmail">Please enter a valid email address.</span>
+            </div>
+
+            <!-- Facebook / Instagram Username -->
+            <div class="form-group" id="groupSocialHandle">
+              <label for="inputSocialHandle" class="form-label">
+                Facebook / Instagram Username <span class="required-star">*</span>
+              </label>
+              <input type="text" id="inputSocialHandle" class="form-control" placeholder="e.g. @mariaclara.stationery" required>
+              <span class="form-error-msg" id="errorSocialHandle">Social username is required for verification.</span>
+            </div>
+
+            <!-- Shipping / Delivery Address -->
+            <div class="form-group grid-full" id="groupAddress">
+              <label for="inputAddress" class="form-label">
+                Shipping / Delivery Address <span class="required-star">*</span>
+              </label>
+              <textarea id="inputAddress" class="form-control" rows="2" placeholder="House/Unit No., Street, Barangay, City/Municipality, Province, Postal Code" required></textarea>
+              <span class="form-error-msg" id="errorAddress">Complete delivery address is required.</span>
+            </div>
+
+            <!-- Target Date Needed -->
+            <div class="form-group" id="groupTargetDate">
+              <label for="inputTargetDate" class="form-label">
+                Target Date Needed <span class="required-star">*</span>
+              </label>
+              <input type="date" id="inputTargetDate" class="form-control" required>
+              <span class="form-error-msg" id="errorTargetDate">Please select target delivery date.</span>
+            </div>
+
+            <!-- Courier Option -->
+            <div class="form-group" id="groupCourier">
+              <label for="selectCourier" class="form-label">
+                Courier Option <span class="required-star">*</span>
+              </label>
+              <select id="selectCourier" class="form-control" required>
+                <option value="" disabled selected>Select Courier</option>
+                <option value="J&T">J&amp;T Express (Nationwide Shipping)</option>
+                <option value="Lalamove">Lalamove (Metro Manila / Same Day)</option>
+              </select>
+              <span class="form-error-msg" id="errorCourier">Please select your preferred courier.</span>
+            </div>
+
+            <!-- Mode of Payment -->
+            <div class="form-group grid-full" id="groupPayment">
+              <label for="selectPayment" class="form-label">
+                Mode of Payment <span class="required-star">*</span>
+              </label>
+              <select id="selectPayment" class="form-control" required>
+                <option value="" disabled selected>Select Payment Method</option>
+                <option value="GCash">GCash</option>
+                <option value="Bank Transfer">Bank Transfer (BDO / BPI / UnionBank)</option>
+              </select>
+              <span class="form-error-msg" id="errorPayment">Please select your payment method.</span>
+              
+              <!-- Payment Details Privacy Note -->
+              <div class="payment-privacy-note" id="paymentPrivacyNote">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>Payment details will be shared separately and privately.</span>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- Step 2: Product & Design Selection -->
+        <section class="card" id="productSelectionCard">
+          <div class="card-header" id="productCardHeader">
+            <div class="card-title-group">
+              <div class="step-indicator" id="step2Indicator">2</div>
+              <div>
+                <h2 class="card-title" id="productCardTitle">Product &amp; Design Selection</h2>
+                <p class="card-subtitle">Choose stationery category, size format, motif, and personalization</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Category Tabs: Notepads, Notecards, Money Envelopes -->
+          <div class="category-tabs" id="categoryTabs" role="tablist">
+            <button type="button" class="tab-btn active" id="tabNotepads" data-category="notepads" role="tab" aria-selected="true">
+              Notepads
+            </button>
+            <button type="button" class="tab-btn" id="tabNotecards" data-category="notecards" role="tab" aria-selected="false">
+              Notecards
+            </button>
+            <button type="button" class="tab-btn" id="tabEnvelopes" data-category="envelopes" role="tab" aria-selected="false">
+              Money Envelopes
+            </button>
+          </div>
+
+          <!-- Dynamic Options Section -->
+          <div id="productOptionsDynamic">
+            
+            <!-- Category Specific Size / Type Selection (Clean UI - NO PRICES IN LABELS) -->
+            <div class="options-group" id="sizeOptionsContainer">
+              <div class="options-group-title">
+                <span>Select Size Format</span>
+                <span class="form-hint" id="categoryBadge">Notepads</span>
+              </div>
+              <div class="cards-grid three-col" id="sizeCardsGrid">
+                <!-- Dynamically populated without prices in labels -->
+              </div>
+            </div>
+
+            <!-- Sheet Count Option (Only for Notepads - Clean UI: NO PRICES IN LABELS) -->
+            <div class="options-group" id="sheetCountGroup">
+              <div class="options-group-title">
+                <span>Sheet Count</span>
+                <span class="form-hint">Select pad thickness</span>
+              </div>
+              <div class="sheets-toggle-container" id="sheetsContainer">
+                <label class="sheet-pill-label" id="sheetPill30Label">
+                  <input type="radio" name="sheetCount" value="30" class="sheet-pill-input" id="radioSheet30" checked>
+                  <div class="sheet-pill-content">30 sheets</div>
+                </label>
+                <label class="sheet-pill-label" id="sheetPill50Label">
+                  <input type="radio" name="sheetCount" value="50" class="sheet-pill-input" id="radioSheet50">
+                  <div class="sheet-pill-content">50 sheets</div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Design Selection & Live Mockup Preview Box -->
+            <div class="design-selection-card" id="designSelectionBox">
+              <div class="form-label" id="designLabel">
+                Design Motif Code <span class="required-star">*</span>
+              </div>
+
+              <div class="design-preview-layout" id="designPreviewLayout">
+                <!-- Left: Dropdown Selection -->
+                <div class="form-group" id="designDropdownGroup">
+                  <label for="selectDesignCode" class="form-hint" id="designSelectHint">Choose a curated template code:</label>
+                  <select id="selectDesignCode" class="form-control">
+                    <!-- Populated dynamically via JS based on product category -->
+                  </select>
+                  <div class="form-hint" id="designDescriptionText" style="margin-top: 8px;">
+                    Minimalist luxury border with subtle botanical filigree.
+                  </div>
+                </div>
+
+                <!-- Right: Mockup Image Container loading images/{selectedCode}.jpg -->
+                <div class="mockup-preview-container" id="mockupPreviewWrapper">
+                  <img id="mockupPreviewImg" class="mockup-preview-img" src="" alt="Design Mockup Preview" onerror="window.handleImageError(this)">
+                  <!-- Fallback Visual Canvas if Image is Missing -->
+                  <div class="mockup-placeholder-canvas" id="mockupCanvasFallback" style="display: none;">
+                    <span class="canvas-badge" id="canvasBadgeCode">NP-001</span>
+                    <span class="canvas-meta" id="canvasMetaTitle">Botanical Monogram</span>
+                    <div class="canvas-brand-watermark"><span class="brand-name-word">Printelio</span> Studio</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customization Checkbox (+₱10) & Single Text Input -->
+            <div class="customization-box" id="customizationContainer">
+              <label class="customization-toggle-label" id="customizationToggleLabel">
+                <input type="checkbox" id="checkCustomization" class="custom-checkbox">
+                <div class="custom-toggle-text">
+                  <div class="custom-toggle-title">
+                    <span>Add Text Customization (e.g., Name/Monogram)</span>
+                    <span class="custom-price-badge">+₱10.00 / item</span>
+                  </div>
+                  <p class="custom-toggle-desc">Personalize with recipient name, initials, or family monogram</p>
+                </div>
+              </label>
+
+              <!-- Single Custom Text Input Field (No font dropdown or notes) -->
+              <div class="custom-inputs-collapse" id="customInputsCollapse">
+                <div class="form-group" id="groupCustomText">
+                  <label for="inputCustomText" class="form-label">Custom Name / Text to Print <span class="required-star">*</span></label>
+                  <input type="text" id="inputCustomText" class="form-control" placeholder="e.g. Maria Clara / M.C.">
+                </div>
+              </div>
+            </div>
+
+            <!-- Unit Price Display & Add to Order Bar -->
+            <div class="item-action-bar" id="itemActionBar">
+              <div class="current-pricing-preview" id="currentPricingPreview">
+                <span class="price-preview-label">Unit Price:</span>
+                <div class="price-preview-value" id="currentUnitPrice">₱29.00</div>
+                <div class="price-preview-breakdown" id="currentPriceBreakdown">Base ₱29.00 (30 sheets)</div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <!-- Quantity Stepper -->
+                <div class="qty-stepper-wrapper" id="qtyStepperWrapper">
+                  <button type="button" class="stepper-btn" id="btnQtyMinus" aria-label="Decrease quantity">-</button>
+                  <input type="number" id="inputQuantity" class="qty-input" value="1" min="1" max="500" aria-label="Item quantity">
+                  <button type="button" class="stepper-btn" id="btnQtyPlus" aria-label="Increase quantity">+</button>
+                </div>
+
+                <!-- Add Item Button -->
+                <button type="button" class="btn btn-primary" id="btnAddToCart">
+                  + Add Item to Order
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Order Summary & Job Order Submission -->
+      <div class="workflow-column" id="rightWorkflowCol">
+        
+        <section class="card" id="orderSummaryCard">
+          <div class="card-header" id="summaryCardHeader">
+            <div class="card-title-group">
+              <div class="step-indicator" id="step3Indicator">3</div>
+              <div>
+                <h2 class="card-title" id="summaryCardTitle">Order Summary</h2>
+                <p class="card-subtitle">Review selected stationery before submitting job order</p>
+              </div>
+            </div>
+            <div class="cart-header-actions" id="cartHeaderActions">
+              <span class="cart-items-count-badge" id="cartCountBadge">0 Items</span>
+            </div>
+          </div>
+
+          <!-- Empty Cart Notice -->
+          <div class="empty-cart-state" id="emptyCartState">
+            <div class="empty-cart-title">Your Order is Empty</div>
+            <p class="empty-cart-text">Select your preferred stationery specs on the left and click "Add Item to Order".</p>
+          </div>
+
+          <!-- Itemized Table / Cards Container -->
+          <div class="cart-items-container" id="cartItemsList" style="display: none;">
+            <!-- Rendered by JavaScript -->
+          </div>
+
+          <!-- Calculated Total Display & Prominent Shipping Disclaimer -->
+          <div class="order-totals-card" id="orderTotalsCard">
+            <div class="totals-row" id="subtotalRow">
+              <span>Fixed Priced Items:</span>
+              <span id="summarySubtotalAmount">₱0.00</span>
+            </div>
+            <div class="totals-row" id="tbaItemsCountRow">
+              <span>Custom Quote Items (TBA):</span>
+              <span id="summaryTbaCount">0 items</span>
+            </div>
+            <div class="totals-row" id="shippingMethodRow">
+              <span>Selected Courier:</span>
+              <span id="summaryCourierDisplay" style="color: var(--brand-cyan);">Not Selected</span>
+            </div>
+            <div class="totals-row" id="paymentMethodRow">
+              <span>Payment Mode:</span>
+              <span id="summaryPaymentDisplay" style="color: var(--brand-yellow);">Not Selected</span>
+            </div>
+            
+            <div class="totals-row grand-total-row" id="grandTotalRow">
+              <span>Calculated Grand Total:</span>
+              <span class="grand-total-amount" id="summaryGrandTotal">₱0.00</span>
+            </div>
+
+            <!-- Mandatory Prominent Shipping Fee Disclaimer -->
+            <div class="shipping-disclaimer-banner" id="shippingDisclaimerBanner">
+              ⚠️ Note: Shipping fee is not yet included.
+            </div>
+
+            <div class="tba-note-banner" id="tbaNoticeBanner" style="display: none;">
+              * Items marked TBA (Notecards &amp; Money Envelopes) are custom-quoted based on cardstock &amp; foil specifications.
+            </div>
+          </div>
+
+          <!-- Submit Job Order Button -->
+          <button type="button" class="btn btn-primary btn-large" id="btnSubmitOrder">
+            Submit Job Order
+          </button>
+
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Job Order Confirmation Slip Modal -->
+  <div class="modal-backdrop" id="jobOrderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog" id="jobOrderDialog">
+      <div class="modal-header" id="modalHeader">
+        <div>
+          <div class="brand-header-banner" style="padding: 2px 14px; margin-bottom: 4px; box-shadow: none; border-color: rgba(203,108,230,0.5);">
+            <span class="brand-name-word" style="font-size: 1.1rem;">Printelio</span>
+          </div>
+          <h2 class="card-title" id="modalTitle" style="color: #ffffff; font-size: 1.15rem; margin-top: 2px;">Job Order Request Slip</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnCloseModal" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="job-order-slip-body" id="printableJobOrderSlip">
+        
+        <!-- Job Order Header & Ref No -->
+        <div class="job-order-header-box" id="joHeaderBox">
+          <div>
+            <span class="jo-ref-num" id="joReferenceNumber">PRNT-2026-0001</span>
+            <div>
+              <span class="jo-meta-badge" id="joDateGenerated">Generated on August 28, 2026</span>
+              <span class="jo-meta-badge" style="background: rgba(61, 255, 255, 0.15); color: #007c7c; border-color: rgba(61, 255, 255, 0.4);" id="joStatusBadge">Status: Job Order Received</span>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-weight: 800; font-size: 1.1rem; color: var(--brand-black);">
+              <span class="brand-name-word" style="color: var(--brand-black) !important; -webkit-text-fill-color: var(--brand-black) !important; font-size: 1.25rem;">Printelio</span> Studio
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Custom Stationery &amp; Luxury Printworks</div>
+          </div>
+        </div>
+
+        <!-- Customer Summary Details -->
+        <div class="customer-info-grid" id="joCustomerInfoGrid">
+          <div class="info-item">
+            <div class="info-item-label">Customer Name</div>
+            <div class="info-item-value" id="joCustomerName">-</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Contact Number</div>
+            <div class="info-item-value" id="joCustomerContact">-</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Email Address</div>
+            <div class="info-item-value" id="joCustomerEmail">-</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Social Username</div>
+            <div class="info-item-value" id="joCustomerSocial">-</div>
+          </div>
+          <div class="info-item" style="grid-column: 1 / -1;">
+            <div class="info-item-label">Delivery Address</div>
+            <div class="info-item-value" id="joCustomerAddress">-</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Target Date Needed</div>
+            <div class="info-item-value" id="joTargetDate">-</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Courier</div>
+            <div class="info-item-value" id="joCourier">-</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Payment Method</div>
+            <div class="info-item-value" id="joPayment">-</div>
+          </div>
+        </div>
+
+        <!-- Order Items Table -->
+        <div class="jo-table-wrapper" id="joTableWrapper">
+          <table class="jo-table" id="joTable">
+            <thead>
+              <tr>
+                <th>Item &amp; Specifications</th>
+                <th>Design Code</th>
+                <th>Customization</th>
+                <th style="text-align: center;">Qty</th>
+                <th style="text-align: right;">Unit Price</th>
+                <th style="text-align: right;">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="joTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="5" style="text-align: right; font-weight: 800; text-transform: uppercase;">Calculated Grand Total:</td>
+                <td id="joModalGrandTotal" style="text-align: right; font-weight: 800; font-size: 1.15rem; color: var(--brand-black);">₱0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="shipping-disclaimer-banner" style="background: #fff8e1; color: #7a5800; border-color: #ffd54f;">
+          ⚠️ Note: Shipping fee is not yet included in this total.
+        </div>
+
+        <!-- Payment Instructions Guidelines -->
+        <div class="payment-guidelines-box" id="paymentGuidelinesBox">
+          <div class="payment-guidelines-title">Payment &amp; Processing Notice</div>
+          <div class="payment-details-list" id="paymentInstructionsText">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer" id="modalFooter">
+        <button type="button" class="btn btn-outline" id="btnPrintSlip">
+          🖨️ Print / Save Job Order Slip
+        </button>
+        <button type="button" class="btn btn-primary" id="btnDoneOrder">
+          Finish &amp; Start New Order
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

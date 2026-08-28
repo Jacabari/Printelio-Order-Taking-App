@@ -207,20 +207,20 @@
                 <div class="form-group" id="designDropdownGroup">
                   <label for="selectDesignCode" class="form-hint" id="designSelectHint">Choose a curated template code:</label>
                   <select id="selectDesignCode" class="form-control">
-                    <!-- Populated dynamically via JS based on product category -->
+                    <option value="">-- Select Design Code --</option>
                   </select>
                   <div class="form-hint" id="designDescriptionText" style="margin-top: 8px;">
-                    Minimalist luxury border with subtle botanical filigree.
+                    Please select a design code to preview.
                   </div>
                 </div>
 
-                <!-- Right: Mockup Image Container loading images/{selectedCode}.jpg -->
+                <!-- Right: Mockup Image Container loading images/{selectedCode}.png -->
                 <div class="mockup-preview-container" id="mockupPreviewWrapper">
-                  <img id="mockupPreviewImg" class="mockup-preview-img" src="" alt="Design Mockup Preview" onerror="window.handleImageError(this)">
-                  <!-- Fallback Visual Canvas if Image is Missing -->
-                  <div class="mockup-placeholder-canvas" id="mockupCanvasFallback" style="display: none;">
-                    <span class="canvas-badge" id="canvasBadgeCode">NP-001</span>
-                    <span class="canvas-meta" id="canvasMetaTitle">Botanical Monogram</span>
+                  <img id="designMockupImg" class="mockup-preview-img" src="" alt="Select a design code to view preview">
+                  <!-- Fallback Visual Canvas if Image is Missing or Unselected -->
+                  <div class="mockup-placeholder-canvas" id="mockupCanvasFallback">
+                    <span class="canvas-badge" id="canvasBadgeCode">-- Select Design --</span>
+                    <span class="canvas-meta" id="canvasMetaTitle">Choose a motif code to view preview</span>
                     <div class="canvas-brand-watermark"><span class="brand-name-word">Printelio</span> Studio</div>
                   </div>
                 </div>

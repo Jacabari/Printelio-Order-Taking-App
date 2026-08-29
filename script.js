@@ -1,28 +1,14 @@
 /**
  * Printelio - Custom Stationery Order Request Application
- * Integration: EmailJS Transmission, html2canvas Job Order Image Generation,
+ * Integration: Google Sheets Transmission, html2canvas Job Order Image Generation,
  * Dynamic Design Code Filtering, Mockup Preview, Dynamic Pricing & Cart Management.
  */
 
 // ============================================================================
-// 0. EmailJS Configuration & Initialization
+// 0. Google Sheets Web App Endpoint Configuration
 // ============================================================================
 
-const EMAILJS_CONFIG = {
-  PUBLIC_KEY: 'atxJrY8b6d4jJp_rp',
-  SERVICE_ID: 'service_f3btwvd',
-  TEMPLATE_ID: 'template_f80esgo',
-  TARGET_EMAIL: 'printelio22@gmail.com'
-};
-
-// Initialize EmailJS library safely
-if (typeof window !== 'undefined' && typeof window.emailjs !== 'undefined') {
-  try {
-    window.emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-  } catch (err) {
-    console.warn('EmailJS initialization warning:', err);
-  }
-}
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
 // ============================================================================
 // 1. Data Models & Constants
@@ -179,7 +165,7 @@ const DOM = {
   btnQtyPlus: document.getElementById('btnQtyPlus'),
   btnAddToCart: document.getElementById('btnAddToCart'),
   
-  // Customer Form (Removed Email & Target Date)
+  // Customer Form
   customerDetailsCard: document.getElementById('customerDetailsCard'),
   customerForm: document.getElementById('customerForm'),
   inputFullName: document.getElementById('inputFullName'),
@@ -225,9 +211,6 @@ const DOM = {
 // 4. Dynamic Design Code Dropdown Population & Image Preview
 // ============================================================================
 
-/**
- * Returns available design choices based on current category and selected size.
- */
 function getDesignCodesForCurrentSelection() {
   const categoryData = PRODUCTS_DATA[appState.currentCategory];
   if (!categoryData) return [];
@@ -244,9 +227,6 @@ function getDesignCodesForCurrentSelection() {
   return [];
 }
 
-/**
- * Populates the Design Motif Code dropdown.
- */
 function populateDesignDropdown() {
   const designCodes = getDesignCodesForCurrentSelection();
   
@@ -274,10 +254,6 @@ function populateDesignDropdown() {
   updatePreviewImage();
 }
 
-/**
- * Updates the mockup preview image based on selected design code.
- * Directly modifies the standard <img> tag and uses encodeURIComponent.
- */
 function updatePreviewImage() {
   const selectedCode = appState.selectedDesignCode;
 
@@ -610,7 +586,7 @@ function renderCart() {
 window.removeCartItem = removeCartItem;
 
 // ============================================================================
-// 8. Customer Form Validation & Sync (Streamlined)
+// 8. Customer Form Validation & Sync
 // ============================================================================
 
 function syncCustomerSummaryDisplay() {
@@ -673,7 +649,7 @@ function attachValidationClearListeners() {
 }
 
 // ============================================================================
-// 9. Job Order Slip Generation, Image Download & EmailJS Submission
+// 9. Job Order Slip Generation & Google Sheets Submission
 // ============================================================================
 
 function generateReferenceNumber() {
@@ -682,9 +658,6 @@ function generateReferenceNumber() {
   return `PRNT-${currentYear}-${randomNum}`;
 }
 
-/**
- * Builds the UI for Job Order Slip Modal and populates line items.
- */
 function buildJobOrderSlip(refNo) {
   const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
   DOM.joReferenceNumber.textContent = refNo;
@@ -739,9 +712,6 @@ function buildJobOrderSlip(refNo) {
   return grandTotalNumeric;
 }
 
-/**
- * Converts Job Order Slip into a Canvas using html2canvas.
- */
 async function renderJobOrderSlipCanvas() {
   const slipElement = DOM.printableJobOrderSlip || document.getElementById('printableJobOrderSlip');
   if (!slipElement || typeof window.html2canvas === 'undefined') {
@@ -756,9 +726,6 @@ async function renderJobOrderSlipCanvas() {
   });
 }
 
-/**
- * Downloads the Job Order Slip as a PNG image file.
- */
 async function downloadJobOrderAsImage() {
   if (typeof window.html2canvas === 'undefined') {
     showToast('Image generator is loading. Please try again in a moment.');
@@ -798,14 +765,6 @@ async function downloadJobOrderAsImage() {
   }
 }
 
-/**
- * Handles Job Order Submission:
- * 1. Validates inputs and cart.
- * 2. Builds modal preview.
- * 3. Uses html2canvas to create image data URL.
- * 4. Transmits email via EmailJS with full order details to printelio22@gmail.com.
- * 5. Shows success notification and displays the Job Order Slip.
- */
 async function submitJobOrder() {
   if (appState.cart.length === 0) {
     showToast('Your order is empty. Please add items before submitting.');
@@ -836,68 +795,51 @@ async function submitJobOrder() {
   // Show the modal slip to user immediately
   DOM.jobOrderModal.classList.add('active');
 
-  // Submit button visual feedback
   const originalSubmitText = DOM.btnSubmitOrder ? DOM.btnSubmitOrder.innerHTML : '';
   if (DOM.btnSubmitOrder) {
     DOM.btnSubmitOrder.disabled = true;
-    DOM.btnSubmitOrder.innerHTML = '<span>⏳ Submitting &amp; Sending...</span>';
+    DOM.btnSubmitOrder.innerHTML = '<span>⏳ Submitting Order...</span>';
   }
 
   try {
-    // 1. Generate base64 image of the order slip via html2canvas
-    let slipImageBase64 = '';
-    try {
-      const canvas = await renderJobOrderSlipCanvas();
-      if (canvas) {
-        slipImageBase64 = canvas.toDataURL('image/jpeg', 0.85);
-      }
-    } catch (canvasErr) {
-      console.warn('Slip image canvas generation warning:', canvasErr);
-    }
-
-    // 2. Format plain-text itemized summary for email
+    // 1. Format plain-text itemized summary for sheet
     const itemizedSummaryText = appState.cart.map((item, idx) => {
       const customStr = item.isCustomized ? ` [Custom: "${item.customText}"]` : '';
       const sheetStr = item.hasSheets ? ` (${item.sheetCount} sheets)` : '';
       const priceStr = item.isTba ? 'TBA' : `₱${item.subtotal.toFixed(2)}`;
       return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${sheetStr}${customStr} | Qty: ${item.quantity} | ${priceStr}`;
-    }).join('\n');
+    }).join('; ');
 
-    // 3. Prepare EmailJS template parameters
-    const emailParams = {
-      to_email: EMAILJS_CONFIG.TARGET_EMAIL,
-      to_name: 'Printelio Orders',
-      from_name: appState.customer.fullName,
-      customer_name: appState.customer.fullName,
-      contact_number: appState.customer.contactNumber,
-      social_handle: appState.customer.socialHandle,
+    // 2. Extract selected design motifs
+    const uniqueDesignMotifs = [...new Set(appState.cart.map(item => item.designCode))].join(', ');
+
+    // 3. Prepare Google Sheets Payload
+    const sheetPayload = {
+      fullName: appState.customer.fullName,
+      contactNumber: appState.customer.contactNumber,
+      socialHandle: appState.customer.socialHandle,
       courier: appState.customer.courier,
-      delivery_address: appState.customer.address,
-      payment_method: appState.customer.payment,
-      order_reference: refNo,
-      order_date: new Date().toLocaleString(),
-      total_price: `₱${grandTotal.toFixed(2)}`,
-      grand_total: `₱${grandTotal.toFixed(2)}`,
-      itemized_orders: itemizedSummaryText,
-      order_image: slipImageBase64 || 'Rendered in Job Order Slip',
-      message: `New Order Received from ${appState.customer.fullName} (${appState.customer.contactNumber}). Total: ₱${grandTotal.toFixed(2)}.`
+      address: appState.customer.address,
+      paymentMethod: appState.customer.payment,
+      designMotif: uniqueDesignMotifs,
+      orderItems: itemizedSummaryText,
+      totalPrice: `₱${grandTotal.toFixed(2)}`
     };
 
-    // 4. Send email via EmailJS
-    if (typeof window.emailjs !== 'undefined') {
-      await window.emailjs.send(
-        EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID,
-        emailParams,
-        EMAILJS_CONFIG.PUBLIC_KEY
-      );
-      showToast(`🎉 Order ${refNo} sent successfully to Printelio!`);
-    } else {
-      showToast(`Job Order ${refNo} created! (Email service connecting)`);
-    }
+    // 4. Send directly to Google Sheets Web App
+    await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sheetPayload)
+    });
 
-  } catch (emailError) {
-    console.error('EmailJS submission notice:', emailError);
+    showToast(`🎉 Order ${refNo} logged successfully in Google Sheets!`);
+
+  } catch (sheetError) {
+    console.error('Google Sheets submission error:', sheetError);
     showToast(`Job Order ${refNo} generated! Please download or screenshot your slip.`);
   } finally {
     if (DOM.btnSubmitOrder) {
@@ -942,12 +884,10 @@ function showToast(message) {
 // ============================================================================
 
 function initEventListeners() {
-  // Category tabs
   DOM.tabNotepads.addEventListener('click', () => switchCategory('notepads'));
   DOM.tabNotecards.addEventListener('click', () => switchCategory('notecards'));
   DOM.tabEnvelopes.addEventListener('click', () => switchCategory('envelopes'));
 
-  // Sheet count radio buttons
   DOM.radioSheet30.addEventListener('change', () => {
     appState.selectedSheetCount = '30';
     updatePricePreview();
@@ -957,13 +897,11 @@ function initEventListeners() {
     updatePricePreview();
   });
 
-  // Design Dropdown Change
   DOM.selectDesignCode.addEventListener('change', (e) => {
     appState.selectedDesignCode = e.target.value;
     updatePreviewImage();
   });
 
-  // Customization Checkbox (+₱10)
   DOM.checkCustomization.addEventListener('change', (e) => {
     appState.isCustomized = e.target.checked;
     DOM.customizationContainer.classList.toggle('active', appState.isCustomized);
@@ -971,7 +909,6 @@ function initEventListeners() {
     updatePricePreview();
   });
 
-  // Quantity Stepper
   DOM.btnQtyMinus.addEventListener('click', () => {
     let current = parseInt(DOM.inputQuantity.value, 10) || 1;
     if (current > 1) {
@@ -984,31 +921,24 @@ function initEventListeners() {
     DOM.inputQuantity.value = current + 1;
   });
 
-  // Add Item to Order Button
   DOM.btnAddToCart.addEventListener('click', addItemToCart);
-
-  // Submit Job Order Button
   DOM.btnSubmitOrder.addEventListener('click', submitJobOrder);
 
-  // Modal Controls
   DOM.btnCloseModal.addEventListener('click', closeModal);
   DOM.btnDoneOrder.addEventListener('click', startNewOrder);
   if (DOM.btnDownloadImage) {
     DOM.btnDownloadImage.addEventListener('click', downloadJobOrderAsImage);
   }
 
-  // Close modal when clicking outside dialog
   DOM.jobOrderModal.addEventListener('click', (e) => {
     if (e.target === DOM.jobOrderModal) {
       closeModal();
     }
   });
 
-  // Form input validation feedback
   attachValidationClearListeners();
 }
 
-// Initial Bootstrapping
 document.addEventListener('DOMContentLoaded', () => {
   switchCategory('notepads');
   renderCart();

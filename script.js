@@ -42,7 +42,25 @@ const PRODUCTS_DATA = {
         shortName: 'Square Notepad',
         dimensions: '3 × 3 in',
         prices: { '30': 29, '50': 39 },
-        designs: ['NP-SQ01', 'NP-SQ02', 'NP-SQ03', 'NP-SQ04']
+        designs: [
+          'NP_SQ_CAT01',
+          'NP_SQ_CAT02',
+          'NP_SQ_CAT03',
+          'NP_SQ_CAT04',
+          'NP_SQ_CAT05',
+          'NP_SQ_CAT06',
+          'NP_SQ_MEMO',
+          'NP_SQ_MS_Blue',
+          'NP_SQ_MS_Pink',
+          'NP_SQ_MS_Purple',
+          'NP_SQ_NOTES1',
+          'NP_SQ_NOTES2',
+          'NP_SQ01',
+          'NP_SQ02',
+          'NP_SQ03',
+          'NP_SQ04',
+          'NP_SQ05'
+        ]
       },
       {
         id: 'np-a6',

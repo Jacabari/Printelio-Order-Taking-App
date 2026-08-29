@@ -713,6 +713,8 @@ async function downloadJobOrderAsPdf() {
     downloadBtn.disabled = true;
   }
 
+  let offscreenContainer = null;
+
   try {
     const slipElement = DOM.printableJobOrderSlip || document.getElementById('printableJobOrderSlip');
     if (!slipElement) {
@@ -723,23 +725,51 @@ async function downloadJobOrderAsPdf() {
       throw new Error('html2canvas library is not loaded');
     }
 
-    // Capture using html2canvas with high scale for crisp print quality
-    const canvas = await window.html2canvas(slipElement, {
+    const jsPdfLib = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+    if (!jsPdfLib) {
+      throw new Error('jsPDF library is not loaded');
+    }
+
+    // Create an offscreen wrapper with fixed desktop A4 dimensions to bypass mobile viewport constraints
+    offscreenContainer = document.createElement('div');
+    offscreenContainer.id = 'pdf-render-container';
+    offscreenContainer.style.position = 'fixed';
+    offscreenContainer.style.left = '-9999px';
+    offscreenContainer.style.top = '0';
+    offscreenContainer.style.width = '780px';
+    offscreenContainer.style.minWidth = '780px';
+    offscreenContainer.style.maxWidth = '780px';
+    offscreenContainer.style.zIndex = '-9999';
+    offscreenContainer.style.background = '#ffffff';
+    offscreenContainer.style.opacity = '1';
+    offscreenContainer.style.pointerEvents = 'none';
+
+    // Clone the slip element and enforce desktop styling
+    const clone = slipElement.cloneNode(true);
+    clone.classList.add('pdf-render-mode');
+    clone.style.width = '780px';
+    clone.style.minWidth = '780px';
+    clone.style.maxWidth = '780px';
+    clone.style.padding = '28px';
+    clone.style.boxSizing = 'border-box';
+    clone.style.background = '#ffffff';
+    
+    offscreenContainer.appendChild(clone);
+    document.body.appendChild(offscreenContainer);
+
+    // Capture offscreen desktop layout using html2canvas
+    const canvas = await window.html2canvas(clone, {
       scale: 2,
       useCORS: true,
       logging: false,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      width: 780,
+      windowWidth: 1024
     });
 
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
     const refNo = (DOM.joReferenceNumber ? DOM.joReferenceNumber.textContent.trim() : '') || 'JobOrder';
     const fileName = `Printelio_Job_Order_${refNo}.pdf`;
-
-    // Initialize jsPDF (A4 Portrait format)
-    const jsPdfLib = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
-    if (!jsPdfLib) {
-      throw new Error('jsPDF library is not loaded');
-    }
 
     const pdf = new jsPdfLib({
       orientation: 'portrait',
@@ -750,7 +780,7 @@ async function downloadJobOrderAsPdf() {
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
     
-    // Fit canvas aspect ratio to page width with 8mm margins
+    // Fit canvas aspect ratio to A4 page width with 8mm margins
     const margin = 8;
     const contentWidth = pdfWidth - (margin * 2);
     const contentHeight = (canvas.height * contentWidth) / canvas.width;
@@ -780,6 +810,9 @@ async function downloadJobOrderAsPdf() {
     console.error('Error generating PDF:', err);
     showToast('Could not save PDF automatically. Please screenshot your order slip.');
   } finally {
+    if (offscreenContainer && document.body.contains(offscreenContainer)) {
+      document.body.removeChild(offscreenContainer);
+    }
     if (downloadBtn) {
       downloadBtn.innerHTML = originalBtnText;
       downloadBtn.disabled = false;

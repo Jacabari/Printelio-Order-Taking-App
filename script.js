@@ -1,6 +1,6 @@
 /**
  * Printelio - Custom Stationery Order Request Application
- * Integration: Google Sheets Transmission, html2canvas Job Order Image Generation,
+ * Integration: Google Sheets Transmission, jsPDF + html2canvas PDF Generation,
  * Dynamic Design Code Filtering, Mockup Preview, Dynamic Pricing & Cart Management.
  */
 
@@ -180,18 +180,16 @@ const DOM = {
   cartItemsList: document.getElementById('cartItemsList'),
   cartCountBadge: document.getElementById('cartCountBadge'),
   summarySubtotalAmount: document.getElementById('summarySubtotalAmount'),
-  summaryTbaCount: document.getElementById('summaryTbaCount'),
   summaryCourierDisplay: document.getElementById('summaryCourierDisplay'),
   summaryPaymentDisplay: document.getElementById('summaryPaymentDisplay'),
   summaryGrandTotal: document.getElementById('summaryGrandTotal'),
-  tbaNoticeBanner: document.getElementById('tbaNoticeBanner'),
   btnSubmitOrder: document.getElementById('btnSubmitOrder'),
   
   // Modal & Slip Elements
   jobOrderModal: document.getElementById('jobOrderModal'),
   printableJobOrderSlip: document.getElementById('printableJobOrderSlip'),
   btnCloseModal: document.getElementById('btnCloseModal'),
-  btnDownloadImage: document.getElementById('btnDownloadImage'),
+  btnDownloadPdf: document.getElementById('btnDownloadPdf') || document.getElementById('btnDownloadImage'),
   btnDoneOrder: document.getElementById('btnDoneOrder'),
   joReferenceNumber: document.getElementById('joReferenceNumber'),
   joDateGenerated: document.getElementById('joDateGenerated'),
@@ -263,7 +261,7 @@ function updatePreviewImage() {
     DOM.designMockupImg.src = '';
     DOM.designMockupImg.alt = 'Select a design code to view preview';
     if (DOM.designDescriptionText) {
-      DOM.designDescriptionText.textContent = 'Please select a design motif code to load the preview image.';
+      DOM.designDescriptionText.textContent = 'Please select a design code to load the preview image.';
     }
     if (DOM.designPreviewCaption) {
       DOM.designPreviewCaption.textContent = 'Select a design code to preview';
@@ -310,7 +308,9 @@ function switchCategory(categoryKey) {
     tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
   });
 
-  DOM.categoryBadge.textContent = categoryData.categoryName;
+  if (DOM.categoryBadge) {
+    DOM.categoryBadge.textContent = categoryData.categoryName;
+  }
 
   if (categoryData.hasSheets) {
     DOM.sheetCountGroup.style.display = 'block';
@@ -440,7 +440,7 @@ function updatePricePreview() {
 
 function addItemToCart() {
   if (!appState.selectedDesignCode) {
-    showToast('Please select a Design Motif Code before adding to order.');
+    showToast('Please select a Design Code before adding to order.');
     DOM.selectDesignCode.focus();
     return;
   }
@@ -502,10 +502,8 @@ function renderCart() {
     DOM.emptyCartState.style.display = 'block';
     DOM.cartItemsList.style.display = 'none';
     DOM.cartItemsList.innerHTML = '';
-    DOM.summarySubtotalAmount.textContent = '₱0.00';
-    DOM.summaryTbaCount.textContent = '0 items';
-    DOM.summaryGrandTotal.textContent = '₱0.00';
-    DOM.tbaNoticeBanner.style.display = 'none';
+    if (DOM.summarySubtotalAmount) DOM.summarySubtotalAmount.textContent = '₱0.00';
+    if (DOM.summaryGrandTotal) DOM.summaryGrandTotal.textContent = '₱0.00';
     return;
   }
 
@@ -514,12 +512,9 @@ function renderCart() {
   DOM.cartItemsList.innerHTML = '';
 
   let numericTotal = 0;
-  let tbaCount = 0;
 
   appState.cart.forEach(item => {
-    if (item.isTba) {
-      tbaCount += item.quantity;
-    } else {
+    if (!item.isTba) {
       numericTotal += item.subtotal;
     }
 
@@ -572,14 +567,11 @@ function renderCart() {
     DOM.cartItemsList.appendChild(itemCard);
   });
 
-  DOM.summarySubtotalAmount.textContent = `₱${numericTotal.toFixed(2)}`;
-  DOM.summaryTbaCount.textContent = `${tbaCount} item${tbaCount === 1 ? '' : 's'}`;
-  DOM.summaryGrandTotal.textContent = `₱${numericTotal.toFixed(2)}`;
-
-  if (tbaCount > 0) {
-    DOM.tbaNoticeBanner.style.display = 'block';
-  } else {
-    DOM.tbaNoticeBanner.style.display = 'none';
+  if (DOM.summarySubtotalAmount) {
+    DOM.summarySubtotalAmount.textContent = `₱${numericTotal.toFixed(2)}`;
+  }
+  if (DOM.summaryGrandTotal) {
+    DOM.summaryGrandTotal.textContent = `₱${numericTotal.toFixed(2)}`;
   }
 }
 
@@ -649,7 +641,7 @@ function attachValidationClearListeners() {
 }
 
 // ============================================================================
-// 9. Job Order Slip Generation & Google Sheets Submission
+// 9. Job Order Slip Generation, PDF Output & Google Sheets Submission
 // ============================================================================
 
 function generateReferenceNumber() {
@@ -712,55 +704,85 @@ function buildJobOrderSlip(refNo) {
   return grandTotalNumeric;
 }
 
-async function renderJobOrderSlipCanvas() {
-  const slipElement = DOM.printableJobOrderSlip || document.getElementById('printableJobOrderSlip');
-  if (!slipElement || typeof window.html2canvas === 'undefined') {
-    return null;
-  }
-
-  return await window.html2canvas(slipElement, {
-    scale: 2,
-    useCORS: true,
-    logging: false,
-    backgroundColor: '#ffffff'
-  });
-}
-
-async function downloadJobOrderAsImage() {
-  if (typeof window.html2canvas === 'undefined') {
-    showToast('Image generator is loading. Please try again in a moment.');
-    return;
-  }
-
-  const originalBtnText = DOM.btnDownloadImage ? DOM.btnDownloadImage.textContent : '';
-  if (DOM.btnDownloadImage) {
-    DOM.btnDownloadImage.textContent = '⏳ Generating Image...';
-    DOM.btnDownloadImage.disabled = true;
+async function downloadJobOrderAsPdf() {
+  const downloadBtn = DOM.btnDownloadPdf || document.getElementById('btnDownloadPdf') || document.getElementById('btnDownloadImage');
+  const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
+  
+  if (downloadBtn) {
+    downloadBtn.innerHTML = '<span>⏳ Generating PDF...</span>';
+    downloadBtn.disabled = true;
   }
 
   try {
-    const canvas = await renderJobOrderSlipCanvas();
-    if (!canvas) {
-      throw new Error('Canvas rendering failed');
+    const slipElement = DOM.printableJobOrderSlip || document.getElementById('printableJobOrderSlip');
+    if (!slipElement) {
+      throw new Error('Slip element not found');
     }
 
-    const imageUri = canvas.toDataURL('image/png');
-    const refNo = DOM.joReferenceNumber.textContent.trim() || 'JobOrder';
-    const downloadLink = document.createElement('a');
-    downloadLink.href = imageUri;
-    downloadLink.download = `Printelio_Order_Slip_${refNo}.png`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    if (typeof window.html2canvas === 'undefined') {
+      throw new Error('html2canvas library is not loaded');
+    }
 
-    showToast('Job Order Slip image downloaded successfully!');
+    // Capture using html2canvas with high scale for crisp print quality
+    const canvas = await window.html2canvas(slipElement, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff'
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const refNo = (DOM.joReferenceNumber ? DOM.joReferenceNumber.textContent.trim() : '') || 'JobOrder';
+    const fileName = `Printelio_Job_Order_${refNo}.pdf`;
+
+    // Initialize jsPDF (A4 Portrait format)
+    const jsPdfLib = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+    if (!jsPdfLib) {
+      throw new Error('jsPDF library is not loaded');
+    }
+
+    const pdf = new jsPdfLib({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    
+    // Fit canvas aspect ratio to page width with 8mm margins
+    const margin = 8;
+    const contentWidth = pdfWidth - (margin * 2);
+    const contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+    if (contentHeight <= (pdfHeight - margin * 2)) {
+      pdf.addImage(imgData, 'JPEG', margin, margin, contentWidth, contentHeight);
+    } else {
+      let heightLeft = contentHeight;
+      let position = margin;
+      
+      pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
+      heightLeft -= (pdfHeight - margin * 2);
+
+      while (heightLeft > 0) {
+        position = heightLeft - contentHeight + margin;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
+        heightLeft -= (pdfHeight - margin * 2);
+      }
+    }
+
+    // Save and prompt download for both Desktop and Mobile devices
+    pdf.save(fileName);
+    showToast('Job Order PDF generated successfully!');
+
   } catch (err) {
-    console.error('Error generating image:', err);
-    showToast('Could not save image automatically. Please screenshot your order slip.');
+    console.error('Error generating PDF:', err);
+    showToast('Could not save PDF automatically. Please screenshot your order slip.');
   } finally {
-    if (DOM.btnDownloadImage) {
-      DOM.btnDownloadImage.textContent = originalBtnText;
-      DOM.btnDownloadImage.disabled = false;
+    if (downloadBtn) {
+      downloadBtn.innerHTML = originalBtnText;
+      downloadBtn.disabled = false;
     }
   }
 }
@@ -810,8 +832,8 @@ async function submitJobOrder() {
       return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${sheetStr}${customStr} | Qty: ${item.quantity} | ${priceStr}`;
     }).join('; ');
 
-    // 2. Extract selected design motifs
-    const uniqueDesignMotifs = [...new Set(appState.cart.map(item => item.designCode))].join(', ');
+    // 2. Extract selected design codes
+    const uniqueDesignCodes = [...new Set(appState.cart.map(item => item.designCode))].join(', ');
 
     // 3. Prepare Google Sheets Payload
     const sheetPayload = {
@@ -821,7 +843,7 @@ async function submitJobOrder() {
       courier: appState.customer.courier,
       address: appState.customer.address,
       paymentMethod: appState.customer.payment,
-      designMotif: uniqueDesignMotifs,
+      designMotif: uniqueDesignCodes,
       orderItems: itemizedSummaryText,
       totalPrice: `₱${grandTotal.toFixed(2)}`
     };
@@ -836,7 +858,7 @@ async function submitJobOrder() {
       body: JSON.stringify(sheetPayload)
     });
 
-    showToast(`🎉 Order ${refNo} logged successfully in Google Sheets!`);
+    showToast(`Order submitted successfully! Your order has been recorded.`);
 
   } catch (sheetError) {
     console.error('Google Sheets submission error:', sheetError);
@@ -844,7 +866,7 @@ async function submitJobOrder() {
   } finally {
     if (DOM.btnSubmitOrder) {
       DOM.btnSubmitOrder.disabled = false;
-      DOM.btnSubmitOrder.innerHTML = originalSubmitText || '<span>✨ Submit Job Order Request</span>';
+      DOM.btnSubmitOrder.innerHTML = originalSubmitText || 'Submit Job Order';
     }
   }
 }
@@ -926,8 +948,10 @@ function initEventListeners() {
 
   DOM.btnCloseModal.addEventListener('click', closeModal);
   DOM.btnDoneOrder.addEventListener('click', startNewOrder);
-  if (DOM.btnDownloadImage) {
-    DOM.btnDownloadImage.addEventListener('click', downloadJobOrderAsImage);
+  
+  const downloadBtn = DOM.btnDownloadPdf || document.getElementById('btnDownloadPdf') || document.getElementById('btnDownloadImage');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', downloadJobOrderAsPdf);
   }
 
   DOM.jobOrderModal.addEventListener('click', (e) => {

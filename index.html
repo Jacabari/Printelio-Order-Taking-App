@@ -8,7 +8,8 @@
   <meta property="og:title" content="Printelio - Custom Stationery Order Request">
   <meta property="og:description" content="Mobile-responsive custom stationery order-taking web application for Printelio with dynamic design code mockups, dynamic pricing, and job order generation.">
   
-  <!-- External Script Libraries: html2canvas & EmailJS -->
+  <!-- External Script Libraries: jsPDF, html2canvas & EmailJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
@@ -185,7 +186,7 @@
             <!-- Design Selection & Live Mockup Preview Box -->
             <div class="design-selection-card" id="designSelectionBox">
               <div class="form-label" id="designLabel">
-                Design Motif Code <span class="required-star">*</span>
+                Design Code <span class="required-star">*</span>
               </div>
 
               <div class="design-preview-layout" id="designPreviewLayout">
@@ -214,10 +215,10 @@
                 <input type="checkbox" id="checkCustomization" class="custom-checkbox">
                 <div class="custom-toggle-text">
                   <div class="custom-toggle-title">
-                    <span>Add Text Customization (e.g., Name/Monogram)</span>
+                    <span>Add Text Customization (e.g., Name)</span>
                     <span class="custom-price-badge">+₱10.00 / item</span>
                   </div>
-                  <p class="custom-toggle-desc">Personalize with recipient name, initials, or family monogram</p>
+                  <p class="custom-toggle-desc">Personalize with recipient name or initials</p>
                 </div>
               </label>
 
@@ -225,7 +226,7 @@
               <div class="custom-inputs-collapse" id="customInputsCollapse">
                 <div class="form-group" id="groupCustomText">
                   <label for="inputCustomText" class="form-label">Custom Name / Text to Print <span class="required-star">*</span></label>
-                  <input type="text" id="inputCustomText" class="form-control" placeholder="e.g. Maria Clara / M.C.">
+                  <input type="text" id="inputCustomText" class="form-control" placeholder="e.g. Maria Clara / M. Santos">
                 </div>
               </div>
             </div>
@@ -289,12 +290,8 @@
           <!-- Calculated Total Display & Prominent Shipping Disclaimer -->
           <div class="order-totals-card" id="orderTotalsCard">
             <div class="totals-row" id="subtotalRow">
-              <span>Fixed Priced Items:</span>
+              <span>Total Amount in Cart:</span>
               <span id="summarySubtotalAmount">₱0.00</span>
-            </div>
-            <div class="totals-row" id="tbaItemsCountRow">
-              <span>Custom Quote Items (TBA):</span>
-              <span id="summaryTbaCount">0 items</span>
             </div>
             <div class="totals-row" id="shippingMethodRow">
               <span>Selected Courier:</span>
@@ -313,10 +310,6 @@
             <!-- Mandatory Prominent Shipping Fee Disclaimer -->
             <div class="shipping-disclaimer-banner" id="shippingDisclaimerBanner">
               ⚠️ Note: Shipping fee is not yet included.
-            </div>
-
-            <div class="tba-note-banner" id="tbaNoticeBanner" style="display: none;">
-              * Items marked TBA (Notecards &amp; Money Envelopes) are custom-quoted based on cardstock &amp; foil specifications.
             </div>
           </div>
 
@@ -357,10 +350,9 @@
             </div>
           </div>
           <div style="text-align: right;">
-            <div style="font-weight: 800; font-size: 1.1rem; color: var(--brand-black);">
-              <span class="brand-name-word" style="color: var(--brand-black) !important; -webkit-text-fill-color: var(--brand-black) !important; font-size: 1.25rem;">Printelio</span> Studio
+            <div style="font-weight: 800; font-size: 1.35rem; color: var(--brand-black);">
+              <span class="brand-name-word" style="color: var(--brand-black) !important; -webkit-text-fill-color: var(--brand-black) !important; font-size: 1.5rem;">Printelio</span>
             </div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Custom Stationery &amp; Luxury Printworks</div>
           </div>
         </div>
 
@@ -432,8 +424,8 @@
       </div>
 
       <div class="modal-footer" id="modalFooter">
-        <button type="button" class="btn btn-outline" id="btnDownloadImage">
-          🖼️ Download as Image
+        <button type="button" class="btn btn-outline" id="btnDownloadPdf">
+          📄 Download as PDF
         </button>
         <button type="button" class="btn btn-primary" id="btnDoneOrder">
           Finish &amp; Start New Order

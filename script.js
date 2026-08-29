@@ -69,7 +69,7 @@ const PRODUCTS_DATA = {
         dimensions: '4 × 5.8 in',
         prices: { '30': 49, '50': 69 },
         designs: [
-          'NP_A6_Cinnamoroll',
+          'NP_A6_Cinnamonoroll',
           'NP_A6_Flower',
           'NP_A6_HelloKitty',
           'NP_A6_Kuromi',
@@ -888,7 +888,7 @@ async function submitJobOrder() {
       const sheetStr = item.hasSheets ? ` (${item.sheetCount} sheets)` : '';
       const priceStr = item.isTba ? 'TBA' : `₱${item.subtotal.toFixed(2)}`;
       return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${sheetStr}${customStr} | Qty: ${item.quantity} | ${priceStr}`;
-    }).join('; ');
+    }).join('\n');
 
     // 2. Extract selected design codes
     const uniqueDesignCodes = [...new Set(appState.cart.map(item => item.designCode))].join(', ');

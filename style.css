@@ -1349,6 +1349,78 @@ select.form-control {
 }
 
 /* --------------------------------------------------------------------------
+   PDF Render & Capture Mode (Enforces Desktop A4 Structure on Mobile)
+   -------------------------------------------------------------------------- */
+.pdf-render-mode {
+  width: 780px !important;
+  min-width: 780px !important;
+  max-width: 780px !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  padding: 28px !important;
+  box-sizing: border-box !important;
+}
+
+.pdf-render-mode .job-order-header-box {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  flex-wrap: nowrap !important;
+  padding-bottom: 18px !important;
+  border-bottom: 2px solid var(--border-color) !important;
+}
+
+.pdf-render-mode .customer-info-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 14px !important;
+  background: #f7f7fc !important;
+  padding: 18px !important;
+  border-radius: var(--radius-md) !important;
+  border: 1.5px solid var(--border-color) !important;
+}
+
+.pdf-render-mode .customer-info-grid .info-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.pdf-render-mode .customer-info-grid .info-item[style*="grid-column"] {
+  grid-column: 1 / -1 !important;
+}
+
+.pdf-render-mode .jo-table-wrapper {
+  overflow: visible !important;
+  width: 100% !important;
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.pdf-render-mode .jo-table {
+  width: 100% !important;
+  min-width: 720px !important;
+  border-collapse: collapse !important;
+}
+
+.pdf-render-mode .jo-table th {
+  padding: 12px 14px !important;
+  font-size: 0.775rem !important;
+  background: #f0f0f5 !important;
+}
+
+.pdf-render-mode .jo-table td {
+  padding: 12px 14px !important;
+  font-size: 0.85rem !important;
+}
+
+.pdf-render-mode .payment-guidelines-box {
+  padding: 18px !important;
+  border-radius: var(--radius-md) !important;
+}
+
+/* --------------------------------------------------------------------------
    Mobile Optimizations (Smartphones & Tablets)
    -------------------------------------------------------------------------- */
 @media (max-width: 640px) {

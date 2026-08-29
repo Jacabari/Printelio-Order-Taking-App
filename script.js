@@ -69,7 +69,7 @@ const PRODUCTS_DATA = {
         dimensions: '4 × 5.8 in',
         prices: { '30': 49, '50': 69 },
         designs: [
-          'NP_A6_Cinnamonoroll',
+          'NP_A6_Cinnamoroll',
           'NP_A6_Flower',
           'NP_A6_HelloKitty',
           'NP_A6_Kuromi',

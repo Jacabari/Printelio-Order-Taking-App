@@ -1,8 +1,28 @@
 /**
  * Printelio - Custom Stationery Order Request Application
- * Complete Front-end Integration: Dynamic Design Code Filtering,
- * Mockup Preview with Image Fallback, Dynamic Pricing, Customization & Job Order Generation.
+ * Integration: EmailJS Transmission, html2canvas Job Order Image Generation,
+ * Dynamic Design Code Filtering, Mockup Preview, Dynamic Pricing & Cart Management.
  */
+
+// ============================================================================
+// 0. EmailJS Configuration & Initialization
+// ============================================================================
+
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY: 'atxJrY8b6d4jJp_rp',
+  SERVICE_ID: 'service_f3btwvd',
+  TEMPLATE_ID: 'template_f80esgo',
+  TARGET_EMAIL: 'printelio22@gmail.com'
+};
+
+// Initialize EmailJS library safely
+if (typeof window !== 'undefined' && typeof window.emailjs !== 'undefined') {
+  try {
+    window.emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  } catch (err) {
+    console.warn('EmailJS initialization warning:', err);
+  }
+}
 
 // ============================================================================
 // 1. Data Models & Constants
@@ -114,11 +134,9 @@ const appState = {
   customer: {
     fullName: '',
     contactNumber: '',
-    email: '',
     socialHandle: '',
-    address: '',
-    targetDate: '',
     courier: '',
+    address: '',
     payment: ''
   }
 };
@@ -144,6 +162,7 @@ const DOM = {
   // Design & Mockup Preview Elements
   selectDesignCode: document.getElementById('selectDesignCode'),
   designDescriptionText: document.getElementById('designDescriptionText'),
+  designPreviewCaption: document.getElementById('designPreviewCaption'),
   designMockupImg: document.getElementById('designMockupImg'),
   
   // Customization
@@ -160,16 +179,14 @@ const DOM = {
   btnQtyPlus: document.getElementById('btnQtyPlus'),
   btnAddToCart: document.getElementById('btnAddToCart'),
   
-  // Customer Form
+  // Customer Form (Removed Email & Target Date)
   customerDetailsCard: document.getElementById('customerDetailsCard'),
   customerForm: document.getElementById('customerForm'),
   inputFullName: document.getElementById('inputFullName'),
   inputContactNumber: document.getElementById('inputContactNumber'),
-  inputEmail: document.getElementById('inputEmail'),
   inputSocialHandle: document.getElementById('inputSocialHandle'),
-  inputAddress: document.getElementById('inputAddress'),
-  inputTargetDate: document.getElementById('inputTargetDate'),
   selectCourier: document.getElementById('selectCourier'),
+  inputAddress: document.getElementById('inputAddress'),
   selectPayment: document.getElementById('selectPayment'),
   
   // Cart & Order Summary
@@ -184,20 +201,19 @@ const DOM = {
   tbaNoticeBanner: document.getElementById('tbaNoticeBanner'),
   btnSubmitOrder: document.getElementById('btnSubmitOrder'),
   
-  // Modal & Slip
+  // Modal & Slip Elements
   jobOrderModal: document.getElementById('jobOrderModal'),
+  printableJobOrderSlip: document.getElementById('printableJobOrderSlip'),
   btnCloseModal: document.getElementById('btnCloseModal'),
-  btnPrintSlip: document.getElementById('btnPrintSlip'),
+  btnDownloadImage: document.getElementById('btnDownloadImage'),
   btnDoneOrder: document.getElementById('btnDoneOrder'),
   joReferenceNumber: document.getElementById('joReferenceNumber'),
   joDateGenerated: document.getElementById('joDateGenerated'),
   joCustomerName: document.getElementById('joCustomerName'),
   joCustomerContact: document.getElementById('joCustomerContact'),
-  joCustomerEmail: document.getElementById('joCustomerEmail'),
   joCustomerSocial: document.getElementById('joCustomerSocial'),
-  joCustomerAddress: document.getElementById('joCustomerAddress'),
-  joTargetDate: document.getElementById('joTargetDate'),
   joCourier: document.getElementById('joCourier'),
+  joCustomerAddress: document.getElementById('joCustomerAddress'),
   joPayment: document.getElementById('joPayment'),
   joTableBody: document.getElementById('joTableBody'),
   joModalGrandTotal: document.getElementById('joModalGrandTotal'),
@@ -211,7 +227,6 @@ const DOM = {
 
 /**
  * Returns available design choices based on current category and selected size.
- * For A5 Notepad (np-a5), returns the 11 designated planner codes.
  */
 function getDesignCodesForCurrentSelection() {
   const categoryData = PRODUCTS_DATA[appState.currentCategory];
@@ -222,7 +237,6 @@ function getDesignCodesForCurrentSelection() {
     return sizeObj.designs;
   }
 
-  // If A5 Notepad
   if (appState.currentCategory === 'notepads' && appState.selectedSizeId === 'np-a5') {
     return A5_NOTEPAD_DESIGNS;
   }
@@ -231,20 +245,18 @@ function getDesignCodesForCurrentSelection() {
 }
 
 /**
- * Populates the Design Motif Code dropdown. Starts with empty placeholder option.
+ * Populates the Design Motif Code dropdown.
  */
 function populateDesignDropdown() {
   const designCodes = getDesignCodesForCurrentSelection();
   
   DOM.selectDesignCode.innerHTML = '';
 
-  // 1. Initial Empty / Placeholder Option
   const defaultOption = document.createElement('option');
   defaultOption.value = '';
   defaultOption.textContent = '-- Select Design Code --';
   DOM.selectDesignCode.appendChild(defaultOption);
 
-  // 2. Populate dynamic design options
   designCodes.forEach(code => {
     const opt = document.createElement('option');
     opt.value = code;
@@ -252,7 +264,6 @@ function populateDesignDropdown() {
     DOM.selectDesignCode.appendChild(opt);
   });
 
-  // Preserve selection if it still exists in the new list, otherwise reset
   if (designCodes.includes(appState.selectedDesignCode)) {
     DOM.selectDesignCode.value = appState.selectedDesignCode;
   } else {
@@ -264,8 +275,8 @@ function populateDesignDropdown() {
 }
 
 /**
- * Updates the mockup preview image based on the selected design code.
- * Directly updates the standard <img> element's src using encodeURIComponent.
+ * Updates the mockup preview image based on selected design code.
+ * Directly modifies the standard <img> tag and uses encodeURIComponent.
  */
 function updatePreviewImage() {
   const selectedCode = appState.selectedDesignCode;
@@ -278,11 +289,17 @@ function updatePreviewImage() {
     if (DOM.designDescriptionText) {
       DOM.designDescriptionText.textContent = 'Please select a design motif code to load the preview image.';
     }
+    if (DOM.designPreviewCaption) {
+      DOM.designPreviewCaption.textContent = 'Select a design code to preview';
+    }
     return;
   }
 
   if (DOM.designDescriptionText) {
     DOM.designDescriptionText.textContent = `Previewing design code: ${selectedCode}`;
+  }
+  if (DOM.designPreviewCaption) {
+    DOM.designPreviewCaption.textContent = `Design: ${selectedCode}`;
   }
 
   DOM.designMockupImg.alt = `Design Preview: ${selectedCode}`;
@@ -293,13 +310,16 @@ function updatePreviewImage() {
     if (DOM.designDescriptionText) {
       DOM.designDescriptionText.textContent = `Preview image for "${selectedCode}" could not be loaded.`;
     }
+    if (DOM.designPreviewCaption) {
+      DOM.designPreviewCaption.textContent = `Image not found for "${selectedCode}"`;
+    }
   };
 
   DOM.designMockupImg.src = 'images/' + encodeURIComponent(selectedCode) + '.png';
 }
 
 // ============================================================================
-// 6. Category & Size Selection (Clean UI: No Prices in Labels)
+// 5. Category & Size Selection
 // ============================================================================
 
 function switchCategory(categoryKey) {
@@ -308,30 +328,22 @@ function switchCategory(categoryKey) {
   appState.currentCategory = categoryKey;
   const categoryData = PRODUCTS_DATA[categoryKey];
   
-  // Update Tab Buttons UI
   DOM.categoryTabs.forEach(tab => {
     const isCurrent = tab.dataset.category === categoryKey;
     tab.classList.toggle('active', isCurrent);
     tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
   });
 
-  // Update Category Badge text
   DOM.categoryBadge.textContent = categoryData.categoryName;
 
-  // Toggle Sheet Count visibility (Only for Notepads)
   if (categoryData.hasSheets) {
     DOM.sheetCountGroup.style.display = 'block';
   } else {
     DOM.sheetCountGroup.style.display = 'none';
   }
 
-  // Render Clean Size Cards (No prices in labels)
   renderSizeOptions();
-
-  // Populate dynamic design dropdown for current category/size
   populateDesignDropdown();
-
-  // Update pricing calculation display
   updatePricePreview();
 }
 
@@ -339,18 +351,15 @@ function renderSizeOptions() {
   const categoryData = PRODUCTS_DATA[appState.currentCategory];
   DOM.sizeCardsGrid.innerHTML = '';
 
-  // Validate selected size ID
   if (!categoryData.sizes.some(s => s.id === appState.selectedSizeId)) {
     appState.selectedSizeId = categoryData.sizes[0].id;
   }
 
-  // Responsive grid class
   DOM.sizeCardsGrid.className = `cards-grid ${categoryData.sizes.length === 3 ? 'three-col' : categoryData.sizes.length === 2 ? 'two-col' : ''}`;
 
   categoryData.sizes.forEach(size => {
     const isChecked = size.id === appState.selectedSizeId;
     
-    // Clean UI: Display name only, NO PRICES in labels
     const cardHtml = `
       <label class="radio-card-label" for="size-${size.id}">
         <input type="radio" name="sizeOption" id="size-${size.id}" value="${size.id}" class="radio-card-input" ${isChecked ? 'checked' : ''}>
@@ -363,7 +372,6 @@ function renderSizeOptions() {
     DOM.sizeCardsGrid.insertAdjacentHTML('beforeend', cardHtml);
   });
 
-  // Attach change listeners to size radio inputs
   DOM.sizeCardsGrid.querySelectorAll('input[name="sizeOption"]').forEach(input => {
     input.addEventListener('change', (e) => {
       appState.selectedSizeId = e.target.value;
@@ -374,13 +382,12 @@ function renderSizeOptions() {
 }
 
 // ============================================================================
-// 7. Dynamic Price Calculation Engine
+// 6. Dynamic Price Calculation Engine
 // ============================================================================
 
 function calculateCurrentItemPrice() {
   const categoryData = PRODUCTS_DATA[appState.currentCategory];
   
-  // Notecards & Money Envelopes -> TBA
   if (categoryData.isTba) {
     return {
       isTba: true,
@@ -390,7 +397,6 @@ function calculateCurrentItemPrice() {
     };
   }
 
-  // Notepads pricing calculation
   const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId);
   if (!sizeObj || !sizeObj.prices) {
     return {
@@ -453,11 +459,10 @@ function updatePricePreview() {
 }
 
 // ============================================================================
-// 8. Order Item Cart Management
+// 7. Order Item Cart Management
 // ============================================================================
 
 function addItemToCart() {
-  // Validate design code selection
   if (!appState.selectedDesignCode) {
     showToast('Please select a Design Motif Code before adding to order.');
     DOM.selectDesignCode.focus();
@@ -474,7 +479,6 @@ function addItemToCart() {
     return;
   }
 
-  // Validate custom text if customization is active
   if (appState.isCustomized && !DOM.inputCustomText.value.trim()) {
     showToast('Please enter the custom name/text to be printed.');
     DOM.inputCustomText.focus();
@@ -505,7 +509,6 @@ function addItemToCart() {
   renderCart();
   showToast(`Added ${qty}× ${cartItem.shortName} (${cartItem.designCode}) to order.`);
 
-  // Reset quantity input to 1
   DOM.inputQuantity.value = '1';
 }
 
@@ -593,7 +596,6 @@ function renderCart() {
     DOM.cartItemsList.appendChild(itemCard);
   });
 
-  // Update Totals Card
   DOM.summarySubtotalAmount.textContent = `₱${numericTotal.toFixed(2)}`;
   DOM.summaryTbaCount.textContent = `${tbaCount} item${tbaCount === 1 ? '' : 's'}`;
   DOM.summaryGrandTotal.textContent = `₱${numericTotal.toFixed(2)}`;
@@ -608,7 +610,7 @@ function renderCart() {
 window.removeCartItem = removeCartItem;
 
 // ============================================================================
-// 9. Customer Form Validation & Sync
+// 8. Customer Form Validation & Sync (Streamlined)
 // ============================================================================
 
 function syncCustomerSummaryDisplay() {
@@ -625,16 +627,16 @@ function validateCustomerForm() {
   const fields = [
     { el: DOM.inputFullName, group: 'groupFullName', validator: val => val.trim().length > 1 },
     { el: DOM.inputContactNumber, group: 'groupContactNumber', validator: val => val.trim().length >= 7 },
-    { el: DOM.inputEmail, group: 'groupEmail', validator: val => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim()) },
     { el: DOM.inputSocialHandle, group: 'groupSocialHandle', validator: val => val.trim().length > 1 },
-    { el: DOM.inputAddress, group: 'groupAddress', validator: val => val.trim().length > 5 },
-    { el: DOM.inputTargetDate, group: 'groupTargetDate', validator: val => Boolean(val) },
     { el: DOM.selectCourier, group: 'groupCourier', validator: val => Boolean(val) },
+    { el: DOM.inputAddress, group: 'groupAddress', validator: val => val.trim().length > 5 },
     { el: DOM.selectPayment, group: 'groupPayment', validator: val => Boolean(val) }
   ];
 
   fields.forEach(field => {
+    if (!field.el) return;
     const parentGroup = document.getElementById(field.group);
+    if (!parentGroup) return;
     const passed = field.validator(field.el.value);
     
     if (!passed) {
@@ -652,17 +654,17 @@ function attachValidationClearListeners() {
   const inputs = [
     { el: DOM.inputFullName, group: 'groupFullName' },
     { el: DOM.inputContactNumber, group: 'groupContactNumber' },
-    { el: DOM.inputEmail, group: 'groupEmail' },
     { el: DOM.inputSocialHandle, group: 'groupSocialHandle' },
-    { el: DOM.inputAddress, group: 'groupAddress' },
-    { el: DOM.inputTargetDate, group: 'groupTargetDate' },
     { el: DOM.selectCourier, group: 'groupCourier' },
+    { el: DOM.inputAddress, group: 'groupAddress' },
     { el: DOM.selectPayment, group: 'groupPayment' }
   ];
 
   inputs.forEach(item => {
+    if (!item.el) return;
     const handler = () => {
-      document.getElementById(item.group).classList.remove('has-error');
+      const parent = document.getElementById(item.group);
+      if (parent) parent.classList.remove('has-error');
       syncCustomerSummaryDisplay();
     };
     item.el.addEventListener('input', handler);
@@ -671,7 +673,7 @@ function attachValidationClearListeners() {
 }
 
 // ============================================================================
-// 10. Job Order Slip Generation & Modal Dialog
+// 9. Job Order Slip Generation, Image Download & EmailJS Submission
 // ============================================================================
 
 function generateReferenceNumber() {
@@ -680,44 +682,19 @@ function generateReferenceNumber() {
   return `PRNT-${currentYear}-${randomNum}`;
 }
 
-function submitJobOrder() {
-  if (appState.cart.length === 0) {
-    showToast('Your order is empty. Please add items before submitting.');
-    DOM.btnAddToCart.scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-
-  const isFormValid = validateCustomerForm();
-  if (!isFormValid) {
-    showToast('Please complete all required customer details.');
-    DOM.customerDetailsCard.scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-
-  appState.customer = {
-    fullName: DOM.inputFullName.value.trim(),
-    contactNumber: DOM.inputContactNumber.value.trim(),
-    email: DOM.inputEmail.value.trim(),
-    socialHandle: DOM.inputSocialHandle.value.trim(),
-    address: DOM.inputAddress.value.trim(),
-    targetDate: DOM.inputTargetDate.value,
-    courier: DOM.selectCourier.value,
-    payment: DOM.selectPayment.value
-  };
-
-  const refNo = generateReferenceNumber();
-  DOM.joReferenceNumber.textContent = refNo;
-  
+/**
+ * Builds the UI for Job Order Slip Modal and populates line items.
+ */
+function buildJobOrderSlip(refNo) {
   const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  DOM.joReferenceNumber.textContent = refNo;
   DOM.joDateGenerated.textContent = `Generated on ${new Date().toLocaleDateString('en-US', options)}`;
   
   DOM.joCustomerName.textContent = appState.customer.fullName;
   DOM.joCustomerContact.textContent = appState.customer.contactNumber;
-  DOM.joCustomerEmail.textContent = appState.customer.email;
   DOM.joCustomerSocial.textContent = appState.customer.socialHandle;
-  DOM.joCustomerAddress.textContent = appState.customer.address;
-  DOM.joTargetDate.textContent = appState.customer.targetDate;
   DOM.joCourier.textContent = appState.customer.courier;
+  DOM.joCustomerAddress.textContent = appState.customer.address;
   DOM.joPayment.textContent = appState.customer.payment;
 
   DOM.joTableBody.innerHTML = '';
@@ -754,12 +731,180 @@ function submitJobOrder() {
   DOM.joModalGrandTotal.textContent = `₱${grandTotalNumeric.toFixed(2)}`;
 
   DOM.paymentInstructionsText.innerHTML = `
-    <p>1. <strong>Payment Privacy:</strong> Official payment details and QR code will be shared separately and privately via your provided email or social account (<strong>${appState.customer.socialHandle}</strong>).</p>
+    <p>1. <strong>Payment Privacy:</strong> Official payment details and QR code will be shared separately and privately via your social handle (<strong>${appState.customer.socialHandle}</strong>) or contact number (<strong>${appState.customer.contactNumber}</strong>).</p>
     <p>2. Please reference Job Order No. <strong>${refNo}</strong> when sending proof of payment.</p>
     <p>3. Production starts upon payment confirmation. Standard lead time is 3–5 business days before courier dispatch (${appState.customer.courier}).</p>
   `;
 
+  return grandTotalNumeric;
+}
+
+/**
+ * Converts Job Order Slip into a Canvas using html2canvas.
+ */
+async function renderJobOrderSlipCanvas() {
+  const slipElement = DOM.printableJobOrderSlip || document.getElementById('printableJobOrderSlip');
+  if (!slipElement || typeof window.html2canvas === 'undefined') {
+    return null;
+  }
+
+  return await window.html2canvas(slipElement, {
+    scale: 2,
+    useCORS: true,
+    logging: false,
+    backgroundColor: '#ffffff'
+  });
+}
+
+/**
+ * Downloads the Job Order Slip as a PNG image file.
+ */
+async function downloadJobOrderAsImage() {
+  if (typeof window.html2canvas === 'undefined') {
+    showToast('Image generator is loading. Please try again in a moment.');
+    return;
+  }
+
+  const originalBtnText = DOM.btnDownloadImage ? DOM.btnDownloadImage.textContent : '';
+  if (DOM.btnDownloadImage) {
+    DOM.btnDownloadImage.textContent = '⏳ Generating Image...';
+    DOM.btnDownloadImage.disabled = true;
+  }
+
+  try {
+    const canvas = await renderJobOrderSlipCanvas();
+    if (!canvas) {
+      throw new Error('Canvas rendering failed');
+    }
+
+    const imageUri = canvas.toDataURL('image/png');
+    const refNo = DOM.joReferenceNumber.textContent.trim() || 'JobOrder';
+    const downloadLink = document.createElement('a');
+    downloadLink.href = imageUri;
+    downloadLink.download = `Printelio_Order_Slip_${refNo}.png`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    showToast('Job Order Slip image downloaded successfully!');
+  } catch (err) {
+    console.error('Error generating image:', err);
+    showToast('Could not save image automatically. Please screenshot your order slip.');
+  } finally {
+    if (DOM.btnDownloadImage) {
+      DOM.btnDownloadImage.textContent = originalBtnText;
+      DOM.btnDownloadImage.disabled = false;
+    }
+  }
+}
+
+/**
+ * Handles Job Order Submission:
+ * 1. Validates inputs and cart.
+ * 2. Builds modal preview.
+ * 3. Uses html2canvas to create image data URL.
+ * 4. Transmits email via EmailJS with full order details to printelio22@gmail.com.
+ * 5. Shows success notification and displays the Job Order Slip.
+ */
+async function submitJobOrder() {
+  if (appState.cart.length === 0) {
+    showToast('Your order is empty. Please add items before submitting.');
+    DOM.btnAddToCart.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  const isFormValid = validateCustomerForm();
+  if (!isFormValid) {
+    showToast('Please complete all required customer details.');
+    DOM.customerDetailsCard.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  // Update State from Form
+  appState.customer = {
+    fullName: DOM.inputFullName.value.trim(),
+    contactNumber: DOM.inputContactNumber.value.trim(),
+    socialHandle: DOM.inputSocialHandle.value.trim(),
+    courier: DOM.selectCourier.value,
+    address: DOM.inputAddress.value.trim(),
+    payment: DOM.selectPayment.value
+  };
+
+  const refNo = generateReferenceNumber();
+  const grandTotal = buildJobOrderSlip(refNo);
+
+  // Show the modal slip to user immediately
   DOM.jobOrderModal.classList.add('active');
+
+  // Submit button visual feedback
+  const originalSubmitText = DOM.btnSubmitOrder ? DOM.btnSubmitOrder.innerHTML : '';
+  if (DOM.btnSubmitOrder) {
+    DOM.btnSubmitOrder.disabled = true;
+    DOM.btnSubmitOrder.innerHTML = '<span>⏳ Submitting &amp; Sending...</span>';
+  }
+
+  try {
+    // 1. Generate base64 image of the order slip via html2canvas
+    let slipImageBase64 = '';
+    try {
+      const canvas = await renderJobOrderSlipCanvas();
+      if (canvas) {
+        slipImageBase64 = canvas.toDataURL('image/jpeg', 0.85);
+      }
+    } catch (canvasErr) {
+      console.warn('Slip image canvas generation warning:', canvasErr);
+    }
+
+    // 2. Format plain-text itemized summary for email
+    const itemizedSummaryText = appState.cart.map((item, idx) => {
+      const customStr = item.isCustomized ? ` [Custom: "${item.customText}"]` : '';
+      const sheetStr = item.hasSheets ? ` (${item.sheetCount} sheets)` : '';
+      const priceStr = item.isTba ? 'TBA' : `₱${item.subtotal.toFixed(2)}`;
+      return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${sheetStr}${customStr} | Qty: ${item.quantity} | ${priceStr}`;
+    }).join('\n');
+
+    // 3. Prepare EmailJS template parameters
+    const emailParams = {
+      to_email: EMAILJS_CONFIG.TARGET_EMAIL,
+      to_name: 'Printelio Orders',
+      from_name: appState.customer.fullName,
+      customer_name: appState.customer.fullName,
+      contact_number: appState.customer.contactNumber,
+      social_handle: appState.customer.socialHandle,
+      courier: appState.customer.courier,
+      delivery_address: appState.customer.address,
+      payment_method: appState.customer.payment,
+      order_reference: refNo,
+      order_date: new Date().toLocaleString(),
+      total_price: `₱${grandTotal.toFixed(2)}`,
+      grand_total: `₱${grandTotal.toFixed(2)}`,
+      itemized_orders: itemizedSummaryText,
+      order_image: slipImageBase64 || 'Rendered in Job Order Slip',
+      message: `New Order Received from ${appState.customer.fullName} (${appState.customer.contactNumber}). Total: ₱${grandTotal.toFixed(2)}.`
+    };
+
+    // 4. Send email via EmailJS
+    if (typeof window.emailjs !== 'undefined') {
+      await window.emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        emailParams,
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
+      showToast(`🎉 Order ${refNo} sent successfully to Printelio!`);
+    } else {
+      showToast(`Job Order ${refNo} created! (Email service connecting)`);
+    }
+
+  } catch (emailError) {
+    console.error('EmailJS submission notice:', emailError);
+    showToast(`Job Order ${refNo} generated! Please download or screenshot your slip.`);
+  } finally {
+    if (DOM.btnSubmitOrder) {
+      DOM.btnSubmitOrder.disabled = false;
+      DOM.btnSubmitOrder.innerHTML = originalSubmitText || '<span>✨ Submit Job Order Request</span>';
+    }
+  }
 }
 
 function closeModal() {
@@ -776,7 +921,7 @@ function startNewOrder() {
 }
 
 // ============================================================================
-// 11. Toast Notifications
+// 10. Toast Notifications
 // ============================================================================
 
 function showToast(message) {
@@ -789,11 +934,11 @@ function showToast(message) {
     toast.style.opacity = '0';
     toast.style.transition = 'opacity 0.3s ease';
     setTimeout(() => toast.remove(), 300);
-  }, 3200);
+  }, 3500);
 }
 
 // ============================================================================
-// 12. Event Listeners & Bootstrapping
+// 11. Event Listeners & Bootstrapping
 // ============================================================================
 
 function initEventListeners() {
@@ -848,7 +993,9 @@ function initEventListeners() {
   // Modal Controls
   DOM.btnCloseModal.addEventListener('click', closeModal);
   DOM.btnDoneOrder.addEventListener('click', startNewOrder);
-  DOM.btnPrintSlip.addEventListener('click', () => window.print());
+  if (DOM.btnDownloadImage) {
+    DOM.btnDownloadImage.addEventListener('click', downloadJobOrderAsImage);
+  }
 
   // Close modal when clicking outside dialog
   DOM.jobOrderModal.addEventListener('click', (e) => {
@@ -859,11 +1006,6 @@ function initEventListeners() {
 
   // Form input validation feedback
   attachValidationClearListeners();
-
-  // Set default min date for target date (tomorrow)
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  DOM.inputTargetDate.min = tomorrow.toISOString().split('T')[0];
 }
 
 // Initial Bootstrapping

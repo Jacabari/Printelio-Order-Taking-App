@@ -68,7 +68,14 @@ const PRODUCTS_DATA = {
         shortName: 'A6 Notepad',
         dimensions: '4 × 5.8 in',
         prices: { '30': 49, '50': 69 },
-        designs: ['NP-A601', 'NP-A602', 'NP-A603', 'NP-A604']
+        designs: [
+          'NP_A6_Cinnamonoroll',
+          'NP_A6_Flower',
+          'NP_A6_HelloKitty',
+          'NP_A6_Kuromi',
+          'NP_A6_ToDoList',
+          'NP_A6_Lemon'
+        ]
       },
       {
         id: 'np-a5',

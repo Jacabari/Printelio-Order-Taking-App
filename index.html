@@ -8,6 +8,10 @@
   <meta property="og:title" content="Printelio - Custom Stationery Order Request">
   <meta property="og:description" content="Mobile-responsive custom stationery order-taking web application for Printelio with dynamic design code mockups, dynamic pricing, and job order generation.">
   
+  <!-- External Script Libraries: html2canvas & EmailJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
   <!-- Google Fonts: Playfair Display (Italic for *Printelio*) & Raleway (Clean sans-serif for all other UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,15 +70,6 @@
               <span class="form-error-msg" id="errorContactNumber">Please provide a valid contact number.</span>
             </div>
 
-            <!-- Email Address -->
-            <div class="form-group" id="groupEmail">
-              <label for="inputEmail" class="form-label">
-                Email Address <span class="required-star">*</span>
-              </label>
-              <input type="email" id="inputEmail" class="form-control" placeholder="e.g. maria@example.com" required autocomplete="email">
-              <span class="form-error-msg" id="errorEmail">Please enter a valid email address.</span>
-            </div>
-
             <!-- Facebook / Instagram Username -->
             <div class="form-group" id="groupSocialHandle">
               <label for="inputSocialHandle" class="form-label">
@@ -82,24 +77,6 @@
               </label>
               <input type="text" id="inputSocialHandle" class="form-control" placeholder="e.g. @mariaclara.stationery" required>
               <span class="form-error-msg" id="errorSocialHandle">Social username is required for verification.</span>
-            </div>
-
-            <!-- Shipping / Delivery Address -->
-            <div class="form-group grid-full" id="groupAddress">
-              <label for="inputAddress" class="form-label">
-                Shipping / Delivery Address <span class="required-star">*</span>
-              </label>
-              <textarea id="inputAddress" class="form-control" rows="2" placeholder="House/Unit No., Street, Barangay, City/Municipality, Province, Postal Code" required></textarea>
-              <span class="form-error-msg" id="errorAddress">Complete delivery address is required.</span>
-            </div>
-
-            <!-- Target Date Needed -->
-            <div class="form-group" id="groupTargetDate">
-              <label for="inputTargetDate" class="form-label">
-                Target Date Needed <span class="required-star">*</span>
-              </label>
-              <input type="date" id="inputTargetDate" class="form-control" required>
-              <span class="form-error-msg" id="errorTargetDate">Please select target delivery date.</span>
             </div>
 
             <!-- Courier Option -->
@@ -113,6 +90,15 @@
                 <option value="Lalamove">Lalamove (Metro Manila / Same Day)</option>
               </select>
               <span class="form-error-msg" id="errorCourier">Please select your preferred courier.</span>
+            </div>
+
+            <!-- Shipping / Delivery Address -->
+            <div class="form-group grid-full" id="groupAddress">
+              <label for="inputAddress" class="form-label">
+                Shipping / Delivery Address <span class="required-star">*</span>
+              </label>
+              <textarea id="inputAddress" class="form-control" rows="2" placeholder="House/Unit No., Street, Barangay, City/Municipality, Province, Postal Code" required></textarea>
+              <span class="form-error-msg" id="errorAddress">Complete delivery address is required.</span>
             </div>
 
             <!-- Mode of Payment -->
@@ -389,26 +375,18 @@
             <div class="info-item-value" id="joCustomerContact">-</div>
           </div>
           <div class="info-item">
-            <div class="info-item-label">Email Address</div>
-            <div class="info-item-value" id="joCustomerEmail">-</div>
-          </div>
-          <div class="info-item">
             <div class="info-item-label">Social Username</div>
             <div class="info-item-value" id="joCustomerSocial">-</div>
-          </div>
-          <div class="info-item" style="grid-column: 1 / -1;">
-            <div class="info-item-label">Delivery Address</div>
-            <div class="info-item-value" id="joCustomerAddress">-</div>
-          </div>
-          <div class="info-item">
-            <div class="info-item-label">Target Date Needed</div>
-            <div class="info-item-value" id="joTargetDate">-</div>
           </div>
           <div class="info-item">
             <div class="info-item-label">Courier</div>
             <div class="info-item-value" id="joCourier">-</div>
           </div>
-          <div class="info-item">
+          <div class="info-item" style="grid-column: 1 / -1;">
+            <div class="info-item-label">Delivery Address</div>
+            <div class="info-item-value" id="joCustomerAddress">-</div>
+          </div>
+          <div class="info-item" style="grid-column: 1 / -1;">
             <div class="info-item-label">Payment Method</div>
             <div class="info-item-value" id="joPayment">-</div>
           </div>
@@ -454,8 +432,8 @@
       </div>
 
       <div class="modal-footer" id="modalFooter">
-        <button type="button" class="btn btn-outline" id="btnPrintSlip">
-          🖨️ Print / Save Job Order Slip
+        <button type="button" class="btn btn-outline" id="btnDownloadImage">
+          🖼️ Download as Image
         </button>
         <button type="button" class="btn btn-primary" id="btnDoneOrder">
           Finish &amp; Start New Order

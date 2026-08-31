@@ -1268,7 +1268,7 @@ select.form-control {
 }
 
 .jo-table th {
-  background: var(--brand-black);
+  background: #1e293b;
   color: #ffffff;
   padding: 12px 14px;
   font-weight: 800;
@@ -1407,7 +1407,8 @@ select.form-control {
 .pdf-render-mode .jo-table th {
   padding: 12px 14px !important;
   font-size: 0.775rem !important;
-  background: #f0f0f5 !important;
+  background: #1e293b !important;
+  color: #ffffff !important;
 }
 
 .pdf-render-mode .jo-table td {

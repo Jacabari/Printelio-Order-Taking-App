@@ -38,7 +38,7 @@ const PRODUCTS_DATA = {
     sizes: [
       {
         id: 'np-square',
-        name: 'Square Notepad (3 x 3 in)',
+        name: 'Square Notepad (3 × 3 in) • 30 sheets',
         shortName: 'Square Notepad',
         dimensions: '3 × 3 in',
         prices: { '30': 29 },
@@ -64,12 +64,12 @@ const PRODUCTS_DATA = {
       },
       {
         id: 'np-a6',
-        name: 'A6 Notepad (4 x 5.8 in)',
+        name: 'A6 Notepad (4 × 5.8 in) • 30 sheets',
         shortName: 'A6 Notepad',
         dimensions: '4 × 5.8 in',
         prices: { '30': 49 },
         designs: [
-          'NP_A6_Cinnamonoroll',
+          'NP_A6_Cinnamoroll',
           'NP_A6_Flower',
           'NP_A6_HelloKitty',
           'NP_A6_Kuromi',
@@ -79,7 +79,7 @@ const PRODUCTS_DATA = {
       },
       {
         id: 'np-a5',
-        name: 'A5 Notepad (5.8 x 8.3 in)',
+        name: 'A5 Notepad (5.8 × 8.3 in) • 30 sheets',
         shortName: 'A5 Notepad',
         dimensions: '5.8 × 8.3 in',
         prices: { '30': 99 },

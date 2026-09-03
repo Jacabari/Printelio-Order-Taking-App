@@ -124,119 +124,252 @@
                 <span>Payment details will be shared separately and privately.</span>
               </div>
             </div>
+
+            <!-- Order Type Selection -->
+            <div class="form-group grid-full" id="groupOrderType">
+              <label for="selectOrderType" class="form-label">
+                Order Type <span class="required-star">*</span>
+              </label>
+              <select id="selectOrderType" class="form-control" required>
+                <option value="" selected>Select Order Type</option>
+                <option value="Regular Purchase (Standard design, size & sheets)">Regular Purchase (Standard design, size &amp; sheets)</option>
+                <option value="Custom Made (Request custom size, sheets, or layout/design)">Custom Made (Request custom size, sheets, or layout/design)</option>
+              </select>
+              <span class="form-error-msg" id="errorOrderType">Please select an order type.</span>
+            </div>
           </form>
         </section>
 
         <!-- Step 2: Product & Design Selection -->
-        <section class="card" id="productSelectionCard">
+        <section class="card" id="productSelectionCard" style="display: none;">
           <div class="card-header" id="productCardHeader">
             <div class="card-title-group">
               <div class="step-indicator" id="step2Indicator">2</div>
               <div>
                 <h2 class="card-title" id="productCardTitle">Product &amp; Design Selection</h2>
-                <p class="card-subtitle">Choose stationery category, size format, motif, and personalization</p>
+                <p class="card-subtitle" id="productCardSubtitle">Choose stationery category, size format, motif, and personalization</p>
               </div>
             </div>
           </div>
 
-          <!-- Product Category Tabs: Notepads, Notecards, Money Envelopes -->
-          <div class="category-tabs" id="categoryTabs" role="tablist">
-            <button type="button" class="tab-btn active" id="tabNotepads" data-category="notepads" role="tab" aria-selected="true">
-              Notepads
-            </button>
-            <button type="button" class="tab-btn" id="tabNotecards" data-category="notecards" role="tab" aria-selected="false">
-              Notecards
-            </button>
-            <button type="button" class="tab-btn" id="tabEnvelopes" data-category="envelopes" role="tab" aria-selected="false">
-              Money Envelopes
-            </button>
+          <!-- Standard Ordering Form Section (Regular Purchase) -->
+          <div id="standardOrderingSection">
+            <!-- Product Category Tabs: Notepads, Notecards, Money Envelopes -->
+            <div class="category-tabs" id="categoryTabs" role="tablist">
+              <button type="button" class="tab-btn active" id="tabNotepads" data-category="notepads" role="tab" aria-selected="true">
+                Notepads
+              </button>
+              <button type="button" class="tab-btn" id="tabNotecards" data-category="notecards" role="tab" aria-selected="false">
+                Notecards
+              </button>
+              <button type="button" class="tab-btn" id="tabEnvelopes" data-category="envelopes" role="tab" aria-selected="false">
+                Money Envelopes
+              </button>
+            </div>
+
+            <!-- Dynamic Options Section -->
+            <div id="productOptionsDynamic">
+              
+              <!-- Category Specific Size / Type Selection (Clean UI - NO PRICES IN LABELS) -->
+              <div class="options-group" id="sizeOptionsContainer">
+                <div class="options-group-title">
+                  <span>Select Size Format</span>
+                  <span class="form-hint" id="categoryBadge">Notepads</span>
+                </div>
+                <div class="cards-grid three-col" id="sizeCardsGrid">
+                  <!-- Dynamically populated without prices in labels -->
+                </div>
+              </div>
+
+              <!-- Design Selection & Live Mockup Preview Box -->
+              <div class="design-selection-card" id="designSelectionBox">
+                <div class="form-label" id="designLabel">
+                  Design Code <span class="required-star">*</span>
+                </div>
+
+                <div class="design-preview-layout" id="designPreviewLayout">
+                  <!-- Dropdown Selection -->
+                  <div class="form-group" id="designDropdownGroup">
+                    <label for="selectDesignCode" class="form-hint" id="designSelectHint">Choose a curated template code:</label>
+                    <select id="selectDesignCode" class="form-control">
+                      <option value="">-- Select Design Code --</option>
+                    </select>
+                    <div class="form-hint" id="designDescriptionText" style="margin-top: 8px;">
+                      Please select a design code to preview.
+                    </div>
+                  </div>
+
+                  <!-- Design Preview Image Component (Directly below selector) -->
+                  <div class="mockup-preview-container" id="mockupPreviewWrapper">
+                    <img id="designMockupImg" src="" alt="Select a design code to view preview">
+                    <span id="designPreviewCaption" class="form-hint" style="margin-top: 8px; font-size: 0.85rem; text-align: center; display: block;">Select a design code to preview</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Customization Checkbox (+₱10) & Single Text Input -->
+              <div class="customization-box" id="customizationContainer">
+                <label class="customization-toggle-label" id="customizationToggleLabel">
+                  <input type="checkbox" id="checkCustomization" class="custom-checkbox">
+                  <div class="custom-toggle-text">
+                    <div class="custom-toggle-title">
+                      <span>Add Text Customization (e.g., Name)</span>
+                      <span class="custom-price-badge">+₱10.00 / item</span>
+                    </div>
+                    <p class="custom-toggle-desc">Personalize with recipient name or initials</p>
+                  </div>
+                </label>
+
+                <!-- Single Custom Text Input Field (No font dropdown or notes) -->
+                <div class="custom-inputs-collapse" id="customInputsCollapse">
+                  <div class="form-group" id="groupCustomText">
+                    <label for="inputCustomText" class="form-label">Custom Name / Text to Print <span class="required-star">*</span></label>
+                    <input type="text" id="inputCustomText" class="form-control" placeholder="e.g. Maria Clara / M. Santos">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Unit Price Display & Add to Order Bar -->
+              <div class="item-action-bar" id="itemActionBar">
+                <div class="current-pricing-preview" id="currentPricingPreview">
+                  <span class="price-preview-label">Unit Price:</span>
+                  <div class="price-preview-value" id="currentUnitPrice">₱29.00</div>
+                  <div class="price-preview-breakdown" id="currentPriceBreakdown">Base ₱29.00 (30 sheets)</div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                  <!-- Quantity Stepper -->
+                  <div class="qty-stepper-wrapper" id="qtyStepperWrapper">
+                    <button type="button" class="stepper-btn" id="btnQtyMinus" aria-label="Decrease quantity">-</button>
+                    <input type="number" id="inputQuantity" class="qty-input" value="1" min="1" max="500" aria-label="Item quantity">
+                    <button type="button" class="stepper-btn" id="btnQtyPlus" aria-label="Increase quantity">+</button>
+                  </div>
+
+                  <!-- Add Item Button -->
+                  <button type="button" class="btn btn-primary" id="btnAddToCart">
+                    + Add Item to Order
+                  </button>
+                </div>
+              </div>
+
+            </div>
           </div>
 
-          <!-- Dynamic Options Section -->
-          <div id="productOptionsDynamic">
-            
-            <!-- Category Specific Size / Type Selection (Clean UI - NO PRICES IN LABELS) -->
-            <div class="options-group" id="sizeOptionsContainer">
+          <!-- Custom Ordering Form Section (Custom Made) -->
+          <div id="customOrderingSection" class="custom-ordering-section" style="display: none;">
+            <!-- Styled Info Box / Callout banner -->
+            <div class="custom-terms-banner" id="customTermsBanner">
+              <div class="custom-terms-title">
+                Custom Made Specifications &amp; Terms
+              </div>
+              <ul class="custom-terms-list">
+                <li><span>📦</span> <span>Minimum Order Quantity (MOQ): 3 pads per size per design.</span></li>
+                <li><span>📄</span> <span>Minimum of 30 sheets per notepad.</span></li>
+                <li><span>🎨</span> <span>Full-color, one-side print only.</span></li>
+                <li><span>✏️</span> <span>Includes 1 free layout draft (subsequent revisions are ₱100 each).</span></li>
+              </ul>
+            </div>
+
+            <!-- Custom Input Fields Grid -->
+            <div class="form-grid two-col" id="customInputsGrid">
+              <!-- Notepad Size Dropdown (Restricted to standard choices only) -->
+              <div class="form-group" id="groupCustomNotepadSize">
+                <label for="selectCustomNotepadSize" class="form-label">
+                  Notepad Size <span class="required-star">*</span>
+                </label>
+                <select id="selectCustomNotepadSize" class="form-control" required>
+                  <option value="square" selected>Square Notepad (3 × 3 Inches) — Base: ₱29</option>
+                  <option value="a6">A6 Notepad (4 × 5.8 Inches) — Base: ₱49</option>
+                  <option value="a5">A5 Notepad (5.8 × 8.3 Inches) — Base: ₱99</option>
+                </select>
+                <span class="form-hint" id="customSizeRateHint">Extra sheets: +₱1.50 per sheet beyond 30 sheets</span>
+              </div>
+
+              <!-- Sheet Count (Default 30, Minimum 30) -->
+              <div class="form-group" id="groupCustomSheetCount">
+                <label for="inputCustomSheetCount" class="form-label">
+                  Sheet Count <span class="required-star">*</span>
+                </label>
+                <input type="number" id="inputCustomSheetCount" class="form-control" min="30" value="30" placeholder="Minimum 30 sheets" required>
+                <span class="form-error-msg" id="errorCustomSheetCount">Sheet count must be at least 30 sheets.</span>
+                <span class="form-hint" id="customSheetCountHint">Base includes 30 sheets</span>
+              </div>
+
+              <!-- Design / Layout Instructions Text Area -->
+              <div class="form-group grid-full" id="groupCustomInstructions">
+                <label for="textareaCustomInstructions" class="form-label">
+                  Design / Layout Instructions <span class="required-star">*</span>
+                </label>
+                <textarea id="textareaCustomInstructions" class="form-control" rows="3" placeholder="Describe your design motif, color preferences, font styles, text, or reference details..."></textarea>
+                <span class="form-hint" id="customInstructionsEmailHint">If you have your own design, please send it to printelio22@gmail.com.</span>
+                <span class="form-error-msg" id="errorCustomInstructions">Please provide your design or layout instructions.</span>
+              </div>
+            </div>
+
+            <!-- Enlarged 1:1 Square Preview Component -->
+            <div class="options-group" id="customPreviewGroup">
               <div class="options-group-title">
-                <span>Select Size Format</span>
-                <span class="form-hint" id="categoryBadge">Notepads</span>
+                <span>Custom Specification Summary</span>
               </div>
-              <div class="cards-grid three-col" id="sizeCardsGrid">
-                <!-- Dynamically populated without prices in labels -->
-              </div>
-            </div>
+              
+              <div class="mockup-preview-container" id="customMockupPreviewWrapper">
+                <div class="custom-preview-canvas" id="customPreviewCanvas">
+                  <div class="custom-preview-glue"></div>
+                  <div class="custom-preview-header">
+                    <div>
+                      <span class="custom-preview-type-tag">Custom Made Notepad</span>
+                      <div class="custom-preview-size-badge" id="customPreviewSizeBadge">Square Notepad (3 × 3 Inches)</div>
+                    </div>
+                    <div class="custom-preview-sheets-badge" id="customPreviewSheetsBadge">30 Sheets</div>
+                  </div>
+                  
+                  <div class="custom-preview-body">
+                    <div class="custom-preview-icon-row">
+                      <span class="custom-preview-feature-pill">📄 1-Side Print</span>
+                      <span class="custom-preview-feature-pill">🎨 Full-Color</span>
+                      <span class="custom-preview-feature-pill">✏️ 1 Free Draft</span>
+                    </div>
+                    
+                    <div class="custom-preview-motif-box">
+                      <div class="custom-preview-motif-label">Layout / Motif Instructions:</div>
+                      <div class="custom-preview-motif-text" id="customPreviewInstructionsText">
+                        Your custom layout &amp; design instructions will appear here...
+                      </div>
+                    </div>
+                  </div>
 
-            <!-- Design Selection & Live Mockup Preview Box -->
-            <div class="design-selection-card" id="designSelectionBox">
-              <div class="form-label" id="designLabel">
-                Design Code <span class="required-star">*</span>
-              </div>
-
-              <div class="design-preview-layout" id="designPreviewLayout">
-                <!-- Dropdown Selection -->
-                <div class="form-group" id="designDropdownGroup">
-                  <label for="selectDesignCode" class="form-hint" id="designSelectHint">Choose a curated template code:</label>
-                  <select id="selectDesignCode" class="form-control">
-                    <option value="">-- Select Design Code --</option>
-                  </select>
-                  <div class="form-hint" id="designDescriptionText" style="margin-top: 8px;">
-                    Please select a design code to preview.
+                  <div class="custom-preview-footer">
+                    <div class="custom-preview-draft-tag">
+                      <span>📐 Custom Layout Draft</span>
+                    </div>
+                    <div class="custom-preview-price-tag" id="customPreviewPriceTag">₱29.00 / pc</div>
                   </div>
                 </div>
-
-                <!-- Design Preview Image Component (Directly below selector) -->
-                <div class="mockup-preview-container" id="mockupPreviewWrapper">
-                  <img id="designMockupImg" src="" alt="Select a design code to view preview">
-                  <span id="designPreviewCaption" class="form-hint" style="margin-top: 8px; font-size: 0.85rem; text-align: center; display: block;">Select a design code to preview</span>
-                </div>
               </div>
             </div>
 
-            <!-- Customization Checkbox (+₱10) & Single Text Input -->
-            <div class="customization-box" id="customizationContainer">
-              <label class="customization-toggle-label" id="customizationToggleLabel">
-                <input type="checkbox" id="checkCustomization" class="custom-checkbox">
-                <div class="custom-toggle-text">
-                  <div class="custom-toggle-title">
-                    <span>Add Text Customization (e.g., Name)</span>
-                    <span class="custom-price-badge">+₱10.00 / item</span>
-                  </div>
-                  <p class="custom-toggle-desc">Personalize with recipient name or initials</p>
-                </div>
-              </label>
-
-              <!-- Single Custom Text Input Field (No font dropdown or notes) -->
-              <div class="custom-inputs-collapse" id="customInputsCollapse">
-                <div class="form-group" id="groupCustomText">
-                  <label for="inputCustomText" class="form-label">Custom Name / Text to Print <span class="required-star">*</span></label>
-                  <input type="text" id="inputCustomText" class="form-control" placeholder="e.g. Maria Clara / M. Santos">
-                </div>
-              </div>
-            </div>
-
-            <!-- Unit Price Display & Add to Order Bar -->
-            <div class="item-action-bar" id="itemActionBar">
-              <div class="current-pricing-preview" id="currentPricingPreview">
-                <span class="price-preview-label">Unit Price:</span>
-                <div class="price-preview-value" id="currentUnitPrice">₱29.00</div>
-                <div class="price-preview-breakdown" id="currentPriceBreakdown">Base ₱29.00 (30 sheets)</div>
+            <!-- Custom Unit Price Display, Quantity Stepper & Add to Cart Button -->
+            <div class="item-action-bar" id="customItemActionBar">
+              <div class="current-pricing-preview" id="customPricingPreview">
+                <span class="price-preview-label">Custom Unit Price:</span>
+                <div class="price-preview-value" id="customUnitPriceDisplay">₱29.00</div>
+                <div class="price-preview-breakdown" id="customPriceBreakdownDisplay">Base ₱29.00 (30 sheets)</div>
               </div>
 
               <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                 <!-- Quantity Stepper -->
-                <div class="qty-stepper-wrapper" id="qtyStepperWrapper">
-                  <button type="button" class="stepper-btn" id="btnQtyMinus" aria-label="Decrease quantity">-</button>
-                  <input type="number" id="inputQuantity" class="qty-input" value="1" min="1" max="500" aria-label="Item quantity">
-                  <button type="button" class="stepper-btn" id="btnQtyPlus" aria-label="Increase quantity">+</button>
+                <div class="qty-stepper-wrapper" id="customQtyStepperWrapper">
+                  <button type="button" class="stepper-btn" id="btnCustomQtyMinus" aria-label="Decrease quantity">-</button>
+                  <input type="number" id="inputCustomQuantity" class="qty-input" value="3" min="3" max="500" aria-label="Custom item quantity">
+                  <button type="button" class="stepper-btn" id="btnCustomQtyPlus" aria-label="Increase quantity">+</button>
                 </div>
 
-                <!-- Add Item Button -->
-                <button type="button" class="btn btn-primary" id="btnAddToCart">
-                  + Add Item to Order
+                <!-- Add Custom Item Button -->
+                <button type="button" class="btn btn-primary" id="btnAddCustomToCart">
+                  + Add Custom Item to Order
                 </button>
               </div>
             </div>
-
           </div>
         </section>
 
@@ -283,6 +416,10 @@
             <div class="totals-row" id="paymentMethodRow">
               <span>Payment Mode:</span>
               <span id="summaryPaymentDisplay" style="color: var(--brand-yellow);">Not Selected</span>
+            </div>
+            <div class="totals-row" id="orderTypeRow">
+              <span>Order Type:</span>
+              <span id="summaryOrderTypeDisplay" style="color: var(--brand-purple-dark); font-weight: 700;">Not Selected</span>
             </div>
             
             <div class="totals-row grand-total-row" id="grandTotalRow">
@@ -364,6 +501,14 @@
           <div class="info-item" style="grid-column: 1 / -1;">
             <div class="info-item-label">Payment Method</div>
             <div class="info-item-value" id="joPayment">-</div>
+          </div>
+          <div class="info-item" style="grid-column: 1 / -1;">
+            <div class="info-item-label">Order Type</div>
+            <div class="info-item-value" id="joOrderType">Regular Purchase</div>
+          </div>
+          <div class="info-item" id="joCustomMadeDetailsRow" style="grid-column: 1 / -1; display: none;">
+            <div class="info-item-label">Custom Specifications</div>
+            <div class="info-item-value" id="joCustomMadeDetails">-</div>
           </div>
         </div>
 

@@ -398,6 +398,229 @@ select.form-control {
 }
 
 /* --------------------------------------------------------------------------
+   Custom Made Order Type & Callout Form
+   -------------------------------------------------------------------------- */
+.custom-made-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #fdfdfd;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 4px;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-terms-banner {
+  background: linear-gradient(135deg, rgba(203, 108, 230, 0.08) 0%, rgba(255, 222, 89, 0.12) 100%);
+  border: 1.5px solid rgba(203, 108, 230, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+
+.custom-terms-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--brand-purple-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-bottom: 8px;
+}
+
+.custom-terms-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.custom-terms-list li {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--brand-black);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.custom-terms-list li span:first-child {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+/* --------------------------------------------------------------------------
+   Custom Made Ordering Form & Live 1:1 Preview
+   -------------------------------------------------------------------------- */
+.custom-ordering-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+.custom-preview-canvas {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.custom-preview-glue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, var(--brand-purple) 0%, var(--brand-cyan) 100%);
+}
+
+.custom-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1.5px dashed var(--border-color);
+  padding-bottom: 10px;
+  margin-top: 4px;
+}
+
+.custom-preview-type-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--brand-purple-dark);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.custom-preview-size-badge {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--brand-black);
+}
+
+.custom-preview-sheets-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: rgba(203, 108, 230, 0.15);
+  color: var(--brand-purple-dark);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.custom-preview-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 0;
+  gap: 10px;
+  min-height: 0;
+}
+
+.custom-preview-icon-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.custom-preview-feature-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--brand-black);
+  background: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.custom-preview-motif-box {
+  background: #fafafa;
+  border: 1.5px solid #e5e7eb;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.custom-preview-motif-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.025em;
+}
+
+.custom-preview-motif-text {
+  font-size: 0.82rem;
+  color: var(--brand-black);
+  line-height: 1.45;
+  font-style: italic;
+  word-break: break-word;
+}
+
+.custom-preview-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1.5px dashed var(--border-color);
+  padding-top: 8px;
+  margin-top: auto;
+}
+
+.custom-preview-draft-tag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--brand-purple-dark);
+}
+
+.custom-preview-price-tag {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--brand-black);
+}
+
+.cart-item-custom-thumb {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, rgba(203, 108, 230, 0.15) 0%, rgba(255, 222, 89, 0.2) 100%);
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
    Product Category Tabs
    -------------------------------------------------------------------------- */
 .category-tabs {

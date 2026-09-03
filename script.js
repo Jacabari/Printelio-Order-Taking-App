@@ -41,7 +41,7 @@ const PRODUCTS_DATA = {
         name: 'Square Notepad (3 x 3 in)',
         shortName: 'Square Notepad',
         dimensions: '3 × 3 in',
-        prices: { '30': 29, '50': 39 },
+        prices: { '30': 29 },
         designs: [
           'NP_SQ_CAT01',
           'NP_SQ_CAT02',
@@ -67,9 +67,9 @@ const PRODUCTS_DATA = {
         name: 'A6 Notepad (4 x 5.8 in)',
         shortName: 'A6 Notepad',
         dimensions: '4 × 5.8 in',
-        prices: { '30': 49, '50': 69 },
+        prices: { '30': 49 },
         designs: [
-          'NP_A6_Cinnamoroll',
+          'NP_A6_Cinnamonoroll',
           'NP_A6_Flower',
           'NP_A6_HelloKitty',
           'NP_A6_Kuromi',
@@ -82,7 +82,7 @@ const PRODUCTS_DATA = {
         name: 'A5 Notepad (5.8 x 8.3 in)',
         shortName: 'A5 Notepad',
         dimensions: '5.8 × 8.3 in',
-        prices: { '30': 79, '50': 99 },
+        prices: { '30': 99 },
         designs: A5_NOTEPAD_DESIGNS
       }
     ]
@@ -337,9 +337,7 @@ function switchCategory(categoryKey) {
     DOM.categoryBadge.textContent = categoryData.categoryName;
   }
 
-  if (categoryData.hasSheets) {
-    DOM.sheetCountGroup.style.display = 'block';
-  } else {
+  if (DOM.sheetCountGroup) {
     DOM.sheetCountGroup.style.display = 'none';
   }
 
@@ -409,16 +407,17 @@ function calculateCurrentItemPrice() {
     };
   }
 
-  const sheetCount = appState.selectedSheetCount;
-  const basePrice = sizeObj.prices[sheetCount];
+  const sheetCount = '30';
+  appState.selectedSheetCount = '30';
+  const basePrice = sizeObj.prices['30'];
 
   if (basePrice === undefined) {
     return {
       isTba: false,
       isPendingSelection: true,
       unitPrice: 0,
-      breakdownText: 'Please select sheet count',
-      displayPrice: 'Select Sheets'
+      breakdownText: 'Please select a size format',
+      displayPrice: 'Select Size'
     };
   }
   
@@ -968,14 +967,12 @@ function initEventListeners() {
   DOM.tabNotecards.addEventListener('click', () => switchCategory('notecards'));
   DOM.tabEnvelopes.addEventListener('click', () => switchCategory('envelopes'));
 
-  DOM.radioSheet30.addEventListener('change', () => {
-    appState.selectedSheetCount = '30';
-    updatePricePreview();
-  });
-  DOM.radioSheet50.addEventListener('change', () => {
-    appState.selectedSheetCount = '50';
-    updatePricePreview();
-  });
+  if (DOM.radioSheet30) {
+    DOM.radioSheet30.addEventListener('change', () => {
+      appState.selectedSheetCount = '30';
+      updatePricePreview();
+    });
+  }
 
   DOM.selectDesignCode.addEventListener('change', (e) => {
     appState.selectedDesignCode = e.target.value;

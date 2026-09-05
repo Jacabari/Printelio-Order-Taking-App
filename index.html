@@ -16,7 +16,7 @@
   <!-- Google Fonts: Playfair Display (Italic for *Printelio*) & Raleway (Clean sans-serif for all other UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700;1,800&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
@@ -30,422 +30,391 @@
         <h1 class="brand-title-main" id="mainBrandTitle">
           <span class="brand-name-word">Printelio</span>
         </h1>
-        <p class="brand-subtitle-main" id="mainBrandSubtitle">Order request form</p>
+        <p class="brand-subtitle-main" id="mainBrandSubtitle">Handcrafted and Custom Stationery</p>
+      </div>
+
+      <!-- Header Actions: Quick Custom Link & Cart Pill -->
+      <div class="header-actions" id="headerActions">
+        <button type="button" class="btn-header-action" id="btnHeaderCustom" aria-label="Configure custom order">
+          <span>✨ Custom Notepad</span>
+        </button>
+        <button type="button" class="header-cart-pill" id="btnHeaderCart" aria-label="View Order Summary and Cart">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-text">Cart</span>
+          <span class="cart-badge-pill" id="headerCartCount">0</span>
+        </button>
       </div>
     </header>
 
-    <!-- Main Order Workflow Grid -->
-    <main class="order-workflow-grid" id="orderWorkflow">
-      
-      <!-- Left Column: Customer Details + Product Configuration Form -->
-      <div class="workflow-column" id="leftWorkflowCol">
-        
-        <!-- Step 1: Customer & Order Details -->
-        <section class="card" id="customerDetailsCard">
-          <div class="card-header" id="customerCardHeader">
-            <div class="card-title-group">
-              <div class="step-indicator" id="step1Indicator">1</div>
-              <div>
-                <h2 class="card-title" id="customerCardTitle">Customer &amp; Order Details</h2>
-                <p class="card-subtitle">Required information for order processing and delivery</p>
-              </div>
-            </div>
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+
+      <!-- SECTION 1: Product Gallery View (Front & Center) -->
+      <section class="gallery-section" id="gallerySection">
+        <div class="gallery-header-box" id="galleryHeaderBox">
+          <div class="gallery-title-wrap">
+            <h2 class="gallery-section-title" id="gallerySectionTitle">Notepad Catalog</h2>
+            <p class="gallery-section-subtitle" id="gallerySectionSubtitle">
+              Browse our curated notepad designs or add multiple styles to your order.
+            </p>
           </div>
 
-          <form id="customerForm" class="form-grid two-col" novalidate>
-            <!-- Full Name -->
-            <div class="form-group" id="groupFullName">
-              <label for="inputFullName" class="form-label">
-                Full Name <span class="required-star">*</span>
-              </label>
-              <input type="text" id="inputFullName" class="form-control" placeholder="e.g. Maria Clara Santos" required autocomplete="name">
-              <span class="form-error-msg" id="errorFullName">Please enter your full name.</span>
-            </div>
-
-            <!-- Contact Number -->
-            <div class="form-group" id="groupContactNumber">
-              <label for="inputContactNumber" class="form-label">
-                Contact Number <span class="required-star">*</span>
-              </label>
-              <input type="tel" id="inputContactNumber" class="form-control" placeholder="e.g. 0917 123 4567" required autocomplete="tel">
-              <span class="form-error-msg" id="errorContactNumber">Please provide a valid contact number.</span>
-            </div>
-
-            <!-- Facebook / Instagram Username -->
-            <div class="form-group" id="groupSocialHandle">
-              <label for="inputSocialHandle" class="form-label">
-                Facebook / Instagram Username <span class="required-star">*</span>
-              </label>
-              <input type="text" id="inputSocialHandle" class="form-control" placeholder="e.g. @mariaclara.stationery" required>
-              <span class="form-error-msg" id="errorSocialHandle">Social username is required for verification.</span>
-            </div>
-
-            <!-- Courier Option -->
-            <div class="form-group" id="groupCourier">
-              <label for="selectCourier" class="form-label">
-                Courier Option <span class="required-star">*</span>
-              </label>
-              <select id="selectCourier" class="form-control" required>
-                <option value="" disabled selected>Select Courier</option>
-                <option value="J&T">J&amp;T Express (Nationwide Shipping)</option>
-                <option value="Lalamove">Lalamove</option>
-                <option value="Pick-up at the agreed location">Pick-up at the agreed location</option>
-              </select>
-              <span class="form-error-msg" id="errorCourier">Please select your preferred courier.</span>
-            </div>
-
-            <!-- Shipping / Delivery Address -->
-            <div class="form-group grid-full" id="groupAddress">
-              <label for="inputAddress" class="form-label">
-                Shipping / Delivery Address <span class="required-star">*</span>
-              </label>
-              <textarea id="inputAddress" class="form-control" rows="2" placeholder="House/Unit No., Street, Barangay, City/Municipality, Province, Postal Code" required></textarea>
-              <span class="form-error-msg" id="errorAddress">Complete delivery address is required.</span>
-            </div>
-
-            <!-- Mode of Payment -->
-            <div class="form-group grid-full" id="groupPayment">
-              <label for="selectPayment" class="form-label">
-                Mode of Payment <span class="required-star">*</span>
-              </label>
-              <select id="selectPayment" class="form-control" required>
-                <option value="" disabled selected>Select Payment Method</option>
-                <option value="GCash">GCash</option>
-                <option value="Bank Transfer">Bank Transfer (BDO / BPI)</option>
-              </select>
-              <span class="form-error-msg" id="errorPayment">Please select your payment method.</span>
-              
-              <!-- Payment Details Privacy Note -->
-              <div class="payment-privacy-note" id="paymentPrivacyNote">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                <span>Payment details will be shared separately and privately.</span>
-              </div>
-            </div>
-
-            <!-- Order Type Selection -->
-            <div class="form-group grid-full" id="groupOrderType">
-              <label for="selectOrderType" class="form-label">
-                Order Type <span class="required-star">*</span>
-              </label>
-              <select id="selectOrderType" class="form-control" required>
-                <option value="" selected>Select Order Type</option>
-                <option value="Regular Purchase (Standard design, size & sheets)">Regular Purchase (Standard design, size &amp; sheets)</option>
-                <option value="Custom Made (Request custom size, sheets, or layout/design)">Custom Made (Request custom size, sheets, or layout/design)</option>
-              </select>
-              <span class="form-error-msg" id="errorOrderType">Please select an order type.</span>
-            </div>
-          </form>
-        </section>
-
-        <!-- Step 2: Product & Design Selection -->
-        <section class="card" id="productSelectionCard" style="display: none;">
-          <div class="card-header" id="productCardHeader">
-            <div class="card-title-group">
-              <div class="step-indicator" id="step2Indicator">2</div>
-              <div>
-                <h2 class="card-title" id="productCardTitle">Product &amp; Design Selection</h2>
-                <p class="card-subtitle" id="productCardSubtitle">Choose stationery category, size format, motif, and personalization</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Standard Ordering Form Section (Regular Purchase) -->
-          <div id="standardOrderingSection">
-            <!-- Product Category Tabs: Notepads, Notecards, Money Envelopes -->
-            <div class="category-tabs" id="categoryTabs" role="tablist">
-              <button type="button" class="tab-btn active" id="tabNotepads" data-category="notepads" role="tab" aria-selected="true">
-                Notepads
+          <!-- Category Tabs Navigation Bar (3x3, A6, A5 - Default 3x3) -->
+          <div class="category-tabs-container" id="categoryTabsContainer">
+            <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Notepad Size Categories">
+              <button type="button" class="tab-btn active" id="tab3x3" data-category="3x3" role="tab" aria-selected="true" aria-controls="productGalleryGrid">
+                3x3
               </button>
-              <button type="button" class="tab-btn" id="tabNotecards" data-category="notecards" role="tab" aria-selected="false">
-                Notecards
+              <button type="button" class="tab-btn" id="tabA6" data-category="A6" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
+                A6
               </button>
-              <button type="button" class="tab-btn" id="tabEnvelopes" data-category="envelopes" role="tab" aria-selected="false">
-                Money Envelopes
+              <button type="button" class="tab-btn" id="tabA5" data-category="A5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
+                A5
               </button>
-            </div>
-
-            <!-- Dynamic Options Section -->
-            <div id="productOptionsDynamic">
-              
-              <!-- Category Specific Size / Type Selection (Clean UI - NO PRICES IN LABELS) -->
-              <div class="options-group" id="sizeOptionsContainer">
-                <div class="options-group-title">
-                  <span>Select Size Format</span>
-                  <span class="form-hint" id="categoryBadge">Notepads</span>
-                </div>
-                <div class="cards-grid three-col" id="sizeCardsGrid">
-                  <!-- Dynamically populated without prices in labels -->
-                </div>
-              </div>
-
-              <!-- Design Selection & Live Mockup Preview Box -->
-              <div class="design-selection-card" id="designSelectionBox">
-                <div class="form-label" id="designLabel">
-                  Design Code <span class="required-star">*</span>
-                </div>
-
-                <div class="design-preview-layout" id="designPreviewLayout">
-                  <!-- Dropdown Selection -->
-                  <div class="form-group" id="designDropdownGroup">
-                    <label for="selectDesignCode" class="form-hint" id="designSelectHint">Choose a curated template code:</label>
-                    <select id="selectDesignCode" class="form-control">
-                      <option value="">-- Select Design Code --</option>
-                    </select>
-                    <div class="form-hint" id="designDescriptionText" style="margin-top: 8px;">
-                      Please select a design code to preview.
-                    </div>
-                  </div>
-
-                  <!-- Design Preview Image Component (Directly below selector) -->
-                  <div class="mockup-preview-container" id="mockupPreviewWrapper">
-                    <img id="designMockupImg" src="" alt="Select a design code to view preview">
-                    <span id="designPreviewCaption" class="form-hint" style="margin-top: 8px; font-size: 0.85rem; text-align: center; display: block;">Select a design code to preview</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Customization Checkbox (+₱10) & Single Text Input -->
-              <div class="customization-box" id="customizationContainer">
-                <label class="customization-toggle-label" id="customizationToggleLabel">
-                  <input type="checkbox" id="checkCustomization" class="custom-checkbox">
-                  <div class="custom-toggle-text">
-                    <div class="custom-toggle-title">
-                      <span>Add Text Customization (e.g., Name)</span>
-                      <span class="custom-price-badge">+₱10.00 / item</span>
-                    </div>
-                    <p class="custom-toggle-desc">Personalize with recipient name or initials</p>
-                  </div>
-                </label>
-
-                <!-- Single Custom Text Input Field (No font dropdown or notes) -->
-                <div class="custom-inputs-collapse" id="customInputsCollapse">
-                  <div class="form-group" id="groupCustomText">
-                    <label for="inputCustomText" class="form-label">Custom Name / Text to Print <span class="required-star">*</span></label>
-                    <input type="text" id="inputCustomText" class="form-control" placeholder="e.g. Maria Clara / M. Santos">
-                  </div>
-                </div>
-              </div>
-
-              <!-- Unit Price Display & Add to Order Bar -->
-              <div class="item-action-bar" id="itemActionBar">
-                <div class="current-pricing-preview" id="currentPricingPreview">
-                  <span class="price-preview-label">Unit Price:</span>
-                  <div class="price-preview-value" id="currentUnitPrice">₱29.00</div>
-                  <div class="price-preview-breakdown" id="currentPriceBreakdown">Base ₱29.00 (30 sheets)</div>
-                </div>
-
-                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                  <!-- Quantity Stepper -->
-                  <div class="qty-stepper-wrapper" id="qtyStepperWrapper">
-                    <button type="button" class="stepper-btn" id="btnQtyMinus" aria-label="Decrease quantity">-</button>
-                    <input type="number" id="inputQuantity" class="qty-input" value="1" min="1" max="500" aria-label="Item quantity">
-                    <button type="button" class="stepper-btn" id="btnQtyPlus" aria-label="Increase quantity">+</button>
-                  </div>
-
-                  <!-- Add Item Button -->
-                  <button type="button" class="btn btn-primary" id="btnAddToCart">
-                    + Add Item to Order
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- Custom Ordering Form Section (Custom Made) -->
-          <div id="customOrderingSection" class="custom-ordering-section" style="display: none;">
-            <!-- Styled Info Box / Callout banner -->
-            <div class="custom-terms-banner" id="customTermsBanner">
-              <div class="custom-terms-title">
-                Custom Made Specifications &amp; Terms
-              </div>
-              <ul class="custom-terms-list">
-                <li><span>📦</span> <span>Minimum Order Quantity (MOQ): 3 pads per size per design.</span></li>
-                <li><span>📄</span> <span>Minimum of 30 sheets per notepad.</span></li>
-                <li><span>🎨</span> <span>Full-color, one-side print only.</span></li>
-                <li><span>✏️</span> <span>Includes 1 free layout draft (subsequent revisions are ₱100 each).</span></li>
-              </ul>
-            </div>
-
-            <!-- Custom Input Fields Grid -->
-            <div class="form-grid two-col" id="customInputsGrid">
-              <!-- Notepad Size Dropdown (Restricted to standard choices only) -->
-              <div class="form-group" id="groupCustomNotepadSize">
-                <label for="selectCustomNotepadSize" class="form-label">
-                  Notepad Size <span class="required-star">*</span>
-                </label>
-                <select id="selectCustomNotepadSize" class="form-control" required>
-                  <option value="square" selected>Square Notepad (3 × 3 Inches) — Base: ₱29</option>
-                  <option value="a6">A6 Notepad (4 × 5.8 Inches) — Base: ₱49</option>
-                  <option value="a5">A5 Notepad (5.8 × 8.3 Inches) — Base: ₱99</option>
-                </select>
-                <span class="form-hint" id="customSizeRateHint">Extra sheets: +₱1.50 per sheet beyond 30 sheets</span>
-              </div>
-
-              <!-- Sheet Count (Default 30, Minimum 30) -->
-              <div class="form-group" id="groupCustomSheetCount">
-                <label for="inputCustomSheetCount" class="form-label">
-                  Sheet Count <span class="required-star">*</span>
-                </label>
-                <input type="number" id="inputCustomSheetCount" class="form-control" min="30" value="30" placeholder="Minimum 30 sheets" required>
-                <span class="form-error-msg" id="errorCustomSheetCount">Sheet count must be at least 30 sheets.</span>
-                <span class="form-hint" id="customSheetCountHint">Base includes 30 sheets</span>
-              </div>
-
-              <!-- Design / Layout Instructions Text Area -->
-              <div class="form-group grid-full" id="groupCustomInstructions">
-                <label for="textareaCustomInstructions" class="form-label">
-                  Design / Layout Instructions <span class="required-star">*</span>
-                </label>
-                <textarea id="textareaCustomInstructions" class="form-control" rows="3" placeholder="Describe your design motif, color preferences, font styles, text, or reference details..."></textarea>
-                <span class="form-hint" id="customInstructionsEmailHint">If you have your own design, please send it to printelio22@gmail.com.</span>
-                <span class="form-error-msg" id="errorCustomInstructions">Please provide your design or layout instructions.</span>
-              </div>
-            </div>
-
-            <!-- Enlarged 1:1 Square Preview Component -->
-            <div class="options-group" id="customPreviewGroup">
-              <div class="options-group-title">
-                <span>Custom Specification Summary</span>
-              </div>
-              
-              <div class="mockup-preview-container" id="customMockupPreviewWrapper">
-                <div class="custom-preview-canvas" id="customPreviewCanvas">
-                  <div class="custom-preview-glue"></div>
-                  <div class="custom-preview-header">
-                    <div>
-                      <span class="custom-preview-type-tag">Custom Made Notepad</span>
-                      <div class="custom-preview-size-badge" id="customPreviewSizeBadge">Square Notepad (3 × 3 Inches)</div>
-                    </div>
-                    <div class="custom-preview-sheets-badge" id="customPreviewSheetsBadge">30 Sheets</div>
-                  </div>
-                  
-                  <div class="custom-preview-body">
-                    <div class="custom-preview-icon-row">
-                      <span class="custom-preview-feature-pill">📄 1-Side Print</span>
-                      <span class="custom-preview-feature-pill">🎨 Full-Color</span>
-                      <span class="custom-preview-feature-pill">✏️ 1 Free Draft</span>
-                    </div>
-                    
-                    <div class="custom-preview-motif-box">
-                      <div class="custom-preview-motif-label">Layout / Motif Instructions:</div>
-                      <div class="custom-preview-motif-text" id="customPreviewInstructionsText">
-                        Your custom layout &amp; design instructions will appear here...
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="custom-preview-footer">
-                    <div class="custom-preview-draft-tag">
-                      <span>📐 Custom Layout Draft</span>
-                    </div>
-                    <div class="custom-preview-price-tag" id="customPreviewPriceTag">₱29.00 / pc</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Custom Unit Price Display, Quantity Stepper & Add to Cart Button -->
-            <div class="item-action-bar" id="customItemActionBar">
-              <div class="current-pricing-preview" id="customPricingPreview">
-                <span class="price-preview-label">Custom Unit Price:</span>
-                <div class="price-preview-value" id="customUnitPriceDisplay">₱29.00</div>
-                <div class="price-preview-breakdown" id="customPriceBreakdownDisplay">Base ₱29.00 (30 sheets)</div>
-              </div>
-
-              <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                <!-- Quantity Stepper -->
-                <div class="qty-stepper-wrapper" id="customQtyStepperWrapper">
-                  <button type="button" class="stepper-btn" id="btnCustomQtyMinus" aria-label="Decrease quantity">-</button>
-                  <input type="number" id="inputCustomQuantity" class="qty-input" value="3" min="3" max="500" aria-label="Custom item quantity">
-                  <button type="button" class="stepper-btn" id="btnCustomQtyPlus" aria-label="Increase quantity">+</button>
-                </div>
-
-                <!-- Add Custom Item Button -->
-                <button type="button" class="btn btn-primary" id="btnAddCustomToCart">
-                  + Add Custom Item to Order
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- Right Column: Order Summary & Job Order Submission -->
-      <div class="workflow-column" id="rightWorkflowCol">
-        
-        <section class="card" id="orderSummaryCard">
-          <div class="card-header" id="summaryCardHeader">
-            <div class="card-title-group">
-              <div class="step-indicator" id="step3Indicator">3</div>
-              <div>
-                <h2 class="card-title" id="summaryCardTitle">Order Summary</h2>
-                <p class="card-subtitle">Review selected stationery before submitting job order</p>
-              </div>
-            </div>
-            <div class="cart-header-actions" id="cartHeaderActions">
-              <span class="cart-items-count-badge" id="cartCountBadge">0 Items</span>
-            </div>
-          </div>
-
-          <!-- Empty Cart Notice -->
-          <div class="empty-cart-state" id="emptyCartState">
-            <div class="empty-cart-title">Your Order is Empty</div>
-            <p class="empty-cart-text">Select your preferred stationery specs on the left and click "Add Item to Order".</p>
-          </div>
-
-          <!-- Itemized Table / Cards Container -->
-          <div class="cart-items-container" id="cartItemsList" style="display: none;">
-            <!-- Rendered by JavaScript -->
-          </div>
-
-          <!-- Calculated Total Display & Prominent Shipping Disclaimer -->
-          <div class="order-totals-card" id="orderTotalsCard">
-            <div class="totals-row" id="subtotalRow">
-              <span>Total Amount in Cart:</span>
-              <span id="summarySubtotalAmount">₱0.00</span>
-            </div>
-            <div class="totals-row" id="shippingMethodRow">
-              <span>Selected Courier:</span>
-              <span id="summaryCourierDisplay" style="color: var(--brand-cyan);">Not Selected</span>
-            </div>
-            <div class="totals-row" id="paymentMethodRow">
-              <span>Payment Mode:</span>
-              <span id="summaryPaymentDisplay" style="color: var(--brand-yellow);">Not Selected</span>
-            </div>
-            <div class="totals-row" id="orderTypeRow">
-              <span>Order Type:</span>
-              <span id="summaryOrderTypeDisplay" style="color: var(--brand-purple-dark); font-weight: 700;">Not Selected</span>
             </div>
             
-            <div class="totals-row grand-total-row" id="grandTotalRow">
-              <span>Calculated Total:</span>
-              <span class="grand-total-amount" id="summaryGrandTotal">₱0.00</span>
+            <!-- Category Specification Pill / Hint -->
+            <div class="category-spec-pill" id="categorySpecPill">
+              <span id="categorySpecIcon">📐</span>
+              <span id="categorySpecText">Square Notepad (3 × 3 in) • 30 Sheets • ₱29.00 / pad</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Responsive Product Gallery Grid (2 cols mobile, 3-4 cols desktop) -->
+        <div class="product-gallery-grid" id="productGalleryGrid" aria-live="polite">
+          <!-- Dynamically populated from PRODUCT_CATALOG array in script.js -->
+        </div>
+      </section>
+
+      <!-- SECTION 2: Custom Order CTA Banner -->
+      <section class="custom-cta-banner-section" id="customOrderCtaBanner">
+        <div class="custom-cta-card">
+          <div class="custom-cta-content">
+            <div class="custom-cta-badge">
+              <span>✨ BESPOKE STATIONERY</span>
+            </div>
+            <h3 class="custom-cta-title">Need more Sheets, or want to see your Own Designs and Branding?</h3>
+            <p class="custom-cta-desc">
+              We make custom-printed notepads with your logo, personalized layout, or extra sheets! Full-color 1-side printing with 1 free design draft included.
+            </p>
+            <div class="custom-cta-highlights">
+              <span class="cta-pill">📦 MOQ: 3 Pads</span>
+              <span class="cta-pill">📄 30+ Sheets</span>
+              <span class="cta-pill">🎨 Full-Color Print</span>
+              <span class="cta-pill">✏️ 1 Free Layout Draft</span>
+            </div>
+          </div>
+          <div class="custom-cta-action">
+            <button type="button" class="btn btn-secondary btn-custom-trigger" id="btnOpenCustomOrder">
+              <span>Configure Custom Order</span>
+              <span class="cta-arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: Custom Made Specification Section (Initially hidden / revealed via CTA) -->
+      <section class="card custom-made-section" id="customOrderingSection" style="display: none;">
+        <!-- Visible Back to Notepad Catalog Navigation Button -->
+        <div class="custom-nav-bar" id="customNavBar">
+          <button type="button" class="btn-back-catalog" id="btnBackToCatalog" aria-label="Back to Notepad Catalog">
+            <span class="back-arrow">←</span>
+            <span>Back to Notepad Catalog</span>
+          </button>
+        </div>
+
+        <div class="card-header" id="customCardHeader">
+          <div class="card-title-group">
+            <div class="step-indicator" id="customStepIndicator">✏️</div>
+            <div>
+              <h2 class="card-title" id="customSectionTitle">Custom Made Notepad Specification</h2>
+              <p class="card-subtitle">Request custom sizes, higher sheet counts, or your own layout motif</p>
+            </div>
+          </div>
+          <button type="button" class="btn-close-section" id="btnCloseCustomSection" aria-label="Back to catalog" title="Back to Notepad Catalog">&times;</button>
+        </div>
+
+        <!-- Styled Info Box / Callout banner (PRESERVED) -->
+        <div class="custom-terms-banner" id="customTermsBanner">
+          <div class="custom-terms-title">
+            Custom Made Specifications &amp; Terms
+          </div>
+          <ul class="custom-terms-list">
+            <li><span>📦</span> <span>Minimum Order Quantity (MOQ): 3 pads per size per design.</span></li>
+            <li><span>📄</span> <span>Minimum of 30 sheets per notepad.</span></li>
+            <li><span>🎨</span> <span>Full-color, one-side print only.</span></li>
+            <li><span>✏️</span> <span>Includes 1 free layout draft (subsequent revisions are ₱100 each).</span></li>
+          </ul>
+        </div>
+
+        <!-- Custom Input Fields Grid -->
+        <div class="form-grid two-col" id="customInputsGrid">
+          <!-- Notepad Size Dropdown (Preserved choices & formula hints) -->
+          <div class="form-group" id="groupCustomNotepadSize">
+            <label for="selectCustomNotepadSize" class="form-label">
+              Notepad Size <span class="required-star">*</span>
+            </label>
+            <select id="selectCustomNotepadSize" class="form-control" required>
+              <option value="square" selected>Square Notepad (3 × 3 Inches) — Base: ₱29</option>
+              <option value="a6">A6 Notepad (4 × 5.8 Inches) — Base: ₱49</option>
+              <option value="a5">A5 Notepad (5.8 × 8.3 Inches) — Base: ₱99</option>
+            </select>
+            <span class="form-hint" id="customSizeRateHint">Extra sheets: +₱1.50 per sheet beyond 30 sheets</span>
+          </div>
+
+          <!-- Sheet Count (Default 30, Minimum 30) -->
+          <div class="form-group" id="groupCustomSheetCount">
+            <label for="inputCustomSheetCount" class="form-label">
+              Sheet Count <span class="required-star">*</span>
+            </label>
+            <input type="number" id="inputCustomSheetCount" class="form-control" min="30" value="30" placeholder="Minimum 30 sheets" required>
+            <span class="form-error-msg" id="errorCustomSheetCount">Sheet count must be at least 30 sheets.</span>
+            <span class="form-hint" id="customSheetCountHint">Base includes 30 sheets</span>
+          </div>
+
+          <!-- Design / Layout Instructions Text Area -->
+          <div class="form-group grid-full" id="groupCustomInstructions">
+            <label for="textareaCustomInstructions" class="form-label">
+              Design / Layout Instructions <span class="required-star">*</span>
+            </label>
+            <textarea id="textareaCustomInstructions" class="form-control" rows="3" placeholder="Describe your design motif, color preferences, font styles, text, or reference details..."></textarea>
+            <!-- Preserved Email Instruction Notice -->
+            <span class="form-hint" id="customInstructionsEmailHint">If you have your own design, please send it to printelio22@gmail.com.</span>
+            <span class="form-error-msg" id="errorCustomInstructions">Please provide your design or layout instructions.</span>
+          </div>
+        </div>
+
+        <!-- Preserved 1:1 Preview Component -->
+        <div class="options-group" id="customPreviewGroup">
+          <div class="options-group-title">
+            <span>Custom Specification Summary</span>
+          </div>
+          
+          <div class="mockup-preview-container" id="customMockupPreviewWrapper">
+            <div class="custom-preview-canvas" id="customPreviewCanvas">
+              <div class="custom-preview-glue"></div>
+              <div class="custom-preview-header">
+                <div>
+                  <span class="custom-preview-type-tag">Custom Made Notepad</span>
+                  <div class="custom-preview-size-badge" id="customPreviewSizeBadge">Square Notepad (3 × 3 Inches)</div>
+                </div>
+                <div class="custom-preview-sheets-badge" id="customPreviewSheetsBadge">30 Sheets</div>
+              </div>
+              
+              <div class="custom-preview-body">
+                <div class="custom-preview-icon-row">
+                  <span class="custom-preview-feature-pill">📄 1-Side Print</span>
+                  <span class="custom-preview-feature-pill">🎨 Full-Color</span>
+                  <span class="custom-preview-feature-pill">✏️ 1 Free Draft</span>
+                </div>
+                
+                <div class="custom-preview-motif-box">
+                  <div class="custom-preview-motif-label">Layout / Motif Instructions:</div>
+                  <div class="custom-preview-motif-text" id="customPreviewInstructionsText">
+                    Your custom layout &amp; design instructions will appear here...
+                  </div>
+                </div>
+              </div>
+
+              <div class="custom-preview-footer">
+                <div class="custom-preview-draft-tag">
+                  <span>📐 Custom Layout Draft</span>
+                </div>
+                <div class="custom-preview-price-tag" id="customPreviewPriceTag">₱29.00 / pc</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Unit Price Display, Quantity Stepper (MOQ 3) & Add to Cart Button -->
+        <div class="item-action-bar" id="customItemActionBar">
+          <div class="current-pricing-preview" id="customPricingPreview">
+            <span class="price-preview-label">Custom Unit Price:</span>
+            <div class="price-preview-value" id="customUnitPriceDisplay">₱29.00</div>
+            <div class="price-preview-breakdown" id="customPriceBreakdownDisplay">Base ₱29.00 (30 sheets)</div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <!-- Quantity Stepper with MOQ 3 -->
+            <div class="qty-stepper-wrapper" id="customQtyStepperWrapper">
+              <button type="button" class="stepper-btn" id="btnCustomQtyMinus" aria-label="Decrease quantity">-</button>
+              <input type="number" id="inputCustomQuantity" class="qty-input" value="3" min="3" max="500" aria-label="Custom item quantity">
+              <button type="button" class="stepper-btn" id="btnCustomQtyPlus" aria-label="Increase quantity">+</button>
             </div>
 
-            <!-- Mandatory Prominent Shipping Fee Disclaimer -->
-            <div class="shipping-disclaimer-banner" id="shippingDisclaimerBanner">
-              ⚠️ Note: Shipping fee is not yet included.
+            <!-- Add Custom Item Button -->
+            <button type="button" class="btn btn-primary" id="btnAddCustomToCart">
+              + Add Custom Item to Order
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: Final Checkout / Order Summary Section (Hidden initially, revealed after adding to cart or clicking cart) -->
+      <section class="checkout-workflow-section" id="checkoutSection" style="display: none;">
+        <div class="checkout-section-header">
+          <div class="card-title-group">
+            <div class="step-indicator" id="checkoutStepIndicator">🛒</div>
+            <div>
+              <h2 class="card-title" id="checkoutSectionTitle">Review Order &amp; Checkout</h2>
+              <p class="card-subtitle">Review items in your order, enter delivery details, and submit your job order request</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-layout-grid">
+          <!-- Left Column: Itemized Order Summary -->
+          <div class="checkout-column checkout-order-col">
+            <div class="card" id="orderSummaryCard">
+              <div class="card-header" id="summaryCardHeader">
+                <div class="card-title-group">
+                  <h3 class="card-title" id="summaryCardTitle" style="font-size: 1.15rem;">Selected Items</h3>
+                </div>
+                <div class="cart-header-actions" id="cartHeaderActions">
+                  <span class="cart-items-count-badge" id="cartCountBadge">0 Items</span>
+                </div>
+              </div>
+
+              <!-- Empty Cart Notice -->
+              <div class="empty-cart-state" id="emptyCartState">
+                <div class="empty-cart-title">Your Order is Empty</div>
+                <p class="empty-cart-text">Click "+ Add to Cart" on any notepad in the gallery above to start your order.</p>
+              </div>
+
+              <!-- Itemized Table / Cards Container -->
+              <div class="cart-items-container" id="cartItemsList" style="display: none;">
+                <!-- Rendered by JavaScript -->
+              </div>
+
+              <!-- Calculated Total Display & Prominent Shipping Disclaimer -->
+              <div class="order-totals-card" id="orderTotalsCard">
+                <div class="totals-row" id="subtotalRow">
+                  <span>Total Amount in Cart:</span>
+                  <span id="summarySubtotalAmount">₱0.00</span>
+                </div>
+                <div class="totals-row" id="shippingMethodRow">
+                  <span>Selected Courier:</span>
+                  <span id="summaryCourierDisplay" style="color: var(--brand-cyan);">Not Selected</span>
+                </div>
+                <div class="totals-row" id="paymentMethodRow">
+                  <span>Payment Mode:</span>
+                  <span id="summaryPaymentDisplay" style="color: var(--brand-yellow);">Not Selected</span>
+                </div>
+                
+                <div class="totals-row grand-total-row" id="grandTotalRow">
+                  <span>Calculated Total:</span>
+                  <span class="grand-total-amount" id="summaryGrandTotal">₱0.00</span>
+                </div>
+
+                <!-- Mandatory Prominent Shipping Fee Disclaimer -->
+                <div class="shipping-disclaimer-banner" id="shippingDisclaimerBanner">
+                  ⚠️ Note: Shipping fee is not yet included.
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Submit Job Order Button -->
-          <button type="button" class="btn btn-primary btn-large" id="btnSubmitOrder">
-            Submit Job Order
-          </button>
+          <!-- Right Column: Customer & Delivery Information Form -->
+          <div class="checkout-column checkout-customer-col">
+            <div class="card" id="customerDetailsCard">
+              <div class="card-header" id="customerCardHeader">
+                <div class="card-title-group">
+                  <h3 class="card-title" id="customerCardTitle" style="font-size: 1.15rem;">Customer &amp; Delivery Details</h3>
+                </div>
+              </div>
 
-        </section>
+              <form id="customerForm" class="form-grid two-col" novalidate>
+                <!-- Full Name -->
+                <div class="form-group grid-full" id="groupFullName">
+                  <label for="inputFullName" class="form-label">
+                    Full Name <span class="required-star">*</span>
+                  </label>
+                  <input type="text" id="inputFullName" class="form-control" placeholder="e.g. Maria Clara Santos" required autocomplete="name">
+                  <span class="form-error-msg" id="errorFullName">Please enter your full name.</span>
+                </div>
 
-      </div>
+                <!-- Contact Number -->
+                <div class="form-group" id="groupContactNumber">
+                  <label for="inputContactNumber" class="form-label">
+                    Contact Number <span class="required-star">*</span>
+                  </label>
+                  <input type="tel" id="inputContactNumber" class="form-control" placeholder="e.g. 0917 123 4567" required autocomplete="tel">
+                  <span class="form-error-msg" id="errorContactNumber">Please provide a valid contact number.</span>
+                </div>
+
+                <!-- Facebook / Instagram Username -->
+                <div class="form-group" id="groupSocialHandle">
+                  <label for="inputSocialHandle" class="form-label">
+                    Facebook / Instagram Username <span class="required-star">*</span>
+                  </label>
+                  <input type="text" id="inputSocialHandle" class="form-control" placeholder="e.g. @mariaclara.stationery" required>
+                  <span class="form-error-msg" id="errorSocialHandle">Social username is required for verification.</span>
+                </div>
+
+                <!-- Courier Option -->
+                <div class="form-group" id="groupCourier">
+                  <label for="selectCourier" class="form-label">
+                    Courier Option <span class="required-star">*</span>
+                  </label>
+                  <select id="selectCourier" class="form-control" required>
+                    <option value="" disabled selected>Select Courier</option>
+                    <option value="J&T">J&amp;T Express (Nationwide Shipping)</option>
+                    <option value="Lalamove">Lalamove</option>
+                    <option value="Pick-up at the agreed location">Pick-up at the agreed location</option>
+                  </select>
+                  <span class="form-error-msg" id="errorCourier">Please select your preferred courier.</span>
+                </div>
+
+                <!-- Mode of Payment -->
+                <div class="form-group" id="groupPayment">
+                  <label for="selectPayment" class="form-label">
+                    Mode of Payment <span class="required-star">*</span>
+                  </label>
+                  <select id="selectPayment" class="form-control" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="GCash">GCash</option>
+                    <option value="Bank Transfer">Bank Transfer (BDO / BPI)</option>
+                  </select>
+                  <span class="form-error-msg" id="errorPayment">Please select your payment method.</span>
+                </div>
+
+                <!-- Payment Details Privacy Note -->
+                <div class="form-group grid-full" style="margin-top: -8px;">
+                  <div class="payment-privacy-note" id="paymentPrivacyNote">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Payment details will be shared separately and privately.</span>
+                  </div>
+                </div>
+
+                <!-- Shipping / Delivery Address -->
+                <div class="form-group grid-full" id="groupAddress">
+                  <label for="inputAddress" class="form-label">
+                    Shipping / Delivery Address <span class="required-star">*</span>
+                  </label>
+                  <textarea id="inputAddress" class="form-control" rows="2" placeholder="House/Unit No., Street, Barangay, City/Municipality, Province, Postal Code" required></textarea>
+                  <span class="form-error-msg" id="errorAddress">Complete delivery address is required.</span>
+                </div>
+
+                <!-- Submit Job Order Button -->
+                <div class="form-group grid-full" style="margin-top: 12px;">
+                  <button type="button" class="btn btn-primary btn-large" id="btnSubmitOrder" style="width: 100%;">
+                    Submit Job Order
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
 
     </main>
   </div>
 
-  <!-- Job Order Confirmation Slip Modal -->
+  <!-- Job Order Confirmation Slip Modal (PRESERVED) -->
   <div class="modal-backdrop" id="jobOrderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-dialog" id="jobOrderDialog">
       <div class="modal-header" id="modalHeader">
@@ -464,9 +433,9 @@
         <div class="job-order-header-box" id="joHeaderBox">
           <div>
             <span class="jo-ref-num" id="joReferenceNumber">PRNT-2026-0001</span>
-            <div>
-              <span class="jo-meta-badge" id="joDateGenerated">Generated on August 28, 2026</span>
-              <span class="jo-meta-badge" style="background: rgba(61, 255, 255, 0.15); color: #007c7c; border-color: rgba(61, 255, 255, 0.4);" id="joStatusBadge">Status: Job Order Received</span>
+            <div class="jo-meta-badges-wrap" id="joMetaBadgesWrap">
+              <span class="jo-meta-badge jo-date-badge" id="joDateGenerated">Generated on August 28, 2026</span>
+              <span class="jo-meta-badge jo-status-badge" id="joStatusBadge">Status: Job Order Received</span>
             </div>
           </div>
           <div style="text-align: right;">
@@ -501,10 +470,6 @@
           <div class="info-item" style="grid-column: 1 / -1;">
             <div class="info-item-label">Payment Method</div>
             <div class="info-item-value" id="joPayment">-</div>
-          </div>
-          <div class="info-item" style="grid-column: 1 / -1;">
-            <div class="info-item-label">Order Type</div>
-            <div class="info-item-value" id="joOrderType">Regular Purchase</div>
           </div>
           <div class="info-item" id="joCustomMadeDetailsRow" style="grid-column: 1 / -1; display: none;">
             <div class="info-item-label">Custom Specifications</div>

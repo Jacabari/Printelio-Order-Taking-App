@@ -151,11 +151,53 @@ const CATEGORY_SPECS = {
   }
 };
 
+const DESIGN_TITLES = {
+  // Square Notepads (3x3)
+  'NP_SQ_CAT01': 'Sunny Sitting Calico',
+  'NP_SQ_CAT02': 'Dozing Dreamer',
+  'NP_SQ_CAT03': 'Curious Calico',
+  'NP_SQ_CAT04': 'Cozy Nap',
+  'NP_SQ_CAT05': 'Paws Up Calico',
+  'NP_SQ_CAT06': 'Sweet Smile',
+  'NP_SQ_MEMO': 'Berry Checkerboard',
+  'NP_SQ_MS_Blue': 'Blue Celestial',
+  'NP_SQ_MS_Pink': 'Pink Celestial',
+  'NP_SQ_MS_Purple': 'Lavender Celestial',
+  'NP_SQ_NOTES1': 'Blooming Meadow',
+  'NP_SQ_NOTES2': 'Pink Ribbon',
+  'NP_SQ01': 'Lemon Zest',
+  'NP_SQ02': 'Soft Bunny Dot',
+  'NP_SQ03': 'Pixel & Heart Retro',
+  'NP_SQ04': 'Cloudy Constellation',
+  'NP_SQ05': 'Lavender Gingham',
+
+  // A6 Notepads
+  'NP_A6_Cinnamoroll': 'Cinnamoroll',
+  'NP_A6_Flower': 'Blush Flora',
+  'NP_A6_HelloKitty': 'Hello Kitty',
+  'NP_A6_Kuromi': 'Kuromi',
+  'NP_A6_ToDoList': 'Tulip Blossom',
+  'NP_A6_Lemon': 'Lemony Fresh',
+
+  // A5 Notepads
+  'Blue DP_A5': 'Cloud Nine Daily',
+  'Pink DP_A5': 'Sweet Rose Daily',
+  'Yellow DP_A5': 'Sunshine Glow Daily',
+  'WP1_A5': 'Pastel Weekly',
+  'WP2_A5': 'Berry Bloom Weekly',
+  'WP3_A5': 'Lavender Bloom Weekly',
+  'WP4_A5': 'Peach Bloom Weekly',
+  'WP5_A5': 'Garden Grid Weekly',
+  'WP6_A5': 'Paws & Garden Weekly',
+  'WP7_A5': 'Retro Rainbow Weekly',
+  'WP8_A5': 'Lilac Monster Weekly'
+};
+
 const PRODUCT_CATALOG = [
   // 3x3 Notepads (Square 3 × 3 in, 30 sheets, ₱29.00)
   {
     code: 'NP_SQ_CAT01',
-    name: 'Playful Kitty · Cat 01',
+    name: 'Sunny Sitting Calico',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -166,7 +208,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_CAT02',
-    name: 'Sweet Whiskers · Cat 02',
+    name: 'Dozing Dreamer',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -177,7 +219,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_CAT03',
-    name: 'Paws & Cocoa · Cat 03',
+    name: 'Curious Calico',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -188,7 +230,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_CAT04',
-    name: 'Curious Calico · Cat 04',
+    name: 'Cozy Nap',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -199,7 +241,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_CAT05',
-    name: 'Sleeping Tabby · Cat 05',
+    name: 'Paws Up Calico',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -210,7 +252,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_CAT06',
-    name: 'Kitty Friends · Cat 06',
+    name: 'Sweet Smile',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -221,7 +263,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_MEMO',
-    name: 'Daily Memo Square',
+    name: 'Berry Checkerboard',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -232,7 +274,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_MS_Blue',
-    name: 'Pastel Grid · Sky Blue',
+    name: 'Blue Celestial',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -243,7 +285,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_MS_Pink',
-    name: 'Blush Lines · Pastel Pink',
+    name: 'Pink Celestial',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -254,7 +296,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_MS_Purple',
-    name: 'Lavender Grid · Purple',
+    name: 'Lavender Celestial',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -265,7 +307,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_NOTES1',
-    name: 'Floral Header Notes',
+    name: 'Blooming Meadow',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -276,7 +318,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ_NOTES2',
-    name: 'Daily Checklist Notes',
+    name: 'Pink Ribbon',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -287,7 +329,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ01',
-    name: 'Classic Grid Memo',
+    name: 'Lemon Zest',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -298,7 +340,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ02',
-    name: 'Dot Grid Daily',
+    name: 'Soft Bunny Dot',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -309,7 +351,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ03',
-    name: 'Retro Aesthetic Note',
+    name: 'Pixel & Heart Retro',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -320,7 +362,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ04',
-    name: 'Clean Lined Memo',
+    name: 'Cloudy Constellation',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -331,7 +373,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_SQ05',
-    name: 'Warm Sun Memo',
+    name: 'Lavender Gingham',
     category: '3x3',
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
@@ -344,7 +386,7 @@ const PRODUCT_CATALOG = [
   // A6 Notepads (4 × 5.8 in, 30 sheets, ₱49.00)
   {
     code: 'NP_A6_Cinnamoroll',
-    name: 'Cloud Bunny · Cinnamoroll',
+    name: 'Cinnamoroll',
     category: 'A6',
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
@@ -355,7 +397,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_A6_Flower',
-    name: 'Botanical Bloom · Flower',
+    name: 'Blush Flora',
     category: 'A6',
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
@@ -366,7 +408,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_A6_HelloKitty',
-    name: 'Sweet Bow · Hello Kitty',
+    name: 'Hello Kitty',
     category: 'A6',
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
@@ -377,7 +419,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_A6_Kuromi',
-    name: 'Gothic Star · Kuromi',
+    name: 'Kuromi',
     category: 'A6',
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
@@ -388,7 +430,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_A6_ToDoList',
-    name: 'Task Priorities Checklist',
+    name: 'Tulip Blossom',
     category: 'A6',
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
@@ -399,7 +441,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'NP_A6_Lemon',
-    name: 'Citrus Fresh · Lemon Pad',
+    name: 'Lemony Fresh',
     category: 'A6',
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
@@ -412,7 +454,7 @@ const PRODUCT_CATALOG = [
   // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱99.00)
   {
     code: 'Blue DP_A5',
-    name: 'Ocean Mist · Daily Planner',
+    name: 'Cloud Nine Daily',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -423,7 +465,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'Pink DP_A5',
-    name: 'Rose Petal · Daily Planner',
+    name: 'Sweet Rose Daily',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -434,7 +476,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'Yellow DP_A5',
-    name: 'Sunshine Glow · Daily Planner',
+    name: 'Sunshine Glow Daily',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -445,7 +487,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP1_A5',
-    name: 'Goal & Habit · Weekly Planner 01',
+    name: 'Pastel Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -456,7 +498,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP2_A5',
-    name: 'Hourly Schedule · Weekly Planner 02',
+    name: 'Berry Bloom Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -467,7 +509,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP3_A5',
-    name: 'Track & Reflect · Weekly Planner 03',
+    name: 'Lavender Bloom Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -478,7 +520,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP4_A5',
-    name: 'Minimalist Focus · Weekly Planner 04',
+    name: 'Peach Bloom Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -489,7 +531,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP5_A5',
-    name: 'Priority Matrix · Weekly Planner 05',
+    name: 'Garden Grid Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -500,7 +542,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP6_A5',
-    name: 'Clean Checklist · Weekly Planner 06',
+    name: 'Paws & Garden Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -511,7 +553,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP7_A5',
-    name: 'Grid Journal · Weekly Planner 07',
+    name: 'Retro Rainbow Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -522,7 +564,7 @@ const PRODUCT_CATALOG = [
   },
   {
     code: 'WP8_A5',
-    name: 'Productivity Week · Weekly Planner 08',
+    name: 'Lilac Monster Weekly',
     category: 'A5',
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
@@ -1004,6 +1046,7 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
   const qty = Math.max(1, parseInt(quantity, 10) || 1);
   const trimmedText = isCustomized ? customText.trim() : '';
   const unitPrice = product.price + (isCustomized ? 10 : 0);
+  const displayTitle = DESIGN_TITLES[product.code] || product.name;
 
   const existingIndex = appState.cart.findIndex(
     item => !item.isCustomMade && 
@@ -1016,6 +1059,8 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
   if (existingIndex > -1) {
     appState.cart[existingIndex].quantity += qty;
     appState.cart[existingIndex].subtotal = appState.cart[existingIndex].quantity * appState.cart[existingIndex].unitPrice;
+    appState.cart[existingIndex].productTitle = displayTitle;
+    appState.cart[existingIndex].shortName = displayTitle;
   } else {
     const cartItem = {
       id: 'gallery_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
@@ -1024,7 +1069,8 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
       categoryName: 'Notepads',
       sizeId: product.category,
       sizeName: product.sizeName,
-      shortName: product.name,
+      shortName: displayTitle,
+      productTitle: displayTitle,
       dimensions: product.dimensions,
       hasSheets: true,
       sheetCount: product.sheets,
@@ -1043,7 +1089,7 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
   renderCart();
   showCheckoutSection(false);
   const customNote = isCustomized ? ` with custom text "${trimmedText}"` : '';
-  showToast(`Added ${qty}× ${product.name} (${product.code})${customNote} to order.`);
+  showToast(`Added ${qty}× ${displayTitle} (${product.code})${customNote} to order.`);
 }
 
 function showCheckoutSection(scrollIntoView = false) {
@@ -1528,13 +1574,16 @@ function addItemToCart() {
     return;
   }
 
+  const displayTitle = DESIGN_TITLES[appState.selectedDesignCode] || sizeObj.shortName || sizeObj.name;
+
   const cartItem = {
     id: 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
     categoryKey: appState.currentCategory,
     categoryName: categoryData.categoryName,
     sizeId: sizeObj.id,
     sizeName: sizeObj.name,
-    shortName: sizeObj.shortName || sizeObj.name,
+    shortName: displayTitle,
+    productTitle: displayTitle,
     dimensions: sizeObj.dimensions,
     hasSheets: categoryData.hasSheets,
     sheetCount: categoryData.hasSheets ? appState.selectedSheetCount : null,
@@ -1640,9 +1689,10 @@ function renderCart() {
       thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" onerror="this.onerror=null; this.style.display='none';">`;
     }
 
+    const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';
     const designBadgeHtml = item.isCustomMade
       ? `<div class="cart-item-design-badge" style="background: var(--brand-black); color: var(--brand-yellow);">Design: Custom Layout Draft</div>`
-      : `<div class="cart-item-design-badge">Design: ${item.designCode}</div>`;
+      : `<div class="cart-item-design-badge">Design: <strong>${escapeHtml(item.designCode)}</strong>${displayTitle ? ` — ${escapeHtml(displayTitle)}` : ''}</div>`;
 
     itemCard.innerHTML = `
       <div class="cart-item-main">
@@ -1650,8 +1700,8 @@ function renderCart() {
           ${thumbHtml}
         </div>
         <div class="cart-item-details">
-          <div class="cart-item-title">${item.sizeName}</div>
-          <div class="cart-item-spec-line">${specDetails}</div>
+          <div class="cart-item-title">${escapeHtml(displayTitle ? `${displayTitle} (${item.sizeName})` : item.sizeName)}</div>
+          <div class="cart-item-spec-line">${escapeHtml(specDetails)}</div>
           ${designBadgeHtml}
           ${customDetailsBadge}
         </div>
@@ -1874,14 +1924,20 @@ function buildJobOrderSlip(refNo) {
     const priceCell = item.isTba ? '<span style="color:#b241ce; font-weight:700;">TBA</span>' : `₱${item.unitPrice.toFixed(2)}`;
     const subtotalCell = item.isTba ? '<span style="color:#b241ce; font-weight:700;">TBA</span>' : `₱${item.subtotal.toFixed(2)}`;
 
+    const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';
+
     const designCellHtml = item.isCustomMade
       ? `<span class="jo-design-badge jo-design-badge-custom">CUSTOM</span>`
-      : `<span class="jo-design-badge">${escapeHtml(item.designCode)}</span>`;
+      : `<span class="jo-design-badge">${escapeHtml(item.designCode)}</span>${displayTitle ? `<br><span style="font-size:0.75rem; color:#475569; font-weight:600; display:inline-block; margin-top:3px;">${escapeHtml(displayTitle)}</span>` : ''}`;
+
+    const itemTitleHtml = displayTitle
+      ? `<strong style="color:#111827; font-weight:700;">${escapeHtml(displayTitle)}</strong><br><span style="font-size:0.8rem; color:#4b5563; font-weight:600;">${escapeHtml(item.sizeName)}</span>`
+      : `<strong style="color:#111827; font-weight:700;">${escapeHtml(item.categoryName)} - ${escapeHtml(item.sizeName)}</strong>`;
 
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>
-        <strong style="color:#111827; font-weight:700;">${escapeHtml(item.categoryName)} - ${escapeHtml(item.sizeName)}</strong><br>
+        ${itemTitleHtml}<br>
         <span style="font-size:0.775rem; color:#64748b;">${escapeHtml(item.dimensions)} ${item.hasSheets ? '• ' + item.sheetCount + ' sheets' + (item.extraSheets > 0 ? ` (+${item.extraSheets} extra)` : '') : ''}</span>
       </td>
       <td>
@@ -2327,14 +2383,18 @@ async function submitJobOrder() {
       if (item.isCustomMade) {
         return `${idx + 1}. [Custom Made] ${item.sizeName} (${item.sheetCount} sheets${item.extraSheets > 0 ? `, +${item.extraSheets} extra @ ₱${item.rate.toFixed(2)}/sh` : ''}) - Instructions: "${item.instructions}" | Qty: ${item.quantity} | ₱${item.subtotal.toFixed(2)}`;
       }
+      const titleStr = (item.productTitle || DESIGN_TITLES[item.designCode]) ? ` ("${item.productTitle || DESIGN_TITLES[item.designCode]}")` : '';
       const customStr = item.isCustomized ? ` [Custom: "${item.customText}"]` : '';
       const sheetStr = item.hasSheets ? ` (${item.sheetCount} sheets)` : '';
       const priceStr = item.isTba ? 'TBA' : `₱${item.subtotal.toFixed(2)}`;
-      return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${sheetStr}${customStr} | Qty: ${item.quantity} | ${priceStr}`;
+      return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${titleStr}${sheetStr}${customStr} | Qty: ${item.quantity} | ${priceStr}`;
     }).join('\n');
 
     // 2. Extract selected design codes
-    const uniqueDesignCodes = [...new Set(appState.cart.map(item => item.designCode))].join(', ');
+    const uniqueDesignCodes = [...new Set(appState.cart.map(item => {
+      const title = item.productTitle || DESIGN_TITLES[item.designCode];
+      return title ? `${item.designCode} (${title})` : item.designCode;
+    }))].join(', ');
 
     // 3. Prepare Google Sheets Payload
     const customItems = appState.cart.filter(i => i.isCustomMade);

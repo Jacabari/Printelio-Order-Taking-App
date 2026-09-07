@@ -26,10 +26,7 @@ const A5_NOTEPAD_DESIGNS = [
   'WP5_A5',
   'WP6_A5',
   'WP7_A5',
-  'WP8_A5',
-  'NP_NHD_A5_01',
-  'NP_NHD_A5_02',
-  'NP_NHD_A5_03'
+  'WP8_A5'
 ];
 
 // Product Catalog & Pricing Matrix
@@ -77,10 +74,7 @@ const PRODUCTS_DATA = {
           'NP_A6_HelloKitty',
           'NP_A6_Kuromi',
           'NP_A6_ToDoList',
-          'NP_A6_Lemon',
-          'NP_NHD_A6_01',
-          'NP_NHD_A6_02',
-          'NP_NHD_A6_03'
+          'NP_A6_Lemon'
         ]
       },
       {
@@ -184,9 +178,6 @@ const DESIGN_TITLES = {
   'NP_A6_Kuromi': 'Kuromi',
   'NP_A6_ToDoList': 'Tulip Blossom',
   'NP_A6_Lemon': 'Lemony Fresh',
-  'NP_NHD_A6_01': 'Vintage Parchment Scroll',
-  'NP_NHD_A6_02': "Explorer's Parchment",
-  'NP_NHD_A6_03': 'Gazette Botanical',
 
   // A5 Notepads
   'Blue DP_A5': 'Cloud Nine Daily',
@@ -199,10 +190,7 @@ const DESIGN_TITLES = {
   'WP5_A5': 'Garden Grid Weekly',
   'WP6_A5': 'Paws & Garden Weekly',
   'WP7_A5': 'Retro Rainbow Weekly',
-  'WP8_A5': 'Lilac Monster Weekly',
-  'NP_NHD_A5_01': 'Vintage Parchment Scroll',
-  'NP_NHD_A5_02': "Explorer's Parchment",
-  'NP_NHD_A5_03': 'Gazette Botanical'
+  'WP8_A5': 'Lilac Monster Weekly'
 };
 
 const PRODUCT_CATALOG = [
@@ -462,42 +450,6 @@ const PRODUCT_CATALOG = [
     tag: 'Fruit Motif',
     motif: 'Watercolor Lemon Sprig'
   },
-  {
-    code: 'NP_NHD_A6_01',
-    name: 'Vintage Parchment Scroll',
-    category: 'A6',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    image: 'images/NP_NHD_A6_01.jpg',
-    tag: 'Vintage / Scroll',
-    motif: 'Antique Parchment & Feather Quill'
-  },
-  {
-    code: 'NP_NHD_A6_02',
-    name: "Explorer's Parchment",
-    category: 'A6',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    image: 'images/NP_NHD_A6_02.jpg',
-    tag: 'Explorer Motif',
-    motif: 'Parchment Map & Compass Lines'
-  },
-  {
-    code: 'NP_NHD_A6_03',
-    name: 'Gazette Botanical',
-    category: 'A6',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    image: 'images/NP_NHD_A6_03.jpg',
-    tag: 'Botanical Gazette',
-    motif: 'Vintage Pressed Flora & Newspaper Layout'
-  },
 
   // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱99.00)
   {
@@ -620,42 +572,6 @@ const PRODUCT_CATALOG = [
     price: 99.00,
     tag: 'Weekly Planner',
     motif: 'Sprint Goals & Project Tracking'
-  },
-  {
-    code: 'NP_NHD_A5_01',
-    name: 'Vintage Parchment Scroll',
-    category: 'A5',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    image: 'images/NP_NHD_A5_01.jpg',
-    tag: 'Vintage / Scroll',
-    motif: 'Antique Parchment & Feather Quill'
-  },
-  {
-    code: 'NP_NHD_A5_02',
-    name: "Explorer's Parchment",
-    category: 'A5',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    image: 'images/NP_NHD_A5_02.jpg',
-    tag: 'Explorer Motif',
-    motif: 'Parchment Map & Compass Lines'
-  },
-  {
-    code: 'NP_NHD_A5_03',
-    name: 'Gazette Botanical',
-    category: 'A5',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    image: 'images/NP_NHD_A5_03.jpg',
-    tag: 'Botanical Gazette',
-    motif: 'Vintage Pressed Flora & Newspaper Layout'
   }
 ];
 
@@ -829,18 +745,12 @@ function getProductMockupSvg(code, name, category, tag) {
   } else if (tag.includes('Character')) {
     iconEmoji = '🎀';
     headerColor = '#ea98b7';
-  } else if (tag.includes('Floral') || tag.includes('Botanical')) {
-    iconEmoji = '🌿';
+  } else if (tag.includes('Floral')) {
+    iconEmoji = '🌸';
     headerColor = '#7bc794';
   } else if (tag.includes('Fruit')) {
     iconEmoji = '🍋';
     headerColor = '#fcd05b';
-  } else if (tag.includes('Vintage') || tag.includes('Scroll')) {
-    iconEmoji = '📜';
-    headerColor = '#c8a870';
-  } else if (tag.includes('Explorer')) {
-    iconEmoji = '🧭';
-    headerColor = '#cca362';
   } else if (tag.includes('Planner') || tag.includes('Checklist')) {
     iconEmoji = '📅';
     headerColor = '#80a3dc';
@@ -928,7 +838,7 @@ function renderProductGallery(categoryKey) {
         <span class="product-card-badge">${product.code}</span>
         <span class="product-card-motif-tag">${product.tag}</span>
         <img 
-          src="${product.image || `images/${encodeURIComponent(product.code)}.png`}" 
+          src="images/${encodeURIComponent(product.code)}.png" 
           alt="${product.name}" 
           class="product-card-img" 
           loading="lazy"
@@ -991,12 +901,8 @@ function renderProductGallery(categoryKey) {
     const cardImg = card.querySelector('.product-card-img');
     if (cardImg) {
       cardImg.addEventListener('error', function onImgError() {
-        if (!product.image && !this.src.endsWith('.jpg')) {
-          this.src = `images/${encodeURIComponent(product.code)}.jpg`;
-        } else {
-          this.removeEventListener('error', onImgError);
-          this.src = fallbackSvg;
-        }
+        this.removeEventListener('error', onImgError);
+        this.src = fallbackSvg;
       });
     }
 
@@ -1169,7 +1075,7 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
       hasSheets: true,
       sheetCount: product.sheets,
       designCode: product.code,
-      imagePath: product.image || ('images/' + encodeURIComponent(product.code) + '.png'),
+      imagePath: 'images/' + encodeURIComponent(product.code) + '.png',
       isCustomized: isCustomized,
       customText: trimmedText,
       isTba: false,
@@ -1780,8 +1686,7 @@ function renderCart() {
     if (item.isCustomMade) {
       thumbHtml = `<div class="cart-item-custom-thumb" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:1.75rem; background:rgba(203,108,230,0.15); border-radius:8px;">🎨</div>`;
     } else {
-      const imgSrc = item.imagePath || item.image || (item.designCode && item.designCode.startsWith('NP_NHD_') ? `images/${encodeURIComponent(item.designCode)}.jpg` : `images/${encodeURIComponent(item.designCode)}.png`);
-      thumbHtml = `<img src="${imgSrc}" alt="${escapeHtml(item.designCode)}" onerror="if(!this.src.endsWith('.jpg')){this.src='images/${encodeURIComponent(item.designCode)}.jpg';}else{this.onerror=null; this.style.display='none';}">`;
+      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" onerror="this.onerror=null; this.style.display='none';">`;
     }
 
     const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';

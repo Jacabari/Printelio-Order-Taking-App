@@ -26,7 +26,10 @@ const A5_NOTEPAD_DESIGNS = [
   'WP5_A5',
   'WP6_A5',
   'WP7_A5',
-  'WP8_A5'
+  'WP8_A5',
+  'NP_NHD_A5_01',
+  'NP_NHD_A5_02',
+  'NP_NHD_A5_03'
 ];
 
 // Product Catalog & Pricing Matrix
@@ -74,7 +77,10 @@ const PRODUCTS_DATA = {
           'NP_A6_HelloKitty',
           'NP_A6_Kuromi',
           'NP_A6_ToDoList',
-          'NP_A6_Lemon'
+          'NP_A6_Lemon',
+          'NP_NHD_A6_01',
+          'NP_NHD_A6_02',
+          'NP_NHD_A6_03'
         ]
       },
       {
@@ -178,6 +184,9 @@ const DESIGN_TITLES = {
   'NP_A6_Kuromi': 'Kuromi',
   'NP_A6_ToDoList': 'Tulip Blossom',
   'NP_A6_Lemon': 'Lemony Fresh',
+  'NP_NHD_A6_01': 'Vintage Parchment Scroll',
+  'NP_NHD_A6_02': "Explorer's Parchment",
+  'NP_NHD_A6_03': 'Gazette Botanical',
 
   // A5 Notepads
   'Blue DP_A5': 'Cloud Nine Daily',
@@ -190,7 +199,10 @@ const DESIGN_TITLES = {
   'WP5_A5': 'Garden Grid Weekly',
   'WP6_A5': 'Paws & Garden Weekly',
   'WP7_A5': 'Retro Rainbow Weekly',
-  'WP8_A5': 'Lilac Monster Weekly'
+  'WP8_A5': 'Lilac Monster Weekly',
+  'NP_NHD_A5_01': 'Vintage Parchment Scroll',
+  'NP_NHD_A5_02': "Explorer's Parchment",
+  'NP_NHD_A5_03': 'Gazette Botanical'
 };
 
 const PRODUCT_CATALOG = [
@@ -450,6 +462,39 @@ const PRODUCT_CATALOG = [
     tag: 'Fruit Motif',
     motif: 'Watercolor Lemon Sprig'
   },
+  {
+    code: 'NP_NHD_A6_01',
+    name: 'Vintage Parchment Scroll',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: 'Vintage',
+    motif: 'Parchment Scroll & Antique Script'
+  },
+  {
+    code: 'NP_NHD_A6_02',
+    name: "Explorer's Parchment",
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: 'Vintage',
+    motif: 'Aged Cartography & Explorer Motif'
+  },
+  {
+    code: 'NP_NHD_A6_03',
+    name: 'Gazette Botanical',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: 'Botanical',
+    motif: 'Vintage Newspaper & Botanical Flora'
+  },
 
   // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱99.00)
   {
@@ -572,6 +617,39 @@ const PRODUCT_CATALOG = [
     price: 99.00,
     tag: 'Weekly Planner',
     motif: 'Sprint Goals & Project Tracking'
+  },
+  {
+    code: 'NP_NHD_A5_01',
+    name: 'Vintage Parchment Scroll',
+    category: 'A5',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: 'Vintage',
+    motif: 'Parchment Scroll & Antique Script'
+  },
+  {
+    code: 'NP_NHD_A5_02',
+    name: "Explorer's Parchment",
+    category: 'A5',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: 'Vintage',
+    motif: 'Aged Cartography & Explorer Motif'
+  },
+  {
+    code: 'NP_NHD_A5_03',
+    name: 'Gazette Botanical',
+    category: 'A5',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: 'Botanical',
+    motif: 'Vintage Newspaper & Botanical Flora'
   }
 ];
 
@@ -745,9 +823,12 @@ function getProductMockupSvg(code, name, category, tag) {
   } else if (tag.includes('Character')) {
     iconEmoji = '🎀';
     headerColor = '#ea98b7';
-  } else if (tag.includes('Floral')) {
+  } else if (tag.includes('Floral') || tag.includes('Botanical')) {
     iconEmoji = '🌸';
     headerColor = '#7bc794';
+  } else if (tag.includes('Vintage')) {
+    iconEmoji = '📜';
+    headerColor = '#d4a373';
   } else if (tag.includes('Fruit')) {
     iconEmoji = '🍋';
     headerColor = '#fcd05b';

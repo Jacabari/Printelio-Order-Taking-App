@@ -53,15 +53,28 @@
       <section class="gallery-section" id="gallerySection">
         <div class="gallery-header-box" id="galleryHeaderBox">
           <div class="gallery-title-wrap">
+            <!-- Catalog Mode Switcher (Notepads vs Notecards) -->
+            <div class="catalog-mode-switcher" id="catalogModeSwitcher" role="tablist" aria-label="Select Stationery Catalog">
+              <button type="button" class="catalog-mode-btn active" id="btnCatalogNotepads" data-catalog="notepads" role="tab" aria-selected="true">
+                <span class="catalog-mode-icon">📝</span>
+                <span class="catalog-mode-name">Notepads</span>
+              </button>
+              <button type="button" class="catalog-mode-btn" id="btnCatalogNotecards" data-catalog="notecards" role="tab" aria-selected="false">
+                <span class="catalog-mode-icon">💌</span>
+                <span class="catalog-mode-name">Notecards</span>
+                <span class="catalog-mode-badge">NEW</span>
+              </button>
+            </div>
+
             <h2 class="gallery-section-title" id="gallerySectionTitle">Notepad Catalog</h2>
             <p class="gallery-section-subtitle" id="gallerySectionSubtitle">
               Browse our curated notepad designs or add multiple styles to your order.
             </p>
           </div>
 
-          <!-- Category Tabs Navigation Bar (3x3, A6, A5 - Default 3x3) -->
+          <!-- Category Tabs Navigation Bar (3x3, A6, A5 for Notepads | 2x3.5, 4x3 for Notecards) -->
           <div class="category-tabs-container" id="categoryTabsContainer">
-            <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Notepad Size Categories">
+            <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Catalog Size Categories">
               <button type="button" class="tab-btn active" id="tab3x3" data-category="3x3" role="tab" aria-selected="true" aria-controls="productGalleryGrid">
                 3x3
               </button>
@@ -70,6 +83,12 @@
               </button>
               <button type="button" class="tab-btn" id="tabA5" data-category="A5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
                 A5
+              </button>
+              <button type="button" class="tab-btn" id="tab2x35" data-category="2x3.5" role="tab" aria-selected="false" aria-controls="productGalleryGrid" style="display: none;">
+                2x3.5 in
+              </button>
+              <button type="button" class="tab-btn" id="tab4x3" data-category="4x3" role="tab" aria-selected="false" aria-controls="productGalleryGrid" style="display: none;">
+                4x3 in
               </button>
             </div>
             
@@ -96,11 +115,11 @@
             </div>
             <h3 class="custom-cta-title">Need more Sheets, or want to see your Own Designs and Branding?</h3>
             <p class="custom-cta-desc">
-              We make custom-printed notepads with your logo, personalized layout, or extra sheets! Full-color 1-side printing with 1 free design draft included.
+              We make custom-printed notepads and notecards with your logo, personalized layout, or extra count! Full-color 1-side printing with 1 free design draft included.
             </p>
             <div class="custom-cta-highlights">
-              <span class="cta-pill">📦 MOQ: 3 Pads</span>
-              <span class="cta-pill">📄 30+ Sheets</span>
+              <span class="cta-pill">📦 MOQ: 3 Items</span>
+              <span class="cta-pill">📄 30+ Sheets / 12+ Cards</span>
               <span class="cta-pill">🎨 Full-Color Print</span>
               <span class="cta-pill">✏️ 1 Free Layout Draft</span>
             </div>
@@ -116,11 +135,11 @@
 
       <!-- SECTION 3: Custom Made Specification Section (Initially hidden / revealed via CTA) -->
       <section class="card custom-made-section" id="customOrderingSection" style="display: none;">
-        <!-- Visible Back to Notepad Catalog Navigation Button -->
+        <!-- Visible Back to Catalog Navigation Button -->
         <div class="custom-nav-bar" id="customNavBar">
-          <button type="button" class="btn-back-catalog" id="btnBackToCatalog" aria-label="Back to Notepad Catalog">
+          <button type="button" class="btn-back-catalog" id="btnBackToCatalog" aria-label="Back to Catalog">
             <span class="back-arrow">←</span>
-            <span>Back to Notepad Catalog</span>
+            <span>Back to Catalog</span>
           </button>
         </div>
 
@@ -128,31 +147,44 @@
           <div class="card-title-group">
             <div class="step-indicator" id="customStepIndicator">✏️</div>
             <div>
-              <h2 class="card-title" id="customSectionTitle">Custom Made Notepad Specification</h2>
-              <p class="card-subtitle">Request custom sizes, higher sheet counts, or your own layout motif</p>
+              <h2 class="card-title" id="customSectionTitle">Custom Made Specification</h2>
+              <p class="card-subtitle" id="customSectionSubtitle">Request custom sizes, higher sheet/card counts, or your own layout motif</p>
             </div>
           </div>
-          <button type="button" class="btn-close-section" id="btnCloseCustomSection" aria-label="Back to catalog" title="Back to Notepad Catalog">&times;</button>
+          <button type="button" class="btn-close-section" id="btnCloseCustomSection" aria-label="Back to catalog" title="Back to Catalog">&times;</button>
         </div>
 
-        <!-- Styled Info Box / Callout banner (PRESERVED) -->
+        <!-- Styled Info Box / Callout banner -->
         <div class="custom-terms-banner" id="customTermsBanner">
           <div class="custom-terms-title">
             Custom Made Specifications &amp; Terms
           </div>
-          <ul class="custom-terms-list">
-            <li><span>📦</span> <span>Minimum Order Quantity (MOQ): 3 pads per size per design.</span></li>
-            <li><span>📄</span> <span>Minimum of 30 sheets per notepad.</span></li>
-            <li><span>🎨</span> <span>Full-color, one-side print only.</span></li>
-            <li><span>✏️</span> <span>Includes 1 free layout draft (subsequent revisions are ₱100 each).</span></li>
+          <ul class="custom-terms-list" id="customTermsList">
+            <li id="termMoq"><span>📦</span> <span><strong>Minimum Order Quantity (MOQ):</strong> 3 pads per size per design.</span></li>
+            <li id="termCount"><span>📄</span> <span><strong>Minimum Sheet Count:</strong> Minimum of 30 sheets per notepad.</span></li>
+            <li id="termLeadTime"><span>⏳</span> <span><strong>Lead Time:</strong> 2-3 business days production upon payment confirmation.</span></li>
+            <li id="termLayoutFee"><span>✏️</span> <span><strong>Custom Layout Fee:</strong> ₱100.00 / revision (quoted separately for complex branding or custom illustrations).</span></li>
+            <li id="termPrint"><span>🎨</span> <span>Full-color, one-side print only.</span></li>
           </ul>
         </div>
 
         <!-- Custom Input Fields Grid -->
         <div class="form-grid two-col" id="customInputsGrid">
-          <!-- Notepad Size Dropdown (Preserved choices & formula hints) -->
+          <!-- Product Category Dropdown ("Notepads" vs "Notecards") -->
+          <div class="form-group grid-full" id="groupCustomCategory">
+            <label for="selectCustomCategory" class="form-label">
+              Product Category <span class="required-star">*</span>
+            </label>
+            <select id="selectCustomCategory" class="form-control" required>
+              <option value="notepads" selected>Notepads</option>
+              <option value="notecards">Notecards</option>
+            </select>
+            <span class="form-hint" id="customCategoryHint">Select the stationery product category</span>
+          </div>
+
+          <!-- Size Dropdown (Dynamically updated for Notepads vs Notecards) -->
           <div class="form-group" id="groupCustomNotepadSize">
-            <label for="selectCustomNotepadSize" class="form-label">
+            <label for="selectCustomNotepadSize" class="form-label" id="labelCustomSize">
               Notepad Size <span class="required-star">*</span>
             </label>
             <select id="selectCustomNotepadSize" class="form-control" required>
@@ -163,9 +195,9 @@
             <span class="form-hint" id="customSizeRateHint">Extra sheets: +₱1.50 per sheet beyond 30 sheets</span>
           </div>
 
-          <!-- Sheet Count (Default 30, Minimum 30) -->
+          <!-- Sheet / Card Count Input (Default 30 / Min 30 for Notepads; 12 / 16 for Notecards) -->
           <div class="form-group" id="groupCustomSheetCount">
-            <label for="inputCustomSheetCount" class="form-label">
+            <label for="inputCustomSheetCount" class="form-label" id="labelCustomCount">
               Sheet Count <span class="required-star">*</span>
             </label>
             <input type="number" id="inputCustomSheetCount" class="form-control" min="30" value="30" placeholder="Minimum 30 sheets" required>

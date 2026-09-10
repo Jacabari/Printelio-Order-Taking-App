@@ -96,23 +96,29 @@ const PRODUCTS_DATA = {
   notecards: {
     categoryName: 'Notecards',
     hasSheets: false,
-    isTba: true,
+    isTba: false,
     sizes: [
       {
         id: 'nc-portrait',
-        name: '2 x 3.5 in (Portrait)',
-        shortName: 'Portrait Notecard',
+        name: '2 x 3.5 in (12 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
+        shortName: '2 x 3.5 in Notecard',
         dimensions: '2 × 3.5 in',
-        prices: null,
-        designs: ['NC-001', 'NC-002', 'NC-003', 'NC-004']
+        prices: { '12': 89 },
+        designs: [
+          'NCP_BLOOM_01', 'NCP_BLOOM_02', 'NCP_BLOOM_03', 'NCP_BLOOM_04', 'NCP_BLOOM_05',
+          'NCP_BLOOM_06', 'NCP_BLOOM_07', 'NCP_BLOOM_08', 'NCP_BLOOM_09', 'NCP_BLOOM_10'
+        ]
       },
       {
         id: 'nc-landscape',
-        name: '3.5 x 2 in (Landscape)',
-        shortName: 'Landscape Notecard',
-        dimensions: '3.5 × 2 in',
-        prices: null,
-        designs: ['NC-005', 'NC-006', 'NC-007', 'NC-008']
+        name: '4 x 3 in (16 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
+        shortName: '4 x 3 in Notecard',
+        dimensions: '4 × 3 in',
+        prices: { '16': 129 },
+        designs: [
+          'NCL_BLOOM_01', 'NCL_BLOOM_02', 'NCL_BLOOM_03', 'NCL_BLOOM_04', 'NCL_BLOOM_05',
+          'NCL_BLOOM_06', 'NCL_BLOOM_07', 'NCL_BLOOM_08', 'NCL_BLOOM_09', 'NCL_BLOOM_10'
+        ]
       }
     ]
   },
@@ -143,17 +149,32 @@ const CATEGORY_SPECS = {
   '3x3': {
     title: 'Square Notepad (3 × 3 in)',
     specText: 'Square Notepad (3 × 3 in) • 30 Sheets • ₱29.00 / pad',
-    price: 29.00
+    price: 29.00,
+    catalog: 'notepads'
   },
   'A6': {
     title: 'A6 Notepad (4 × 5.8 in)',
     specText: 'A6 Notepad (4 × 5.8 in) • 30 Sheets • ₱49.00 / pad',
-    price: 49.00
+    price: 49.00,
+    catalog: 'notepads'
   },
   'A5': {
     title: 'A5 Notepad (5.8 × 8.3 in)',
     specText: 'A5 Notepad (5.8 × 8.3 in) • 30 Sheets • ₱99.00 / pad',
-    price: 99.00
+    price: 99.00,
+    catalog: 'notepads'
+  },
+  '2x3.5': {
+    title: '2 × 3.5 in Notecards (Portrait)',
+    specText: '2 × 3.5 in • 12 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱89.00 / pack',
+    price: 89.00,
+    catalog: 'notecards'
+  },
+  '4x3': {
+    title: '4 × 3 in Notecards (Landscape)',
+    specText: '4 × 3 in • 16 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱129.00 / pack',
+    price: 129.00,
+    catalog: 'notecards'
   }
 };
 
@@ -202,7 +223,31 @@ const DESIGN_TITLES = {
   'WP8_A5': 'Lilac Monster Weekly',
   'NP_NHD_A5_01': 'Vintage Parchment Scroll',
   'NP_NHD_A5_02': "Explorer's Parchment",
-  'NP_NHD_A5_03': 'Gazette Botanical'
+  'NP_NHD_A5_03': 'Gazette Botanical',
+
+  // Notecards 2x3.5 in (Portrait) - Bloomstead 01 to 10
+  'NCP_BLOOM_01': 'Bloomstead 01',
+  'NCP_BLOOM_02': 'Bloomstead 02',
+  'NCP_BLOOM_03': 'Bloomstead 03',
+  'NCP_BLOOM_04': 'Bloomstead 04',
+  'NCP_BLOOM_05': 'Bloomstead 05',
+  'NCP_BLOOM_06': 'Bloomstead 06',
+  'NCP_BLOOM_07': 'Bloomstead 07',
+  'NCP_BLOOM_08': 'Bloomstead 08',
+  'NCP_BLOOM_09': 'Bloomstead 09',
+  'NCP_BLOOM_10': 'Bloomstead 10',
+
+  // Notecards 4x3 in (Landscape) - Bloomstead 01 to 10
+  'NCL_BLOOM_01': 'Bloomstead 01',
+  'NCL_BLOOM_02': 'Bloomstead 02',
+  'NCL_BLOOM_03': 'Bloomstead 03',
+  'NCL_BLOOM_04': 'Bloomstead 04',
+  'NCL_BLOOM_05': 'Bloomstead 05',
+  'NCL_BLOOM_06': 'Bloomstead 06',
+  'NCL_BLOOM_07': 'Bloomstead 07',
+  'NCL_BLOOM_08': 'Bloomstead 08',
+  'NCL_BLOOM_09': 'Bloomstead 09',
+  'NCL_BLOOM_10': 'Bloomstead 10'
 };
 
 const PRODUCT_CATALOG = [
@@ -650,6 +695,314 @@ const PRODUCT_CATALOG = [
     price: 99.00,
     tag: 'Botanical',
     motif: 'Vintage Newspaper & Botanical Flora'
+  },
+
+  // ==========================================================================
+  // NOTECARDS: 2x3.5 inches (12 pcs per pack | 220 gsm | FREE PERSONALIZATION) - ₱89
+  // ==========================================================================
+  {
+    code: 'NCP_BLOOM_01',
+    name: 'Bloomstead 01',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 01'
+  },
+  {
+    code: 'NCP_BLOOM_02',
+    name: 'Bloomstead 02',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 02'
+  },
+  {
+    code: 'NCP_BLOOM_03',
+    name: 'Bloomstead 03',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 03'
+  },
+  {
+    code: 'NCP_BLOOM_04',
+    name: 'Bloomstead 04',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 04'
+  },
+  {
+    code: 'NCP_BLOOM_05',
+    name: 'Bloomstead 05',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 05'
+  },
+  {
+    code: 'NCP_BLOOM_06',
+    name: 'Bloomstead 06',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 06'
+  },
+  {
+    code: 'NCP_BLOOM_07',
+    name: 'Bloomstead 07',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 07'
+  },
+  {
+    code: 'NCP_BLOOM_08',
+    name: 'Bloomstead 08',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 08'
+  },
+  {
+    code: 'NCP_BLOOM_09',
+    name: 'Bloomstead 09',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 09'
+  },
+  {
+    code: 'NCP_BLOOM_10',
+    name: 'Bloomstead 10',
+    category: '2x3.5',
+    catalogType: 'notecards',
+    sizeName: '2×3.5 in Notecards',
+    dimensions: '2 × 3.5 in',
+    sheets: 12,
+    cardCount: 12,
+    gsm: 220,
+    freePersonalization: true,
+    price: 89.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Wildflower Garland 10'
+  },
+
+  // ==========================================================================
+  // NOTECARDS: 4x3 inches (16 pcs per pack | 220 gsm | FREE PERSONALIZATION) - ₱129
+  // ==========================================================================
+  {
+    code: 'NCL_BLOOM_01',
+    name: 'Bloomstead 01',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 01'
+  },
+  {
+    code: 'NCL_BLOOM_02',
+    name: 'Bloomstead 02',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 02'
+  },
+  {
+    code: 'NCL_BLOOM_03',
+    name: 'Bloomstead 03',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 03'
+  },
+  {
+    code: 'NCL_BLOOM_04',
+    name: 'Bloomstead 04',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 04'
+  },
+  {
+    code: 'NCL_BLOOM_05',
+    name: 'Bloomstead 05',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 05'
+  },
+  {
+    code: 'NCL_BLOOM_06',
+    name: 'Bloomstead 06',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 06'
+  },
+  {
+    code: 'NCL_BLOOM_07',
+    name: 'Bloomstead 07',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 07'
+  },
+  {
+    code: 'NCL_BLOOM_08',
+    name: 'Bloomstead 08',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 08'
+  },
+  {
+    code: 'NCL_BLOOM_09',
+    name: 'Bloomstead 09',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 09'
+  },
+  {
+    code: 'NCL_BLOOM_10',
+    name: 'Bloomstead 10',
+    category: '4x3',
+    catalogType: 'notecards',
+    sizeName: '4×3 in Notecards',
+    dimensions: '4 × 3 in',
+    sheets: 16,
+    cardCount: 16,
+    gsm: 220,
+    freePersonalization: true,
+    price: 129.00,
+    tag: 'Botanical',
+    motif: 'Bloomstead Botanical Landscape 10'
   }
 ];
 
@@ -689,12 +1042,20 @@ const appState = {
 const DOM = {
   // Gallery Section & Category Tabs Navigation
   gallerySection: document.getElementById('gallerySection'),
+  gallerySectionTitle: document.getElementById('gallerySectionTitle'),
+  gallerySectionSubtitle: document.getElementById('gallerySectionSubtitle'),
+  catalogModeSwitcher: document.getElementById('catalogModeSwitcher'),
+  btnCatalogNotepads: document.getElementById('btnCatalogNotepads'),
+  btnCatalogNotecards: document.getElementById('btnCatalogNotecards'),
   categoryTabsContainer: document.getElementById('categoryTabsContainer'),
   categoryTabs: document.querySelectorAll('#categoryTabs .tab-btn'),
   tab3x3: document.getElementById('tab3x3'),
   tabA6: document.getElementById('tabA6'),
   tabA5: document.getElementById('tabA5'),
+  tab2x35: document.getElementById('tab2x35'),
+  tab4x3: document.getElementById('tab4x3'),
   categorySpecPill: document.getElementById('categorySpecPill'),
+  categorySpecIcon: document.getElementById('categorySpecIcon'),
   categorySpecText: document.getElementById('categorySpecText'),
   productGalleryGrid: document.getElementById('productGalleryGrid'),
 
@@ -705,6 +1066,11 @@ const DOM = {
   btnBackToCatalog: document.getElementById('btnBackToCatalog'),
   customOrderingSection: document.getElementById('customOrderingSection'),
   customTermsBanner: document.getElementById('customTermsBanner'),
+  customSectionTitle: document.getElementById('customSectionTitle'),
+  selectCustomCategory: document.getElementById('selectCustomCategory'),
+  labelCustomSize: document.getElementById('labelCustomSize'),
+  labelCustomCount: document.getElementById('labelCustomCount'),
+  customTermsList: document.getElementById('customTermsList'),
 
   // Header Actions
   btnHeaderCustom: document.getElementById('btnHeaderCustom'),
@@ -813,6 +1179,83 @@ const DOM = {
 // ============================================================================
 
 function getProductMockupSvg(code, name, category, tag) {
+  // Check for Notecards
+  if (category === '2x3.5' || code.startsWith('NCP_')) {
+    const notecardSvg = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#faf8f5"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1b1822" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="320" height="320" fill="#f4f0ec"/>
+  <g filter="url(#cardShadow)">
+    <rect x="70" y="24" width="180" height="272" rx="6" fill="url(#cardGrad)" stroke="#e4dbce" stroke-width="1.5"/>
+    <rect x="76" y="30" width="168" height="260" rx="4" fill="none" stroke="#d5c7b3" stroke-width="1" stroke-dasharray="3,3"/>
+    
+    <!-- Top Header -->
+    <text x="160" y="52" font-family="Raleway, -apple-system, sans-serif" font-size="8" font-weight="800" fill="#9b8579" text-anchor="middle" letter-spacing="1.5">PRINTELIO • NOTECARD</text>
+    
+    <!-- Floral Motif & Code -->
+    <circle cx="160" cy="106" r="30" fill="#7bc794" fill-opacity="0.18"/>
+    <text x="160" y="118" font-size="32" text-anchor="middle">🌸</text>
+    
+    <text x="160" y="158" font-family="Playfair Display, Georgia, serif" font-size="15" font-weight="700" fill="#1b1822" text-anchor="middle">${name}</text>
+    <text x="160" y="176" font-family="Raleway, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#756f86" text-anchor="middle" letter-spacing="1">${code}</text>
+
+    <!-- Botanical Lines -->
+    <line x1="96" y1="196" x2="224" y2="196" stroke="#d5c7b3" stroke-width="1"/>
+    <line x1="110" y1="210" x2="210" y2="210" stroke="#e8dfd2" stroke-width="1"/>
+    <line x1="124" y1="224" x2="196" y2="224" stroke="#e8dfd2" stroke-width="1"/>
+
+    <!-- Bottom Specs -->
+    <rect x="86" y="252" width="148" height="20" rx="10" fill="#ede5d8"/>
+    <text x="160" y="266" font-family="Raleway, -apple-system, sans-serif" font-size="8" font-weight="800" fill="#585268" text-anchor="middle">2×3.5 in • 12 pcs • 220 gsm</text>
+  </g>
+</svg>`.trim();
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(notecardSvg).replace(/'/g, '%27');
+  }
+
+  if (category === '4x3' || code.startsWith('NCL_')) {
+    const notecardSvg = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cardGradL" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#faf8f5"/>
+    </linearGradient>
+    <filter id="cardShadowL" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1b1822" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="320" height="320" fill="#f4f0ec"/>
+  <g filter="url(#cardShadowL)">
+    <rect x="25" y="52" width="270" height="216" rx="6" fill="url(#cardGradL)" stroke="#e4dbce" stroke-width="1.5"/>
+    <rect x="31" y="58" width="258" height="204" rx="4" fill="none" stroke="#d5c7b3" stroke-width="1" stroke-dasharray="3,3"/>
+    
+    <!-- Top Header -->
+    <text x="160" y="78" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#9b8579" text-anchor="middle" letter-spacing="1.5">PRINTELIO • NOTECARD (LANDSCAPE)</text>
+    
+    <!-- Floral Motif & Code -->
+    <circle cx="80" cy="148" r="28" fill="#7bc794" fill-opacity="0.18"/>
+    <text x="80" y="160" font-size="30" text-anchor="middle">🌸</text>
+    
+    <text x="126" y="140" font-family="Playfair Display, Georgia, serif" font-size="16" font-weight="700" fill="#1b1822">${name}</text>
+    <text x="126" y="160" font-family="Raleway, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#756f86" letter-spacing="1">${code}</text>
+    <text x="126" y="178" font-family="Raleway, -apple-system, sans-serif" font-size="9" font-weight="700" fill="#2d6a4f">✨ FREE PERSONALIZATION INCLUDED</text>
+
+    <!-- Bottom Specs -->
+    <rect x="45" y="222" width="230" height="22" rx="11" fill="#ede5d8"/>
+    <text x="160" y="237" font-family="Raleway, -apple-system, sans-serif" font-size="9" font-weight="800" fill="#585268" text-anchor="middle">4×3 in • 16 pcs / pack • 220 gsm Cardstock</text>
+  </g>
+</svg>`.trim();
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(notecardSvg).replace(/'/g, '%27');
+  }
+
   let headerColor = '#cb6ce6';
   let accentBadge = '#ffde59';
   let iconEmoji = '📝';
@@ -913,6 +1356,14 @@ function renderProductGallery(categoryKey) {
     card.id = `card_${safeCode}`;
 
     const fallbackSvg = getProductMockupSvg(product.code, product.name, product.category, product.tag);
+    const cleanSizeName = product.sizeName.replace(/\s*\([^)]*pcs[^)]*\)/gi, '').trim();
+    const specText = (product.catalogType === 'notecards' || product.cardCount)
+      ? `${cleanSizeName} • ${product.cardCount} pcs (220 gsm)`
+      : `${product.sizeName} • ${product.sheets} sheets`;
+
+    const customPricePill = product.freePersonalization
+      ? `<span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>`
+      : `<span class="card-custom-price-pill">+ ₱10.00 / item</span>`;
 
     card.innerHTML = `
       <div class="product-card-image-wrap">
@@ -926,11 +1377,11 @@ function renderProductGallery(categoryKey) {
         />
       </div>
       <div class="product-card-body">
-        <div class="product-spec">${product.sizeName} • ${product.sheets} sheets</div>
+        <div class="product-spec">${specText}</div>
         <h4 class="product-title">${product.name}</h4>
       </div>
 
-      <!-- Interactive Text Customization (Conditional Visibility + ₱10.00 surcharge) -->
+      <!-- Interactive Text Customization (Conditional Visibility + ₱10.00 surcharge or FREE) -->
       <div class="card-customization-box" id="custBox_${safeCode}">
         <label class="card-customization-toggle" for="checkCust_${safeCode}">
           <input 
@@ -941,7 +1392,7 @@ function renderProductGallery(categoryKey) {
           />
           <span class="card-custom-toggle-content">
             <span class="card-custom-label-text">Add Text Customization (e.g., Name)</span>
-            <span class="card-custom-price-pill">+ ₱10.00 / item</span>
+            ${customPricePill}
           </span>
         </label>
         
@@ -1000,7 +1451,8 @@ function renderProductGallery(categoryKey) {
 
     function updateCardPriceDisplay() {
       const isCustomized = Boolean(checkCust && checkCust.checked);
-      const currentUnitPrice = product.price + (isCustomized ? 10 : 0);
+      const custFee = (isCustomized && !product.freePersonalization) ? 10 : 0;
+      const currentUnitPrice = product.price + custFee;
       if (priceEl) {
         priceEl.textContent = `₱${currentUnitPrice.toFixed(2)}`;
       }
@@ -1101,8 +1553,47 @@ function renderProductGallery(categoryKey) {
   });
 }
 
+function switchMainCatalog(catalogType) {
+  appState.currentCatalog = catalogType; // 'notepads' | 'notecards'
+
+  if (DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
+    DOM.btnCatalogNotepads.classList.toggle('active', catalogType === 'notepads');
+    DOM.btnCatalogNotepads.setAttribute('aria-selected', catalogType === 'notepads' ? 'true' : 'false');
+    DOM.btnCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
+    DOM.btnCatalogNotecards.setAttribute('aria-selected', catalogType === 'notecards' ? 'true' : 'false');
+  }
+
+  if (catalogType === 'notepads') {
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Catalog';
+    if (DOM.gallerySectionSubtitle) DOM.gallerySectionSubtitle.textContent = 'Browse our curated notepad designs or add multiple styles to your order.';
+    if (DOM.tab3x3) DOM.tab3x3.style.display = 'inline-flex';
+    if (DOM.tabA6) DOM.tabA6.style.display = 'inline-flex';
+    if (DOM.tabA5) DOM.tabA5.style.display = 'inline-flex';
+    if (DOM.tab2x35) DOM.tab2x35.style.display = 'none';
+    if (DOM.tab4x3) DOM.tab4x3.style.display = 'none';
+    switchGalleryCategory('3x3');
+  } else if (catalogType === 'notecards') {
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notecards Catalog';
+    if (DOM.gallerySectionSubtitle) DOM.gallerySectionSubtitle.textContent = 'Handcrafted 220 gsm notecards with free personalization included.';
+    if (DOM.tab3x3) DOM.tab3x3.style.display = 'none';
+    if (DOM.tabA6) DOM.tabA6.style.display = 'none';
+    if (DOM.tabA5) DOM.tabA5.style.display = 'none';
+    if (DOM.tab2x35) DOM.tab2x35.style.display = 'inline-flex';
+    if (DOM.tab4x3) DOM.tab4x3.style.display = 'inline-flex';
+    switchGalleryCategory('2x3.5');
+  }
+}
+
 function switchGalleryCategory(categoryKey) {
   appState.activeGalleryTab = categoryKey;
+
+  const isNotecard = (categoryKey === '2x3.5' || categoryKey === '4x3');
+  if (DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
+    DOM.btnCatalogNotepads.classList.toggle('active', !isNotecard);
+    DOM.btnCatalogNotepads.setAttribute('aria-selected', !isNotecard ? 'true' : 'false');
+    DOM.btnCatalogNotecards.classList.toggle('active', isNotecard);
+    DOM.btnCatalogNotecards.setAttribute('aria-selected', isNotecard ? 'true' : 'false');
+  }
 
   // Update tabs active state
   if (DOM.categoryTabs) {
@@ -1118,6 +1609,9 @@ function switchGalleryCategory(categoryKey) {
   if (DOM.categorySpecText && spec) {
     DOM.categorySpecText.textContent = spec.specText;
   }
+  if (DOM.categorySpecIcon) {
+    DOM.categorySpecIcon.textContent = isNotecard ? '💌' : '📐';
+  }
 
   // Re-render cards
   renderProductGallery(categoryKey);
@@ -1126,8 +1620,10 @@ function switchGalleryCategory(categoryKey) {
 function addGalleryProductToCart(product, quantity = 1, isCustomized = false, customText = '') {
   const qty = Math.max(1, parseInt(quantity, 10) || 1);
   const trimmedText = isCustomized ? customText.trim() : '';
-  const unitPrice = product.price + (isCustomized ? 10 : 0);
+  const custFee = (isCustomized && !product.freePersonalization) ? 10 : 0;
+  const unitPrice = product.price + custFee;
   const displayTitle = DESIGN_TITLES[product.code] || product.name;
+  const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount));
 
   const existingIndex = appState.cart.findIndex(
     item => !item.isCustomMade && 
@@ -1146,15 +1642,17 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
     const cartItem = {
       id: 'gallery_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
       isCustomMade: false,
-      categoryKey: 'notepads',
-      categoryName: 'Notepads',
+      categoryKey: isNotecards ? 'notecards' : 'notepads',
+      categoryName: isNotecards ? 'Notecards' : 'Notepads',
       sizeId: product.category,
       sizeName: product.sizeName,
       shortName: displayTitle,
       productTitle: displayTitle,
       dimensions: product.dimensions,
-      hasSheets: true,
-      sheetCount: product.sheets,
+      hasSheets: !isNotecards,
+      sheetCount: product.sheets || product.cardCount || 30,
+      cardCount: product.cardCount || null,
+      freePersonalization: Boolean(product.freePersonalization),
       designCode: product.code,
       imagePath: 'images/' + encodeURIComponent(product.code) + '.png',
       isCustomized: isCustomized,
@@ -1410,6 +1908,27 @@ const CUSTOM_NOTEPAD_CONFIG = {
   }
 };
 
+const CUSTOM_NOTECARD_CONFIG = {
+  'nc-2x35': {
+    id: 'nc-2x35',
+    name: '2×3.5 in Notecards (220 gsm)',
+    dimensions: '2 × 3.5 in',
+    basePrice: 89,
+    baseCount: 12,
+    perCardRate: 8.50,
+    unitName: 'cards'
+  },
+  'nc-4x3': {
+    id: 'nc-4x3',
+    name: '4×3 in Notecards (220 gsm)',
+    dimensions: '4 × 3 in',
+    basePrice: 129,
+    baseCount: 16,
+    perCardRate: 9.00,
+    unitName: 'cards'
+  }
+};
+
 function calculateCustomNotepadPrice(sizeKey, sheetCount) {
   const config = CUSTOM_NOTEPAD_CONFIG[sizeKey] || CUSTOM_NOTEPAD_CONFIG.square;
   const count = parseInt(sheetCount, 10);
@@ -1435,53 +1954,188 @@ function calculateCustomNotepadPrice(sizeKey, sheetCount) {
   };
 }
 
+function calculateCustomNotecardPrice(sizeKey, cardCount) {
+  const config = (sizeKey === 'nc-4x3' || sizeKey === '4x3') ? CUSTOM_NOTECARD_CONFIG['nc-4x3'] : CUSTOM_NOTECARD_CONFIG['nc-2x35'];
+  const count = parseInt(cardCount, 10);
+  const validCount = (!isNaN(count) && count >= config.baseCount) ? count : config.baseCount;
+  const extraCards = Math.max(0, validCount - config.baseCount);
+  const extraCost = extraCards * config.perCardRate;
+  const totalPrice = config.basePrice + extraCost;
+
+  let breakdown = `Base: ₱${config.basePrice.toFixed(2)} (${config.baseCount} pcs)`;
+  if (extraCards > 0) {
+    breakdown += ` + ${extraCards} extra cards (₱${config.perCardRate.toFixed(2)}/card = ₱${extraCost.toFixed(2)})`;
+  }
+
+  return {
+    config,
+    cardCount: validCount,
+    extraCards,
+    basePrice: config.basePrice,
+    perCardRate: config.perCardRate,
+    extraCost,
+    totalPrice,
+    breakdownText: breakdown
+  };
+}
+
+function handleCustomCategoryChange() {
+  const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
+  const sizeSelect = DOM.selectCustomNotepadSize;
+  const countInput = DOM.inputCustomSheetCount;
+
+  if (category === 'notecards') {
+    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Made Specification';
+    if (DOM.labelCustomSize) DOM.labelCustomSize.innerHTML = 'NOTECARD SIZE FORMAT <span class="required-star">*</span>';
+    if (DOM.labelCustomCount) DOM.labelCustomCount.innerHTML = 'CARD COUNT (MIN. 12 PCS) <span class="required-star">*</span>';
+
+    if (sizeSelect) {
+      sizeSelect.innerHTML = `
+        <option value="nc-2x35" selected>2×3.5 Inches (12 pcs per pack | 220 gsm) — ₱89.00</option>
+        <option value="nc-4x3">4×3 Inches (16 pcs per pack | 220 gsm) — ₱129.00</option>
+      `;
+    }
+
+    if (countInput) {
+      countInput.min = '12';
+      countInput.value = '12';
+      countInput.placeholder = 'Minimum 12 cards';
+    }
+
+    if (DOM.customTermsList) {
+      DOM.customTermsList.innerHTML = `
+        <li><strong>Minimum Order Quantity (MOQ):</strong> 3 packs per size per design.</li>
+        <li><strong>Lead Time:</strong> 2-3 business days production upon payment confirmation.</li>
+        <li><strong>Custom Layout Fee:</strong> ₱100.00 / revision (quoted separately for complex branding or custom illustrations).</li>
+        <li><strong>Premium Cardstock:</strong> 220 gsm heavy textured stationery cardstock with free personalization.</li>
+        <li><strong>Free Customization:</strong> Names, monograms, initials, or occasion text printed on every card at no surcharge.</li>
+        <li><strong>Strict Payment Terms:</strong> 100% full payment is required before customized printing commences.</li>
+      `;
+    }
+  } else {
+    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Made Specification';
+    if (DOM.labelCustomSize) DOM.labelCustomSize.innerHTML = 'NOTEPAD SIZE FORMAT <span class="required-star">*</span>';
+    if (DOM.labelCustomCount) DOM.labelCustomCount.innerHTML = 'PREFERRED SHEET COUNT <span class="required-star">*</span>';
+
+    if (sizeSelect) {
+      sizeSelect.innerHTML = `
+        <option value="square" selected>Square Notepad (3 × 3 Inches) — Base: ₱29 (30 sheets)</option>
+        <option value="a6">A6 Notepad (4 × 5.8 Inches) — Base: ₱49 (30 sheets)</option>
+        <option value="a5">A5 Notepad (5.8 × 8.3 Inches) — Base: ₱99 (30 sheets)</option>
+      `;
+    }
+
+    if (countInput) {
+      countInput.min = '30';
+      countInput.value = '30';
+      countInput.placeholder = 'Minimum 30 sheets';
+    }
+
+    if (DOM.customTermsList) {
+      DOM.customTermsList.innerHTML = `
+        <li><strong>Minimum Order Quantity (MOQ):</strong> 3 pads per size per design.</li>
+        <li><strong>Lead Time:</strong> 2-3 business days production upon payment confirmation.</li>
+        <li><strong>Custom Layout Fee:</strong> ₱100.00 / revision (quoted separately for complex branding or custom illustrations).</li>
+        <li><strong>Strict Payment Terms:</strong> 100% full payment is required before customized printing commences.</li>
+      `;
+    }
+  }
+
+  updateCustomPriceAndPreview();
+}
+
 function updateCustomPriceAndPreview() {
   if (!DOM.selectCustomNotepadSize) return;
 
-  const sizeKey = DOM.selectCustomNotepadSize.value || 'square';
-  const rawSheetCount = DOM.inputCustomSheetCount ? DOM.inputCustomSheetCount.value : '30';
+  const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
+  const sizeKey = DOM.selectCustomNotepadSize.value || (category === 'notecards' ? 'nc-2x35' : 'square');
+  const rawCount = DOM.inputCustomSheetCount ? DOM.inputCustomSheetCount.value : (category === 'notecards' ? '12' : '30');
   const instructions = DOM.textareaCustomInstructions ? DOM.textareaCustomInstructions.value.trim() : '';
 
-  const priceCalc = calculateCustomNotepadPrice(sizeKey, rawSheetCount);
+  if (category === 'notecards') {
+    const priceCalc = calculateCustomNotecardPrice(sizeKey, rawCount);
 
-  // Update Dynamic Pricing Preview
-  if (DOM.customUnitPriceDisplay) {
-    DOM.customUnitPriceDisplay.textContent = `₱${priceCalc.totalPrice.toFixed(2)}`;
-  }
-  if (DOM.customPriceBreakdownDisplay) {
-    DOM.customPriceBreakdownDisplay.textContent = priceCalc.breakdownText;
-  }
-  if (DOM.customSizeRateHint) {
-    DOM.customSizeRateHint.textContent = `Extra sheets: +₱${priceCalc.perSheetRate.toFixed(2)} per sheet beyond 30 sheets`;
-  }
-  if (DOM.customSheetCountHint) {
-    if (priceCalc.extraSheets > 0) {
-      DOM.customSheetCountHint.textContent = `30 base + ${priceCalc.extraSheets} extra sheets (+₱${priceCalc.extraCost.toFixed(2)})`;
-    } else {
-      DOM.customSheetCountHint.textContent = `Base includes 30 sheets`;
+    // Update Dynamic Pricing Preview
+    if (DOM.customUnitPriceDisplay) {
+      DOM.customUnitPriceDisplay.textContent = `₱${priceCalc.totalPrice.toFixed(2)}`;
     }
-  }
+    if (DOM.customPriceBreakdownDisplay) {
+      DOM.customPriceBreakdownDisplay.textContent = priceCalc.breakdownText;
+    }
+    if (DOM.customSizeRateHint) {
+      DOM.customSizeRateHint.textContent = `Extra cards: +₱${priceCalc.perCardRate.toFixed(2)} per card beyond ${priceCalc.config.baseCount} cards`;
+    }
+    if (DOM.customSheetCountHint) {
+      if (priceCalc.extraCards > 0) {
+        DOM.customSheetCountHint.textContent = `${priceCalc.config.baseCount} base + ${priceCalc.extraCards} extra cards (+₱${priceCalc.extraCost.toFixed(2)})`;
+      } else {
+        DOM.customSheetCountHint.textContent = `Base pack includes ${priceCalc.config.baseCount} cards (220 gsm)`;
+      }
+    }
 
-  // Update 1:1 Live Preview Canvas
-  if (DOM.customPreviewSizeBadge) {
-    DOM.customPreviewSizeBadge.textContent = priceCalc.config.name;
-  }
-  if (DOM.customPreviewSheetsBadge) {
-    DOM.customPreviewSheetsBadge.textContent = `${priceCalc.sheetCount} Sheets${priceCalc.extraSheets > 0 ? ` (+${priceCalc.extraSheets})` : ''}`;
-  }
-  if (DOM.customPreviewInstructionsText) {
-    if (instructions) {
-      DOM.customPreviewInstructionsText.textContent = `"${instructions}"`;
-      DOM.customPreviewInstructionsText.style.fontStyle = 'normal';
-      DOM.customPreviewInstructionsText.style.color = 'var(--brand-black)';
-    } else {
-      DOM.customPreviewInstructionsText.textContent = 'Enter your design motif, color preferences, font styles, text, or reference details...';
-      DOM.customPreviewInstructionsText.style.fontStyle = 'italic';
-      DOM.customPreviewInstructionsText.style.color = '#888888';
+    // Update 1:1 Live Preview Canvas
+    if (DOM.customPreviewSizeBadge) {
+      DOM.customPreviewSizeBadge.textContent = priceCalc.config.name;
     }
-  }
-  if (DOM.customPreviewPriceTag) {
-    DOM.customPreviewPriceTag.textContent = `₱${priceCalc.totalPrice.toFixed(2)} / pc`;
+    if (DOM.customPreviewSheetsBadge) {
+      DOM.customPreviewSheetsBadge.textContent = `${priceCalc.cardCount} Cards (220 gsm)${priceCalc.extraCards > 0 ? ` (+${priceCalc.extraCards})` : ''}`;
+    }
+    if (DOM.customPreviewInstructionsText) {
+      if (instructions) {
+        DOM.customPreviewInstructionsText.textContent = `"${instructions}"`;
+        DOM.customPreviewInstructionsText.style.fontStyle = 'normal';
+        DOM.customPreviewInstructionsText.style.color = 'var(--brand-black)';
+      } else {
+        DOM.customPreviewInstructionsText.textContent = 'Enter your notecard design motif, name/monogram personalization, font styles, or reference details...';
+        DOM.customPreviewInstructionsText.style.fontStyle = 'italic';
+        DOM.customPreviewInstructionsText.style.color = '#888888';
+      }
+    }
+    if (DOM.customPreviewPriceTag) {
+      DOM.customPreviewPriceTag.textContent = `₱${priceCalc.totalPrice.toFixed(2)} / pack`;
+    }
+  } else {
+    const priceCalc = calculateCustomNotepadPrice(sizeKey, rawCount);
+
+    // Update Dynamic Pricing Preview
+    if (DOM.customUnitPriceDisplay) {
+      DOM.customUnitPriceDisplay.textContent = `₱${priceCalc.totalPrice.toFixed(2)}`;
+    }
+    if (DOM.customPriceBreakdownDisplay) {
+      DOM.customPriceBreakdownDisplay.textContent = priceCalc.breakdownText;
+    }
+    if (DOM.customSizeRateHint) {
+      DOM.customSizeRateHint.textContent = `Extra sheets: +₱${priceCalc.perSheetRate.toFixed(2)} per sheet beyond 30 sheets`;
+    }
+    if (DOM.customSheetCountHint) {
+      if (priceCalc.extraSheets > 0) {
+        DOM.customSheetCountHint.textContent = `30 base + ${priceCalc.extraSheets} extra sheets (+₱${priceCalc.extraCost.toFixed(2)})`;
+      } else {
+        DOM.customSheetCountHint.textContent = `Base includes 30 sheets`;
+      }
+    }
+
+    // Update 1:1 Live Preview Canvas
+    if (DOM.customPreviewSizeBadge) {
+      DOM.customPreviewSizeBadge.textContent = priceCalc.config.name;
+    }
+    if (DOM.customPreviewSheetsBadge) {
+      DOM.customPreviewSheetsBadge.textContent = `${priceCalc.sheetCount} Sheets${priceCalc.extraSheets > 0 ? ` (+${priceCalc.extraSheets})` : ''}`;
+    }
+    if (DOM.customPreviewInstructionsText) {
+      if (instructions) {
+        DOM.customPreviewInstructionsText.textContent = `"${instructions}"`;
+        DOM.customPreviewInstructionsText.style.fontStyle = 'normal';
+        DOM.customPreviewInstructionsText.style.color = 'var(--brand-black)';
+      } else {
+        DOM.customPreviewInstructionsText.textContent = 'Enter your design motif, color preferences, font styles, text, or reference details...';
+        DOM.customPreviewInstructionsText.style.fontStyle = 'italic';
+        DOM.customPreviewInstructionsText.style.color = '#888888';
+      }
+    }
+    if (DOM.customPreviewPriceTag) {
+      DOM.customPreviewPriceTag.textContent = `₱${priceCalc.totalPrice.toFixed(2)} / pc`;
+    }
   }
 }
 
@@ -1564,19 +2218,33 @@ function updatePricePreview() {
 // ============================================================================
 
 function addCustomItemToCart() {
-  const sizeKey = DOM.selectCustomNotepadSize ? DOM.selectCustomNotepadSize.value : 'square';
-  const sheetCountInput = DOM.inputCustomSheetCount ? parseInt(DOM.inputCustomSheetCount.value, 10) : 30;
+  const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
+  const sizeKey = DOM.selectCustomNotepadSize ? DOM.selectCustomNotepadSize.value : (category === 'notecards' ? 'nc-2x35' : 'square');
+  const countInput = DOM.inputCustomSheetCount ? parseInt(DOM.inputCustomSheetCount.value, 10) : (category === 'notecards' ? 12 : 30);
   const instructions = DOM.textareaCustomInstructions ? DOM.textareaCustomInstructions.value.trim() : '';
   let qty = DOM.inputCustomQuantity ? parseInt(DOM.inputCustomQuantity.value, 10) : 3;
 
-  if (isNaN(sheetCountInput) || sheetCountInput < 30) {
-    showToast('Preferred sheet count must be at least 30 sheets.');
-    if (DOM.inputCustomSheetCount) {
-      DOM.inputCustomSheetCount.focus();
-      const parent = document.getElementById('groupCustomSheetCount');
-      if (parent) parent.classList.add('has-error');
+  if (category === 'notecards') {
+    const minCards = (sizeKey === 'nc-4x3' || sizeKey === '4x3') ? 16 : 12;
+    if (isNaN(countInput) || countInput < minCards) {
+      showToast(`Preferred card count must be at least ${minCards} cards.`);
+      if (DOM.inputCustomSheetCount) {
+        DOM.inputCustomSheetCount.focus();
+        const parent = document.getElementById('groupCustomSheetCount');
+        if (parent) parent.classList.add('has-error');
+      }
+      return;
     }
-    return;
+  } else {
+    if (isNaN(countInput) || countInput < 30) {
+      showToast('Preferred sheet count must be at least 30 sheets.');
+      if (DOM.inputCustomSheetCount) {
+        DOM.inputCustomSheetCount.focus();
+        const parent = document.getElementById('groupCustomSheetCount');
+        if (parent) parent.classList.add('has-error');
+      }
+      return;
+    }
   }
 
   if (!instructions) {
@@ -1589,7 +2257,7 @@ function addCustomItemToCart() {
     return;
   }
 
-  // Minimum Order Quantity (MOQ): 3 pads per size per design
+  // Minimum Order Quantity (MOQ): 3 packs per size per design
   if (isNaN(qty) || qty < 3) {
     qty = 3;
     if (DOM.inputCustomQuantity) {
@@ -1597,35 +2265,69 @@ function addCustomItemToCart() {
     }
   }
 
-  const priceCalc = calculateCustomNotepadPrice(sizeKey, sheetCountInput);
+  if (category === 'notecards') {
+    const priceCalc = calculateCustomNotecardPrice(sizeKey, countInput);
 
-  const customCartItem = {
-    id: 'custom_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-    isCustomMade: true,
-    categoryKey: 'notepads',
-    categoryName: 'Custom Notepad',
-    sizeId: sizeKey,
-    sizeName: priceCalc.config.name,
-    shortName: `Custom ${priceCalc.config.name.split('(')[0].trim()}`,
-    dimensions: priceCalc.config.dimensions,
-    hasSheets: true,
-    sheetCount: priceCalc.sheetCount,
-    extraSheets: priceCalc.extraSheets,
-    rate: priceCalc.perSheetRate,
-    instructions: instructions,
-    designCode: 'CUSTOM_LAYOUT',
-    isCustomized: false,
-    customText: instructions,
-    isTba: false,
-    unitPrice: priceCalc.totalPrice,
-    quantity: qty,
-    subtotal: priceCalc.totalPrice * qty
-  };
+    const customCartItem = {
+      id: 'custom_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+      isCustomMade: true,
+      categoryKey: 'notecards',
+      categoryName: 'Custom Notecard',
+      sizeId: sizeKey,
+      sizeName: priceCalc.config.name,
+      shortName: `Custom ${priceCalc.config.name.split('(')[0].trim()}`,
+      dimensions: priceCalc.config.dimensions,
+      hasSheets: false,
+      sheetCount: priceCalc.cardCount,
+      cardCount: priceCalc.cardCount,
+      extraCards: priceCalc.extraCards,
+      rate: priceCalc.perCardRate,
+      instructions: instructions,
+      designCode: 'CUSTOM_NOTECARD',
+      isCustomized: true,
+      freePersonalization: true,
+      customText: instructions,
+      isTba: false,
+      unitPrice: priceCalc.totalPrice,
+      quantity: qty,
+      subtotal: priceCalc.totalPrice * qty
+    };
 
-  appState.cart.push(customCartItem);
-  renderCart();
-  showCheckoutSection(false);
-  showToast(`Added ${qty}× ${customCartItem.sizeName} (${priceCalc.sheetCount} sheets) to order.`);
+    appState.cart.push(customCartItem);
+    renderCart();
+    showCheckoutSection(false);
+    showToast(`Added ${qty}× ${customCartItem.sizeName} (${priceCalc.cardCount} cards) to order.`);
+  } else {
+    const priceCalc = calculateCustomNotepadPrice(sizeKey, countInput);
+
+    const customCartItem = {
+      id: 'custom_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+      isCustomMade: true,
+      categoryKey: 'notepads',
+      categoryName: 'Custom Notepad',
+      sizeId: sizeKey,
+      sizeName: priceCalc.config.name,
+      shortName: `Custom ${priceCalc.config.name.split('(')[0].trim()}`,
+      dimensions: priceCalc.config.dimensions,
+      hasSheets: true,
+      sheetCount: priceCalc.sheetCount,
+      extraSheets: priceCalc.extraSheets,
+      rate: priceCalc.perSheetRate,
+      instructions: instructions,
+      designCode: 'CUSTOM_LAYOUT',
+      isCustomized: false,
+      customText: instructions,
+      isTba: false,
+      unitPrice: priceCalc.totalPrice,
+      quantity: qty,
+      subtotal: priceCalc.totalPrice * qty
+    };
+
+    appState.cart.push(customCartItem);
+    renderCart();
+    showCheckoutSection(false);
+    showToast(`Added ${qty}× ${customCartItem.sizeName} (${priceCalc.sheetCount} sheets) to order.`);
+  }
 
   if (DOM.inputCustomQuantity) {
     DOM.inputCustomQuantity.value = '3';
@@ -1743,19 +2445,29 @@ function renderCart() {
       if (item.extraSheets && item.extraSheets > 0) {
         specDetails += ` (+${item.extraSheets} extra @ ₱${item.rate.toFixed(2)}/sh)`;
       }
+    } else if (item.cardCount || item.categoryKey === 'notecards') {
+      const count = item.cardCount || item.sheetCount || 12;
+      specDetails += ` • ${count} pcs (220 gsm)`;
+      if (item.extraCards && item.extraCards > 0) {
+        specDetails += ` (+${item.extraCards} extra @ ₱${item.rate.toFixed(2)}/card)`;
+      }
     }
 
     let customDetailsBadge = '';
     if (item.isCustomMade) {
       customDetailsBadge = `
         <div class="cart-item-custom-badge" style="background: rgba(203, 108, 230, 0.12); color: var(--brand-purple-dark); border: 1px solid rgba(203, 108, 230, 0.3);">
-          <span>📝 Request: "${item.instructions}"</span>
+          <span>📝 Request: "${escapeHtml(item.instructions)}"</span>
         </div>
       `;
     } else if (item.isCustomized) {
+      const badgeStyle = item.freePersonalization 
+        ? `background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9;`
+        : ``;
+      const badgeLabel = item.freePersonalization ? `✨ Free Personalization` : `✨ Custom`;
       customDetailsBadge = `
-        <div class="cart-item-custom-badge">
-          <span>✨ Custom: "${item.customText}"</span>
+        <div class="cart-item-custom-badge" style="${badgeStyle}">
+          <span>${badgeLabel}: "${escapeHtml(item.customText)}"</span>
         </div>
       `;
     }
@@ -1765,9 +2477,11 @@ function renderCart() {
 
     let thumbHtml = '';
     if (item.isCustomMade) {
-      thumbHtml = `<div class="cart-item-custom-thumb" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:1.75rem; background:rgba(203,108,230,0.15); border-radius:8px;">🎨</div>`;
+      const icon = item.categoryKey === 'notecards' ? '💌' : '🎨';
+      thumbHtml = `<div class="cart-item-custom-thumb" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:1.75rem; background:rgba(203,108,230,0.15); border-radius:8px;">${icon}</div>`;
     } else {
-      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" onerror="this.onerror=null; this.style.display='none';">`;
+      const fallbackSvg = getProductMockupSvg(item.designCode, item.shortName || item.designCode, item.sizeId, 'Floral');
+      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
     }
 
     const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';
@@ -1973,15 +2687,20 @@ function buildJobOrderSlip(refNo) {
       DOM.joCustomMadeDetailsRow.style.display = 'block';
       const customItems = appState.cart.filter(i => i.isCustomMade);
       if (customItems.length > 0) {
-        DOM.joCustomMadeDetails.innerHTML = customItems.map((ci, idx) => `
+        DOM.joCustomMadeDetails.innerHTML = customItems.map((ci, idx) => {
+          const unitSpec = ci.categoryKey === 'notecards'
+            ? `${ci.cardCount || 12} cards (220 gsm)${ci.extraCards > 0 ? `, +${ci.extraCards} extra` : ''}`
+            : `${ci.sheetCount} sheets${ci.extraSheets > 0 ? `, +${ci.extraSheets} extra @ ₱${ci.rate.toFixed(2)}/sh` : ''}`;
+          return `
           <div style="margin-bottom: 6px;">
-            <strong>Custom Notepad #${idx + 1}:</strong> ${escapeHtml(ci.sizeName)} (${ci.sheetCount} sheets${ci.extraSheets > 0 ? `, +${ci.extraSheets} extra @ ₱${ci.rate.toFixed(2)}/sh` : ''})<br>
+            <strong>${escapeHtml(ci.categoryName)} #${idx + 1}:</strong> ${escapeHtml(ci.sizeName)} (${unitSpec})<br>
             <strong>Instructions:</strong> ${escapeHtml(ci.instructions)}
           </div>
-        `).join('');
+        `;
+        }).join('');
       } else {
         DOM.joCustomMadeDetails.innerHTML = `
-          <strong>Order Type:</strong> Custom Made Notepad Order
+          <strong>Order Type:</strong> Custom Made Stationery Order
         `;
       }
     } else {
@@ -1999,7 +2718,10 @@ function buildJobOrderSlip(refNo) {
     if (item.isCustomMade) {
       personalizationText = `<span style="color:#111827; font-weight:600;">Custom Layout: "${escapeHtml(item.instructions)}"</span>`;
     } else if (item.isCustomized) {
-      personalizationText = `<span style="color:#721c8a; font-weight:700;">"${escapeHtml(item.customText)}"</span> <span style="display:inline-block; font-size:0.7rem; background:#ffde59; color:#111827; padding:1px 6px; border-radius:4px; font-weight:800; margin-left:4px;">+₱10</span>`;
+      const freeTag = item.freePersonalization
+        ? `<span style="display:inline-block; font-size:0.7rem; background:#e8f5e9; color:#1b5e20; padding:1px 6px; border-radius:4px; font-weight:800; margin-left:4px;">FREE</span>`
+        : `<span style="display:inline-block; font-size:0.7rem; background:#ffde59; color:#111827; padding:1px 6px; border-radius:4px; font-weight:800; margin-left:4px;">+₱10</span>`;
+      personalizationText = `<span style="color:#721c8a; font-weight:700;">"${escapeHtml(item.customText)}"</span> ${freeTag}`;
     }
 
     const priceCell = item.isTba ? '<span style="color:#b241ce; font-weight:700;">TBA</span>' : `₱${item.unitPrice.toFixed(2)}`;
@@ -2015,11 +2737,19 @@ function buildJobOrderSlip(refNo) {
       ? `<strong style="color:#111827; font-weight:700;">${escapeHtml(displayTitle)}</strong><br><span style="font-size:0.8rem; color:#4b5563; font-weight:600;">${escapeHtml(item.sizeName)}</span>`
       : `<strong style="color:#111827; font-weight:700;">${escapeHtml(item.categoryName)} - ${escapeHtml(item.sizeName)}</strong>`;
 
+    let specLine = escapeHtml(item.dimensions);
+    if (item.hasSheets) {
+      specLine += ` • ${item.sheetCount} sheets` + (item.extraSheets > 0 ? ` (+${item.extraSheets} extra)` : '');
+    } else if (item.cardCount || item.categoryKey === 'notecards') {
+      const count = item.cardCount || item.sheetCount || 12;
+      specLine += ` • ${count} pcs (220 gsm)` + (item.extraCards > 0 ? ` (+${item.extraCards} extra)` : '');
+    }
+
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>
         ${itemTitleHtml}<br>
-        <span style="font-size:0.775rem; color:#64748b;">${escapeHtml(item.dimensions)} ${item.hasSheets ? '• ' + item.sheetCount + ' sheets' + (item.extraSheets > 0 ? ` (+${item.extraSheets} extra)` : '') : ''}</span>
+        <span style="font-size:0.775rem; color:#64748b;">${specLine}</span>
       </td>
       <td>
         ${designCellHtml}
@@ -2561,7 +3291,15 @@ function showToast(message) {
 // ============================================================================
 
 function initEventListeners() {
-  // Gallery Category Tabs (3x3, A6, A5)
+  // Main Catalog Switcher (Notepads vs Notecards)
+  if (DOM.btnCatalogNotepads) {
+    DOM.btnCatalogNotepads.addEventListener('click', () => switchMainCatalog('notepads'));
+  }
+  if (DOM.btnCatalogNotecards) {
+    DOM.btnCatalogNotecards.addEventListener('click', () => switchMainCatalog('notecards'));
+  }
+
+  // Gallery Category Tabs (3x3, A6, A5 for Notepads | 2x3.5, 4x3 for Notecards)
   if (DOM.tab3x3) {
     DOM.tab3x3.addEventListener('click', () => switchGalleryCategory('3x3'));
   }
@@ -2570,6 +3308,12 @@ function initEventListeners() {
   }
   if (DOM.tabA5) {
     DOM.tabA5.addEventListener('click', () => switchGalleryCategory('A5'));
+  }
+  if (DOM.tab2x35) {
+    DOM.tab2x35.addEventListener('click', () => switchGalleryCategory('2x3.5'));
+  }
+  if (DOM.tab4x3) {
+    DOM.tab4x3.addEventListener('click', () => switchGalleryCategory('4x3'));
   }
 
   // Header Actions
@@ -2652,7 +3396,10 @@ function initEventListeners() {
     DOM.btnSubmitOrder.addEventListener('click', submitJobOrder);
   }
 
-  // Custom Made Form Event Listeners (Preserved)
+  // Custom Made Form Event Listeners (Preserved & Expanded)
+  if (DOM.selectCustomCategory) {
+    DOM.selectCustomCategory.addEventListener('change', handleCustomCategoryChange);
+  }
   if (DOM.selectCustomNotepadSize) {
     DOM.selectCustomNotepadSize.addEventListener('change', updateCustomPriceAndPreview);
   }

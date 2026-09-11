@@ -1299,8 +1299,6 @@ const PRODUCT_CATALOG = [
 const appState = {
   activeGalleryTab: '3x3', // '3x3' (default), 'A6', 'A5'
   currentCategory: 'notepads',
-  gallerySort: 'newest', // 'newest' (default), 'name-asc', 'name-desc', 'code-asc'
-  galleryFilter: 'all', // 'all' (default), 'teachers-day'
   selectedSizeId: 'np-square',
   selectedSheetCount: '30',
   selectedDesignCode: '',
@@ -1345,14 +1343,6 @@ const DOM = {
   categorySpecPill: document.getElementById('categorySpecPill'),
   categorySpecIcon: document.getElementById('categorySpecIcon'),
   categorySpecText: document.getElementById('categorySpecText'),
-  galleryControlsToolbar: document.getElementById('galleryControlsToolbar'),
-  galleryFilterChips: document.getElementById('galleryFilterChips'),
-  filterChipAll: document.getElementById('filterChipAll'),
-  filterChipNewArrivals: document.getElementById('filterChipNewArrivals'),
-  filterChipTeachersDay: document.getElementById('filterChipTeachersDay'),
-  filterChipBloomstead: document.getElementById('filterChipBloomstead'),
-  filterChipBotanical: document.getElementById('filterChipBotanical'),
-  selectGallerySort: document.getElementById('selectGallerySort'),
   productGalleryGrid: document.getElementById('productGalleryGrid'),
 
   // Custom CTA Banner & Section
@@ -1656,64 +1646,30 @@ function renderProductGallery(categoryKey) {
 
   let items = PRODUCT_CATALOG.filter(p => p.category === categoryKey);
 
-  // Apply collection or category filter if active
-  const activeFilter = appState.galleryFilter || 'all';
-  if (activeFilter === 'new-arrivals') {
-    items = items.filter(p => isProductNewArrival(p));
-  } else if (activeFilter === 'teachers-day') {
-    items = items.filter(p => p.collection === 'teachers-day' || p.tag === "Teacher's Day" || (p.code && p.code.includes('_TD')));
-  } else if (activeFilter === 'bloomstead') {
-    items = items.filter(p => p.collection === 'bloomstead' || p.name.includes('Bloomstead') || (p.code && p.code.includes('BLOOM')));
-  } else if (activeFilter === 'botanical') {
-    items = items.filter(p => p.tag === 'Botanical');
-  }
+  // Automatic ordering and grouping:
+  // 1. Automatically display newly uploaded designs at the top/upper section by default
+  // 2. Group designs with similar themes/series together sequentially based on their design codes
+  items.sort((a, b) => {
+    const aNew = isProductNewArrival(a) ? 1 : 0;
+    const bNew = isProductNewArrival(b) ? 1 : 0;
+    if (bNew !== aNew) return bNew - aNew; // New arrivals prioritized at the top
 
-  // Apply sorting logic (default: newest / new arrivals first)
-  const sortMode = appState.gallerySort || 'newest';
-  if (sortMode === 'newest') {
-    // New Arrivals prioritized first, preserving consistent numerical/catalog sequence
-    items.sort((a, b) => {
-      const aNew = isProductNewArrival(a) ? 1 : 0;
-      const bNew = isProductNewArrival(b) ? 1 : 0;
-      if (bNew !== aNew) return bNew - aNew;
-      return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
-    });
-  } else if (sortMode === 'name-asc') {
-    items.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
-  } else if (sortMode === 'name-desc') {
-    items.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
-  } else if (sortMode === 'code-asc') {
-    items.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true, sensitivity: 'base' }));
-  }
+    // When both are new, group by series and sequential numbers
+    if (aNew && bNew) {
+      return a.code.localeCompare(b.code, undefined, { numeric: true, sensitivity: 'base' });
+    }
+
+    // For other designs, maintain their catalog grouping
+    return PRODUCT_CATALOG.indexOf(a) - PRODUCT_CATALOG.indexOf(b);
+  });
 
   if (items.length === 0) {
-    const isNotecards = (categoryKey === '2x3.5' || categoryKey === '4x3');
-    let emptyDesc = 'No designs match this filter in this size category.';
-    if (activeFilter === 'teachers-day') {
-      emptyDesc = 'There are no Teacher\'s Day designs in this size category. Teacher\'s Day notepads are available in 3x3, A6, and A5!';
-    } else if (activeFilter === 'bloomstead') {
-      emptyDesc = 'Bloomstead designs are available in 2x3.5 and 4x3 Notecards.';
-    } else if (activeFilter === 'new-arrivals') {
-      emptyDesc = isNotecards 
-        ? 'No new arrivals found in this notecard category.' 
-        : 'No new arrivals found in this notepad category.';
-    }
-
     DOM.productGalleryGrid.innerHTML = `
       <div class="gallery-empty-state">
-        <div class="gallery-empty-title">No matching designs found</div>
-        <div class="gallery-empty-desc">${emptyDesc}</div>
-        <button type="button" class="btn-header-action" id="btnResetGalleryFilter" style="display:inline-flex; margin-top:8px;">
-          Show All Designs
-        </button>
+        <div class="gallery-empty-title">No designs available</div>
+        <div class="gallery-empty-desc">Designs for this category will be available soon.</div>
       </div>
     `;
-    const btnReset = document.getElementById('btnResetGalleryFilter');
-    if (btnReset) {
-      btnReset.addEventListener('click', () => {
-        setGalleryFilter('all');
-      });
-    }
     return;
   }
 
@@ -1733,20 +1689,9 @@ function renderProductGallery(categoryKey) {
       ? `<span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>`
       : `<span class="card-custom-price-pill">+ ₱10.00 / item</span>`;
 
-    let newBadgeHtml = '';
-    if (isProductNewArrival(product)) {
-      const isNotecards = (product.catalogType === 'notecards' || product.cardCount || categoryKey === '2x3.5' || categoryKey === '4x3');
-      if (isNotecards) {
-        newBadgeHtml = `<span class="product-card-new-badge badge-notecard">🌸 NEW</span>`;
-      } else {
-        newBadgeHtml = `<span class="product-card-new-badge">🍎 NEW</span>`;
-      }
-    }
-
     card.innerHTML = `
       <div class="product-card-image-wrap">
         <span class="product-card-badge">${product.code}</span>
-        ${newBadgeHtml}
         <span class="product-card-motif-tag">${product.tag}</span>
         <img 
           src="images/${encodeURIComponent(product.code)}.png" 
@@ -1932,36 +1877,6 @@ function renderProductGallery(categoryKey) {
   });
 }
 
-function setGallerySort(sortMode) {
-  appState.gallerySort = sortMode;
-  if (DOM.selectGallerySort && DOM.selectGallerySort.value !== sortMode) {
-    DOM.selectGallerySort.value = sortMode;
-  }
-  renderProductGallery(appState.activeGalleryTab);
-}
-
-function setGalleryFilter(filterMode) {
-  appState.galleryFilter = filterMode;
-
-  const chips = [
-    { el: DOM.filterChipAll, mode: 'all' },
-    { el: DOM.filterChipNewArrivals, mode: 'new-arrivals' },
-    { el: DOM.filterChipTeachersDay, mode: 'teachers-day' },
-    { el: DOM.filterChipBloomstead, mode: 'bloomstead' },
-    { el: DOM.filterChipBotanical, mode: 'botanical' }
-  ];
-
-  chips.forEach(({ el, mode }) => {
-    if (el) {
-      const isActive = (mode === filterMode);
-      el.classList.toggle('active', isActive);
-      el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    }
-  });
-
-  renderProductGallery(appState.activeGalleryTab);
-}
-
 function switchMainCatalog(catalogType) {
   appState.currentCatalog = catalogType; // 'notepads' | 'notecards'
 
@@ -2002,24 +1917,6 @@ function switchGalleryCategory(categoryKey) {
     DOM.btnCatalogNotepads.setAttribute('aria-selected', !isNotecard ? 'true' : 'false');
     DOM.btnCatalogNotecards.classList.toggle('active', isNotecard);
     DOM.btnCatalogNotecards.setAttribute('aria-selected', isNotecard ? 'true' : 'false');
-  }
-
-  // Update filter chips visibility per catalog type
-  if (DOM.filterChipTeachersDay) {
-    DOM.filterChipTeachersDay.style.display = isNotecard ? 'none' : 'inline-flex';
-  }
-  if (DOM.filterChipBloomstead) {
-    DOM.filterChipBloomstead.style.display = isNotecard ? 'inline-flex' : 'none';
-  }
-  if (DOM.filterChipBotanical) {
-    DOM.filterChipBotanical.style.display = isNotecard ? 'inline-flex' : 'none';
-  }
-
-  // Reset filter if incompatible with the current catalog type
-  if (isNotecard && appState.galleryFilter === 'teachers-day') {
-    setGalleryFilter('all');
-  } else if (!isNotecard && (appState.galleryFilter === 'bloomstead' || appState.galleryFilter === 'botanical')) {
-    setGalleryFilter('all');
   }
 
   // Update tabs active state
@@ -3741,38 +3638,6 @@ function initEventListeners() {
   }
   if (DOM.tab4x3) {
     DOM.tab4x3.addEventListener('click', () => switchGalleryCategory('4x3'));
-  }
-
-  // Gallery Sort and Filter Controls
-  if (DOM.selectGallerySort) {
-    DOM.selectGallerySort.addEventListener('change', (e) => {
-      setGallerySort(e.target.value);
-    });
-  }
-  if (DOM.filterChipAll) {
-    DOM.filterChipAll.addEventListener('click', () => {
-      setGalleryFilter('all');
-    });
-  }
-  if (DOM.filterChipNewArrivals) {
-    DOM.filterChipNewArrivals.addEventListener('click', () => {
-      setGalleryFilter('new-arrivals');
-    });
-  }
-  if (DOM.filterChipTeachersDay) {
-    DOM.filterChipTeachersDay.addEventListener('click', () => {
-      setGalleryFilter('teachers-day');
-    });
-  }
-  if (DOM.filterChipBloomstead) {
-    DOM.filterChipBloomstead.addEventListener('click', () => {
-      setGalleryFilter('bloomstead');
-    });
-  }
-  if (DOM.filterChipBotanical) {
-    DOM.filterChipBotanical.addEventListener('click', () => {
-      setGalleryFilter('botanical');
-    });
   }
 
   // Header Actions

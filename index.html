@@ -558,6 +558,23 @@
     </div>
   </div>
 
+  <!-- Image Preview Lightbox Modal -->
+  <div class="image-lightbox-modal" id="imageLightboxModal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="image-lightbox-backdrop" id="imageLightboxBackdrop" title="Click to close preview"></div>
+    <button type="button" class="image-lightbox-close-btn" id="btnCloseImageLightbox" aria-label="Close image preview">&times;</button>
+    <div class="image-lightbox-container" id="imageLightboxContainer">
+      <div class="image-lightbox-content" id="imageLightboxContent">
+        <div class="image-lightbox-img-wrapper">
+          <img src="" alt="Enlarged Product Preview" class="image-lightbox-img" id="lightboxPreviewImage" />
+        </div>
+        <div class="image-lightbox-caption" id="lightboxCaption">
+          <span class="image-lightbox-code" id="lightboxCode"></span>
+          <span class="image-lightbox-title" id="lightboxTitle"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 

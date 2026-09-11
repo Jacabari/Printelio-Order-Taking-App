@@ -959,7 +959,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 01'
+    motif: 'Bloomstead Wildflower Garland 01',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_02',
@@ -974,7 +976,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 02'
+    motif: 'Bloomstead Wildflower Garland 02',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_03',
@@ -989,7 +993,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 03'
+    motif: 'Bloomstead Wildflower Garland 03',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_04',
@@ -1004,7 +1010,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 04'
+    motif: 'Bloomstead Wildflower Garland 04',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_05',
@@ -1019,7 +1027,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 05'
+    motif: 'Bloomstead Wildflower Garland 05',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_06',
@@ -1034,7 +1044,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 06'
+    motif: 'Bloomstead Wildflower Garland 06',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_07',
@@ -1049,7 +1061,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 07'
+    motif: 'Bloomstead Wildflower Garland 07',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_08',
@@ -1064,7 +1078,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 08'
+    motif: 'Bloomstead Wildflower Garland 08',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_09',
@@ -1079,7 +1095,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 09'
+    motif: 'Bloomstead Wildflower Garland 09',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCP_BLOOM_10',
@@ -1094,7 +1112,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 89.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Wildflower Garland 10'
+    motif: 'Bloomstead Wildflower Garland 10',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
 
   // ==========================================================================
@@ -1113,7 +1133,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 01'
+    motif: 'Bloomstead Botanical Landscape 01',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_02',
@@ -1128,7 +1150,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 02'
+    motif: 'Bloomstead Botanical Landscape 02',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_03',
@@ -1143,7 +1167,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 03'
+    motif: 'Bloomstead Botanical Landscape 03',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_04',
@@ -1158,7 +1184,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 04'
+    motif: 'Bloomstead Botanical Landscape 04',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_05',
@@ -1173,7 +1201,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 05'
+    motif: 'Bloomstead Botanical Landscape 05',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_06',
@@ -1188,7 +1218,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 06'
+    motif: 'Bloomstead Botanical Landscape 06',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_07',
@@ -1203,7 +1235,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 07'
+    motif: 'Bloomstead Botanical Landscape 07',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_08',
@@ -1218,7 +1252,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 08'
+    motif: 'Bloomstead Botanical Landscape 08',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_09',
@@ -1233,7 +1269,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 09'
+    motif: 'Bloomstead Botanical Landscape 09',
+    isNewArrival: true,
+    collection: 'bloomstead'
   },
   {
     code: 'NCL_BLOOM_10',
@@ -1248,7 +1286,9 @@ const PRODUCT_CATALOG = [
     freePersonalization: true,
     price: 129.00,
     tag: 'Botanical',
-    motif: 'Bloomstead Botanical Landscape 10'
+    motif: 'Bloomstead Botanical Landscape 10',
+    isNewArrival: true,
+    collection: 'bloomstead'
   }
 ];
 
@@ -1308,7 +1348,10 @@ const DOM = {
   galleryControlsToolbar: document.getElementById('galleryControlsToolbar'),
   galleryFilterChips: document.getElementById('galleryFilterChips'),
   filterChipAll: document.getElementById('filterChipAll'),
+  filterChipNewArrivals: document.getElementById('filterChipNewArrivals'),
   filterChipTeachersDay: document.getElementById('filterChipTeachersDay'),
+  filterChipBloomstead: document.getElementById('filterChipBloomstead'),
+  filterChipBotanical: document.getElementById('filterChipBotanical'),
   selectGallerySort: document.getElementById('selectGallerySort'),
   productGalleryGrid: document.getElementById('productGalleryGrid'),
 
@@ -1599,40 +1642,67 @@ function getProductMockupSvg(code, name, category, tag) {
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg).replace(/'/g, '%27');
 }
 
+function isProductNewArrival(product) {
+  if (!product) return false;
+  if (product.isNewArrival) return true;
+  if (product.collection === 'teachers-day' || product.collection === 'bloomstead') return true;
+  if (product.code && (product.code.includes('_TD') || product.code.includes('BLOOM'))) return true;
+  return false;
+}
+
 function renderProductGallery(categoryKey) {
   if (!DOM.productGalleryGrid) return;
   DOM.productGalleryGrid.innerHTML = '';
 
   let items = PRODUCT_CATALOG.filter(p => p.category === categoryKey);
 
-  // Apply collection filter if active
+  // Apply collection or category filter if active
   const activeFilter = appState.galleryFilter || 'all';
-  if (activeFilter === 'teachers-day') {
-    items = items.filter(p => p.collection === 'teachers-day' || p.tag === "Teacher's Day" || p.code.includes('_TD'));
+  if (activeFilter === 'new-arrivals') {
+    items = items.filter(p => isProductNewArrival(p));
+  } else if (activeFilter === 'teachers-day') {
+    items = items.filter(p => p.collection === 'teachers-day' || p.tag === "Teacher's Day" || (p.code && p.code.includes('_TD')));
+  } else if (activeFilter === 'bloomstead') {
+    items = items.filter(p => p.collection === 'bloomstead' || p.name.includes('Bloomstead') || (p.code && p.code.includes('BLOOM')));
+  } else if (activeFilter === 'botanical') {
+    items = items.filter(p => p.tag === 'Botanical');
   }
 
   // Apply sorting logic (default: newest / new arrivals first)
   const sortMode = appState.gallerySort || 'newest';
   if (sortMode === 'newest') {
-    // New Arrivals first, preserving natural catalog sequence within each group
+    // New Arrivals prioritized first, preserving consistent numerical/catalog sequence
     items.sort((a, b) => {
-      const aNew = a.isNewArrival ? 1 : 0;
-      const bNew = b.isNewArrival ? 1 : 0;
-      return bNew - aNew;
+      const aNew = isProductNewArrival(a) ? 1 : 0;
+      const bNew = isProductNewArrival(b) ? 1 : 0;
+      if (bNew !== aNew) return bNew - aNew;
+      return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
     });
   } else if (sortMode === 'name-asc') {
-    items.sort((a, b) => a.name.localeCompare(b.name));
+    items.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
   } else if (sortMode === 'name-desc') {
-    items.sort((a, b) => b.name.localeCompare(a.name));
+    items.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
   } else if (sortMode === 'code-asc') {
-    items.sort((a, b) => a.code.localeCompare(b.code));
+    items.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true, sensitivity: 'base' }));
   }
 
   if (items.length === 0) {
+    const isNotecards = (categoryKey === '2x3.5' || categoryKey === '4x3');
+    let emptyDesc = 'No designs match this filter in this size category.';
+    if (activeFilter === 'teachers-day') {
+      emptyDesc = 'There are no Teacher\'s Day designs in this size category. Teacher\'s Day notepads are available in 3x3, A6, and A5!';
+    } else if (activeFilter === 'bloomstead') {
+      emptyDesc = 'Bloomstead designs are available in 2x3.5 and 4x3 Notecards.';
+    } else if (activeFilter === 'new-arrivals') {
+      emptyDesc = isNotecards 
+        ? 'No new arrivals found in this notecard category.' 
+        : 'No new arrivals found in this notepad category.';
+    }
+
     DOM.productGalleryGrid.innerHTML = `
       <div class="gallery-empty-state">
         <div class="gallery-empty-title">No matching designs found</div>
-        <div class="gallery-empty-desc">There are no Teacher's Day designs in this size category. Teacher's Day notepads are available in 3x3, A6, and A5!</div>
+        <div class="gallery-empty-desc">${emptyDesc}</div>
         <button type="button" class="btn-header-action" id="btnResetGalleryFilter" style="display:inline-flex; margin-top:8px;">
           Show All Designs
         </button>
@@ -1663,9 +1733,15 @@ function renderProductGallery(categoryKey) {
       ? `<span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>`
       : `<span class="card-custom-price-pill">+ ₱10.00 / item</span>`;
 
-    const newBadgeHtml = product.isNewArrival 
-      ? `<span class="product-card-new-badge">🍎 NEW</span>` 
-      : '';
+    let newBadgeHtml = '';
+    if (isProductNewArrival(product)) {
+      const isNotecards = (product.catalogType === 'notecards' || product.cardCount || categoryKey === '2x3.5' || categoryKey === '4x3');
+      if (isNotecards) {
+        newBadgeHtml = `<span class="product-card-new-badge badge-notecard">🌸 NEW</span>`;
+      } else {
+        newBadgeHtml = `<span class="product-card-new-badge">🍎 NEW</span>`;
+      }
+    }
 
     card.innerHTML = `
       <div class="product-card-image-wrap">
@@ -1866,12 +1942,23 @@ function setGallerySort(sortMode) {
 
 function setGalleryFilter(filterMode) {
   appState.galleryFilter = filterMode;
-  if (DOM.filterChipAll) {
-    DOM.filterChipAll.classList.toggle('active', filterMode === 'all');
-  }
-  if (DOM.filterChipTeachersDay) {
-    DOM.filterChipTeachersDay.classList.toggle('active', filterMode === 'teachers-day');
-  }
+
+  const chips = [
+    { el: DOM.filterChipAll, mode: 'all' },
+    { el: DOM.filterChipNewArrivals, mode: 'new-arrivals' },
+    { el: DOM.filterChipTeachersDay, mode: 'teachers-day' },
+    { el: DOM.filterChipBloomstead, mode: 'bloomstead' },
+    { el: DOM.filterChipBotanical, mode: 'botanical' }
+  ];
+
+  chips.forEach(({ el, mode }) => {
+    if (el) {
+      const isActive = (mode === filterMode);
+      el.classList.toggle('active', isActive);
+      el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    }
+  });
+
   renderProductGallery(appState.activeGalleryTab);
 }
 
@@ -1883,13 +1970,6 @@ function switchMainCatalog(catalogType) {
     DOM.btnCatalogNotepads.setAttribute('aria-selected', catalogType === 'notepads' ? 'true' : 'false');
     DOM.btnCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
     DOM.btnCatalogNotecards.setAttribute('aria-selected', catalogType === 'notecards' ? 'true' : 'false');
-  }
-
-  // If switching to notecards, reset filter to 'all' since Teacher's Day is in notepads
-  if (catalogType === 'notecards' && appState.galleryFilter === 'teachers-day') {
-    appState.galleryFilter = 'all';
-    if (DOM.filterChipAll) DOM.filterChipAll.classList.add('active');
-    if (DOM.filterChipTeachersDay) DOM.filterChipTeachersDay.classList.remove('active');
   }
 
   if (catalogType === 'notepads') {
@@ -1922,6 +2002,24 @@ function switchGalleryCategory(categoryKey) {
     DOM.btnCatalogNotepads.setAttribute('aria-selected', !isNotecard ? 'true' : 'false');
     DOM.btnCatalogNotecards.classList.toggle('active', isNotecard);
     DOM.btnCatalogNotecards.setAttribute('aria-selected', isNotecard ? 'true' : 'false');
+  }
+
+  // Update filter chips visibility per catalog type
+  if (DOM.filterChipTeachersDay) {
+    DOM.filterChipTeachersDay.style.display = isNotecard ? 'none' : 'inline-flex';
+  }
+  if (DOM.filterChipBloomstead) {
+    DOM.filterChipBloomstead.style.display = isNotecard ? 'inline-flex' : 'none';
+  }
+  if (DOM.filterChipBotanical) {
+    DOM.filterChipBotanical.style.display = isNotecard ? 'inline-flex' : 'none';
+  }
+
+  // Reset filter if incompatible with the current catalog type
+  if (isNotecard && appState.galleryFilter === 'teachers-day') {
+    setGalleryFilter('all');
+  } else if (!isNotecard && (appState.galleryFilter === 'bloomstead' || appState.galleryFilter === 'botanical')) {
+    setGalleryFilter('all');
   }
 
   // Update tabs active state
@@ -3656,9 +3754,24 @@ function initEventListeners() {
       setGalleryFilter('all');
     });
   }
+  if (DOM.filterChipNewArrivals) {
+    DOM.filterChipNewArrivals.addEventListener('click', () => {
+      setGalleryFilter('new-arrivals');
+    });
+  }
   if (DOM.filterChipTeachersDay) {
     DOM.filterChipTeachersDay.addEventListener('click', () => {
       setGalleryFilter('teachers-day');
+    });
+  }
+  if (DOM.filterChipBloomstead) {
+    DOM.filterChipBloomstead.addEventListener('click', () => {
+      setGalleryFilter('bloomstead');
+    });
+  }
+  if (DOM.filterChipBotanical) {
+    DOM.filterChipBotanical.addEventListener('click', () => {
+      setGalleryFilter('botanical');
     });
   }
 

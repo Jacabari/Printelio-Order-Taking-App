@@ -1457,7 +1457,18 @@ const DOM = {
   joTableBody: document.getElementById('joTableBody'),
   joModalGrandTotal: document.getElementById('joModalGrandTotal'),
   paymentInstructionsText: document.getElementById('paymentInstructionsText'),
-  toastContainer: document.getElementById('toastContainer')
+  toastContainer: document.getElementById('toastContainer'),
+
+  // Image Preview Lightbox Modal Elements
+  imageLightboxModal: document.getElementById('imageLightboxModal'),
+  imageLightboxBackdrop: document.getElementById('imageLightboxBackdrop'),
+  btnCloseImageLightbox: document.getElementById('btnCloseImageLightbox'),
+  imageLightboxContainer: document.getElementById('imageLightboxContainer'),
+  imageLightboxContent: document.getElementById('imageLightboxContent'),
+  lightboxPreviewImage: document.getElementById('lightboxPreviewImage'),
+  lightboxCaption: document.getElementById('lightboxCaption'),
+  lightboxCode: document.getElementById('lightboxCode'),
+  lightboxTitle: document.getElementById('lightboxTitle')
 };
 
 // ============================================================================
@@ -1690,7 +1701,7 @@ function renderProductGallery(categoryKey) {
       : `<span class="card-custom-price-pill">+ ₱10.00 / item</span>`;
 
     card.innerHTML = `
-      <div class="product-card-image-wrap">
+      <div class="product-card-image-wrap" title="Click to view enlarged design">
         <span class="product-card-badge">${product.code}</span>
         <span class="product-card-motif-tag">${product.tag}</span>
         <img 
@@ -1699,6 +1710,14 @@ function renderProductGallery(categoryKey) {
           class="product-card-img" 
           loading="lazy"
         />
+        <div class="product-card-zoom-btn" aria-hidden="true" title="Zoom in">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
       </div>
       <div class="product-card-body">
         <div class="product-spec">${specText}</div>
@@ -1759,6 +1778,16 @@ function renderProductGallery(categoryKey) {
       cardImg.addEventListener('error', function onImgError() {
         this.removeEventListener('error', onImgError);
         this.src = fallbackSvg;
+      });
+    }
+
+    // Attach click event to product thumbnail to open Image Preview Lightbox (Modal)
+    const imgWrap = card.querySelector('.product-card-image-wrap');
+    if (imgWrap) {
+      imgWrap.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const currentSrc = (cardImg && cardImg.src) ? cardImg.src : `images/${encodeURIComponent(product.code)}.png`;
+        openImageLightbox(currentSrc, product.name, product.code);
       });
     }
 
@@ -3581,6 +3610,57 @@ function closeModal() {
   DOM.jobOrderModal.classList.remove('active');
 }
 
+// ============================================================================
+// 9b. Image Preview Lightbox (Modal)
+// ============================================================================
+
+function openImageLightbox(imageSrc, title, code) {
+  if (!DOM.imageLightboxModal || !DOM.lightboxPreviewImage) return;
+
+  DOM.lightboxPreviewImage.src = imageSrc;
+  DOM.lightboxPreviewImage.alt = title ? `${title} Preview` : 'Enlarged Product Preview';
+
+  if (DOM.lightboxCode) {
+    if (code) {
+      DOM.lightboxCode.textContent = code;
+      DOM.lightboxCode.style.display = 'inline-block';
+    } else {
+      DOM.lightboxCode.style.display = 'none';
+    }
+  }
+
+  if (DOM.lightboxTitle) {
+    DOM.lightboxTitle.textContent = title || '';
+  }
+
+  DOM.imageLightboxModal.style.display = 'flex';
+  void DOM.imageLightboxModal.offsetWidth; // Force layout recalculation for smooth CSS animation
+  DOM.imageLightboxModal.classList.add('active');
+  DOM.imageLightboxModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeImageLightbox() {
+  if (!DOM.imageLightboxModal) return;
+
+  DOM.imageLightboxModal.classList.remove('active');
+  DOM.imageLightboxModal.setAttribute('aria-hidden', 'true');
+
+  setTimeout(() => {
+    if (DOM.imageLightboxModal && !DOM.imageLightboxModal.classList.contains('active')) {
+      DOM.imageLightboxModal.style.display = 'none';
+      if (DOM.lightboxPreviewImage) {
+        DOM.lightboxPreviewImage.src = '';
+      }
+    }
+  }, 250);
+
+  // Restore scroll behavior only if jobOrderModal is also closed
+  if (!DOM.jobOrderModal || !DOM.jobOrderModal.classList.contains('active')) {
+    document.body.style.overflow = '';
+  }
+}
+
 function startNewOrder() {
   closeModal();
   appState.cart = [];
@@ -3788,6 +3868,41 @@ function initEventListeners() {
       }
     });
   }
+
+  // Image Preview Lightbox Event Listeners
+  // Trigger 1: Clicking the Close button (×)
+  if (DOM.btnCloseImageLightbox) {
+    DOM.btnCloseImageLightbox.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeImageLightbox();
+    });
+  }
+
+  // Trigger 2: Clicking anywhere on the dark backdrop overlay (outside the image content)
+  if (DOM.imageLightboxBackdrop) {
+    DOM.imageLightboxBackdrop.addEventListener('click', () => {
+      closeImageLightbox();
+    });
+  }
+
+  if (DOM.imageLightboxModal) {
+    DOM.imageLightboxModal.addEventListener('click', (e) => {
+      if (e.target.closest('#btnCloseImageLightbox') || !e.target.closest('#imageLightboxContent')) {
+        closeImageLightbox();
+      }
+    });
+  }
+
+  // Trigger 3: Pressing the 'Escape' key on the keyboard
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      if (DOM.imageLightboxModal && DOM.imageLightboxModal.classList.contains('active')) {
+        closeImageLightbox();
+      } else if (DOM.jobOrderModal && DOM.jobOrderModal.classList.contains('active')) {
+        closeModal();
+      }
+    }
+  });
 
   attachValidationClearListeners();
 }

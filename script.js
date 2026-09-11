@@ -16,6 +16,11 @@ const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63
 
 // Exact A5 Notepad Design Codes
 const A5_NOTEPAD_DESIGNS = [
+  'NP_A5_TD 1',
+  'NP_A5_TD 2',
+  'NP_A5_TD 3',
+  'NP_A5_TD 4',
+  'NP_A5_TD 5',
   'Blue DP_A5',
   'Pink DP_A5',
   'Yellow DP_A5',
@@ -46,6 +51,11 @@ const PRODUCTS_DATA = {
         dimensions: '3 × 3 in',
         prices: { '30': 29 },
         designs: [
+          'NP_SQ_TD 1',
+          'NP_SQ_TD 2',
+          'NP_SQ_TD 3',
+          'NP_SQ_TD 4',
+          'NP_SQ_TD 5',
           'NP_SQ_CAT01',
           'NP_SQ_CAT02',
           'NP_SQ_CAT03',
@@ -72,6 +82,11 @@ const PRODUCTS_DATA = {
         dimensions: '4 × 5.8 in',
         prices: { '30': 49 },
         designs: [
+          'NP_A6_TD 1',
+          'NP_A6_TD 2',
+          'NP_A6_TD 3',
+          'NP_A6_TD 4',
+          'NP_A6_TD 5',
           'NP_A6_Cinnamoroll',
           'NP_A6_Flower',
           'NP_A6_HelloKitty',
@@ -179,6 +194,27 @@ const CATEGORY_SPECS = {
 };
 
 const DESIGN_TITLES = {
+  // Teacher's Day Collection (Square 3x3)
+  'NP_SQ_TD 1': 'SQ Teachers Day 1',
+  'NP_SQ_TD 2': 'SQ Teachers Day 2',
+  'NP_SQ_TD 3': 'SQ Teachers Day 3',
+  'NP_SQ_TD 4': 'SQ Teachers Day 4',
+  'NP_SQ_TD 5': 'SQ Teachers Day 5',
+
+  // Teacher's Day Collection (A6)
+  'NP_A6_TD 1': 'A6 Teachers Day 1',
+  'NP_A6_TD 2': 'A6 Teachers Day 2',
+  'NP_A6_TD 3': 'A6 Teachers Day 3',
+  'NP_A6_TD 4': 'A6 Teachers Day 4',
+  'NP_A6_TD 5': 'A6 Teachers Day 5',
+
+  // Teacher's Day Collection (A5)
+  'NP_A5_TD 1': 'A5 Teachers Day 1',
+  'NP_A5_TD 2': 'A5 Teachers Day 2',
+  'NP_A5_TD 3': 'A5 Teachers Day 3',
+  'NP_A5_TD 4': 'A5 Teachers Day 4',
+  'NP_A5_TD 5': 'A5 Teachers Day 5',
+
   // Square Notepads (3x3)
   'NP_SQ_CAT01': 'Sunny Sitting Calico',
   'NP_SQ_CAT02': 'Dozing Dreamer',
@@ -252,6 +288,76 @@ const DESIGN_TITLES = {
 
 const PRODUCT_CATALOG = [
   // 3x3 Notepads (Square 3 × 3 in, 30 sheets, ₱29.00)
+  {
+    code: 'NP_SQ_TD 1',
+    name: 'SQ Teachers Day 1',
+    category: '3x3',
+    catalogType: 'notepads',
+    sizeName: 'Square Notepad (3 × 3 in)',
+    dimensions: '3 × 3 in',
+    sheets: 30,
+    price: 29.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 01",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_SQ_TD 2',
+    name: 'SQ Teachers Day 2',
+    category: '3x3',
+    catalogType: 'notepads',
+    sizeName: 'Square Notepad (3 × 3 in)',
+    dimensions: '3 × 3 in',
+    sheets: 30,
+    price: 29.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 02",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_SQ_TD 3',
+    name: 'SQ Teachers Day 3',
+    category: '3x3',
+    catalogType: 'notepads',
+    sizeName: 'Square Notepad (3 × 3 in)',
+    dimensions: '3 × 3 in',
+    sheets: 30,
+    price: 29.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 03",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_SQ_TD 4',
+    name: 'SQ Teachers Day 4',
+    category: '3x3',
+    catalogType: 'notepads',
+    sizeName: 'Square Notepad (3 × 3 in)',
+    dimensions: '3 × 3 in',
+    sheets: 30,
+    price: 29.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 04",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_SQ_TD 5',
+    name: 'SQ Teachers Day 5',
+    category: '3x3',
+    catalogType: 'notepads',
+    sizeName: 'Square Notepad (3 × 3 in)',
+    dimensions: '3 × 3 in',
+    sheets: 30,
+    price: 29.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 05",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
   {
     code: 'NP_SQ_CAT01',
     name: 'Sunny Sitting Calico',
@@ -442,6 +548,76 @@ const PRODUCT_CATALOG = [
 
   // A6 Notepads (4 × 5.8 in, 30 sheets, ₱49.00)
   {
+    code: 'NP_A6_TD 1',
+    name: 'A6 Teachers Day 1',
+    category: 'A6',
+    catalogType: 'notepads',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 01",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A6_TD 2',
+    name: 'A6 Teachers Day 2',
+    category: 'A6',
+    catalogType: 'notepads',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 02",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A6_TD 3',
+    name: 'A6 Teachers Day 3',
+    category: 'A6',
+    catalogType: 'notepads',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 03",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A6_TD 4',
+    name: 'A6 Teachers Day 4',
+    category: 'A6',
+    catalogType: 'notepads',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 04",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A6_TD 5',
+    name: 'A6 Teachers Day 5',
+    category: 'A6',
+    catalogType: 'notepads',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 49.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 05",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
     code: 'NP_A6_Cinnamoroll',
     name: 'Cinnamoroll',
     category: 'A6',
@@ -542,6 +718,76 @@ const PRODUCT_CATALOG = [
   },
 
   // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱99.00)
+  {
+    code: 'NP_A5_TD 1',
+    name: 'A5 Teachers Day 1',
+    category: 'A5',
+    catalogType: 'notepads',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 01",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A5_TD 2',
+    name: 'A5 Teachers Day 2',
+    category: 'A5',
+    catalogType: 'notepads',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 02",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A5_TD 3',
+    name: 'A5 Teachers Day 3',
+    category: 'A5',
+    catalogType: 'notepads',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 03",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A5_TD 4',
+    name: 'A5 Teachers Day 4',
+    category: 'A5',
+    catalogType: 'notepads',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 04",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
+  {
+    code: 'NP_A5_TD 5',
+    name: 'A5 Teachers Day 5',
+    category: 'A5',
+    catalogType: 'notepads',
+    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
+    dimensions: '5.8 × 8.3 in',
+    sheets: 30,
+    price: 99.00,
+    tag: "Teacher's Day",
+    motif: "Teacher's Day Tribute 05",
+    isNewArrival: true,
+    collection: 'teachers-day'
+  },
   {
     code: 'Blue DP_A5',
     name: 'Cloud Nine Daily',
@@ -1013,6 +1259,8 @@ const PRODUCT_CATALOG = [
 const appState = {
   activeGalleryTab: '3x3', // '3x3' (default), 'A6', 'A5'
   currentCategory: 'notepads',
+  gallerySort: 'newest', // 'newest' (default), 'name-asc', 'name-desc', 'code-asc'
+  galleryFilter: 'all', // 'all' (default), 'teachers-day'
   selectedSizeId: 'np-square',
   selectedSheetCount: '30',
   selectedDesignCode: '',
@@ -1057,6 +1305,11 @@ const DOM = {
   categorySpecPill: document.getElementById('categorySpecPill'),
   categorySpecIcon: document.getElementById('categorySpecIcon'),
   categorySpecText: document.getElementById('categorySpecText'),
+  galleryControlsToolbar: document.getElementById('galleryControlsToolbar'),
+  galleryFilterChips: document.getElementById('galleryFilterChips'),
+  filterChipAll: document.getElementById('filterChipAll'),
+  filterChipTeachersDay: document.getElementById('filterChipTeachersDay'),
+  selectGallerySort: document.getElementById('selectGallerySort'),
   productGalleryGrid: document.getElementById('productGalleryGrid'),
 
   // Custom CTA Banner & Section
@@ -1260,7 +1513,10 @@ function getProductMockupSvg(code, name, category, tag) {
   let accentBadge = '#ffde59';
   let iconEmoji = '📝';
 
-  if (tag.includes('Cat')) {
+  if (tag.includes('Teacher') || code.includes('_TD')) {
+    iconEmoji = '🍎';
+    headerColor = '#e76f51';
+  } else if (tag.includes('Cat')) {
     iconEmoji = '🐱';
     headerColor = '#f5b597';
   } else if (tag.includes('Character')) {
@@ -1347,7 +1603,49 @@ function renderProductGallery(categoryKey) {
   if (!DOM.productGalleryGrid) return;
   DOM.productGalleryGrid.innerHTML = '';
 
-  const items = PRODUCT_CATALOG.filter(p => p.category === categoryKey);
+  let items = PRODUCT_CATALOG.filter(p => p.category === categoryKey);
+
+  // Apply collection filter if active
+  const activeFilter = appState.galleryFilter || 'all';
+  if (activeFilter === 'teachers-day') {
+    items = items.filter(p => p.collection === 'teachers-day' || p.tag === "Teacher's Day" || p.code.includes('_TD'));
+  }
+
+  // Apply sorting logic (default: newest / new arrivals first)
+  const sortMode = appState.gallerySort || 'newest';
+  if (sortMode === 'newest') {
+    // New Arrivals first, preserving natural catalog sequence within each group
+    items.sort((a, b) => {
+      const aNew = a.isNewArrival ? 1 : 0;
+      const bNew = b.isNewArrival ? 1 : 0;
+      return bNew - aNew;
+    });
+  } else if (sortMode === 'name-asc') {
+    items.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortMode === 'name-desc') {
+    items.sort((a, b) => b.name.localeCompare(a.name));
+  } else if (sortMode === 'code-asc') {
+    items.sort((a, b) => a.code.localeCompare(b.code));
+  }
+
+  if (items.length === 0) {
+    DOM.productGalleryGrid.innerHTML = `
+      <div class="gallery-empty-state">
+        <div class="gallery-empty-title">No matching designs found</div>
+        <div class="gallery-empty-desc">There are no Teacher's Day designs in this size category. Teacher's Day notepads are available in 3x3, A6, and A5!</div>
+        <button type="button" class="btn-header-action" id="btnResetGalleryFilter" style="display:inline-flex; margin-top:8px;">
+          Show All Designs
+        </button>
+      </div>
+    `;
+    const btnReset = document.getElementById('btnResetGalleryFilter');
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        setGalleryFilter('all');
+      });
+    }
+    return;
+  }
 
   items.forEach(product => {
     const card = document.createElement('div');
@@ -1365,9 +1663,14 @@ function renderProductGallery(categoryKey) {
       ? `<span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>`
       : `<span class="card-custom-price-pill">+ ₱10.00 / item</span>`;
 
+    const newBadgeHtml = product.isNewArrival 
+      ? `<span class="product-card-new-badge">🍎 NEW</span>` 
+      : '';
+
     card.innerHTML = `
       <div class="product-card-image-wrap">
         <span class="product-card-badge">${product.code}</span>
+        ${newBadgeHtml}
         <span class="product-card-motif-tag">${product.tag}</span>
         <img 
           src="images/${encodeURIComponent(product.code)}.png" 
@@ -1553,6 +1856,25 @@ function renderProductGallery(categoryKey) {
   });
 }
 
+function setGallerySort(sortMode) {
+  appState.gallerySort = sortMode;
+  if (DOM.selectGallerySort && DOM.selectGallerySort.value !== sortMode) {
+    DOM.selectGallerySort.value = sortMode;
+  }
+  renderProductGallery(appState.activeGalleryTab);
+}
+
+function setGalleryFilter(filterMode) {
+  appState.galleryFilter = filterMode;
+  if (DOM.filterChipAll) {
+    DOM.filterChipAll.classList.toggle('active', filterMode === 'all');
+  }
+  if (DOM.filterChipTeachersDay) {
+    DOM.filterChipTeachersDay.classList.toggle('active', filterMode === 'teachers-day');
+  }
+  renderProductGallery(appState.activeGalleryTab);
+}
+
 function switchMainCatalog(catalogType) {
   appState.currentCatalog = catalogType; // 'notepads' | 'notecards'
 
@@ -1561,6 +1883,13 @@ function switchMainCatalog(catalogType) {
     DOM.btnCatalogNotepads.setAttribute('aria-selected', catalogType === 'notepads' ? 'true' : 'false');
     DOM.btnCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
     DOM.btnCatalogNotecards.setAttribute('aria-selected', catalogType === 'notecards' ? 'true' : 'false');
+  }
+
+  // If switching to notecards, reset filter to 'all' since Teacher's Day is in notepads
+  if (catalogType === 'notecards' && appState.galleryFilter === 'teachers-day') {
+    appState.galleryFilter = 'all';
+    if (DOM.filterChipAll) DOM.filterChipAll.classList.add('active');
+    if (DOM.filterChipTeachersDay) DOM.filterChipTeachersDay.classList.remove('active');
   }
 
   if (catalogType === 'notepads') {
@@ -3314,6 +3643,23 @@ function initEventListeners() {
   }
   if (DOM.tab4x3) {
     DOM.tab4x3.addEventListener('click', () => switchGalleryCategory('4x3'));
+  }
+
+  // Gallery Sort and Filter Controls
+  if (DOM.selectGallerySort) {
+    DOM.selectGallerySort.addEventListener('change', (e) => {
+      setGallerySort(e.target.value);
+    });
+  }
+  if (DOM.filterChipAll) {
+    DOM.filterChipAll.addEventListener('click', () => {
+      setGalleryFilter('all');
+    });
+  }
+  if (DOM.filterChipTeachersDay) {
+    DOM.filterChipTeachersDay.addEventListener('click', () => {
+      setGalleryFilter('teachers-day');
+    });
   }
 
   // Header Actions

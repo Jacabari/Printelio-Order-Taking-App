@@ -486,6 +486,10 @@ h1, h2, h3, h4 {
   letter-spacing: 0.04em;
 }
 
+.gallery-filter-chip .chip-badge.chip-badge-notecard {
+  background: #2d6a4f;
+}
+
 .gallery-sort-control {
   display: inline-flex;
   align-items: center;
@@ -638,6 +642,11 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   gap: 3px;
+}
+
+.product-card-new-badge.badge-notecard {
+  background: #2d6a4f;
+  box-shadow: 0 2px 6px rgba(45, 106, 79, 0.35);
 }
 
 .product-card-motif-tag {

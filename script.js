@@ -1692,13 +1692,65 @@ function renderProductGallery(categoryKey) {
 
     const fallbackSvg = getProductMockupSvg(product.code, product.name, product.category, product.tag);
     const cleanSizeName = product.sizeName.replace(/\s*\([^)]*pcs[^)]*\)/gi, '').trim();
-    const specText = (product.catalogType === 'notecards' || product.cardCount)
+    const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount));
+    const specText = isNotecards
       ? `${cleanSizeName} • ${product.cardCount} pcs (220 gsm)`
       : `${product.sizeName} • ${product.sheets} sheets`;
 
-    const customPricePill = product.freePersonalization
-      ? `<span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>`
-      : `<span class="card-custom-price-pill">+ ₱10.00 / item</span>`;
+    const customizationSectionHtml = isNotecards ? `
+      <!-- Always-visible Text Customization for Notecards (FREE Personalization) -->
+      <div class="card-customization-box card-customization-box-always-visible" id="custBox_${safeCode}">
+        <div class="card-notecard-custom-header">
+          <label class="card-custom-input-label" for="inputCustText_${safeCode}">
+            CUSTOM NAME / TEXT TO PRINT
+          </label>
+          <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>
+        </div>
+        <div class="card-custom-input-wrap card-custom-input-wrap-visible" id="wrapCustInput_${safeCode}">
+          <input 
+            type="text" 
+            class="card-custom-input" 
+            id="inputCustText_${safeCode}" 
+            placeholder="e.g. Maria Clara / The Santos Family" 
+            maxlength="50"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    ` : `
+      <!-- Interactive Text Customization for Notepads (Conditional Visibility + ₱10.00 surcharge) -->
+      <div class="card-customization-box" id="custBox_${safeCode}">
+        <label class="card-customization-toggle" for="checkCust_${safeCode}">
+          <input 
+            type="checkbox" 
+            class="card-custom-checkbox" 
+            id="checkCust_${safeCode}" 
+            name="checkCust_${safeCode}"
+          />
+          <span class="card-custom-toggle-content">
+            <span class="card-custom-label-text">Add Text Customization (e.g., Name)</span>
+            <span class="card-custom-price-pill">+ ₱10.00 / item</span>
+          </span>
+        </label>
+        
+        <div class="card-custom-input-wrap" id="wrapCustInput_${safeCode}" style="display: none;">
+          <label class="card-custom-input-label" for="inputCustText_${safeCode}">
+            CUSTOM NAME / TEXT TO PRINT <span class="required-star">*</span>
+          </label>
+          <input 
+            type="text" 
+            class="card-custom-input" 
+            id="inputCustText_${safeCode}" 
+            placeholder="e.g. Maria Clara / M. Santos" 
+            maxlength="50"
+            autocomplete="off"
+          />
+          <div class="card-custom-error-msg" id="errCustText_${safeCode}" style="display: none;">
+            Please enter the custom name or text to print.
+          </div>
+        </div>
+      </div>
+    `;
 
     card.innerHTML = `
       <div class="product-card-image-wrap" title="Click to view enlarged design">
@@ -1724,38 +1776,7 @@ function renderProductGallery(categoryKey) {
         <h4 class="product-title">${product.name}</h4>
       </div>
 
-      <!-- Interactive Text Customization (Conditional Visibility + ₱10.00 surcharge or FREE) -->
-      <div class="card-customization-box" id="custBox_${safeCode}">
-        <label class="card-customization-toggle" for="checkCust_${safeCode}">
-          <input 
-            type="checkbox" 
-            class="card-custom-checkbox" 
-            id="checkCust_${safeCode}" 
-            name="checkCust_${safeCode}"
-          />
-          <span class="card-custom-toggle-content">
-            <span class="card-custom-label-text">Add Text Customization (e.g., Name)</span>
-            ${customPricePill}
-          </span>
-        </label>
-        
-        <div class="card-custom-input-wrap" id="wrapCustInput_${safeCode}" style="display: none;">
-          <label class="card-custom-input-label" for="inputCustText_${safeCode}">
-            CUSTOM NAME / TEXT TO PRINT <span class="required-star">*</span>
-          </label>
-          <input 
-            type="text" 
-            class="card-custom-input" 
-            id="inputCustText_${safeCode}" 
-            placeholder="e.g. Maria Clara / M. Santos" 
-            maxlength="50"
-            autocomplete="off"
-          />
-          <div class="card-custom-error-msg" id="errCustText_${safeCode}" style="display: none;">
-            Please enter the custom name or text to print.
-          </div>
-        </div>
-      </div>
+      ${customizationSectionHtml}
 
       <div class="product-card-footer">
         <div class="product-card-footer-top">
@@ -1878,20 +1899,32 @@ function renderProductGallery(categoryKey) {
     if (addBtn) {
       addBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isCustomized = Boolean(checkCust && checkCust.checked);
-        const customText = inputCustText ? inputCustText.value.trim() : '';
+        let isCustomized = false;
+        let customText = '';
 
-        // Validation: If customization is checked, custom text is mandatory
-        if (isCustomized && !customText) {
-          if (inputCustText) {
-            inputCustText.classList.add('has-error');
-            inputCustText.focus();
+        if (isNotecards) {
+          // Notecards: Text customization input is always visible
+          // If text is entered, capture as FREE personalization
+          // If left blank, treat as standard order without customization
+          customText = inputCustText ? inputCustText.value.trim() : '';
+          isCustomized = customText.length > 0;
+        } else {
+          // Notepads: Checkbox toggle determines customization (+₱10 fee)
+          isCustomized = Boolean(checkCust && checkCust.checked);
+          customText = inputCustText ? inputCustText.value.trim() : '';
+
+          // Validation: If customization is checked on Notepads, custom text is mandatory
+          if (isCustomized && !customText) {
+            if (inputCustText) {
+              inputCustText.classList.add('has-error');
+              inputCustText.focus();
+            }
+            if (errCustText) {
+              errCustText.style.display = 'block';
+            }
+            showToast('Please enter the custom name or text to print.');
+            return;
           }
-          if (errCustText) {
-            errCustText.style.display = 'block';
-          }
-          showToast('Please enter the custom name or text to print.');
-          return;
         }
 
         if (inputCustText) inputCustText.classList.remove('has-error');

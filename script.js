@@ -115,10 +115,10 @@ const PRODUCTS_DATA = {
     sizes: [
       {
         id: 'nc-portrait',
-        name: '2 x 3.5 in (12 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
+        name: '2 x 3.5 in (24 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
         shortName: '2 x 3.5 in Notecard',
         dimensions: '2 × 3.5 in',
-        prices: { '12': 89 },
+        prices: { '24': 89 },
         designs: [
           'NCP_BLOOM_01', 'NCP_BLOOM_02', 'NCP_BLOOM_03', 'NCP_BLOOM_04', 'NCP_BLOOM_05',
           'NCP_BLOOM_06', 'NCP_BLOOM_07', 'NCP_BLOOM_08', 'NCP_BLOOM_09', 'NCP_BLOOM_10'
@@ -126,10 +126,10 @@ const PRODUCTS_DATA = {
       },
       {
         id: 'nc-landscape',
-        name: '4 x 3 in (16 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
+        name: '4 x 3 in (24 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
         shortName: '4 x 3 in Notecard',
         dimensions: '4 × 3 in',
-        prices: { '16': 129 },
+        prices: { '24': 129 },
         designs: [
           'NCL_BLOOM_01', 'NCL_BLOOM_02', 'NCL_BLOOM_03', 'NCL_BLOOM_04', 'NCL_BLOOM_05',
           'NCL_BLOOM_06', 'NCL_BLOOM_07', 'NCL_BLOOM_08', 'NCL_BLOOM_09', 'NCL_BLOOM_10'
@@ -181,13 +181,13 @@ const CATEGORY_SPECS = {
   },
   '2x3.5': {
     title: '2 × 3.5 in Notecards (Portrait)',
-    specText: '2 × 3.5 in • 12 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱89.00 / pack',
+    specText: '2 × 3.5 in • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱89.00 / pack',
     price: 89.00,
     catalog: 'notecards'
   },
   '4x3': {
     title: '4 × 3 in Notecards (Landscape)',
-    specText: '4 × 3 in • 16 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱129.00 / pack',
+    specText: '4 × 3 in • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱129.00 / pack',
     price: 129.00,
     catalog: 'notecards'
   }
@@ -944,7 +944,7 @@ const PRODUCT_CATALOG = [
   },
 
   // ==========================================================================
-  // NOTECARDS: 2x3.5 inches (12 pcs per pack | 220 gsm | FREE PERSONALIZATION) - ₱89
+  // NOTECARDS: 2x3.5 inches (24 pcs per pack | 220 gsm | FREE PERSONALIZATION) - ₱89
   // ==========================================================================
   {
     code: 'NCP_BLOOM_01',
@@ -953,8 +953,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -970,8 +970,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -987,8 +987,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1004,8 +1004,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1021,8 +1021,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1038,8 +1038,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1055,8 +1055,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1072,8 +1072,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1089,8 +1089,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1106,8 +1106,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '2×3.5 in Notecards',
     dimensions: '2 × 3.5 in',
-    sheets: 12,
-    cardCount: 12,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 89.00,
@@ -1118,7 +1118,7 @@ const PRODUCT_CATALOG = [
   },
 
   // ==========================================================================
-  // NOTECARDS: 4x3 inches (16 pcs per pack | 220 gsm | FREE PERSONALIZATION) - ₱129
+  // NOTECARDS: 4x3 inches (24 pcs per pack | 220 gsm | FREE PERSONALIZATION) - ₱129
   // ==========================================================================
   {
     code: 'NCL_BLOOM_01',
@@ -1127,8 +1127,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1144,8 +1144,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1161,8 +1161,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1178,8 +1178,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1195,8 +1195,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1212,8 +1212,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1229,8 +1229,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1246,8 +1246,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1263,8 +1263,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1280,8 +1280,8 @@ const PRODUCT_CATALOG = [
     catalogType: 'notecards',
     sizeName: '4×3 in Notecards',
     dimensions: '4 × 3 in',
-    sheets: 16,
-    cardCount: 16,
+    sheets: 24,
+    cardCount: 24,
     gsm: 220,
     freePersonalization: true,
     price: 129.00,
@@ -1511,7 +1511,7 @@ function getProductMockupSvg(code, name, category, tag) {
 
     <!-- Bottom Specs -->
     <rect x="86" y="252" width="148" height="20" rx="10" fill="#ede5d8"/>
-    <text x="160" y="266" font-family="Raleway, -apple-system, sans-serif" font-size="8" font-weight="800" fill="#585268" text-anchor="middle">2×3.5 in • 12 pcs • 220 gsm</text>
+    <text x="160" y="266" font-family="Raleway, -apple-system, sans-serif" font-size="8" font-weight="800" fill="#585268" text-anchor="middle">2×3.5 in • 24 pcs • 220 gsm</text>
   </g>
 </svg>`.trim();
     return 'data:image/svg+xml;utf8,' + encodeURIComponent(notecardSvg).replace(/'/g, '%27');
@@ -1547,7 +1547,7 @@ function getProductMockupSvg(code, name, category, tag) {
 
     <!-- Bottom Specs -->
     <rect x="45" y="222" width="230" height="22" rx="11" fill="#ede5d8"/>
-    <text x="160" y="237" font-family="Raleway, -apple-system, sans-serif" font-size="9" font-weight="800" fill="#585268" text-anchor="middle">4×3 in • 16 pcs / pack • 220 gsm Cardstock</text>
+    <text x="160" y="237" font-family="Raleway, -apple-system, sans-serif" font-size="9" font-weight="800" fill="#585268" text-anchor="middle">4×3 in • 24 pcs / pack • 220 gsm Cardstock</text>
   </g>
 </svg>`.trim();
     return 'data:image/svg+xml;utf8,' + encodeURIComponent(notecardSvg).replace(/'/g, '%27');
@@ -2267,8 +2267,8 @@ const CUSTOM_NOTECARD_CONFIG = {
     name: '2×3.5 in Notecards (220 gsm)',
     dimensions: '2 × 3.5 in',
     basePrice: 89,
-    baseCount: 12,
-    perCardRate: 8.50,
+    baseCount: 24,
+    perCardRate: 5.00,
     unitName: 'cards'
   },
   'nc-4x3': {
@@ -2276,8 +2276,8 @@ const CUSTOM_NOTECARD_CONFIG = {
     name: '4×3 in Notecards (220 gsm)',
     dimensions: '4 × 3 in',
     basePrice: 129,
-    baseCount: 16,
-    perCardRate: 9.00,
+    baseCount: 24,
+    perCardRate: 7.00,
     unitName: 'cards'
   }
 };
@@ -2338,21 +2338,21 @@ function handleCustomCategoryChange() {
   const countInput = DOM.inputCustomSheetCount;
 
   if (category === 'notecards') {
-    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Made Specification';
+    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Order Specification';
     if (DOM.labelCustomSize) DOM.labelCustomSize.innerHTML = 'NOTECARD SIZE FORMAT <span class="required-star">*</span>';
-    if (DOM.labelCustomCount) DOM.labelCustomCount.innerHTML = 'CARD COUNT (MIN. 12 PCS) <span class="required-star">*</span>';
+    if (DOM.labelCustomCount) DOM.labelCustomCount.innerHTML = 'CARD COUNT (MIN. 24 PCS) <span class="required-star">*</span>';
 
     if (sizeSelect) {
       sizeSelect.innerHTML = `
-        <option value="nc-2x35" selected>2×3.5 Inches (12 pcs per pack | 220 gsm) — ₱89.00</option>
-        <option value="nc-4x3">4×3 Inches (16 pcs per pack | 220 gsm) — ₱129.00</option>
+        <option value="nc-2x35" selected>2×3.5 Inches (24 pcs per pack | 220 gsm) — ₱89.00</option>
+        <option value="nc-4x3">4×3 Inches (24 pcs per pack | 220 gsm) — ₱129.00</option>
       `;
     }
 
     if (countInput) {
-      countInput.min = '12';
-      countInput.value = '12';
-      countInput.placeholder = 'Minimum 12 cards';
+      countInput.min = '24';
+      countInput.value = '24';
+      countInput.placeholder = 'Minimum 24 cards';
     }
 
     if (DOM.customTermsList) {
@@ -2366,7 +2366,7 @@ function handleCustomCategoryChange() {
       `;
     }
   } else {
-    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Made Specification';
+    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Order Specification';
     if (DOM.labelCustomSize) DOM.labelCustomSize.innerHTML = 'NOTEPAD SIZE FORMAT <span class="required-star">*</span>';
     if (DOM.labelCustomCount) DOM.labelCustomCount.innerHTML = 'PREFERRED SHEET COUNT <span class="required-star">*</span>';
 
@@ -2402,7 +2402,7 @@ function updateCustomPriceAndPreview() {
 
   const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
   const sizeKey = DOM.selectCustomNotepadSize.value || (category === 'notecards' ? 'nc-2x35' : 'square');
-  const rawCount = DOM.inputCustomSheetCount ? DOM.inputCustomSheetCount.value : (category === 'notecards' ? '12' : '30');
+  const rawCount = DOM.inputCustomSheetCount ? DOM.inputCustomSheetCount.value : (category === 'notecards' ? '24' : '30');
   const instructions = DOM.textareaCustomInstructions ? DOM.textareaCustomInstructions.value.trim() : '';
 
   if (category === 'notecards') {
@@ -2573,12 +2573,12 @@ function updatePricePreview() {
 function addCustomItemToCart() {
   const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
   const sizeKey = DOM.selectCustomNotepadSize ? DOM.selectCustomNotepadSize.value : (category === 'notecards' ? 'nc-2x35' : 'square');
-  const countInput = DOM.inputCustomSheetCount ? parseInt(DOM.inputCustomSheetCount.value, 10) : (category === 'notecards' ? 12 : 30);
+  const countInput = DOM.inputCustomSheetCount ? parseInt(DOM.inputCustomSheetCount.value, 10) : (category === 'notecards' ? 24 : 30);
   const instructions = DOM.textareaCustomInstructions ? DOM.textareaCustomInstructions.value.trim() : '';
   let qty = DOM.inputCustomQuantity ? parseInt(DOM.inputCustomQuantity.value, 10) : 3;
 
   if (category === 'notecards') {
-    const minCards = (sizeKey === 'nc-4x3' || sizeKey === '4x3') ? 16 : 12;
+    const minCards = 24;
     if (isNaN(countInput) || countInput < minCards) {
       showToast(`Preferred card count must be at least ${minCards} cards.`);
       if (DOM.inputCustomSheetCount) {
@@ -2799,7 +2799,7 @@ function renderCart() {
         specDetails += ` (+${item.extraSheets} extra @ ₱${item.rate.toFixed(2)}/sh)`;
       }
     } else if (item.cardCount || item.categoryKey === 'notecards') {
-      const count = item.cardCount || item.sheetCount || 12;
+      const count = item.cardCount || item.sheetCount || 24;
       specDetails += ` • ${count} pcs (220 gsm)`;
       if (item.extraCards && item.extraCards > 0) {
         specDetails += ` (+${item.extraCards} extra @ ₱${item.rate.toFixed(2)}/card)`;
@@ -3042,7 +3042,7 @@ function buildJobOrderSlip(refNo) {
       if (customItems.length > 0) {
         DOM.joCustomMadeDetails.innerHTML = customItems.map((ci, idx) => {
           const unitSpec = ci.categoryKey === 'notecards'
-            ? `${ci.cardCount || 12} cards (220 gsm)${ci.extraCards > 0 ? `, +${ci.extraCards} extra` : ''}`
+            ? `${ci.cardCount || 24} cards (220 gsm)${ci.extraCards > 0 ? `, +${ci.extraCards} extra` : ''}`
             : `${ci.sheetCount} sheets${ci.extraSheets > 0 ? `, +${ci.extraSheets} extra @ ₱${ci.rate.toFixed(2)}/sh` : ''}`;
           return `
           <div style="margin-bottom: 6px;">
@@ -3094,7 +3094,7 @@ function buildJobOrderSlip(refNo) {
     if (item.hasSheets) {
       specLine += ` • ${item.sheetCount} sheets` + (item.extraSheets > 0 ? ` (+${item.extraSheets} extra)` : '');
     } else if (item.cardCount || item.categoryKey === 'notecards') {
-      const count = item.cardCount || item.sheetCount || 12;
+      const count = item.cardCount || item.sheetCount || 24;
       specLine += ` • ${count} pcs (220 gsm)` + (item.extraCards > 0 ? ` (+${item.extraCards} extra)` : '');
     }
 

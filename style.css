@@ -625,6 +625,42 @@ h1, h2, h3, h4 {
   box-shadow: 0 2px 8px rgba(203, 108, 230, 0.15);
 }
 
+/* Always-visible Text Customization for Notecards */
+.card-customization-box-always-visible {
+  background: #fdfcfe;
+  border: 1.5px solid #ece7f6;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin: 4px 0 10px 0;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.card-customization-box-always-visible:focus-within {
+  background: #faf6ff;
+  border-color: var(--brand-purple);
+  box-shadow: 0 2px 8px rgba(203, 108, 230, 0.14);
+}
+
+.card-notecard-custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.card-notecard-custom-header .card-custom-input-label {
+  margin-bottom: 0;
+}
+
+.card-custom-input-wrap-visible {
+  display: flex !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+  animation: none !important;
+}
+
 .card-customization-toggle {
   display: flex;
   align-items: flex-start;

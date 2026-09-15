@@ -649,8 +649,29 @@ h1, h2, h3, h4 {
   margin-bottom: 6px;
 }
 
+.card-notecard-label-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 .card-notecard-custom-header .card-custom-input-label {
   margin-bottom: 0;
+}
+
+.card-custom-limit-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #5c556b;
+  background: #f1ecf7;
+  border: 1px solid #dfd6ed;
+  border-radius: var(--radius-full);
+  padding: 1px 6px;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  white-space: nowrap;
 }
 
 .card-custom-input-wrap-visible {
@@ -659,6 +680,35 @@ h1, h2, h3, h4 {
   padding-top: 0 !important;
   border-top: none !important;
   animation: none !important;
+}
+
+.card-custom-helper-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 3px;
+  padding: 0 1px;
+}
+
+.card-custom-helper-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #6b7280;
+  line-height: 1.2;
+}
+
+.card-custom-char-counter {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #8b8599;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.card-custom-char-counter.at-limit {
+  color: var(--brand-purple-dark, #721c8a);
+  font-weight: 800;
 }
 
 .card-customization-toggle {

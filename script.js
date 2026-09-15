@@ -1767,6 +1767,7 @@ function renderProductGallery(categoryKey) {
           alt="${product.name}" 
           class="product-card-img" 
           loading="lazy"
+          decoding="async"
         />
         <div class="product-card-zoom-btn" aria-hidden="true" title="Zoom in">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2181,6 +2182,9 @@ function updatePreviewImage() {
   const selectedCode = appState.selectedDesignCode;
 
   if (!DOM.designMockupImg) return;
+
+  DOM.designMockupImg.loading = 'lazy';
+  DOM.designMockupImg.decoding = 'async';
 
   if (!selectedCode) {
     DOM.designMockupImg.src = '';
@@ -2884,7 +2888,7 @@ function renderCart() {
       thumbHtml = `<div class="cart-item-custom-thumb" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:1.75rem; background:rgba(203,108,230,0.15); border-radius:8px;">${icon}</div>`;
     } else {
       const fallbackSvg = getProductMockupSvg(item.designCode, item.shortName || item.designCode, item.sizeId, 'Floral');
-      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
+      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
     }
 
     const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';
@@ -3667,6 +3671,8 @@ function closeModal() {
 function openImageLightbox(imageSrc, title, code) {
   if (!DOM.imageLightboxModal || !DOM.lightboxPreviewImage) return;
 
+  DOM.lightboxPreviewImage.loading = 'lazy';
+  DOM.lightboxPreviewImage.decoding = 'async';
   DOM.lightboxPreviewImage.src = imageSrc;
   DOM.lightboxPreviewImage.alt = title ? `${title} Preview` : 'Enlarged Product Preview';
 

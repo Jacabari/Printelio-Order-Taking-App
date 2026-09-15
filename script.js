@@ -1695,21 +1695,18 @@ function renderProductGallery(categoryKey) {
     const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount));
     const is2x35 = (product.category === '2x3.5' || product.code.startsWith('NCP_'));
     const notecardMaxChars = is2x35 ? 10 : 15;
-    const notecardPlaceholder = is2x35 ? 'e.g. Maria C. (Max 10 chars)' : 'e.g. Maria Clara (Max 15 chars)';
+    const notecardPlaceholder = is2x35 ? 'e.g. Maria C.' : 'e.g. Maria Clara';
     const specText = isNotecards
       ? `${cleanSizeName} • ${product.cardCount} pcs (220 gsm)`
       : `${product.sizeName} • ${product.sheets} sheets`;
 
     const customizationSectionHtml = isNotecards ? `
-      <!-- Always-visible Text Customization for Notecards (FREE Personalization with Character Limits) -->
+      <!-- Always-visible Text Customization for Notecards (FREE Personalization) -->
       <div class="card-customization-box card-customization-box-always-visible" id="custBox_${safeCode}">
         <div class="card-notecard-custom-header">
-          <div class="card-notecard-label-group">
-            <label class="card-custom-input-label" for="inputCustText_${safeCode}">
-              CUSTOM NAME / TEXT
-            </label>
-            <span class="card-custom-limit-pill">Max ${notecardMaxChars} chars</span>
-          </div>
+          <label class="card-custom-input-label" for="inputCustText_${safeCode}">
+            CUSTOM NAME / TEXT TO PRINT
+          </label>
           <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>
         </div>
         <div class="card-custom-input-wrap card-custom-input-wrap-visible" id="wrapCustInput_${safeCode}">
@@ -1722,7 +1719,6 @@ function renderProductGallery(categoryKey) {
             autocomplete="off"
           />
           <div class="card-custom-helper-row">
-            <span class="card-custom-helper-text">Max ${notecardMaxChars} characters</span>
             <span class="card-custom-char-counter" id="charCount_${safeCode}">0/${notecardMaxChars}</span>
           </div>
         </div>

@@ -1693,17 +1693,23 @@ function renderProductGallery(categoryKey) {
     const fallbackSvg = getProductMockupSvg(product.code, product.name, product.category, product.tag);
     const cleanSizeName = product.sizeName.replace(/\s*\([^)]*pcs[^)]*\)/gi, '').trim();
     const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount));
+    const is2x35 = (product.category === '2x3.5' || product.code.startsWith('NCP_'));
+    const notecardMaxChars = is2x35 ? 10 : 15;
+    const notecardPlaceholder = is2x35 ? 'e.g. Maria C. (Max 10 chars)' : 'e.g. Maria Clara (Max 15 chars)';
     const specText = isNotecards
       ? `${cleanSizeName} • ${product.cardCount} pcs (220 gsm)`
       : `${product.sizeName} • ${product.sheets} sheets`;
 
     const customizationSectionHtml = isNotecards ? `
-      <!-- Always-visible Text Customization for Notecards (FREE Personalization) -->
+      <!-- Always-visible Text Customization for Notecards (FREE Personalization with Character Limits) -->
       <div class="card-customization-box card-customization-box-always-visible" id="custBox_${safeCode}">
         <div class="card-notecard-custom-header">
-          <label class="card-custom-input-label" for="inputCustText_${safeCode}">
-            CUSTOM NAME / TEXT TO PRINT
-          </label>
+          <div class="card-notecard-label-group">
+            <label class="card-custom-input-label" for="inputCustText_${safeCode}">
+              CUSTOM NAME / TEXT
+            </label>
+            <span class="card-custom-limit-pill">Max ${notecardMaxChars} chars</span>
+          </div>
           <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>
         </div>
         <div class="card-custom-input-wrap card-custom-input-wrap-visible" id="wrapCustInput_${safeCode}">
@@ -1711,10 +1717,14 @@ function renderProductGallery(categoryKey) {
             type="text" 
             class="card-custom-input" 
             id="inputCustText_${safeCode}" 
-            placeholder="e.g. Maria Clara / The Santos Family" 
-            maxlength="50"
+            placeholder="${notecardPlaceholder}" 
+            maxlength="${notecardMaxChars}"
             autocomplete="off"
           />
+          <div class="card-custom-helper-row">
+            <span class="card-custom-helper-text">Max ${notecardMaxChars} characters</span>
+            <span class="card-custom-char-counter" id="charCount_${safeCode}">0/${notecardMaxChars}</span>
+          </div>
         </div>
       </div>
     ` : `
@@ -1856,11 +1866,22 @@ function renderProductGallery(categoryKey) {
       });
     }
 
+    const charCountEl = card.querySelector(`#charCount_${safeCode}`);
+
     if (inputCustText) {
       inputCustText.addEventListener('input', () => {
-        if (inputCustText.value.trim().length > 0) {
+        const val = inputCustText.value;
+        if (val.trim().length > 0) {
           inputCustText.classList.remove('has-error');
           if (errCustText) errCustText.style.display = 'none';
+        }
+        if (charCountEl && isNotecards) {
+          charCountEl.textContent = `${val.length}/${notecardMaxChars}`;
+          if (val.length >= notecardMaxChars) {
+            charCountEl.classList.add('at-limit');
+          } else {
+            charCountEl.classList.remove('at-limit');
+          }
         }
       });
     }

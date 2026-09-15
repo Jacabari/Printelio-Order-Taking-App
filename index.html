@@ -8,14 +8,25 @@
   <meta property="og:title" content="Printelio - Custom Stationery Order Request">
   <meta property="og:description" content="Mobile-responsive custom stationery order-taking web application for Printelio with dynamic design code mockups, dynamic pricing, and job order generation.">
   
+  <!-- Browser Caching Hints for Static Assets -->
+  <meta http-equiv="Cache-Control" content="max-age=31536000, public">
+
+  <!-- Preconnect & DNS-Prefetch Hints for External CDN Dependencies -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
   <!-- External Script Libraries: jsPDF, html2canvas & EmailJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
   <!-- Google Fonts: Playfair Display (Italic for *Printelio*) & Raleway (Clean sans-serif for all other UI) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
@@ -565,7 +576,7 @@
     <div class="image-lightbox-container" id="imageLightboxContainer">
       <div class="image-lightbox-content" id="imageLightboxContent">
         <div class="image-lightbox-img-wrapper">
-          <img src="" alt="Enlarged Product Preview" class="image-lightbox-img" id="lightboxPreviewImage" />
+          <img src="" alt="Enlarged Product Preview" class="image-lightbox-img" id="lightboxPreviewImage" loading="lazy" decoding="async" />
         </div>
         <div class="image-lightbox-caption" id="lightboxCaption">
           <span class="image-lightbox-code" id="lightboxCode"></span>

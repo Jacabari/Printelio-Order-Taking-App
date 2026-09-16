@@ -1763,7 +1763,7 @@ function renderProductGallery(categoryKey) {
         <span class="product-card-badge">${product.code}</span>
         <span class="product-card-motif-tag">${product.tag}</span>
         <img 
-          src="images/${encodeURIComponent(product.code)}.png" 
+          src="images/${encodeURIComponent(product.code)}.webp" 
           alt="${product.name}" 
           class="product-card-img" 
           loading="lazy"
@@ -1814,7 +1814,7 @@ function renderProductGallery(categoryKey) {
     if (imgWrap) {
       imgWrap.addEventListener('click', (e) => {
         e.stopPropagation();
-        const currentSrc = (cardImg && cardImg.src) ? cardImg.src : `images/${encodeURIComponent(product.code)}.png`;
+        const currentSrc = (cardImg && cardImg.src) ? cardImg.src : `images/${encodeURIComponent(product.code)}.webp`;
         openImageLightbox(currentSrc, product.name, product.code);
       });
     }
@@ -2058,7 +2058,7 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
       cardCount: product.cardCount || null,
       freePersonalization: Boolean(product.freePersonalization),
       designCode: product.code,
-      imagePath: 'images/' + encodeURIComponent(product.code) + '.png',
+      imagePath: 'images/' + encodeURIComponent(product.code) + '.webp',
       isCustomized: isCustomized,
       customText: trimmedText,
       isTba: false,
@@ -2218,7 +2218,7 @@ function updatePreviewImage() {
     }
   };
 
-  DOM.designMockupImg.src = 'images/' + encodeURIComponent(selectedCode) + '.png';
+  DOM.designMockupImg.src = 'images/' + encodeURIComponent(selectedCode) + '.webp';
 }
 
 // ============================================================================
@@ -2778,7 +2778,7 @@ function addItemToCart() {
     hasSheets: categoryData.hasSheets,
     sheetCount: categoryData.hasSheets ? appState.selectedSheetCount : null,
     designCode: appState.selectedDesignCode,
-    imagePath: 'images/' + encodeURIComponent(appState.selectedDesignCode) + '.png',
+    imagePath: 'images/' + encodeURIComponent(appState.selectedDesignCode) + '.webp',
     isCustomized: appState.isCustomized,
     customText: appState.isCustomized ? DOM.inputCustomText.value.trim() : '',
     isTba: priceInfo.isTba,
@@ -2888,7 +2888,7 @@ function renderCart() {
       thumbHtml = `<div class="cart-item-custom-thumb" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:1.75rem; background:rgba(203,108,230,0.15); border-radius:8px;">${icon}</div>`;
     } else {
       const fallbackSvg = getProductMockupSvg(item.designCode, item.shortName || item.designCode, item.sizeId, 'Floral');
-      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.png" alt="${item.designCode}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
+      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.webp" alt="${item.designCode}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
     }
 
     const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';

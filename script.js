@@ -155,12 +155,19 @@ const PRODUCTS_DATA = {
 };
 
 const CUSTOMIZATION_FEE = 10; // ₱10.00 per item
+const CHRISTMAS_COLLECTION_PRICE = 299.00; // ₱299.00 per complete Christmas Collection set
 
 // ============================================================================
 // 1b. Gallery Catalog & Category Specifications
 // ============================================================================
 
 const CATEGORY_SPECS = {
+  'christmas': {
+    title: 'Christmas Collection',
+    specText: '🎄 Holiday Collection Set • 1 Notepad (30 sh) + 2 Notecards (48 pcs) + 5 Money Envelopes • FREE Personalization • ₱299.00 / set',
+    price: CHRISTMAS_COLLECTION_PRICE,
+    catalog: 'collections'
+  },
   '3x3': {
     title: 'Square Notepad (3 × 3 in)',
     specText: 'Square Notepad (3 × 3 in) • 30 Sheets • ₱29.00 / pad',
@@ -179,12 +186,6 @@ const CATEGORY_SPECS = {
     price: 99.00,
     catalog: 'notepads'
   },
-  'bundle': {
-    title: 'Notepad Bundles (Set of 3)',
-    specText: '✨ Save more than ₱40 by availing our bundled notepads! (3 Notepads for ₱159 + FREE Personalization)',
-    price: 159.00,
-    catalog: 'notepads'
-  },
   '2x3.5': {
     title: '2 × 3.5 in Notecards (Portrait)',
     specText: '2 × 3.5 in • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱89.00 / pack',
@@ -200,12 +201,17 @@ const CATEGORY_SPECS = {
 };
 
 const DESIGN_TITLES = {
-  // Teacher's Day Notepad Bundles (Set of 3)
-  'NP_TD_BND 1': "Teacher's Day Bundle 1",
-  'NP_TD_BND 2': "Teacher's Day Bundle 2",
-  'NP_TD_BND 3': "Teacher's Day Bundle 3",
-  'NP_TD_BND 4': "Teacher's Day Bundle 4",
-  'NP_TD_BND 5': "Teacher's Day Bundle 5",
+  // Christmas Collection
+  'CC_00': 'Arctic',
+  'CC_01': 'Poinsettia',
+  'CC_02': 'Woodland',
+  'CC_03': 'Pine',
+  'CC_04': 'Cane',
+  'CC_05': 'Peppermint',
+  'CC_06': 'Mittens',
+  'CC_07': 'Frosty',
+  'CC_08': 'Bows',
+  'CC_09': 'Dots',
 
   // Teacher's Day Collection (Square 3x3)
   'NP_SQ_TD 1': 'SQ Teachers Day 1',
@@ -957,82 +963,177 @@ const PRODUCT_CATALOG = [
   },
 
   // ==========================================================================
-  // NOTEPAD BUNDLES: 3 Notepads, 1 Sweet Deal! (₱159 | FREE PERSONALIZATION)
+  // CHRISTMAS COLLECTION (1 Notepad + Notecards in 2 sizes + 5 Money Envelopes)
   // ==========================================================================
   {
-    code: 'NP_TD_BND 1',
-    name: "Teacher's Day Bundle 1",
-    category: 'bundle',
-    catalogType: 'notepads',
-    sizeName: 'Notepad Bundle (Set of 3)',
-    dimensions: 'Set of 3 Notepads',
-    sheets: 90,
-    price: 159.00,
+    code: 'CC_00',
+    name: 'Arctic',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
     freePersonalization: true,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Trio Bundle 01",
+    tag: 'Christmas Set',
+    motif: 'Arctic Holiday Stationery Collection',
     isNewArrival: true,
-    collection: 'teachers-day'
+    collection: 'christmas'
   },
   {
-    code: 'NP_TD_BND 2',
-    name: "Teacher's Day Bundle 2",
-    category: 'bundle',
-    catalogType: 'notepads',
-    sizeName: 'Notepad Bundle (Set of 3)',
-    dimensions: 'Set of 3 Notepads',
-    sheets: 90,
-    price: 159.00,
+    code: 'CC_01',
+    name: 'Poinsettia',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
     freePersonalization: true,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Trio Bundle 02",
+    tag: 'Christmas Set',
+    motif: 'Poinsettia Holiday Stationery Collection',
     isNewArrival: true,
-    collection: 'teachers-day'
+    collection: 'christmas'
   },
   {
-    code: 'NP_TD_BND 3',
-    name: "Teacher's Day Bundle 3",
-    category: 'bundle',
-    catalogType: 'notepads',
-    sizeName: 'Notepad Bundle (Set of 3)',
-    dimensions: 'Set of 3 Notepads',
-    sheets: 90,
-    price: 159.00,
+    code: 'CC_02',
+    name: 'Woodland',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
     freePersonalization: true,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Trio Bundle 03",
+    tag: 'Christmas Set',
+    motif: 'Woodland Holiday Stationery Collection',
     isNewArrival: true,
-    collection: 'teachers-day'
+    collection: 'christmas'
   },
   {
-    code: 'NP_TD_BND 4',
-    name: "Teacher's Day Bundle 4",
-    category: 'bundle',
-    catalogType: 'notepads',
-    sizeName: 'Notepad Bundle (Set of 3)',
-    dimensions: 'Set of 3 Notepads',
-    sheets: 90,
-    price: 159.00,
+    code: 'CC_03',
+    name: 'Pine',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
     freePersonalization: true,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Trio Bundle 04",
+    tag: 'Christmas Set',
+    motif: 'Pine Holiday Stationery Collection',
     isNewArrival: true,
-    collection: 'teachers-day'
+    collection: 'christmas'
   },
   {
-    code: 'NP_TD_BND 5',
-    name: "Teacher's Day Bundle 5",
-    category: 'bundle',
-    catalogType: 'notepads',
-    sizeName: 'Notepad Bundle (Set of 3)',
-    dimensions: 'Set of 3 Notepads',
-    sheets: 90,
-    price: 159.00,
+    code: 'CC_04',
+    name: 'Cane',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
     freePersonalization: true,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Trio Bundle 05",
+    tag: 'Christmas Set',
+    motif: 'Cane Holiday Stationery Collection',
     isNewArrival: true,
-    collection: 'teachers-day'
+    collection: 'christmas'
+  },
+  {
+    code: 'CC_05',
+    name: 'Peppermint',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
+    freePersonalization: true,
+    tag: 'Christmas Set',
+    motif: 'Peppermint Holiday Stationery Collection',
+    isNewArrival: true,
+    collection: 'christmas'
+  },
+  {
+    code: 'CC_06',
+    name: 'Mittens',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
+    freePersonalization: true,
+    tag: 'Christmas Set',
+    motif: 'Mittens Holiday Stationery Collection',
+    isNewArrival: true,
+    collection: 'christmas'
+  },
+  {
+    code: 'CC_07',
+    name: 'Frosty',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
+    freePersonalization: true,
+    tag: 'Christmas Set',
+    motif: 'Frosty Holiday Stationery Collection',
+    isNewArrival: true,
+    collection: 'christmas'
+  },
+  {
+    code: 'CC_08',
+    name: 'Bows',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
+    freePersonalization: true,
+    tag: 'Christmas Set',
+    motif: 'Bows Holiday Stationery Collection',
+    isNewArrival: true,
+    collection: 'christmas'
+  },
+  {
+    code: 'CC_09',
+    name: 'Dots',
+    category: 'christmas',
+    catalogType: 'collections',
+    sizeName: 'Christmas Collection Set',
+    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    sheets: 30,
+    cardCount: 48,
+    envelopeCount: 5,
+    price: CHRISTMAS_COLLECTION_PRICE,
+    freePersonalization: true,
+    tag: 'Christmas Set',
+    motif: 'Dots Holiday Stationery Collection',
+    isNewArrival: true,
+    collection: 'christmas'
   },
 
   // ==========================================================================
@@ -1389,7 +1490,8 @@ const PRODUCT_CATALOG = [
 // ============================================================================
 
 const appState = {
-  activeGalleryTab: '3x3', // '3x3' (default), 'A6', 'A5'
+  currentCatalog: 'collections',
+  activeGalleryTab: 'christmas', // 'christmas' (default), '3x3', 'A6', 'A5', '2x3.5', '4x3'
   currentCategory: 'notepads',
   selectedSizeId: 'np-square',
   selectedSheetCount: '30',
@@ -1423,18 +1525,17 @@ const DOM = {
   gallerySectionTitle: document.getElementById('gallerySectionTitle'),
   gallerySectionSubtitle: document.getElementById('gallerySectionSubtitle'),
   catalogModeSwitcher: document.getElementById('catalogModeSwitcher'),
+  btnCatalogCollections: document.getElementById('btnCatalogCollections'),
   btnCatalogNotepads: document.getElementById('btnCatalogNotepads'),
   btnCatalogNotecards: document.getElementById('btnCatalogNotecards'),
   categoryTabsContainer: document.getElementById('categoryTabsContainer'),
   categoryTabs: document.querySelectorAll('#categoryTabs .tab-btn'),
+  tabChristmas: document.getElementById('tabChristmas'),
   tab3x3: document.getElementById('tab3x3'),
   tabA6: document.getElementById('tabA6'),
   tabA5: document.getElementById('tabA5'),
-  tabBundle: document.getElementById('tabBundle'),
   tab2x35: document.getElementById('tab2x35'),
   tab4x3: document.getElementById('tab4x3'),
-  bundlePromoBanner: document.getElementById('bundlePromoBanner'),
-  bundlePromoText: document.getElementById('bundlePromoText'),
   categorySpecPill: document.getElementById('categorySpecPill'),
   categorySpecIcon: document.getElementById('categorySpecIcon'),
   categorySpecText: document.getElementById('categorySpecText'),
@@ -1648,68 +1749,59 @@ function getProductMockupSvg(code, name, category, tag) {
     return 'data:image/svg+xml;utf8,' + encodeURIComponent(notecardSvg).replace(/'/g, '%27');
   }
 
-  // Check for Bundles
-  if (category === 'bundle' || code.includes('_BND')) {
-    const bundleSvg = `
+  // Check for Christmas Collections
+  if (category === 'christmas' || code.startsWith('CC_')) {
+    const christmasSvg = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="100%" height="100%">
   <defs>
-    <linearGradient id="bundleGrad" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="xmasGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#fbf9fe"/>
+      <stop offset="100%" stop-color="#fff8f8"/>
     </linearGradient>
-    <filter id="bundleShadow" x="-10%" y="-10%" width="125%" height="125%">
+    <filter id="xmasShadow" x="-10%" y="-10%" width="125%" height="125%">
       <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1b1822" flood-opacity="0.12"/>
     </filter>
   </defs>
-  <rect width="320" height="320" fill="#f4effa"/>
+  <rect width="320" height="320" fill="#fcf4f4"/>
   
-  <!-- Back Pad -->
-  <g opacity="0.65" transform="translate(16, 12) rotate(4 160 160)">
-    <rect x="52" y="32" width="216" height="236" rx="8" fill="#efeaf7" stroke="#ded8ea" stroke-width="1.5"/>
-    <rect x="52" y="32" width="216" height="22" rx="4" fill="#3a3048"/>
-  </g>
-  
-  <!-- Middle Pad -->
-  <g opacity="0.85" transform="translate(-10, 8) rotate(-3 160 160)">
-    <rect x="52" y="32" width="216" height="236" rx="8" fill="#f8f5fd" stroke="#ded8ea" stroke-width="1.5"/>
-    <rect x="52" y="32" width="216" height="22" rx="4" fill="#e76f51"/>
-  </g>
-  
-  <!-- Front Pad -->
-  <g filter="url(#bundleShadow)">
-    <rect x="44" y="36" width="232" height="248" rx="8" fill="url(#bundleGrad)" stroke="#ded9ec" stroke-width="1.5"/>
-    <rect x="44" y="36" width="232" height="26" rx="4" fill="#241e2f"/>
+  <g filter="url(#xmasShadow)">
+    <rect x="28" y="26" width="264" height="268" rx="10" fill="url(#xmasGrad)" stroke="#eed5d5" stroke-width="1.5"/>
+    <rect x="28" y="26" width="264" height="28" rx="6" fill="#1b1822"/>
     
-    <text x="160" y="53" font-family="Raleway, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#ffde59" text-anchor="middle" letter-spacing="1.5">
-      PRINTELIO • NOTEPAD BUNDLE
+    <!-- Top Header -->
+    <text x="160" y="45" font-family="Raleway, -apple-system, sans-serif" font-size="9.5" font-weight="800" fill="#ffde59" text-anchor="middle" letter-spacing="1.5">
+      PRINTELIO • CHRISTMAS COLLECTION
     </text>
     
-    <circle cx="70" cy="88" r="16" fill="#ffde59" fill-opacity="0.35"/>
-    <text x="70" y="94" font-size="16" text-anchor="middle">✨</text>
+    <!-- Holiday Badge & Motif -->
+    <circle cx="68" cy="88" r="22" fill="#c9184a" fill-opacity="0.15"/>
+    <text x="68" y="96" font-size="22" text-anchor="middle">🎄</text>
     
-    <text x="96" y="85" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#e76f51" letter-spacing="1">
-      3 NOTEPADS TRIO SET
+    <text x="100" y="80" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#c9184a" letter-spacing="1">
+      HOLIDAY COLLECTION SET
     </text>
-    <text x="96" y="100" font-family="Playfair Display, Georgia, serif" font-size="13" font-weight="700" fill="#1b1822">
+    <text x="100" y="98" font-family="Playfair Display, Georgia, serif" font-size="16" font-weight="700" fill="#1b1822">
       ${name}
     </text>
-    
-    <text x="160" y="132" font-family="Raleway, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#721c8a" text-anchor="middle">
-      ✨ 3 Notepads for ₱159 ✨
+    <text x="100" y="113" font-family="Raleway, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#756f86" letter-spacing="1">
+      ${code}
     </text>
-    
-    <line x1="60" y1="150" x2="260" y2="150" stroke="#ece8f5" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="60" y1="170" x2="260" y2="170" stroke="#ece8f5" stroke-width="1.2" stroke-linecap="round"/>
-    <line x1="60" y1="190" x2="260" y2="190" stroke="#ece8f5" stroke-width="1.2" stroke-linecap="round"/>
-    <line x1="60" y1="210" x2="260" y2="210" stroke="#ece8f5" stroke-width="1.2" stroke-linecap="round"/>
-    
-    <rect x="52" y="240" width="216" height="28" rx="6" fill="#e8f5e9" stroke="#c8e6c9" stroke-width="1"/>
-    <text x="160" y="258" font-family="Raleway, -apple-system, sans-serif" font-size="9.5" font-weight="800" fill="#1b5e20" text-anchor="middle">
-      ₱159.00 • FREE PERSONALIZATION
+
+    <!-- Collection Contents Checklist -->
+    <rect x="42" y="126" width="236" height="96" rx="8" fill="#ffffff" stroke="#f0e2e2" stroke-width="1"/>
+    <text x="54" y="146" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#2d6a4f">✓ 1 Notepad (30 sheets)</text>
+    <text x="54" y="166" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#2d6a4f">✓ Notecards in 2 sizes (24 pcs each)</text>
+    <text x="54" y="186" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#2d6a4f">✓ 5 Money Envelopes</text>
+    <text x="54" y="206" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#b241ce">✨ FREE Personalization Included</text>
+
+    <!-- Bottom Specs Pill -->
+    <rect x="42" y="234" width="236" height="26" rx="6" fill="#f8f4f9" stroke="#e8d8ee" stroke-width="1"/>
+    <text x="160" y="251" font-family="Raleway, -apple-system, sans-serif" font-size="9.5" font-weight="800" fill="#721c8a" text-anchor="middle">
+      Complete Christmas Stationery Set
     </text>
   </g>
 </svg>`.trim();
-    return 'data:image/svg+xml;utf8,' + encodeURIComponent(bundleSvg).replace(/'/g, '%27');
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(christmasSvg).replace(/'/g, '%27');
   }
 
   let headerColor = '#cb6ce6';
@@ -1719,6 +1811,9 @@ function getProductMockupSvg(code, name, category, tag) {
   if (tag.includes('Teacher') || code.includes('_TD')) {
     iconEmoji = '🍎';
     headerColor = '#e76f51';
+  } else if (tag.includes('Christmas') || code.startsWith('CC_')) {
+    iconEmoji = '🎄';
+    headerColor = '#c9184a';
   } else if (tag.includes('Cat')) {
     iconEmoji = '🐱';
     headerColor = '#f5b597';
@@ -1805,8 +1900,8 @@ function getProductMockupSvg(code, name, category, tag) {
 function isProductNewArrival(product) {
   if (!product) return false;
   if (product.isNewArrival) return true;
-  if (product.collection === 'teachers-day' || product.collection === 'bloomstead') return true;
-  if (product.code && (product.code.includes('_TD') || product.code.includes('BLOOM'))) return true;
+  if (product.collection === 'christmas' || product.collection === 'teachers-day' || product.collection === 'bloomstead') return true;
+  if (product.code && (product.code.startsWith('CC_') || product.code.includes('_TD') || product.code.includes('BLOOM'))) return true;
   return false;
 }
 
@@ -1851,20 +1946,20 @@ function renderProductGallery(categoryKey) {
 
     const fallbackSvg = getProductMockupSvg(product.code, product.name, product.category, product.tag);
     const cleanSizeName = product.sizeName.replace(/\s*\([^)]*pcs[^)]*\)/gi, '').trim();
-    const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount));
-    const isBundle = (product.category === 'bundle');
-    const hasFreePersonalization = Boolean(product.freePersonalization) || isNotecards;
+    const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount && !product.envelopeCount));
+    const isCollection = (product.catalogType === 'collections' || product.category === 'christmas');
+    const hasFreePersonalization = Boolean(product.freePersonalization) || isNotecards || isCollection;
     const is2x35 = (product.category === '2x3.5' || product.code.startsWith('NCP_'));
-    const notecardMaxChars = product.maxChars || (is2x35 ? 10 : 15);
-    const notecardPlaceholder = is2x35 ? 'e.g. Maria C.' : (isBundle ? 'e.g. Teacher Maria' : 'e.g. Maria Clara');
-    const specText = isBundle
-      ? `Set of 3 Notepads • 30 sheets / pad`
+    const notecardMaxChars = product.maxChars || (isCollection ? 30 : (is2x35 ? 10 : 15));
+    const notecardPlaceholder = isCollection ? 'e.g. The Santos Family / Maria Clara' : (is2x35 ? 'e.g. Maria C.' : 'e.g. Maria Clara');
+    const specText = isCollection
+      ? `1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Envelopes`
       : (isNotecards
         ? `${cleanSizeName} • ${product.cardCount} pcs (220 gsm)`
         : `${product.sizeName} • ${product.sheets} sheets`);
 
     const customizationSectionHtml = hasFreePersonalization ? `
-      <!-- Always-visible Text Customization for Notecards & Bundles (FREE Personalization) -->
+      <!-- Always-visible Text Customization for Notecards & Collections (FREE Personalization) -->
       <div class="card-customization-box card-customization-box-always-visible" id="custBox_${safeCode}">
         <div class="card-notecard-custom-header">
           <label class="card-custom-input-label" for="inputCustText_${safeCode}">
@@ -2084,7 +2179,7 @@ function renderProductGallery(categoryKey) {
         let customText = '';
 
         if (hasFreePersonalization) {
-          // Free Personalization (Notecards & Bundles): Text customization input is always visible
+          // Free Personalization (Notecards & Collections): Text customization input is always visible
           // If text is entered, capture as FREE personalization
           // If left blank, treat as standard order without customization
           customText = inputCustText ? inputCustText.value.trim() : '';
@@ -2121,28 +2216,43 @@ function renderProductGallery(categoryKey) {
 }
 
 function switchMainCatalog(catalogType) {
-  appState.currentCatalog = catalogType; // 'notepads' | 'notecards'
+  appState.currentCatalog = catalogType; // 'collections' | 'notepads' | 'notecards'
 
-  if (DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
+  if (DOM.btnCatalogCollections && DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
+    DOM.btnCatalogCollections.classList.toggle('active', catalogType === 'collections');
+    DOM.btnCatalogCollections.setAttribute('aria-selected', catalogType === 'collections' ? 'true' : 'false');
     DOM.btnCatalogNotepads.classList.toggle('active', catalogType === 'notepads');
     DOM.btnCatalogNotepads.setAttribute('aria-selected', catalogType === 'notepads' ? 'true' : 'false');
     DOM.btnCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
     DOM.btnCatalogNotecards.setAttribute('aria-selected', catalogType === 'notecards' ? 'true' : 'false');
   }
 
-  if (catalogType === 'notepads') {
+  if (catalogType === 'collections') {
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collection';
+    if (DOM.gallerySectionSubtitle) {
+      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery set: 1 Notepad (30 sheets), Notecards in 2 sizes (24 pcs each), and 5 Money Envelopes with free personalization.';
+      DOM.gallerySectionSubtitle.style.display = '';
+    }
+    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'inline-flex';
+    if (DOM.tab3x3) DOM.tab3x3.style.display = 'none';
+    if (DOM.tabA6) DOM.tabA6.style.display = 'none';
+    if (DOM.tabA5) DOM.tabA5.style.display = 'none';
+    if (DOM.tab2x35) DOM.tab2x35.style.display = 'none';
+    if (DOM.tab4x3) DOM.tab4x3.style.display = 'none';
+    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
+    switchGalleryCategory('christmas');
+  } else if (catalogType === 'notepads') {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Catalog';
     if (DOM.gallerySectionSubtitle) {
       DOM.gallerySectionSubtitle.textContent = 'Browse our curated notepad designs or add multiple styles to your order.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
+    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
     if (DOM.tab3x3) DOM.tab3x3.style.display = 'inline-flex';
     if (DOM.tabA6) DOM.tabA6.style.display = 'inline-flex';
     if (DOM.tabA5) DOM.tabA5.style.display = 'inline-flex';
-    if (DOM.tabBundle) DOM.tabBundle.style.display = 'inline-flex';
     if (DOM.tab2x35) DOM.tab2x35.style.display = 'none';
     if (DOM.tab4x3) DOM.tab4x3.style.display = 'none';
-    if (DOM.bundlePromoBanner) DOM.bundlePromoBanner.style.display = 'none';
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
     switchGalleryCategory('3x3');
   } else if (catalogType === 'notecards') {
@@ -2151,13 +2261,12 @@ function switchMainCatalog(catalogType) {
       DOM.gallerySectionSubtitle.textContent = 'Handcrafted 220 gsm notecards with free personalization included.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
+    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
     if (DOM.tab3x3) DOM.tab3x3.style.display = 'none';
     if (DOM.tabA6) DOM.tabA6.style.display = 'none';
     if (DOM.tabA5) DOM.tabA5.style.display = 'none';
-    if (DOM.tabBundle) DOM.tabBundle.style.display = 'none';
     if (DOM.tab2x35) DOM.tab2x35.style.display = 'inline-flex';
     if (DOM.tab4x3) DOM.tab4x3.style.display = 'inline-flex';
-    if (DOM.bundlePromoBanner) DOM.bundlePromoBanner.style.display = 'none';
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
     switchGalleryCategory('2x3.5');
   }
@@ -2166,12 +2275,14 @@ function switchMainCatalog(catalogType) {
 function switchGalleryCategory(categoryKey) {
   appState.activeGalleryTab = categoryKey;
 
+  const isCollection = (categoryKey === 'christmas');
   const isNotecard = (categoryKey === '2x3.5' || categoryKey === '4x3');
-  const isBundle = (categoryKey === 'bundle');
 
-  if (DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
-    DOM.btnCatalogNotepads.classList.toggle('active', !isNotecard);
-    DOM.btnCatalogNotepads.setAttribute('aria-selected', !isNotecard ? 'true' : 'false');
+  if (DOM.btnCatalogCollections && DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
+    DOM.btnCatalogCollections.classList.toggle('active', isCollection);
+    DOM.btnCatalogCollections.setAttribute('aria-selected', isCollection ? 'true' : 'false');
+    DOM.btnCatalogNotepads.classList.toggle('active', !isCollection && !isNotecard);
+    DOM.btnCatalogNotepads.setAttribute('aria-selected', !isCollection && !isNotecard ? 'true' : 'false');
     DOM.btnCatalogNotecards.classList.toggle('active', isNotecard);
     DOM.btnCatalogNotecards.setAttribute('aria-selected', isNotecard ? 'true' : 'false');
   }
@@ -2185,25 +2296,19 @@ function switchGalleryCategory(categoryKey) {
     });
   }
 
-  // Header hook & titles - Clean, single headline banner under Notepad Bundles
-  if (isBundle) {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Bundles';
+  if (isCollection) {
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collection';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = '';
-      DOM.gallerySectionSubtitle.style.display = 'none';
+      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery set: 1 Notepad (30 sheets), Notecards in 2 sizes (24 pcs each), and 5 Money Envelopes with free personalization.';
+      DOM.gallerySectionSubtitle.style.display = '';
     }
-    if (DOM.bundlePromoBanner) DOM.bundlePromoBanner.style.display = 'inline-flex';
-    if (DOM.bundlePromoText) {
-      DOM.bundlePromoText.textContent = '✨ Save more than ₱40 by availing our bundled notepads! (3 Notepads for ₱159 + FREE Personalization)';
-    }
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
+    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
   } else if (!isNotecard) {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Catalog';
     if (DOM.gallerySectionSubtitle) {
       DOM.gallerySectionSubtitle.textContent = 'Browse our curated notepad designs or add multiple styles to your order.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
-    if (DOM.bundlePromoBanner) DOM.bundlePromoBanner.style.display = 'none';
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
   } else {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notecards Catalog';
@@ -2211,7 +2316,6 @@ function switchGalleryCategory(categoryKey) {
       DOM.gallerySectionSubtitle.textContent = 'Handcrafted 220 gsm notecards with free personalization included.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
-    if (DOM.bundlePromoBanner) DOM.bundlePromoBanner.style.display = 'none';
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
   }
 
@@ -2221,7 +2325,7 @@ function switchGalleryCategory(categoryKey) {
     DOM.categorySpecText.textContent = spec.specText;
   }
   if (DOM.categorySpecIcon) {
-    DOM.categorySpecIcon.textContent = isBundle ? '✨' : (isNotecard ? '💌' : '📐');
+    DOM.categorySpecIcon.textContent = isCollection ? '🎁' : (isNotecard ? '💌' : '📐');
   }
 
   // Re-render cards
@@ -2234,7 +2338,8 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
   const custFee = (isCustomized && !product.freePersonalization) ? 10 : 0;
   const unitPrice = product.price + custFee;
   const displayTitle = DESIGN_TITLES[product.code] || product.name;
-  const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount));
+  const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount && !product.envelopeCount));
+  const isCollection = (product.catalogType === 'collections' || product.category === 'christmas');
 
   const existingIndex = appState.cart.findIndex(
     item => !item.isCustomMade && 
@@ -2253,14 +2358,14 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
     const cartItem = {
       id: 'gallery_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
       isCustomMade: false,
-      categoryKey: isNotecards ? 'notecards' : 'notepads',
-      categoryName: isNotecards ? 'Notecards' : (product.category === 'bundle' ? 'Notepad Bundle' : 'Notepads'),
+      categoryKey: isCollection ? 'collections' : (isNotecards ? 'notecards' : 'notepads'),
+      categoryName: isCollection ? 'Christmas Collection' : (isNotecards ? 'Notecards' : 'Notepads'),
       sizeId: product.category,
       sizeName: product.sizeName,
       shortName: displayTitle,
       productTitle: displayTitle,
       dimensions: product.dimensions,
-      hasSheets: !isNotecards,
+      hasSheets: !isNotecards && !isCollection,
       sheetCount: product.sheets || product.cardCount || 30,
       cardCount: product.cardCount || null,
       freePersonalization: Boolean(product.freePersonalization),
@@ -3054,7 +3159,9 @@ function renderCart() {
     itemCard.id = `cart-item-${item.id}`;
 
     let specDetails = `${item.dimensions}`;
-    if (item.hasSheets) {
+    if (item.categoryKey === 'collections') {
+      specDetails = `${item.dimensions}`;
+    } else if (item.hasSheets) {
       specDetails += ` • ${item.sheetCount} sheets`;
       if (item.extraSheets && item.extraSheets > 0) {
         specDetails += ` (+${item.extraSheets} extra @ ₱${item.rate.toFixed(2)}/sh)`;
@@ -3352,7 +3459,9 @@ function buildJobOrderSlip(refNo) {
       : `<strong style="color:#111827; font-weight:700;">${escapeHtml(item.categoryName)} - ${escapeHtml(item.sizeName)}</strong>`;
 
     let specLine = escapeHtml(item.dimensions);
-    if (item.hasSheets) {
+    if (item.categoryKey === 'collections') {
+      specLine = escapeHtml(item.dimensions);
+    } else if (item.hasSheets) {
       specLine += ` • ${item.sheetCount} sheets` + (item.extraSheets > 0 ? ` (+${item.extraSheets} extra)` : '');
     } else if (item.cardCount || item.categoryKey === 'notecards') {
       const count = item.cardCount || item.sheetCount || 24;
@@ -3958,7 +4067,10 @@ function showToast(message) {
 // ============================================================================
 
 function initEventListeners() {
-  // Main Catalog Switcher (Notepads vs Notecards)
+  // Main Catalog Switcher (Collections vs Notepads vs Notecards)
+  if (DOM.btnCatalogCollections) {
+    DOM.btnCatalogCollections.addEventListener('click', () => switchMainCatalog('collections'));
+  }
   if (DOM.btnCatalogNotepads) {
     DOM.btnCatalogNotepads.addEventListener('click', () => switchMainCatalog('notepads'));
   }
@@ -3966,7 +4078,10 @@ function initEventListeners() {
     DOM.btnCatalogNotecards.addEventListener('click', () => switchMainCatalog('notecards'));
   }
 
-  // Gallery Category Tabs (3x3, A6, A5 for Notepads | 2x3.5, 4x3 for Notecards)
+  // Gallery Category Tabs (Christmas for Collections | 3x3, A6, A5 for Notepads | 2x3.5, 4x3 for Notecards)
+  if (DOM.tabChristmas) {
+    DOM.tabChristmas.addEventListener('click', () => switchGalleryCategory('christmas'));
+  }
   if (DOM.tab3x3) {
     DOM.tab3x3.addEventListener('click', () => switchGalleryCategory('3x3'));
   }
@@ -3975,9 +4090,6 @@ function initEventListeners() {
   }
   if (DOM.tabA5) {
     DOM.tabA5.addEventListener('click', () => switchGalleryCategory('A5'));
-  }
-  if (DOM.tabBundle) {
-    DOM.tabBundle.addEventListener('click', () => switchGalleryCategory('bundle'));
   }
   if (DOM.tab2x35) {
     DOM.tab2x35.addEventListener('click', () => switchGalleryCategory('2x3.5'));
@@ -4174,8 +4286,8 @@ function initEventListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialize gallery view with default 3x3 category tab
-  switchGalleryCategory('3x3');
+  // 1. Initialize gallery view with default Collections catalog & Christmas collection
+  switchMainCatalog('collections');
 
   // 2. Initialize custom pricing formulas and preview
   updateCustomPriceAndPreview();

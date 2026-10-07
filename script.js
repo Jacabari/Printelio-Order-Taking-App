@@ -1313,6 +1313,16 @@ const DOM = {
   btnHeaderCart: document.getElementById('btnHeaderCart'),
   headerCartCount: document.getElementById('headerCartCount'),
 
+  // Mobile Navigation Drawer Controls
+  btnMobileMenuToggle: document.getElementById('btnMobileMenuToggle'),
+  btnMobileNavClose: document.getElementById('btnMobileNavClose'),
+  mobileNavDrawer: document.getElementById('mobileNavDrawer'),
+  mobileNavBackdrop: document.getElementById('mobileNavBackdrop'),
+  btnMobileCatalogCollections: document.getElementById('btnMobileCatalogCollections'),
+  btnMobileCatalogNotepads: document.getElementById('btnMobileCatalogNotepads'),
+  btnMobileCatalogNotecards: document.getElementById('btnMobileCatalogNotecards'),
+  btnMobileCustomOrder: document.getElementById('btnMobileCustomOrder'),
+
   // Product Selection Card & Groups (Legacy / fallback references)
   productSelectionCard: document.getElementById('productSelectionCard'),
   sizeOptionsContainer: document.getElementById('sizeOptionsContainer'),
@@ -2023,6 +2033,24 @@ function renderProductGallery(categoryKey) {
   });
 }
 
+function toggleMobileMenu(open) {
+  const isCurrentlyOpen = DOM.mobileNavDrawer?.classList.contains('open');
+  const shouldOpen = (typeof open === 'boolean') ? open : !isCurrentlyOpen;
+
+  if (DOM.mobileNavDrawer) {
+    DOM.mobileNavDrawer.classList.toggle('open', shouldOpen);
+    DOM.mobileNavDrawer.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+  }
+  if (DOM.mobileNavBackdrop) {
+    DOM.mobileNavBackdrop.classList.toggle('open', shouldOpen);
+    DOM.mobileNavBackdrop.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+  }
+  if (DOM.btnMobileMenuToggle) {
+    DOM.btnMobileMenuToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+  }
+  document.body.style.overflow = shouldOpen ? 'hidden' : '';
+}
+
 function switchMainCatalog(catalogType) {
   appState.currentCatalog = catalogType; // 'collections' | 'notepads' | 'notecards'
 
@@ -2033,6 +2061,13 @@ function switchMainCatalog(catalogType) {
     DOM.btnCatalogNotepads.setAttribute('aria-selected', catalogType === 'notepads' ? 'true' : 'false');
     DOM.btnCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
     DOM.btnCatalogNotecards.setAttribute('aria-selected', catalogType === 'notecards' ? 'true' : 'false');
+  }
+
+  // Synchronize mobile drawer navigation items
+  if (DOM.btnMobileCatalogCollections && DOM.btnMobileCatalogNotepads && DOM.btnMobileCatalogNotecards) {
+    DOM.btnMobileCatalogCollections.classList.toggle('active', catalogType === 'collections');
+    DOM.btnMobileCatalogNotepads.classList.toggle('active', catalogType === 'notepads');
+    DOM.btnMobileCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
   }
 
   if (catalogType === 'collections') {
@@ -2098,6 +2133,13 @@ function switchGalleryCategory(categoryKey) {
     DOM.btnCatalogNotecards.setAttribute('aria-selected', isNotecard ? 'true' : 'false');
   }
 
+  // Synchronize mobile drawer navigation items
+  if (DOM.btnMobileCatalogCollections && DOM.btnMobileCatalogNotepads && DOM.btnMobileCatalogNotecards) {
+    DOM.btnMobileCatalogCollections.classList.toggle('active', isCollection);
+    DOM.btnMobileCatalogNotepads.classList.toggle('active', !isCollection && !isNotecard);
+    DOM.btnMobileCatalogNotecards.classList.toggle('active', isNotecard);
+  }
+
   // Update tabs active state
   if (DOM.categoryTabs) {
     DOM.categoryTabs.forEach(tab => {
@@ -2108,9 +2150,9 @@ function switchGalleryCategory(categoryKey) {
   }
 
   if (isCollection) {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collection';
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collections';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Each Christmas Collection set includes: 1 A6 Notepad (30 sheets), 2 × 3.5 in Notecard Set (24 pcs), 4 × 3 in Notecard Set (24 pcs), and 5 envelopes with FREE personalization included.';
+      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every curated box includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 in Notecards, 24 pcs of 4 × 3 in Notecards, and 5 Envelopes with complimentary custom name personalization.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
@@ -3887,6 +3929,49 @@ function initEventListeners() {
   }
   if (DOM.btnCatalogNotecards) {
     DOM.btnCatalogNotecards.addEventListener('click', () => switchMainCatalog('notecards'));
+  }
+
+  // Mobile Navigation Drawer Toggle and Links
+  if (DOM.btnMobileMenuToggle) {
+    DOM.btnMobileMenuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+  }
+  if (DOM.btnMobileNavClose) {
+    DOM.btnMobileNavClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMobileMenu(false);
+    });
+  }
+  if (DOM.mobileNavBackdrop) {
+    DOM.mobileNavBackdrop.addEventListener('click', () => {
+      toggleMobileMenu(false);
+    });
+  }
+  if (DOM.btnMobileCatalogCollections) {
+    DOM.btnMobileCatalogCollections.addEventListener('click', () => {
+      switchMainCatalog('collections');
+      toggleMobileMenu(false);
+    });
+  }
+  if (DOM.btnMobileCatalogNotepads) {
+    DOM.btnMobileCatalogNotepads.addEventListener('click', () => {
+      switchMainCatalog('notepads');
+      toggleMobileMenu(false);
+    });
+  }
+  if (DOM.btnMobileCatalogNotecards) {
+    DOM.btnMobileCatalogNotecards.addEventListener('click', () => {
+      switchMainCatalog('notecards');
+      toggleMobileMenu(false);
+    });
+  }
+  if (DOM.btnMobileCustomOrder) {
+    DOM.btnMobileCustomOrder.addEventListener('click', () => {
+      switchToCustomView();
+      toggleMobileMenu(false);
+    });
   }
 
   // Gallery Category Tabs (Christmas for Collections | 3x3, A6, A5 for Notepads | 2x3.5, 4x3 for Notecards)

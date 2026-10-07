@@ -16,11 +16,6 @@ const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63
 
 // Exact A5 Notepad Design Codes
 const A5_NOTEPAD_DESIGNS = [
-  'NP_A5_TD 1',
-  'NP_A5_TD 2',
-  'NP_A5_TD 3',
-  'NP_A5_TD 4',
-  'NP_A5_TD 5',
   'Blue DP_A5',
   'Pink DP_A5',
   'Yellow DP_A5',
@@ -51,11 +46,6 @@ const PRODUCTS_DATA = {
         dimensions: '3 × 3 in',
         prices: { '30': 29 },
         designs: [
-          'NP_SQ_TD 1',
-          'NP_SQ_TD 2',
-          'NP_SQ_TD 3',
-          'NP_SQ_TD 4',
-          'NP_SQ_TD 5',
           'NP_SQ_CAT01',
           'NP_SQ_CAT02',
           'NP_SQ_CAT03',
@@ -82,11 +72,6 @@ const PRODUCTS_DATA = {
         dimensions: '4 × 5.8 in',
         prices: { '30': 49 },
         designs: [
-          'NP_A6_TD 1',
-          'NP_A6_TD 2',
-          'NP_A6_TD 3',
-          'NP_A6_TD 4',
-          'NP_A6_TD 5',
           'NP_A6_Cinnamoroll',
           'NP_A6_Flower',
           'NP_A6_HelloKitty',
@@ -213,27 +198,6 @@ const DESIGN_TITLES = {
   'CC_08': 'Bows',
   'CC_09': 'Dots',
 
-  // Teacher's Day Collection (Square 3x3)
-  'NP_SQ_TD 1': 'SQ Teachers Day 1',
-  'NP_SQ_TD 2': 'SQ Teachers Day 2',
-  'NP_SQ_TD 3': 'SQ Teachers Day 3',
-  'NP_SQ_TD 4': 'SQ Teachers Day 4',
-  'NP_SQ_TD 5': 'SQ Teachers Day 5',
-
-  // Teacher's Day Collection (A6)
-  'NP_A6_TD 1': 'A6 Teachers Day 1',
-  'NP_A6_TD 2': 'A6 Teachers Day 2',
-  'NP_A6_TD 3': 'A6 Teachers Day 3',
-  'NP_A6_TD 4': 'A6 Teachers Day 4',
-  'NP_A6_TD 5': 'A6 Teachers Day 5',
-
-  // Teacher's Day Collection (A5)
-  'NP_A5_TD 1': 'A5 Teachers Day 1',
-  'NP_A5_TD 2': 'A5 Teachers Day 2',
-  'NP_A5_TD 3': 'A5 Teachers Day 3',
-  'NP_A5_TD 4': 'A5 Teachers Day 4',
-  'NP_A5_TD 5': 'A5 Teachers Day 5',
-
   // Square Notepads (3x3)
   'NP_SQ_CAT01': 'Sunny Sitting Calico',
   'NP_SQ_CAT02': 'Dozing Dreamer',
@@ -307,76 +271,6 @@ const DESIGN_TITLES = {
 
 const PRODUCT_CATALOG = [
   // 3x3 Notepads (Square 3 × 3 in, 30 sheets, ₱29.00)
-  {
-    code: 'NP_SQ_TD 1',
-    name: 'SQ Teachers Day 1',
-    category: '3x3',
-    catalogType: 'notepads',
-    sizeName: 'Square Notepad (3 × 3 in)',
-    dimensions: '3 × 3 in',
-    sheets: 30,
-    price: 29.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 01",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_SQ_TD 2',
-    name: 'SQ Teachers Day 2',
-    category: '3x3',
-    catalogType: 'notepads',
-    sizeName: 'Square Notepad (3 × 3 in)',
-    dimensions: '3 × 3 in',
-    sheets: 30,
-    price: 29.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 02",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_SQ_TD 3',
-    name: 'SQ Teachers Day 3',
-    category: '3x3',
-    catalogType: 'notepads',
-    sizeName: 'Square Notepad (3 × 3 in)',
-    dimensions: '3 × 3 in',
-    sheets: 30,
-    price: 29.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 03",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_SQ_TD 4',
-    name: 'SQ Teachers Day 4',
-    category: '3x3',
-    catalogType: 'notepads',
-    sizeName: 'Square Notepad (3 × 3 in)',
-    dimensions: '3 × 3 in',
-    sheets: 30,
-    price: 29.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 04",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_SQ_TD 5',
-    name: 'SQ Teachers Day 5',
-    category: '3x3',
-    catalogType: 'notepads',
-    sizeName: 'Square Notepad (3 × 3 in)',
-    dimensions: '3 × 3 in',
-    sheets: 30,
-    price: 29.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 05",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
   {
     code: 'NP_SQ_CAT01',
     name: 'Sunny Sitting Calico',
@@ -567,76 +461,6 @@ const PRODUCT_CATALOG = [
 
   // A6 Notepads (4 × 5.8 in, 30 sheets, ₱49.00)
   {
-    code: 'NP_A6_TD 1',
-    name: 'A6 Teachers Day 1',
-    category: 'A6',
-    catalogType: 'notepads',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 01",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A6_TD 2',
-    name: 'A6 Teachers Day 2',
-    category: 'A6',
-    catalogType: 'notepads',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 02",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A6_TD 3',
-    name: 'A6 Teachers Day 3',
-    category: 'A6',
-    catalogType: 'notepads',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 03",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A6_TD 4',
-    name: 'A6 Teachers Day 4',
-    category: 'A6',
-    catalogType: 'notepads',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 04",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A6_TD 5',
-    name: 'A6 Teachers Day 5',
-    category: 'A6',
-    catalogType: 'notepads',
-    sizeName: 'A6 Notepad (4 × 5.8 in)',
-    dimensions: '4 × 5.8 in',
-    sheets: 30,
-    price: 49.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 05",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
     code: 'NP_A6_Cinnamoroll',
     name: 'Cinnamoroll',
     category: 'A6',
@@ -737,76 +561,6 @@ const PRODUCT_CATALOG = [
   },
 
   // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱99.00)
-  {
-    code: 'NP_A5_TD 1',
-    name: 'A5 Teachers Day 1',
-    category: 'A5',
-    catalogType: 'notepads',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 01",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A5_TD 2',
-    name: 'A5 Teachers Day 2',
-    category: 'A5',
-    catalogType: 'notepads',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 02",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A5_TD 3',
-    name: 'A5 Teachers Day 3',
-    category: 'A5',
-    catalogType: 'notepads',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 03",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A5_TD 4',
-    name: 'A5 Teachers Day 4',
-    category: 'A5',
-    catalogType: 'notepads',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 04",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
-  {
-    code: 'NP_A5_TD 5',
-    name: 'A5 Teachers Day 5',
-    category: 'A5',
-    catalogType: 'notepads',
-    sizeName: 'A5 Notepad (5.8 × 8.3 in)',
-    dimensions: '5.8 × 8.3 in',
-    sheets: 30,
-    price: 99.00,
-    tag: "Teacher's Day",
-    motif: "Teacher's Day Tribute 05",
-    isNewArrival: true,
-    collection: 'teachers-day'
-  },
   {
     code: 'Blue DP_A5',
     name: 'Cloud Nine Daily',
@@ -971,7 +725,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -988,7 +742,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1005,7 +759,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1022,7 +776,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1039,7 +793,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1056,7 +810,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1073,7 +827,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1090,7 +844,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1107,7 +861,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1124,7 +878,7 @@ const PRODUCT_CATALOG = [
     category: 'christmas',
     catalogType: 'collections',
     sizeName: 'Christmas Collection Set',
-    dimensions: '1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Money Envelopes',
+    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
     sheets: 30,
     cardCount: 48,
     envelopeCount: 5,
@@ -1958,14 +1712,43 @@ function renderProductGallery(categoryKey) {
         ? `${cleanSizeName} • ${product.cardCount} pcs (220 gsm)`
         : `${product.sizeName} • ${product.sheets} sheets`);
 
-    const customizationSectionHtml = hasFreePersonalization ? `
-      <!-- Always-visible Text Customization for Notecards & Collections (FREE Personalization) -->
+    const customizationSectionHtml = isCollection ? `
+      <!-- Always-visible Text Customization for Christmas Collections (MANDATORY FREE Personalization) -->
+      <div class="card-customization-box card-customization-box-always-visible card-customization-box-collection" id="custBox_${safeCode}">
+        <div class="card-notecard-custom-header">
+          <label class="card-custom-input-label" for="inputCustText_${safeCode}">
+            CUSTOM NAME / TEXT TO PRINT <span class="required-star">*</span>
+          </label>
+          <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE personalization</span>
+        </div>
+        <div class="card-custom-input-wrap card-custom-input-wrap-visible" id="wrapCustInput_${safeCode}">
+          <input 
+            type="text" 
+            class="card-custom-input" 
+            id="inputCustText_${safeCode}" 
+            placeholder="e.g. The Santos Family / Maria Clara" 
+            maxlength="30"
+            autocomplete="off"
+            required
+            aria-required="true"
+          />
+          <div class="card-custom-helper-row">
+            <span class="card-custom-hint-text">Personalization required for Christmas sets</span>
+            <span class="card-custom-char-counter" id="charCount_${safeCode}">0/30</span>
+          </div>
+          <div class="card-custom-error-msg" id="errCustText_${safeCode}" style="display: none;">
+            Personalization is required for this Christmas Collection set. Please enter the custom name or text to print.
+          </div>
+        </div>
+      </div>
+    ` : (hasFreePersonalization ? `
+      <!-- Always-visible Text Customization for Notecards (FREE Personalization) -->
       <div class="card-customization-box card-customization-box-always-visible" id="custBox_${safeCode}">
         <div class="card-notecard-custom-header">
           <label class="card-custom-input-label" for="inputCustText_${safeCode}">
             CUSTOM NAME / TEXT TO PRINT
           </label>
-          <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE Personalization</span>
+          <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE personalization</span>
         </div>
         <div class="card-custom-input-wrap card-custom-input-wrap-visible" id="wrapCustInput_${safeCode}">
           <input 
@@ -2014,6 +1797,17 @@ function renderProductGallery(categoryKey) {
           </div>
         </div>
       </div>
+    `);
+
+    const cardBodyHtml = isCollection ? `
+      <div class="product-card-body product-card-body-collection">
+        <h4 class="product-title">${product.name}</h4>
+      </div>
+    ` : `
+      <div class="product-card-body">
+        <div class="product-spec">${specText}</div>
+        <h4 class="product-title">${product.name}</h4>
+      </div>
     `;
 
     card.innerHTML = `
@@ -2036,10 +1830,7 @@ function renderProductGallery(categoryKey) {
           </svg>
         </div>
       </div>
-      <div class="product-card-body">
-        <div class="product-spec">${specText}</div>
-        <h4 class="product-title">${product.name}</h4>
-      </div>
+      ${cardBodyHtml}
 
       ${customizationSectionHtml}
 
@@ -2178,8 +1969,24 @@ function renderProductGallery(categoryKey) {
         let isCustomized = false;
         let customText = '';
 
-        if (hasFreePersonalization) {
-          // Free Personalization (Notecards & Collections): Text customization input is always visible
+        if (isCollection) {
+          // Christmas Collection: Personalization is REQUIRED and FREE!
+          customText = inputCustText ? inputCustText.value.trim() : '';
+          if (!customText) {
+            if (inputCustText) {
+              inputCustText.classList.add('has-error');
+              inputCustText.focus();
+            }
+            if (errCustText) {
+              errCustText.textContent = 'Personalization is required for this Christmas Collection set. Please enter the custom name or text to print.';
+              errCustText.style.display = 'block';
+            }
+            showToast('Personalization is required for this Christmas Collection set.');
+            return;
+          }
+          isCustomized = true;
+        } else if (hasFreePersonalization) {
+          // Free Personalization (Notecards): Text customization input is always visible
           // If text is entered, capture as FREE personalization
           // If left blank, treat as standard order without customization
           customText = inputCustText ? inputCustText.value.trim() : '';
@@ -2196,6 +2003,7 @@ function renderProductGallery(categoryKey) {
               inputCustText.focus();
             }
             if (errCustText) {
+              errCustText.textContent = 'Please enter the custom name or text to print.';
               errCustText.style.display = 'block';
             }
             showToast('Please enter the custom name or text to print.');
@@ -2228,25 +2036,27 @@ function switchMainCatalog(catalogType) {
   }
 
   if (catalogType === 'collections') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collection';
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collections';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery set: 1 Notepad (30 sheets), Notecards in 2 sizes (24 pcs each), and 5 Money Envelopes with free personalization.';
+      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every curated box includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 in Notecards, 24 pcs of 4 × 3 in Notecards, and 5 Envelopes with complimentary custom name personalization.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
-    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'inline-flex';
+    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';
+    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
     if (DOM.tab3x3) DOM.tab3x3.style.display = 'none';
     if (DOM.tabA6) DOM.tabA6.style.display = 'none';
     if (DOM.tabA5) DOM.tabA5.style.display = 'none';
     if (DOM.tab2x35) DOM.tab2x35.style.display = 'none';
     if (DOM.tab4x3) DOM.tab4x3.style.display = 'none';
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
+    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
     switchGalleryCategory('christmas');
   } else if (catalogType === 'notepads') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Catalog';
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepads Collection';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Browse our curated notepad designs or add multiple styles to your order.';
+      DOM.gallerySectionSubtitle.textContent = 'Premium tear-off notepads crafted on smooth 80 gsm paper. Available in Square (3 × 3 in), A6, and A5 sizes — perfect for daily journaling, to-do lists, and desk notes.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
+    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'flex';
     if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
     if (DOM.tab3x3) DOM.tab3x3.style.display = 'inline-flex';
     if (DOM.tabA6) DOM.tabA6.style.display = 'inline-flex';
@@ -2256,11 +2066,12 @@ function switchMainCatalog(catalogType) {
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
     switchGalleryCategory('3x3');
   } else if (catalogType === 'notecards') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notecards Catalog';
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notecards Collection';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Handcrafted 220 gsm notecards with free personalization included.';
+      DOM.gallerySectionSubtitle.textContent = 'Elegant 220 gsm flat stationery cards available in 2 × 3.5 in and 4 × 3 in sets (24 cards per pack). Ideal for personalized gift tags, gratitude notes, and holiday greetings with free personalization included.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
+    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'flex';
     if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
     if (DOM.tab3x3) DOM.tab3x3.style.display = 'none';
     if (DOM.tabA6) DOM.tabA6.style.display = 'none';
@@ -2299,10 +2110,10 @@ function switchGalleryCategory(categoryKey) {
   if (isCollection) {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collection';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery set: 1 Notepad (30 sheets), Notecards in 2 sizes (24 pcs each), and 5 Money Envelopes with free personalization.';
+      DOM.gallerySectionSubtitle.textContent = 'Each Christmas Collection set includes: 1 A6 Notepad (30 sheets), 2 × 3.5 in Notecard Set (24 pcs), 4 × 3 in Notecard Set (24 pcs), and 5 envelopes with FREE personalization included.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
+    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
   } else if (!isNotecard) {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Catalog';
     if (DOM.gallerySectionSubtitle) {
@@ -2429,12 +2240,12 @@ function switchToCatalogView() {
     DOM.customOrderingSection.style.display = 'none';
   }
 
-  // 2. Restore the Notepad Catalog view and CTA banner
+  // 2. Restore the Notepad Catalog view (keep bottom CTA banner hidden)
   if (DOM.gallerySection) {
     DOM.gallerySection.style.display = 'block';
   }
   if (DOM.customOrderCtaBanner) {
-    DOM.customOrderCtaBanner.style.display = 'block';
+    DOM.customOrderCtaBanner.style.display = 'none';
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -37,38 +37,79 @@
   <!-- Top Full-Width Storefront Header -->
   <header class="site-header" id="siteHeader">
     <div class="site-header-inner">
-      <!-- LEFT: Printelio Logo / Brand Mark -->
-      <div class="header-brand-container" id="headerBrandContainer">
-        <a href="#gallerySection" class="header-brand-link" id="mainBrandTitle" aria-label="Printelio Home">
-          <span class="brand-name-word">Printelio</span>
-        </a>
+      <!-- TOP ROW: Desktop [Left: Custom Order | Center: Printelio | Right: Cart] / Mobile [Left: Hamburger | Center: Printelio | Right: Cart] -->
+      <div class="header-top-row" id="headerTopRow">
+        <!-- TOP LEFT: Desktop Custom Order OR Mobile Menu Toggle -->
+        <div class="header-top-left" id="headerTopLeft">
+          <button type="button" class="btn-mobile-menu-toggle" id="btnMobileMenuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+            <svg class="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <button type="button" class="btn-header-custom desktop-only" id="btnHeaderCustom" aria-label="Configure custom order">
+            <span>✨ Custom Order</span>
+          </button>
+        </div>
+
+        <!-- TOP CENTER: Printelio Logo Wordmark -->
+        <div class="header-brand-container" id="headerBrandContainer">
+          <a href="#gallerySection" class="header-brand-link" id="mainBrandTitle" aria-label="Printelio Home">
+            <span class="brand-name-word">Printelio</span>
+          </a>
+        </div>
+
+        <!-- TOP RIGHT: Cart Action -->
+        <div class="header-top-right" id="headerTopRight">
+          <button type="button" class="header-cart-pill" id="btnHeaderCart" aria-label="View Order Summary and Cart">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-text">Cart</span>
+            <span class="cart-badge-pill" id="headerCartCount">0</span>
+          </button>
+        </div>
       </div>
 
-      <!-- CENTER / PRIMARY NAVIGATION: Collections | Notepads | Notecards -->
-      <nav class="site-nav" id="catalogModeSwitcher" role="navigation" aria-label="Catalog Navigation">
-        <button type="button" class="site-nav-link active" id="btnCatalogCollections" data-catalog="collections" aria-selected="true">
-          <span class="nav-text">Collections</span>
+      <!-- SECOND ROW: Centered Primary Navigation on Desktop (Hidden on Mobile) -->
+      <div class="header-bottom-row" id="headerBottomRow">
+        <nav class="site-nav desktop-site-nav" id="catalogModeSwitcher" role="navigation" aria-label="Catalog Navigation">
+          <button type="button" class="site-nav-link active" id="btnCatalogCollections" data-catalog="collections" aria-selected="true">
+            <span class="nav-text">Collections</span>
+            <span class="catalog-mode-badge">NEW</span>
+          </button>
+          <button type="button" class="site-nav-link" id="btnCatalogNotepads" data-catalog="notepads" aria-selected="false">
+            <span class="nav-text">Notepads</span>
+          </button>
+          <button type="button" class="site-nav-link" id="btnCatalogNotecards" data-catalog="notecards" aria-selected="false">
+            <span class="nav-text">Notecards</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Collapsible Navigation Drawer / Menu -->
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop" aria-hidden="true"></div>
+    <div class="mobile-nav-drawer" id="mobileNavDrawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation" aria-hidden="true">
+      <div class="mobile-nav-header">
+        <span class="mobile-nav-brand">Printelio</span>
+        <button type="button" class="btn-mobile-nav-close" id="btnMobileNavClose" aria-label="Close navigation menu">&times;</button>
+      </div>
+      <nav class="mobile-nav-menu" id="mobileNavMenu" role="navigation">
+        <button type="button" class="mobile-nav-link active" id="btnMobileCatalogCollections" data-catalog="collections">
+          <span class="mobile-nav-text">Collections</span>
           <span class="catalog-mode-badge">NEW</span>
         </button>
-        <button type="button" class="site-nav-link" id="btnCatalogNotepads" data-catalog="notepads" aria-selected="false">
-          <span class="nav-text">Notepads</span>
+        <button type="button" class="mobile-nav-link" id="btnMobileCatalogNotepads" data-catalog="notepads">
+          <span class="mobile-nav-text">Notepads</span>
         </button>
-        <button type="button" class="site-nav-link" id="btnCatalogNotecards" data-catalog="notecards" aria-selected="false">
-          <span class="nav-text">Notecards</span>
+        <button type="button" class="mobile-nav-link" id="btnMobileCatalogNotecards" data-catalog="notecards">
+          <span class="mobile-nav-text">Notecards</span>
+        </button>
+        <div class="mobile-nav-separator"></div>
+        <button type="button" class="mobile-nav-link mobile-nav-custom-link" id="btnMobileCustomOrder">
+          <span class="mobile-nav-text">✨ Custom Order</span>
         </button>
       </nav>
-
-      <!-- RIGHT: Custom Order & Cart -->
-      <div class="header-actions" id="headerActions">
-        <button type="button" class="btn-header-custom" id="btnHeaderCustom" aria-label="Configure custom order">
-          <span>✨ Custom Order</span>
-        </button>
-        <button type="button" class="header-cart-pill" id="btnHeaderCart" aria-label="View Order Summary and Cart">
-          <span class="cart-icon">🛒</span>
-          <span class="cart-text">Cart</span>
-          <span class="cart-badge-pill" id="headerCartCount">0</span>
-        </button>
-      </div>
     </div>
   </header>
 

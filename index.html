@@ -34,19 +34,33 @@
 </head>
 <body>
 
-  <div class="app-container" id="appRoot">
-    <!-- Header -->
-    <header class="site-header" id="siteHeader">
+  <!-- Top Full-Width Storefront Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="site-header-inner">
+      <!-- LEFT: Printelio Logo / Brand Mark -->
       <div class="header-brand-container" id="headerBrandContainer">
-        <h1 class="brand-title-main" id="mainBrandTitle">
+        <a href="#gallerySection" class="header-brand-link" id="mainBrandTitle" aria-label="Printelio Home">
           <span class="brand-name-word">Printelio</span>
-        </h1>
-        <p class="brand-subtitle-main" id="mainBrandSubtitle">Handcrafted and Custom Stationery</p>
+        </a>
       </div>
 
-      <!-- Header Actions: Quick Custom Link & Cart Pill -->
+      <!-- CENTER / PRIMARY NAVIGATION: Collections | Notepads | Notecards -->
+      <nav class="site-nav" id="catalogModeSwitcher" role="navigation" aria-label="Catalog Navigation">
+        <button type="button" class="site-nav-link active" id="btnCatalogCollections" data-catalog="collections" aria-selected="true">
+          <span class="nav-text">Collections</span>
+          <span class="catalog-mode-badge">NEW</span>
+        </button>
+        <button type="button" class="site-nav-link" id="btnCatalogNotepads" data-catalog="notepads" aria-selected="false">
+          <span class="nav-text">Notepads</span>
+        </button>
+        <button type="button" class="site-nav-link" id="btnCatalogNotecards" data-catalog="notecards" aria-selected="false">
+          <span class="nav-text">Notecards</span>
+        </button>
+      </nav>
+
+      <!-- RIGHT: Custom Order & Cart -->
       <div class="header-actions" id="headerActions">
-        <button type="button" class="btn-header-action" id="btnHeaderCustom" aria-label="Configure custom order">
+        <button type="button" class="btn-header-custom" id="btnHeaderCustom" aria-label="Configure custom order">
           <span>✨ Custom Order</span>
         </button>
         <button type="button" class="header-cart-pill" id="btnHeaderCart" aria-label="View Order Summary and Cart">
@@ -55,8 +69,10 @@
           <span class="cart-badge-pill" id="headerCartCount">0</span>
         </button>
       </div>
-    </header>
+    </div>
+  </header>
 
+  <div class="app-container" id="appRoot">
     <!-- Main Content Area -->
     <main class="main-content" id="mainContent">
 
@@ -64,56 +80,36 @@
       <section class="gallery-section" id="gallerySection">
         <div class="gallery-header-box" id="galleryHeaderBox">
           <div class="gallery-title-wrap">
-            <!-- Catalog Mode Switcher (Collections vs Notepads vs Notecards) -->
-            <div class="catalog-mode-switcher" id="catalogModeSwitcher" role="tablist" aria-label="Select Stationery Catalog">
-              <button type="button" class="catalog-mode-btn active" id="btnCatalogCollections" data-catalog="collections" role="tab" aria-selected="true">
-                <span class="catalog-mode-icon">🎁</span>
-                <span class="catalog-mode-name">Collections</span>
-                <span class="catalog-mode-badge">NEW</span>
-              </button>
-              <button type="button" class="catalog-mode-btn" id="btnCatalogNotepads" data-catalog="notepads" role="tab" aria-selected="false">
-                <span class="catalog-mode-icon">📝</span>
-                <span class="catalog-mode-name">Notepads</span>
-              </button>
-              <button type="button" class="catalog-mode-btn" id="btnCatalogNotecards" data-catalog="notecards" role="tab" aria-selected="false">
-                <span class="catalog-mode-icon">💌</span>
-                <span class="catalog-mode-name">Notecards</span>
-              </button>
-            </div>
-
-            <h2 class="gallery-section-title" id="gallerySectionTitle">Christmas Collection</h2>
+            <h2 class="gallery-section-title" id="gallerySectionTitle">Christmas Collections</h2>
             <p class="gallery-section-subtitle" id="gallerySectionSubtitle">
-              Complete holiday stationery set: 1 Notepad (30 sheets), Notecards in 2 sizes (24 pcs each), and 5 Money Envelopes with free personalization.
+              Complete holiday stationery gift sets for ₱299.00 each. Every curated box includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 in Notecards, 24 pcs of 4 × 3 in Notecards, and 5 Envelopes with complimentary custom name personalization.
             </p>
           </div>
 
-          <!-- Category Tabs Navigation Bar (Christmas for Collections | 3x3, A6, A5 for Notepads | 2x3.5, 4x3 for Notecards) -->
-          <div class="category-tabs-container" id="categoryTabsContainer">
+          <!-- Category Tabs Navigation Bar (For Notepads & Notecards; hidden for Collections) -->
+          <div class="category-tabs-container" id="categoryTabsContainer" style="display: none;">
             <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Catalog Size Categories">
-              <button type="button" class="tab-btn active" id="tabChristmas" data-category="christmas" role="tab" aria-selected="true" aria-controls="productGalleryGrid">
-                Christmas
-              </button>
-              <button type="button" class="tab-btn" id="tab3x3" data-category="3x3" role="tab" aria-selected="false" aria-controls="productGalleryGrid" style="display: none;">
+              <button type="button" class="tab-btn active" id="tab3x3" data-category="3x3" role="tab" aria-selected="true" aria-controls="productGalleryGrid">
                 3x3
               </button>
-              <button type="button" class="tab-btn" id="tabA6" data-category="A6" role="tab" aria-selected="false" aria-controls="productGalleryGrid" style="display: none;">
+              <button type="button" class="tab-btn" id="tabA6" data-category="A6" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
                 A6
               </button>
-              <button type="button" class="tab-btn" id="tabA5" data-category="A5" role="tab" aria-selected="false" aria-controls="productGalleryGrid" style="display: none;">
+              <button type="button" class="tab-btn" id="tabA5" data-category="A5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
                 A5
               </button>
-              <button type="button" class="tab-btn" id="tab2x35" data-category="2x3.5" role="tab" aria-selected="false" aria-controls="productGalleryGrid" style="display: none;">
+              <button type="button" class="tab-btn" id="tab2x35" data-category="2x3.5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
                 2x3.5 in
               </button>
-              <button type="button" class="tab-btn" id="tab4x3" data-category="4x3" role="tab" aria-selected="false" aria-controls="productGalleryGrid" style="display: none;">
+              <button type="button" class="tab-btn" id="tab4x3" data-category="4x3" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
                 4x3 in
               </button>
             </div>
             
             <!-- Category Specification Pill / Hint -->
-            <div class="category-spec-pill" id="categorySpecPill">
-              <span id="categorySpecIcon">🎄</span>
-              <span id="categorySpecText">Christmas Collection Set • 1 Notepad (30 sh) + 2 Notecards (48 pcs) + 5 Money Envelopes • FREE Personalization • ₱299.00</span>
+            <div class="category-spec-pill" id="categorySpecPill" style="display: none;">
+              <span id="categorySpecIcon">📐</span>
+              <span id="categorySpecText">Square Notepad (3 × 3 in) • 30 Sheets • ₱29.00 / pad</span>
             </div>
           </div>
         </div>
@@ -124,8 +120,8 @@
         </div>
       </section>
 
-      <!-- SECTION 2: Custom Order CTA Banner -->
-      <section class="custom-cta-banner-section" id="customOrderCtaBanner">
+      <!-- SECTION 2: Custom Order CTA Banner (Hidden - top header navigation is sole access point) -->
+      <section class="custom-cta-banner-section" id="customOrderCtaBanner" style="display: none !important;">
         <div class="custom-cta-card">
           <div class="custom-cta-content">
             <div class="custom-cta-badge">

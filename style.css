@@ -3553,3 +3553,110 @@ select.form-control {
     border: 1px solid #ccc !important;
   }
 }
+
+/* Catalog presentation refinement: centered descriptions and size selectors */
+.gallery-section-subtitle {
+  text-align: center;
+  margin-inline: auto;
+}
+.category-tabs-container,
+.category-tabs-container .category-tabs {
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+.category-tabs-container { width: 100%; }
+.category-tabs-container .category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+.category-tabs-container .tab-btn {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  white-space: normal;
+  text-align: center;
+  min-height: 40px;
+}
+.category-spec-text {
+  width: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+@media (max-width: 767px) {
+  .category-tabs-container .category-tabs { width: 100%; border-radius: var(--radius-lg); }
+  .category-tabs-container .tab-btn { min-height: 44px; padding: 9px 12px; }
+}
+
+/* Approved catalog header: one centered vertical flow on all viewport sizes. */
+.gallery-header-box {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+.gallery-title-wrap {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+.gallery-section-title { text-align: center; }
+.gallery-section-subtitle {
+  max-width: 820px;
+  text-align: center;
+  margin-inline: auto;
+}
+.category-tabs-container {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.category-tabs-container .category-tabs {
+  max-width: 100%;
+  justify-content: center;
+  margin-inline: auto;
+}
+.category-spec-text {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  padding-inline: 4px;
+}
+@media (max-width: 767px) {
+  .gallery-header-box { padding: 24px 16px; }
+  .category-tabs-container .category-tabs { width: auto; max-width: 100%; }
+}
+
+
+/* Money Envelopes catalog — isolated two-card manual-slider layout */
+.product-gallery-grid.wme-gallery {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+.wme-card {min-width:0;overflow:hidden}
+.wme-heading {display:flex;justify-content:space-between;align-items:center;gap:10px;padding:18px 18px 10px}
+.wme-heading h3 {font-size:1.08rem;margin:0}.wme-heading span{font-size:.76rem;color:var(--text-muted)}
+.wme-preview{position:relative;display:flex;align-items:center;justify-content:center;padding:10px 42px;background:#faf8f5;min-height:240px}
+.wme-image-button{display:flex;justify-content:center;align-items:center;border:0;background:none;padding:0;cursor:zoom-in;width:100%}
+.wme-image{display:block;width:100%;height:280px;object-fit:contain}
+.wme-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:36px;height:42px;border:1px solid var(--border-color);border-radius:8px;background:white;color:#111;font-size:28px;cursor:pointer}
+.wme-prev{left:5px}.wme-next{right:5px}
+.wme-selected{text-align:center;font-weight:700;font-size:.88rem;padding:12px 10px 5px}
+.wme-thumbnails{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:8px 14px 16px}
+.wme-thumb{width:56px;height:65px;border:2px solid transparent;background:#f6f5f4;border-radius:8px;padding:3px;cursor:pointer}
+.wme-thumb.active{border-color:#111}.wme-thumb img{width:100%;height:100%;object-fit:contain}
+.wme-form{padding:12px 18px;display:flex;flex-direction:column;gap:11px}
+.wme-section-label{font-weight:700;font-size:.88rem}.wme-paper-options{display:flex;flex-direction:column;gap:8px}
+.wme-paper-options label{display:flex;align-items:center;gap:8px;font-size:.84rem;cursor:pointer}
+.wme-paper-options input{accent-color:#111}
+.wme-field{display:flex;flex-direction:column;gap:5px;font-size:.83rem;font-weight:600}
+.wme-field input{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--border-color);border-radius:8px;font:inherit}
+.wme-field input:focus{outline:2px solid var(--brand-purple);outline-offset:1px}
+.wme-error{color:#b42318;font-size:.82rem}.wme-card .product-card-footer{margin-top:auto}
+@media(max-width:767px){.product-gallery-grid.wme-gallery{grid-template-columns:minmax(0,1fr);gap:18px}.wme-preview{min-height:200px}.wme-image{height:250px}.wme-thumb{width:51px;height:60px}}

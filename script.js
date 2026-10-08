@@ -155,31 +155,31 @@ const CATEGORY_SPECS = {
   },
   '3x3': {
     title: 'Square Notepad (3 × 3 in)',
-    specText: 'Square Notepad (3 × 3 in) • 30 Sheets • ₱29.00 / pad',
+    specText: '3 × 3 inches • 30 Sheets • ₱29.00 / pad',
     price: 29.00,
     catalog: 'notepads'
   },
   'A6': {
     title: 'A6 Notepad (4 × 5.8 in)',
-    specText: 'A6 Notepad (4 × 5.8 in) • 30 Sheets • ₱49.00 / pad',
+    specText: '4 × 5.8 inches • 30 Sheets • ₱49.00 / pad',
     price: 49.00,
     catalog: 'notepads'
   },
   'A5': {
     title: 'A5 Notepad (5.8 × 8.3 in)',
-    specText: 'A5 Notepad (5.8 × 8.3 in) • 30 Sheets • ₱99.00 / pad',
+    specText: '5.8 × 8.3 inches • 30 Sheets • ₱99.00 / pad',
     price: 99.00,
     catalog: 'notepads'
   },
   '2x3.5': {
     title: '2 × 3.5 in Notecards (Portrait)',
-    specText: '2 × 3.5 in • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱89.00 / pack',
+    specText: '2 × 3.5 inches • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱89.00 / pack',
     price: 89.00,
     catalog: 'notecards'
   },
   '4x3': {
     title: '4 × 3 in Notecards (Landscape)',
-    specText: '4 × 3 in • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱129.00 / pack',
+    specText: '4 × 3 inches • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱129.00 / pack',
     price: 129.00,
     catalog: 'notecards'
   }
@@ -1282,6 +1282,8 @@ const DOM = {
   btnCatalogCollections: document.getElementById('btnCatalogCollections'),
   btnCatalogNotepads: document.getElementById('btnCatalogNotepads'),
   btnCatalogNotecards: document.getElementById('btnCatalogNotecards'),
+  btnCatalogEnvelopes: document.getElementById('btnCatalogEnvelopes'),
+  btnMobileCatalogEnvelopes: document.getElementById('btnMobileCatalogEnvelopes'),
   categoryTabsContainer: document.getElementById('categoryTabsContainer'),
   categoryTabs: document.querySelectorAll('#categoryTabs .tab-btn'),
   tabChristmas: document.getElementById('tabChristmas'),
@@ -1669,9 +1671,133 @@ function isProductNewArrival(product) {
   return false;
 }
 
-function renderProductGallery(categoryKey) {
+
+// Wedding envelope catalog: independent manual sliders and order configurations.
+const WEDDING_ENVELOPE_GROUPS = [
+  { id: 'monogram', title: 'Monogram Collection', codes: ['WME_00','WME_01','WME_02','WME_03','WME_04'] },
+  { id: 'wedding', title: 'Wedding Collection', codes: ['WME_05','WME_06','WME_07','WME_08'] }
+];
+const WEDDING_ENVELOPE_TITLES = {
+  WME_00:'Timeless', WME_01:'Modern', WME_02:'Devotion', WME_03:'Tranquility', WME_04:'Elegance',
+  WME_05:'Bliss', WME_06:'Serenity', WME_07:'Celebration', WME_08:'Romance'
+};
+
+function renderWeddingEnvelopeGallery() {
   if (!DOM.productGalleryGrid) return;
   DOM.productGalleryGrid.innerHTML = '';
+  DOM.productGalleryGrid.classList.add('wme-gallery');
+  WEDDING_ENVELOPE_GROUPS.forEach(group => {
+    const card = document.createElement('article');
+    card.className = 'product-card wme-card';
+    card.innerHTML = `
+      <div class="wme-heading"><h3>${group.title}</h3><span>${group.codes.length} designs</span></div>
+      <div class="wme-preview">
+        <button type="button" class="wme-arrow wme-prev" aria-label="Previous design">‹</button>
+        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp" alt="${WEDDING_ENVELOPE_TITLES[group.codes[0]]}" loading="lazy"></button>
+        <button type="button" class="wme-arrow wme-next" aria-label="Next design">›</button>
+      </div>
+      <div class="wme-selected" aria-live="polite"></div>
+      <div class="wme-thumbnails" aria-label="Choose envelope design"></div>
+      <div class="wme-form">
+        <div class="wme-section-label">Paper quality</div>
+        <div class="wme-paper-options">
+          <label><input type="radio" name="paper_${group.id}" value="premium" checked> Premium · 108 GSM · ₱79 / 5 pcs</label>
+          <label><input type="radio" name="paper_${group.id}" value="standard"> Standard · 80 GSM · ₱59 / 5 pcs</label>
+        </div>
+        <div class="wme-section-label">Free personalization</div>
+        ${group.id === 'monogram' ? '<label class="wme-field">Preferred 2-letter monogram <input class="wme-monogram" maxlength="2" placeholder="e.g. JM" autocomplete="off" required></label>' : ''}
+        <label class="wme-field">Preferred names <input class="wme-names" maxlength="100" placeholder="e.g. Julia & Marco" autocomplete="off" required></label>
+        <label class="wme-field">Wedding date <input class="wme-date" maxlength="80" placeholder="e.g. December 12, 2026" autocomplete="off" required></label>
+        <p class="wme-error" role="alert" hidden></p>
+      </div>
+      <div class="product-card-footer">
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱79.00</div><small>Per pack of 5 envelopes</small></div>
+          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease packs">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Number of packs"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase packs">+</button></div>
+        </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
+      </div>`;
+    let index = 0;
+    const image = card.querySelector('.wme-image');
+    const title = card.querySelector('.wme-selected');
+    const thumbs = card.querySelector('.wme-thumbnails');
+    const price = card.querySelector('.wme-price');
+    const qty = card.querySelector('.wme-qty');
+    const error = card.querySelector('.wme-error');
+    const selectedPaper = () => card.querySelector(`input[name="paper_${group.id}"]:checked`).value;
+    const unitPrice = () => selectedPaper() === 'premium' ? 79 : 59;
+    function selectDesign(next) {
+      index = (next + group.codes.length) % group.codes.length;
+      const code = group.codes[index];
+      image.src = `images/${code}.webp`;
+      image.alt = WEDDING_ENVELOPE_TITLES[code];
+      title.textContent = `${WEDDING_ENVELOPE_TITLES[code]} — ${code} · Design ${index + 1} of ${group.codes.length}`;
+      [...thumbs.children].forEach((button, i) => {
+        button.classList.toggle('active', i === index);
+        button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+    }
+    group.codes.forEach((code,i) => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'wme-thumb';
+      button.title = `${WEDDING_ENVELOPE_TITLES[code]} (${code})`;
+      button.setAttribute('aria-label', `Select ${WEDDING_ENVELOPE_TITLES[code]}`);
+      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = '';
+      thumb.loading = 'lazy'; button.appendChild(thumb);
+      button.addEventListener('click', () => selectDesign(i));
+      thumbs.appendChild(button);
+    });
+    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1));
+    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1));
+    card.querySelector('.wme-image-button').addEventListener('click', () => {
+      const code = group.codes[index];
+      openImageLightbox(`images/${code}.webp`, WEDDING_ENVELOPE_TITLES[code], code);
+    });
+    card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', () => { price.textContent = `₱${unitPrice().toFixed(2)}`; }));
+    const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
+    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); });
+    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99,clampQty()+1); });
+    qty.addEventListener('change',clampQty);
+    card.querySelector('.wme-add').addEventListener('click', () => {
+      const monogramInput = card.querySelector('.wme-monogram');
+      const monogram = monogramInput ? monogramInput.value.trim().toUpperCase() : '';
+      const names = card.querySelector('.wme-names').value.trim();
+      const date = card.querySelector('.wme-date').value.trim();
+      let invalid = null;
+      if (monogramInput && !/^[A-Z]{2}$/.test(monogram)) invalid = monogramInput;
+      else if (!names) invalid = card.querySelector('.wme-names');
+      else if (!date) invalid = card.querySelector('.wme-date');
+      if (invalid) {
+        error.hidden = false;
+        error.textContent = invalid === monogramInput ? 'Please enter exactly two letters for the monogram.' : 'Please complete all personalization fields.';
+        invalid.focus(); return;
+      }
+      error.hidden = true;
+      const code = group.codes[index], paper = selectedPaper(), count = clampQty();
+      const customText = [monogram ? `Monogram: ${monogram}` : '', `Names: ${names}`, `Wedding date: ${date}`].filter(Boolean).join(' | ');
+      const existing = appState.cart.find(item => item.categoryKey === 'envelopes' && item.designCode === code && item.paperQuality === paper && item.customText === customText);
+      if (existing) { existing.quantity += count; existing.subtotal = existing.quantity * existing.unitPrice; }
+      else appState.cart.push({
+        id: 'wme_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), isCustomMade:false,
+        categoryKey:'envelopes', categoryName:'Money Envelopes', sizeId:'wedding-envelopes',
+        sizeName:`${paper === 'premium' ? 'Premium' : 'Standard'} · ${paper === 'premium' ? 108 : 80} GSM · 5 pcs / pack`,
+        shortName:WEDDING_ENVELOPE_TITLES[code], productTitle:WEDDING_ENVELOPE_TITLES[code],
+        dimensions:'5 money envelopes per pack', hasSheets:false, sheetCount:null, cardCount:null,
+        freePersonalization:true, designCode:code, imagePath:`images/${code}.webp`,
+        isCustomized:true, customText, monogram, preferredNames:names, weddingDate:date,
+        paperQuality:paper, isTba:false, unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
+      });
+      renderCart(); showCheckoutSection(false);
+      showToast(`Added ${count} pack(s) of ${WEDDING_ENVELOPE_TITLES[code]} (${code}) to order.`);
+    });
+    selectDesign(0);
+    DOM.productGalleryGrid.appendChild(card);
+  });
+}
+
+function renderProductGallery(categoryKey) {
+  if (categoryKey === 'wedding-envelopes') { renderWeddingEnvelopeGallery(); return; }
+  if (!DOM.productGalleryGrid) return;
+  DOM.productGalleryGrid.innerHTML = '';
+  DOM.productGalleryGrid.classList.remove('wme-gallery');
 
   let items = PRODUCT_CATALOG.filter(p => p.category === categoryKey);
 
@@ -1709,18 +1835,12 @@ function renderProductGallery(categoryKey) {
     card.id = `card_${safeCode}`;
 
     const fallbackSvg = getProductMockupSvg(product.code, product.name, product.category, product.tag);
-    const cleanSizeName = product.sizeName.replace(/\s*\([^)]*pcs[^)]*\)/gi, '').trim();
     const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount && !product.envelopeCount));
     const isCollection = (product.catalogType === 'collections' || product.category === 'christmas');
     const hasFreePersonalization = Boolean(product.freePersonalization) || isNotecards || isCollection;
     const is2x35 = (product.category === '2x3.5' || product.code.startsWith('NCP_'));
     const notecardMaxChars = product.maxChars || (isCollection ? 30 : (is2x35 ? 10 : 15));
     const notecardPlaceholder = isCollection ? 'e.g. The Santos Family / Maria Clara' : (is2x35 ? 'e.g. Maria C.' : 'e.g. Maria Clara');
-    const specText = isCollection
-      ? `1 Notepad (30 sh) • 2 Notecards (48 pcs) • 5 Envelopes`
-      : (isNotecards
-        ? `${cleanSizeName} • ${product.cardCount} pcs (220 gsm)`
-        : `${product.sizeName} • ${product.sheets} sheets`);
 
     const customizationSectionHtml = isCollection ? `
       <!-- Always-visible Text Customization for Christmas Collections (MANDATORY FREE Personalization) -->
@@ -1815,7 +1935,6 @@ function renderProductGallery(categoryKey) {
       </div>
     ` : `
       <div class="product-card-body">
-        <div class="product-spec">${specText}</div>
         <h4 class="product-title">${product.name}</h4>
       </div>
     `;
@@ -2070,10 +2189,26 @@ function switchMainCatalog(catalogType) {
     DOM.btnMobileCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
   }
 
-  if (catalogType === 'collections') {
+  if (DOM.btnCatalogEnvelopes) {
+    DOM.btnCatalogEnvelopes.classList.toggle('active', catalogType === 'envelopes');
+    DOM.btnCatalogEnvelopes.setAttribute('aria-selected', catalogType === 'envelopes' ? 'true' : 'false');
+  }
+  if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.classList.toggle('active', catalogType === 'envelopes');
+
+  if (catalogType === 'envelopes') {
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Money Envelopes Catalog';
+    if (DOM.gallerySectionSubtitle) {
+      DOM.gallerySectionSubtitle.textContent = 'Personalized wedding money envelopes featuring elegant designs for your special day. Each pack includes 5 envelopes with free customization. Premium 108 GSM • ₱79.00 / pack | Standard 80 GSM • ₱59.00 / pack';
+      DOM.gallerySectionSubtitle.style.display = '';
+    }
+    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';
+    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
+    appState.activeGalleryTab = 'wedding-envelopes';
+    renderProductGallery('wedding-envelopes');
+  } else if (catalogType === 'collections') {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collections';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every curated box includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 in Notecards, 24 pcs of 4 × 3 in Notecards, and 5 Envelopes with complimentary custom name personalization.';
+      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every set includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 inches Notecards, 24 pcs of 4 × 3 inches Notecards, and 5 Money Envelopes with FREE custom name personalization.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
     if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';
@@ -2119,6 +2254,8 @@ function switchMainCatalog(catalogType) {
 }
 
 function switchGalleryCategory(categoryKey) {
+  if (DOM.btnCatalogEnvelopes) { DOM.btnCatalogEnvelopes.classList.remove('active'); DOM.btnCatalogEnvelopes.setAttribute('aria-selected', 'false'); }
+  if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.classList.remove('active');
   appState.activeGalleryTab = categoryKey;
 
   const isCollection = (categoryKey === 'christmas');
@@ -2152,21 +2289,21 @@ function switchGalleryCategory(categoryKey) {
   if (isCollection) {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collections';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every curated box includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 in Notecards, 24 pcs of 4 × 3 in Notecards, and 5 Envelopes with complimentary custom name personalization.';
+      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every set includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 inches Notecards, 24 pcs of 4 × 3 inches Notecards, and 5 Money Envelopes with FREE custom name personalization.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
   } else if (!isNotecard) {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Catalog';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Browse our curated notepad designs or add multiple styles to your order.';
+      DOM.gallerySectionSubtitle.textContent = 'Premium tear-off notepads crafted on smooth 80 gsm paper. Available in Square (3 × 3 in), A6, and A5 sizes — perfect for daily journaling, to-do lists, and desk notes.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
   } else {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notecards Catalog';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Handcrafted 220 gsm notecards with free personalization included.';
+      DOM.gallerySectionSubtitle.textContent = 'Elegant 220 gsm flat stationery cards available in 2 × 3.5 in and 4 × 3 in sets (24 cards per pack). Ideal for personalized gift tags, gratitude notes, and holiday greetings with free personalization included.';
       DOM.gallerySectionSubtitle.style.display = '';
     }
     if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
@@ -2176,9 +2313,6 @@ function switchGalleryCategory(categoryKey) {
   const spec = CATEGORY_SPECS[categoryKey];
   if (DOM.categorySpecText && spec) {
     DOM.categorySpecText.textContent = spec.specText;
-  }
-  if (DOM.categorySpecIcon) {
-    DOM.categorySpecIcon.textContent = isCollection ? '🎁' : (isNotecard ? '💌' : '📐');
   }
 
   // Re-render cards
@@ -3012,6 +3146,7 @@ function renderCart() {
     itemCard.id = `cart-item-${item.id}`;
 
     let specDetails = `${item.dimensions}`;
+    if (item.categoryKey === 'envelopes') specDetails = `${item.sizeName} • ${item.dimensions}`;
     if (item.categoryKey === 'collections') {
       specDetails = `${item.dimensions}`;
     } else if (item.hasSheets) {
@@ -3312,6 +3447,7 @@ function buildJobOrderSlip(refNo) {
       : `<strong style="color:#111827; font-weight:700;">${escapeHtml(item.categoryName)} - ${escapeHtml(item.sizeName)}</strong>`;
 
     let specLine = escapeHtml(item.dimensions);
+    if (item.categoryKey === 'envelopes') specLine = escapeHtml(`${item.sizeName} • ${item.dimensions}`);
     if (item.categoryKey === 'collections') {
       specLine = escapeHtml(item.dimensions);
     } else if (item.hasSheets) {
@@ -3930,6 +4066,7 @@ function initEventListeners() {
   if (DOM.btnCatalogNotecards) {
     DOM.btnCatalogNotecards.addEventListener('click', () => switchMainCatalog('notecards'));
   }
+  if (DOM.btnCatalogEnvelopes) DOM.btnCatalogEnvelopes.addEventListener('click', () => switchMainCatalog('envelopes'));
 
   // Mobile Navigation Drawer Toggle and Links
   if (DOM.btnMobileMenuToggle) {
@@ -3967,6 +4104,7 @@ function initEventListeners() {
       toggleMobileMenu(false);
     });
   }
+  if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.addEventListener('click', () => { switchMainCatalog('envelopes'); toggleMobileMenu(false); });
   if (DOM.btnMobileCustomOrder) {
     DOM.btnMobileCustomOrder.addEventListener('click', () => {
       switchToCustomView();

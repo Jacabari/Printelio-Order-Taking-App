@@ -83,6 +83,7 @@
           <button type="button" class="site-nav-link" id="btnCatalogNotecards" data-catalog="notecards" aria-selected="false">
             <span class="nav-text">Notecards</span>
           </button>
+          <button type="button" class="site-nav-link" id="btnCatalogEnvelopes" data-catalog="envelopes" aria-selected="false"><span class="nav-text">Money Envelopes</span></button>
         </nav>
       </div>
     </div>
@@ -105,6 +106,7 @@
         <button type="button" class="mobile-nav-link" id="btnMobileCatalogNotecards" data-catalog="notecards">
           <span class="mobile-nav-text">Notecards</span>
         </button>
+        <button type="button" class="mobile-nav-link" id="btnMobileCatalogEnvelopes" data-catalog="envelopes"><span class="mobile-nav-text">Money Envelopes</span></button>
         <div class="mobile-nav-separator"></div>
         <button type="button" class="mobile-nav-link mobile-nav-custom-link" id="btnMobileCustomOrder">
           <span class="mobile-nav-text">✨ Custom Order</span>
@@ -123,7 +125,7 @@
           <div class="gallery-title-wrap">
             <h2 class="gallery-section-title" id="gallerySectionTitle">Christmas Collections</h2>
             <p class="gallery-section-subtitle" id="gallerySectionSubtitle">
-              Complete holiday stationery gift sets for ₱299.00 each. Every curated box includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 in Notecards, 24 pcs of 4 × 3 in Notecards, and 5 Envelopes with complimentary custom name personalization.
+              Complete holiday stationery gift sets for ₱299.00 each. Every set includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 inches Notecards, 24 pcs of 4 × 3 inches Notecards, and 5 Money Envelopes with FREE custom name personalization.
             </p>
           </div>
 
@@ -131,26 +133,25 @@
           <div class="category-tabs-container" id="categoryTabsContainer" style="display: none;">
             <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Catalog Size Categories">
               <button type="button" class="tab-btn active" id="tab3x3" data-category="3x3" role="tab" aria-selected="true" aria-controls="productGalleryGrid">
-                3x3
+                Square Notepad
               </button>
               <button type="button" class="tab-btn" id="tabA6" data-category="A6" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                A6
+                A6 Notepad
               </button>
               <button type="button" class="tab-btn" id="tabA5" data-category="A5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                A5
+                A5 Notepad
               </button>
               <button type="button" class="tab-btn" id="tab2x35" data-category="2x3.5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                2x3.5 in
+                Portrait Notecards
               </button>
               <button type="button" class="tab-btn" id="tab4x3" data-category="4x3" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                4x3 in
+                Landscape Notecards
               </button>
             </div>
             
             <!-- Category Specification Pill / Hint -->
-            <div class="category-spec-pill" id="categorySpecPill" style="display: none;">
-              <span id="categorySpecIcon">📐</span>
-              <span id="categorySpecText">Square Notepad (3 × 3 in) • 30 Sheets • ₱29.00 / pad</span>
+            <div class="category-spec-text" id="categorySpecPill" style="display: none;" aria-live="polite">
+              <span id="categorySpecText">30 Sheets • ₱29.00 / pad</span>
             </div>
           </div>
         </div>

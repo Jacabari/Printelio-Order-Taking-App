@@ -1674,12 +1674,18 @@ function isProductNewArrival(product) {
 
 // Wedding envelope catalog: independent manual sliders and order configurations.
 const WEDDING_ENVELOPE_GROUPS = [
-  { id: 'monogram', title: 'Monogram Collection', codes: ['WME_00','WME_01','WME_02','WME_03','WME_04'] },
-  { id: 'wedding', title: 'Wedding Collection', codes: ['WME_05','WME_06','WME_07','WME_08'] }
+  { id: 'monogram', title: 'Wedding 1 Designs', codes: ['WME_00','WME_01','WME_02','WME_03','WME_04'] },
+  { id: 'wedding', title: 'Wedding 2 Designs', codes: ['WME_05','WME_06','WME_07','WME_08'] },
+  { id: 'christmas', title: 'Christmas Designs', codes: ['CME_00','CME_01','CME_02','CME_03','CME_04','CME_05','CME_06','CME_07','CME_08','CME_09'] }
 ];
 const WEDDING_ENVELOPE_TITLES = {
   WME_00:'Timeless', WME_01:'Modern', WME_02:'Devotion', WME_03:'Tranquility', WME_04:'Elegance',
-  WME_05:'Bliss', WME_06:'Serenity', WME_07:'Celebration', WME_08:'Romance'
+  WME_05:'Bliss', WME_06:'Serenity', WME_07:'Celebration', WME_08:'Romance',
+  CME_00:DESIGN_TITLES.CC_00, CME_01:DESIGN_TITLES.CC_01,
+  CME_02:DESIGN_TITLES.CC_02, CME_03:DESIGN_TITLES.CC_03,
+  CME_04:DESIGN_TITLES.CC_04, CME_05:DESIGN_TITLES.CC_05,
+  CME_06:DESIGN_TITLES.CC_06, CME_07:DESIGN_TITLES.CC_07,
+  CME_08:DESIGN_TITLES.CC_08, CME_09:DESIGN_TITLES.CC_09
 };
 
 function renderWeddingEnvelopeGallery() {
@@ -1706,8 +1712,8 @@ function renderWeddingEnvelopeGallery() {
         </div>
         <div class="wme-section-label">Free personalization</div>
         ${group.id === 'monogram' ? '<label class="wme-field">Preferred 2-letter monogram <input class="wme-monogram" maxlength="2" placeholder="e.g. JM" autocomplete="off" required></label>' : ''}
-        <label class="wme-field">Preferred names <input class="wme-names" maxlength="100" placeholder="e.g. Julia & Marco" autocomplete="off" required></label>
-        <label class="wme-field">Wedding date <input class="wme-date" maxlength="80" placeholder="e.g. December 12, 2026" autocomplete="off" required></label>
+        <label class="wme-field">${group.id === 'christmas' ? 'Preferred names (1 or 2 names)' : 'Preferred names'} <input class="wme-names" maxlength="100" placeholder="${group.id === 'christmas' ? 'e.g. Julia or Julia & Marco' : 'e.g. Julia & Marco'}" autocomplete="off" required></label>
+        ${group.id === 'christmas' ? '' : '<label class="wme-field">Wedding date <input class="wme-date" maxlength="80" placeholder="e.g. December 12, 2026" autocomplete="off" required></label>'}
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
@@ -1760,11 +1766,12 @@ function renderWeddingEnvelopeGallery() {
       const monogramInput = card.querySelector('.wme-monogram');
       const monogram = monogramInput ? monogramInput.value.trim().toUpperCase() : '';
       const names = card.querySelector('.wme-names').value.trim();
-      const date = card.querySelector('.wme-date').value.trim();
+      const dateInput = card.querySelector('.wme-date');
+      const date = dateInput ? dateInput.value.trim() : '';
       let invalid = null;
       if (monogramInput && !/^[A-Z]{2}$/.test(monogram)) invalid = monogramInput;
       else if (!names) invalid = card.querySelector('.wme-names');
-      else if (!date) invalid = card.querySelector('.wme-date');
+      else if (dateInput && !date) invalid = dateInput;
       if (invalid) {
         error.hidden = false;
         error.textContent = invalid === monogramInput ? 'Please enter exactly two letters for the monogram.' : 'Please complete all personalization fields.';
@@ -1772,12 +1779,12 @@ function renderWeddingEnvelopeGallery() {
       }
       error.hidden = true;
       const code = group.codes[index], paper = selectedPaper(), count = clampQty();
-      const customText = [monogram ? `Monogram: ${monogram}` : '', `Names: ${names}`, `Wedding date: ${date}`].filter(Boolean).join(' | ');
+      const customText = [monogram ? `Monogram: ${monogram}` : '', `Names: ${names}`, dateInput ? `Wedding date: ${date}` : ''].filter(Boolean).join(' | ');
       const existing = appState.cart.find(item => item.categoryKey === 'envelopes' && item.designCode === code && item.paperQuality === paper && item.customText === customText);
       if (existing) { existing.quantity += count; existing.subtotal = existing.quantity * existing.unitPrice; }
       else appState.cart.push({
         id: 'wme_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), isCustomMade:false,
-        categoryKey:'envelopes', categoryName:'Money Envelopes', sizeId:'wedding-envelopes',
+        categoryKey:'envelopes', categoryName:'Money Envelopes', sizeId:group.id === 'christmas' ? 'christmas-envelopes' : 'wedding-envelopes',
         sizeName:`${paper === 'premium' ? 'Premium' : 'Standard'} · ${paper === 'premium' ? 108 : 80} GSM · 5 pcs / pack`,
         shortName:WEDDING_ENVELOPE_TITLES[code], productTitle:WEDDING_ENVELOPE_TITLES[code],
         dimensions:'5 money envelopes per pack', hasSheets:false, sheetCount:null, cardCount:null,
@@ -2198,7 +2205,7 @@ function switchMainCatalog(catalogType) {
   if (catalogType === 'envelopes') {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Money Envelopes Catalog';
     if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Personalized wedding money envelopes featuring elegant designs for your special day. Each pack includes 5 envelopes with free customization. Premium 108 GSM • ₱79.00 / pack | Standard 80 GSM • ₱59.00 / pack';
+      DOM.gallerySectionSubtitle.textContent = 'Personalized wedding and Christmas money envelopes. Each pack includes 5 envelopes with free customization. Premium 108 GSM • ₱79.00 / pack | Standard 80 GSM • ₱59.00 / pack';
       DOM.gallerySectionSubtitle.style.display = '';
     }
     if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';

@@ -1284,6 +1284,8 @@ const DOM = {
   btnCatalogNotecards: document.getElementById('btnCatalogNotecards'),
   btnCatalogEnvelopes: document.getElementById('btnCatalogEnvelopes'),
   btnMobileCatalogEnvelopes: document.getElementById('btnMobileCatalogEnvelopes'),
+  btnCatalogHardbound: document.getElementById('btnCatalogHardbound'),
+  btnMobileCatalogHardbound: document.getElementById('btnMobileCatalogHardbound'),
   categoryTabsContainer: document.getElementById('categoryTabsContainer'),
   categoryTabs: document.querySelectorAll('#categoryTabs .tab-btn'),
   tabChristmas: document.getElementById('tabChristmas'),
@@ -1800,8 +1802,116 @@ function renderWeddingEnvelopeGallery() {
   });
 }
 
+// Hardbound Notepads: two independent design sliders using existing envelope card styling.
+const HARDBOUND_GROUPS = [
+  {title:'Pastel Reverie', codes:['HBNF_01','HBNF_02','HBNF_03','HBNF_04','HBNF_05','HBNF_06','HBNF_07','HBNF_08']},
+  {title:'Modern Frontier', codes:['HBNM_01','HBNM_02','HBNM_03','HBNM_04','HBNM_05','HBNM_06']}
+];
+const HARDBOUND_TITLES = {
+  HBNF_01:'Pink Petals', HBNF_02:'Pastel Bloom', HBNF_03:'Blue Serenity', HBNF_04:'Peach Blossom',
+  HBNF_05:'Lavender Mist', HBNF_06:'Golden Sage', HBNF_07:'Vibrant Waves', HBNF_08:'Retro Pop',
+  HBNM_01:'Wild Wolf', HBNM_02:'Ocean Depths', HBNM_03:'Forest Edge',
+  HBNM_04:'Copper Ridge', HBNM_05:'Emerald Horizon', HBNM_06:'Royal Eclipse'
+};
+function renderHardboundGallery() {
+  if (!DOM.productGalleryGrid) return;
+  DOM.productGalleryGrid.innerHTML = '';
+  DOM.productGalleryGrid.classList.add('wme-gallery');
+  HARDBOUND_GROUPS.forEach((group, groupIndex) => {
+    const card = document.createElement('article');
+    card.className = 'product-card wme-card';
+    card.innerHTML = `
+      <div class="wme-heading"><h3>${group.title}</h3><span>${group.codes.length} designs</span></div>
+      <div class="wme-preview">
+        <button type="button" class="wme-arrow wme-prev" aria-label="Previous design">‹</button>
+        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp" alt="${HARDBOUND_TITLES[group.codes[0]]}" loading="lazy"></button>
+        <button type="button" class="wme-arrow wme-next" aria-label="Next design">›</button>
+      </div>
+      <div class="wme-selected" aria-live="polite"></div>
+      <div class="wme-thumbnails" aria-label="Choose hardbound notepad design"></div>
+      <div class="wme-form">
+        <div class="wme-section-label">Notepad size · 70 sheets</div>
+        <div class="wme-paper-options">
+          <label><input type="radio" name="hardbound_size_${groupIndex}" value="A6" checked> A6 · 70 sheets · ₱159.00</label>
+          <label><input type="radio" name="hardbound_size_${groupIndex}" value="A5"> A5 · 70 sheets · ₱259.00</label>
+        </div>
+        <div class="wme-section-label">Free personalization</div>
+        <label class="wme-field">Preferred name / cover text <input class="hardbound-name" maxlength="100" placeholder="Enter name or text for cover" autocomplete="off" required></label>
+        <p class="wme-error" role="alert" hidden></p>
+      </div>
+      <div class="product-card-footer">
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱159.00</div><small>Per hardbound notepad · 70 sheets</small></div>
+          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease quantity">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Quantity"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase quantity">+</button></div>
+        </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
+      </div>`;
+    let index = 0;
+    const image = card.querySelector('.wme-image');
+    const selected = card.querySelector('.wme-selected');
+    const thumbs = card.querySelector('.wme-thumbnails');
+    const price = card.querySelector('.wme-price');
+    const qty = card.querySelector('.wme-qty');
+    const error = card.querySelector('.wme-error');
+    const selectedSize = () => card.querySelector(`input[name="hardbound_size_${groupIndex}"]:checked`).value;
+    const unitPrice = () => selectedSize() === 'A6' ? 159 : 259;
+    function selectDesign(next) {
+      index = (next + group.codes.length) % group.codes.length;
+      const code = group.codes[index];
+      image.src = `images/${code}.webp`;
+      image.alt = HARDBOUND_TITLES[code];
+      selected.textContent = `${HARDBOUND_TITLES[code]} — ${code} · Design ${index + 1} of ${group.codes.length}`;
+      [...thumbs.children].forEach((button, i) => {
+        button.classList.toggle('active', i === index);
+        button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+    }
+    group.codes.forEach((code,i) => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'wme-thumb';
+      button.title = `${HARDBOUND_TITLES[code]} (${code})`;
+      button.setAttribute('aria-label', `Select ${HARDBOUND_TITLES[code]}`);
+      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = ''; thumb.loading = 'lazy';
+      button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i)); thumbs.appendChild(button);
+    });
+    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1));
+    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1));
+    card.querySelector('.wme-image-button').addEventListener('click', () => {
+      const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, HARDBOUND_TITLES[code], code);
+    });
+    card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', () => {
+      price.textContent = `₱${unitPrice().toFixed(2)}`;
+    }));
+    const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
+    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1, clampQty()-1); });
+    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99, clampQty()+1); });
+    qty.addEventListener('change', clampQty);
+    card.querySelector('.wme-add').addEventListener('click', () => {
+      const input = card.querySelector('.hardbound-name');
+      const names = input.value.trim();
+      if (!names) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
+      error.hidden = true;
+      const code = group.codes[index], size = selectedSize(), count = clampQty();
+      const customText = `Cover personalization: ${names}`;
+      const existing = appState.cart.find(item => item.categoryKey === 'hardbound' && item.designCode === code && item.sizeId === `hardbound-${size.toLowerCase()}` && item.customText === customText);
+      if (existing) { existing.quantity += count; existing.subtotal = existing.quantity * existing.unitPrice; }
+      else appState.cart.push({
+        id: 'hbn_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), isCustomMade:false,
+        categoryKey:'hardbound', categoryName:'Hardbound Notepads', sizeId:`hardbound-${size.toLowerCase()}`,
+        sizeName:`${size} Hardbound Notepad`, shortName:HARDBOUND_TITLES[code], productTitle:HARDBOUND_TITLES[code],
+        dimensions:size === 'A6' ? 'A6' : 'A5', hasSheets:true, sheetCount:70, cardCount:null,
+        freePersonalization:true, designCode:code, imagePath:`images/${code}.webp`,
+        isCustomized:true, customText, preferredNames:names, isTba:false,
+        unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
+      });
+      renderCart(); showCheckoutSection(false);
+      showToast(`Added ${count} ${size} hardbound notepad(s) of ${HARDBOUND_TITLES[code]} (${code}) to order.`);
+    });
+    selectDesign(0); DOM.productGalleryGrid.appendChild(card);
+  });
+}
+
 function renderProductGallery(categoryKey) {
   if (categoryKey === 'wedding-envelopes') { renderWeddingEnvelopeGallery(); return; }
+  if (categoryKey === 'hardbound') { renderHardboundGallery(); return; }
   if (!DOM.productGalleryGrid) return;
   DOM.productGalleryGrid.innerHTML = '';
   DOM.productGalleryGrid.classList.remove('wme-gallery');
@@ -2202,7 +2312,17 @@ function switchMainCatalog(catalogType) {
   }
   if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.classList.toggle('active', catalogType === 'envelopes');
 
-  if (catalogType === 'envelopes') {
+  if (DOM.btnCatalogHardbound) { DOM.btnCatalogHardbound.classList.toggle('active', catalogType === 'hardbound'); DOM.btnCatalogHardbound.setAttribute('aria-selected', catalogType === 'hardbound' ? 'true' : 'false'); }
+  if (DOM.btnMobileCatalogHardbound) DOM.btnMobileCatalogHardbound.classList.toggle('active', catalogType === 'hardbound');
+
+  if (catalogType === 'hardbound') {
+    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Hardbound Notepads';
+    if (DOM.gallerySectionSubtitle) { DOM.gallerySectionSubtitle.textContent = '70-sheet hardbound notepads with free cover personalization. A6 · ₱159.00 | A5 · ₱259.00'; DOM.gallerySectionSubtitle.style.display = ''; }
+    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';
+    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
+    appState.activeGalleryTab = 'hardbound';
+    renderProductGallery('hardbound');
+  } else if (catalogType === 'envelopes') {
     if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Money Envelopes Catalog';
     if (DOM.gallerySectionSubtitle) {
       DOM.gallerySectionSubtitle.textContent = 'Personalized wedding and Christmas money envelopes. Each pack includes 5 envelopes with free customization. Premium 108 GSM • ₱79.00 / pack | Standard 80 GSM • ₱59.00 / pack';
@@ -2262,6 +2382,8 @@ function switchMainCatalog(catalogType) {
 
 function switchGalleryCategory(categoryKey) {
   if (DOM.btnCatalogEnvelopes) { DOM.btnCatalogEnvelopes.classList.remove('active'); DOM.btnCatalogEnvelopes.setAttribute('aria-selected', 'false'); }
+  if (DOM.btnCatalogHardbound) { DOM.btnCatalogHardbound.classList.remove('active'); DOM.btnCatalogHardbound.setAttribute('aria-selected', 'false'); }
+  if (DOM.btnMobileCatalogHardbound) DOM.btnMobileCatalogHardbound.classList.remove('active');
   if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.classList.remove('active');
   appState.activeGalleryTab = categoryKey;
 
@@ -4074,6 +4196,7 @@ function initEventListeners() {
     DOM.btnCatalogNotecards.addEventListener('click', () => switchMainCatalog('notecards'));
   }
   if (DOM.btnCatalogEnvelopes) DOM.btnCatalogEnvelopes.addEventListener('click', () => switchMainCatalog('envelopes'));
+  if (DOM.btnCatalogHardbound) DOM.btnCatalogHardbound.addEventListener('click', () => switchMainCatalog('hardbound'));
 
   // Mobile Navigation Drawer Toggle and Links
   if (DOM.btnMobileMenuToggle) {
@@ -4112,6 +4235,7 @@ function initEventListeners() {
     });
   }
   if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.addEventListener('click', () => { switchMainCatalog('envelopes'); toggleMobileMenu(false); });
+  if (DOM.btnMobileCatalogHardbound) DOM.btnMobileCatalogHardbound.addEventListener('click', () => { switchMainCatalog('hardbound'); toggleMobileMenu(false); });
   if (DOM.btnMobileCustomOrder) {
     DOM.btnMobileCustomOrder.addEventListener('click', () => {
       switchToCustomView();

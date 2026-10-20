@@ -1946,13 +1946,15 @@ const NOTECARD_SLIDER_TITLES = {
   NCP_CM_15: 'Gingerbread',
   NCP_CM_16: 'Yuletide',
   NCP_CM_17: 'Spruce',
-  ...Object.fromEntries(Array.from({length:10}, (_,i) => [`NCP_CC_${String(i).padStart(2,'0')}`, DESIGN_TITLES[`CC_${String(i).padStart(2,'0')}`]]))
+  ...Object.fromEntries(Array.from({length:10}, (_,i) => [`NCP_CC_${String(i).padStart(2,'0')}`, DESIGN_TITLES[`CC_${String(i).padStart(2,'0')}`]])),
+  ...Object.fromEntries(Array.from({length:10}, (_,i) => [`NCH_CC_${String(i).padStart(2,'0')}`, DESIGN_TITLES[`CC_${String(i).padStart(2,'0')}`]]))
 };
 const NOTECARD_SLIDER_GROUPS = [
   {title:'Bloomstead', category:'2x3.5', codes:Array.from({length:10},(_,i)=>`NCP_BLOOM_${String(i+1).padStart(2,'0')}`)},
   {title:'Minimalist Christmas Designs', category:'2x3.5', codes:Array.from({length:17},(_,i)=>`NCP_CM_${String(i+1).padStart(2,'0')}`)},
   {title:'Christmas Designs', category:'2x3.5', codes:Array.from({length:10},(_,i)=>`NCP_CC_${String(i).padStart(2,'0')}`)},
-  {title:'Bloomstead', category:'4x3', codes:Array.from({length:10},(_,i)=>`NCL_BLOOM_${String(i+1).padStart(2,'0')}`)}
+  {title:'Bloomstead', category:'4x3', codes:Array.from({length:10},(_,i)=>`NCL_BLOOM_${String(i+1).padStart(2,'0')}`)},
+  {title:'Christmas Designs', category:'4x3', codes:Array.from({length:10},(_,i)=>`NCH_CC_${String(i).padStart(2,'0')}`)}
 ];
 function renderNotecardSliderGallery(categoryKey) {
   if (!DOM.productGalleryGrid) return;

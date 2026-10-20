@@ -1909,9 +1909,121 @@ function renderHardboundGallery() {
   });
 }
 
+// Notecard group sliders. Existing Bloomstead codes, prices and personalization are preserved.
+const NOTECARD_SLIDER_TITLES = {
+  NCP_CM_01: 'Snowy',
+  NCP_CM_02: 'Rudolph',
+  NCP_CM_03: 'Santa',
+  NCP_CM_04: 'Jolly',
+  NCP_CM_05: 'Evergreen',
+  NCP_CM_06: 'Tartan',
+  NCP_CM_07: 'Presents',
+  NCP_CM_08: 'Twinkle',
+  NCP_CM_09: 'Cheer',
+  NCP_CM_10: 'Golden',
+  NCP_CM_11: 'Noel',
+  NCP_CM_12: 'Whimsy',
+  NCP_CM_13: 'Cuddles',
+  NCP_CM_14: 'Frosty',
+  NCP_CM_15: 'Gingerbread',
+  NCP_CM_16: 'Yuletide',
+  NCP_CM_17: 'Spruce',
+  ...Object.fromEntries(Array.from({length:10}, (_,i) => [`NCP_CC_${String(i).padStart(2,'0')}`, DESIGN_TITLES[`CC_${String(i).padStart(2,'0')}`]]))
+};
+const NOTECARD_SLIDER_GROUPS = [
+  {title:'Bloomstead', category:'2x3.5', codes:Array.from({length:10},(_,i)=>`NCP_BLOOM_${String(i+1).padStart(2,'0')}`)},
+  {title:'Minimalist Christmas Designs', category:'2x3.5', codes:Array.from({length:17},(_,i)=>`NCP_CM_${String(i+1).padStart(2,'0')}`)},
+  {title:'Christmas Designs', category:'2x3.5', codes:Array.from({length:10},(_,i)=>`NCP_CC_${String(i).padStart(2,'0')}`)},
+  {title:'Bloomstead', category:'4x3', codes:Array.from({length:10},(_,i)=>`NCL_BLOOM_${String(i+1).padStart(2,'0')}`)}
+];
+function renderNotecardSliderGallery(categoryKey) {
+  if (!DOM.productGalleryGrid) return;
+  const groups = NOTECARD_SLIDER_GROUPS.filter(group => group.category === categoryKey);
+  DOM.productGalleryGrid.innerHTML = '';
+  DOM.productGalleryGrid.classList.add('wme-gallery');
+  const pricePerPack = categoryKey === '2x3.5' ? 89 : 129;
+  const sizeName = categoryKey === '2x3.5' ? '2 × 3.5 in Notecards (Portrait)' : '4 × 3 in Notecards (Landscape)';
+  const maxChars = categoryKey === '2x3.5' ? 10 : 15;
+  groups.forEach((group, groupIndex) => {
+    const card = document.createElement('article');
+    card.className = 'product-card wme-card';
+    const getTitle = code => NOTECARD_SLIDER_TITLES[code] || DESIGN_TITLES[code] || code;
+    card.innerHTML = `
+      <div class="wme-heading"><h3>${group.title}</h3><span>${group.codes.length} designs</span></div>
+      <div class="wme-preview">
+        <button type="button" class="wme-arrow wme-prev" aria-label="Previous design">‹</button>
+        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp" alt="${getTitle(group.codes[0])}" loading="lazy"></button>
+        <button type="button" class="wme-arrow wme-next" aria-label="Next design">›</button>
+      </div>
+      <div class="wme-selected" aria-live="polite"></div>
+      <div class="wme-thumbnails" aria-label="Choose notecard design"></div>
+      <div class="wme-form">
+        <div class="wme-section-label">${sizeName} · 220 GSM · 24 pcs per pack</div>
+        <div class="wme-section-label">Free personalization</div>
+        <label class="wme-field">Preferred name / text <input class="notecard-slider-name" maxlength="${maxChars}" placeholder="${categoryKey === '2x3.5' ? 'e.g. Maria C.' : 'e.g. Maria Clara'}" autocomplete="off" required></label>
+        <p class="wme-error" role="alert" hidden></p>
+      </div>
+      <div class="product-card-footer">
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${pricePerPack.toFixed(2)}</div><small>Per pack of 24 notecards</small></div>
+          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease packs">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Number of packs"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase packs">+</button></div>
+        </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
+      </div>`;
+    let index = 0;
+    const image = card.querySelector('.wme-image');
+    const selected = card.querySelector('.wme-selected');
+    const thumbs = card.querySelector('.wme-thumbnails');
+    const qty = card.querySelector('.wme-qty');
+    const error = card.querySelector('.wme-error');
+    function selectDesign(next) {
+      index = (next + group.codes.length) % group.codes.length;
+      const code = group.codes[index];
+      image.src = `images/${code}.webp`;
+      image.alt = getTitle(code);
+      selected.textContent = `${getTitle(code)} — ${code} · Design ${index + 1} of ${group.codes.length}`;
+      [...thumbs.children].forEach((button, i) => {
+        button.classList.toggle('active', i === index);
+        button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+    }
+    group.codes.forEach((code,i) => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'wme-thumb';
+      button.title = `${getTitle(code)} (${code})`;
+      button.setAttribute('aria-label', `Select ${getTitle(code)}`);
+      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = ''; thumb.loading = 'lazy';
+      button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i)); thumbs.appendChild(button);
+    });
+    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1));
+    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1));
+    card.querySelector('.wme-image-button').addEventListener('click', () => {
+      const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, getTitle(code), code);
+    });
+    const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
+    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); });
+    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99,clampQty()+1); });
+    qty.addEventListener('change', clampQty);
+    card.querySelector('.wme-add').addEventListener('click', () => {
+      const input = card.querySelector('.notecard-slider-name');
+      const text = input.value.trim();
+      if (!text) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
+      error.hidden = true;
+      const code = group.codes[index];
+      const product = {
+        code, name:getTitle(code), category:categoryKey, catalogType:'notecards',
+        sizeName, dimensions:categoryKey === '2x3.5' ? '2 × 3.5 in' : '4 × 3 in',
+        cardCount:24, price:pricePerPack, freePersonalization:true
+      };
+      addGalleryProductToCart(product, clampQty(), true, text);
+    });
+    selectDesign(0);
+    DOM.productGalleryGrid.appendChild(card);
+  });
+}
+
 function renderProductGallery(categoryKey) {
   if (categoryKey === 'wedding-envelopes') { renderWeddingEnvelopeGallery(); return; }
   if (categoryKey === 'hardbound') { renderHardboundGallery(); return; }
+  if (categoryKey === '2x3.5' || categoryKey === '4x3') { renderNotecardSliderGallery(categoryKey); return; }
   if (!DOM.productGalleryGrid) return;
   DOM.productGalleryGrid.innerHTML = '';
   DOM.productGalleryGrid.classList.remove('wme-gallery');

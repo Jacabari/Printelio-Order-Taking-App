@@ -3660,3 +3660,30 @@ select.form-control {
 .wme-field input:focus{outline:2px solid var(--brand-purple);outline-offset:1px}
 .wme-error{color:#b42318;font-size:.82rem}.wme-card .product-card-footer{margin-top:auto}
 @media(max-width:767px){.product-gallery-grid.wme-gallery{grid-template-columns:minmax(0,1fr);gap:18px}.wme-preview{min-height:200px}.wme-image{height:250px}.wme-thumb{width:51px;height:60px}}
+
+
+/* Slider-only visual alignment — Notecards, Money Envelopes and Hardbound Notepads.
+   No generic product cards or non-slider catalog layouts are changed. */
+.product-gallery-grid.wme-gallery { align-items:stretch; }
+.product-gallery-grid.wme-gallery > .wme-card { height:100%; display:flex; flex-direction:column; }
+.product-gallery-grid.wme-gallery .wme-heading { min-height:68px; align-items:flex-start; }
+.product-gallery-grid.wme-gallery .wme-heading h3 { line-height:1.35; }
+.product-gallery-grid.wme-gallery .wme-preview { height:300px; min-height:300px; flex:0 0 300px; }
+.product-gallery-grid.wme-gallery .wme-image { height:280px; max-width:100%; object-fit:contain; }
+.product-gallery-grid.wme-gallery .wme-selected { min-height:54px; display:flex; align-items:center; justify-content:center; line-height:1.4; }
+.product-gallery-grid.wme-gallery .wme-thumbnails {
+  justify-content:flex-start; flex-wrap:nowrap; align-items:center;
+  width:100%; min-width:0; max-width:100%; overflow-x:auto; overflow-y:hidden;
+  padding:8px 14px 16px; scroll-behavior:smooth; overscroll-behavior-x:contain;
+  scrollbar-width:thin; scrollbar-color:#c6c4ca transparent;
+}
+.product-gallery-grid.wme-gallery .wme-thumb { flex:0 0 56px; width:56px; height:65px; }
+.product-gallery-grid.wme-gallery .wme-form { flex:1 0 auto; }
+.product-gallery-grid.wme-gallery .product-card-footer { margin-top:auto; }
+@media (max-width:767px) {
+  .product-gallery-grid.wme-gallery > .wme-card { height:auto; }
+  .product-gallery-grid.wme-gallery .wme-heading { min-height:0; }
+  .product-gallery-grid.wme-gallery .wme-preview { height:260px; min-height:260px; flex-basis:260px; }
+  .product-gallery-grid.wme-gallery .wme-image { height:240px; }
+  .product-gallery-grid.wme-gallery .wme-thumb { flex-basis:51px; width:51px; height:60px; }
+}

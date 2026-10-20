@@ -1732,7 +1732,7 @@ function renderWeddingEnvelopeGallery() {
     const error = card.querySelector('.wme-error');
     const selectedPaper = () => card.querySelector(`input[name="paper_${group.id}"]:checked`).value;
     const unitPrice = () => selectedPaper() === 'premium' ? 79 : 59;
-    function selectDesign(next) {
+    function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
       const code = group.codes[index];
       image.src = `images/${code}.webp`;
@@ -1742,6 +1742,15 @@ function renderWeddingEnvelopeGallery() {
         button.classList.toggle('active', i === index);
         button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
       });
+      // Keep the active thumbnail visible without scrolling the entire page.
+      if (revealThumbnail && thumbs.children[index]) {
+        const active = thumbs.children[index];
+        const left = active.getBoundingClientRect().left - thumbs.getBoundingClientRect().left + thumbs.scrollLeft;
+        const right = left + active.offsetWidth;
+        if (left < thumbs.scrollLeft) thumbs.scrollLeft = left;
+        else if (right > thumbs.scrollLeft + thumbs.clientWidth)
+          thumbs.scrollLeft = right - thumbs.clientWidth;
+      }
     }
     group.codes.forEach((code,i) => {
       const button = document.createElement('button');
@@ -1750,11 +1759,11 @@ function renderWeddingEnvelopeGallery() {
       button.setAttribute('aria-label', `Select ${WEDDING_ENVELOPE_TITLES[code]}`);
       const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = '';
       thumb.loading = 'lazy'; button.appendChild(thumb);
-      button.addEventListener('click', () => selectDesign(i));
+      button.addEventListener('click', () => selectDesign(i, true));
       thumbs.appendChild(button);
     });
-    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1));
-    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1));
+    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1, true));
+    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1, true));
     card.querySelector('.wme-image-button').addEventListener('click', () => {
       const code = group.codes[index];
       openImageLightbox(`images/${code}.webp`, WEDDING_ENVELOPE_TITLES[code], code);
@@ -1853,7 +1862,7 @@ function renderHardboundGallery() {
     const error = card.querySelector('.wme-error');
     const selectedSize = () => card.querySelector(`input[name="hardbound_size_${groupIndex}"]:checked`).value;
     const unitPrice = () => selectedSize() === 'A6' ? 159 : 259;
-    function selectDesign(next) {
+    function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
       const code = group.codes[index];
       image.src = `images/${code}.webp`;
@@ -1863,6 +1872,15 @@ function renderHardboundGallery() {
         button.classList.toggle('active', i === index);
         button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
       });
+      // Keep the active thumbnail visible without scrolling the entire page.
+      if (revealThumbnail && thumbs.children[index]) {
+        const active = thumbs.children[index];
+        const left = active.getBoundingClientRect().left - thumbs.getBoundingClientRect().left + thumbs.scrollLeft;
+        const right = left + active.offsetWidth;
+        if (left < thumbs.scrollLeft) thumbs.scrollLeft = left;
+        else if (right > thumbs.scrollLeft + thumbs.clientWidth)
+          thumbs.scrollLeft = right - thumbs.clientWidth;
+      }
     }
     group.codes.forEach((code,i) => {
       const button = document.createElement('button');
@@ -1870,10 +1888,10 @@ function renderHardboundGallery() {
       button.title = `${HARDBOUND_TITLES[code]} (${code})`;
       button.setAttribute('aria-label', `Select ${HARDBOUND_TITLES[code]}`);
       const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = ''; thumb.loading = 'lazy';
-      button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i)); thumbs.appendChild(button);
+      button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i, true)); thumbs.appendChild(button);
     });
-    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1));
-    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1));
+    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1, true));
+    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1, true));
     card.querySelector('.wme-image-button').addEventListener('click', () => {
       const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, HARDBOUND_TITLES[code], code);
     });
@@ -1974,7 +1992,7 @@ function renderNotecardSliderGallery(categoryKey) {
     const thumbs = card.querySelector('.wme-thumbnails');
     const qty = card.querySelector('.wme-qty');
     const error = card.querySelector('.wme-error');
-    function selectDesign(next) {
+    function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
       const code = group.codes[index];
       image.src = `images/${code}.webp`;
@@ -1984,6 +2002,15 @@ function renderNotecardSliderGallery(categoryKey) {
         button.classList.toggle('active', i === index);
         button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
       });
+      // Keep the active thumbnail visible without scrolling the entire page.
+      if (revealThumbnail && thumbs.children[index]) {
+        const active = thumbs.children[index];
+        const left = active.getBoundingClientRect().left - thumbs.getBoundingClientRect().left + thumbs.scrollLeft;
+        const right = left + active.offsetWidth;
+        if (left < thumbs.scrollLeft) thumbs.scrollLeft = left;
+        else if (right > thumbs.scrollLeft + thumbs.clientWidth)
+          thumbs.scrollLeft = right - thumbs.clientWidth;
+      }
     }
     group.codes.forEach((code,i) => {
       const button = document.createElement('button');
@@ -1991,10 +2018,10 @@ function renderNotecardSliderGallery(categoryKey) {
       button.title = `${getTitle(code)} (${code})`;
       button.setAttribute('aria-label', `Select ${getTitle(code)}`);
       const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = ''; thumb.loading = 'lazy';
-      button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i)); thumbs.appendChild(button);
+      button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i, true)); thumbs.appendChild(button);
     });
-    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1));
-    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1));
+    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1, true));
+    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1, true));
     card.querySelector('.wme-image-button').addEventListener('click', () => {
       const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, getTitle(code), code);
     });

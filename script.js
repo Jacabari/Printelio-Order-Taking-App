@@ -1846,6 +1846,7 @@ function renderHardboundGallery() {
         </div>
         <div class="wme-section-label">Free personalization</div>
         <label class="wme-field">Preferred name / cover text <input class="hardbound-name" maxlength="100" placeholder="Enter name or text for cover" autocomplete="off" required></label>
+        <label class="wme-field"><span><input type="checkbox" class="hardbound-packaging"> Add gift packaging (+₱20.00 per notepad)</span><small>Includes corrugated box, ribbon, and onion paper</small></label>
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
@@ -1861,7 +1862,9 @@ function renderHardboundGallery() {
     const qty = card.querySelector('.wme-qty');
     const error = card.querySelector('.wme-error');
     const selectedSize = () => card.querySelector(`input[name="hardbound_size_${groupIndex}"]:checked`).value;
-    const unitPrice = () => selectedSize() === 'A6' ? 159 : 259;
+    const packaging = card.querySelector('.hardbound-packaging');
+    const unitPrice = () => (selectedSize() === 'A6' ? 159 : 259) + (packaging.checked ? 20 : 0);
+    const updatePrice = () => { price.textContent = `₱${unitPrice().toFixed(2)}`; };
     function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
       const code = group.codes[index];
@@ -1895,9 +1898,8 @@ function renderHardboundGallery() {
     card.querySelector('.wme-image-button').addEventListener('click', () => {
       const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, HARDBOUND_TITLES[code], code);
     });
-    card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', () => {
-      price.textContent = `₱${unitPrice().toFixed(2)}`;
-    }));
+    card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', updatePrice));
+    packaging.addEventListener('change', updatePrice);
     const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
     card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1, clampQty()-1); });
     card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99, clampQty()+1); });
@@ -1908,7 +1910,7 @@ function renderHardboundGallery() {
       if (!names) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
       error.hidden = true;
       const code = group.codes[index], size = selectedSize(), count = clampQty();
-      const customText = `Cover personalization: ${names}`;
+      const customText = `Cover personalization: ${names}${packaging.checked ? ' | Gift packaging: Corrugated Box, Ribbon, and Onion Paper (+₱20.00 per notepad)' : ''}`;
       const existing = appState.cart.find(item => item.categoryKey === 'hardbound' && item.designCode === code && item.sizeId === `hardbound-${size.toLowerCase()}` && item.customText === customText);
       if (existing) { existing.quantity += count; existing.subtotal = existing.quantity * existing.unitPrice; }
       else appState.cart.push({

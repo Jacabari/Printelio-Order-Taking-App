@@ -1846,7 +1846,7 @@ function renderHardboundGallery() {
         </div>
         <div class="wme-section-label">Free personalization</div>
         <label class="wme-field">Preferred name / cover text <input class="hardbound-name" maxlength="100" placeholder="Enter name or text for cover" autocomplete="off" required></label>
-        <label class="wme-field"><span><input type="checkbox" class="hardbound-packaging"> Add gift packaging (+₱20.00 per notepad)</span><small>Includes corrugated box, ribbon, and onion paper</small></label>
+        <label class="wme-field"><span style="display:inline-flex;align-items:center;gap:8px"><input type="checkbox" class="hardbound-packaging" style="width:16px;min-width:16px;height:16px;padding:0;margin:0;flex:0 0 16px;accent-color:#111">Add gift packaging (+₱20.00 per notepad)</span><small>Includes corrugated box, ribbon, and onion paper</small></label>
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">

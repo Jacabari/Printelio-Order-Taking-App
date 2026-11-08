@@ -44,7 +44,7 @@ const PRODUCTS_DATA = {
         name: 'Square Notepad (3 × 3 in) • 30 sheets',
         shortName: 'Square Notepad',
         dimensions: '3 × 3 in',
-        prices: { '30': 29 },
+        prices: { '30': 39 },
         designs: [
           'NP_SQ_CAT01',
           'NP_SQ_CAT02',
@@ -70,7 +70,7 @@ const PRODUCTS_DATA = {
         name: 'A6 Notepad (4 × 5.8 in) • 30 sheets',
         shortName: 'A6 Notepad',
         dimensions: '4 × 5.8 in',
-        prices: { '30': 49 },
+        prices: { '30': 59 },
         designs: [
           'NP_A6_Cinnamoroll',
           'NP_A6_Flower',
@@ -88,7 +88,7 @@ const PRODUCTS_DATA = {
         name: 'A5 Notepad (5.8 × 8.3 in) • 30 sheets',
         shortName: 'A5 Notepad',
         dimensions: '5.8 × 8.3 in',
-        prices: { '30': 99 },
+        prices: { '30': 109 },
         designs: A5_NOTEPAD_DESIGNS
       }
     ]
@@ -139,7 +139,22 @@ const PRODUCTS_DATA = {
   }
 };
 
-const CUSTOMIZATION_FEE = 10; // ₱10.00 per item
+const CUSTOMIZATION_FEE = 0; // Personalization is now FREE on every product (kept at 0 for legacy code paths)
+
+// ---------------------------------------------------------------------------
+// Christmas promo: FREE 2×3.5 notecards. Set FREE_TAGS_PROMO_ON to false to switch it off.
+// ---------------------------------------------------------------------------
+const FREE_TAGS_PROMO_ON = true;
+const FREE_TAG_TIERS = [   // highest tier first; based on the product total (shipping not included)
+  { minTotal: 499, tags: 24 },
+  { minTotal: 199, tags: 12 }
+];
+const PROMO_BANNER_TEXT = '🎁 FREE 2×3.5 notecards on orders ₱199+ · Available only until December 12';
+const FREE_ITEM_NAME = '2×3.5 notecards';
+
+// Money envelopes are sold per piece, minimum 5 pieces per order (premium and standard can be mixed).
+const ENVELOPE_PRICES = { premium: 15, standard: 12 };
+const ENVELOPE_MIN_PCS = 5;
 const CHRISTMAS_COLLECTION_PRICE = 299.00; // ₱299.00 per complete Christmas Collection set
 
 // ============================================================================
@@ -155,20 +170,20 @@ const CATEGORY_SPECS = {
   },
   '3x3': {
     title: 'Square Notepad (3 × 3 in)',
-    specText: '3 × 3 inches • 30 Sheets • ₱29.00 / pad',
-    price: 29.00,
+    specText: '3 × 3 inches • 30 Sheets • FREE personalization • ₱39.00 / pad',
+    price: 39.00,
     catalog: 'notepads'
   },
   'A6': {
     title: 'A6 Notepad (4 × 5.8 in)',
-    specText: '4 × 5.8 inches • 30 Sheets • ₱49.00 / pad',
-    price: 49.00,
+    specText: '4 × 5.8 inches • 30 Sheets • FREE personalization • ₱59.00 / pad',
+    price: 59.00,
     catalog: 'notepads'
   },
   'A5': {
     title: 'A5 Notepad (5.8 × 8.3 in)',
-    specText: '5.8 × 8.3 inches • 30 Sheets • ₱99.00 / pad',
-    price: 99.00,
+    specText: '5.8 × 8.3 inches • 30 Sheets • FREE personalization • ₱109.00 / pad',
+    price: 109.00,
     catalog: 'notepads'
   },
   '2x3.5': {
@@ -270,7 +285,7 @@ const DESIGN_TITLES = {
 };
 
 const PRODUCT_CATALOG = [
-  // 3x3 Notepads (Square 3 × 3 in, 30 sheets, ₱29.00)
+  // 3x3 Notepads (Square 3 × 3 in, 30 sheets, ₱39.00, free personalization)
   {
     code: 'NP_SQ_CAT01',
     name: 'Sunny Sitting Calico',
@@ -278,7 +293,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Cat Series',
     motif: 'Playful Kitten with Whiskers'
   },
@@ -289,7 +304,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Cat Series',
     motif: 'Sleepy Kitty Head'
   },
@@ -300,7 +315,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Cat Series',
     motif: 'Cat in Warm Cup'
   },
@@ -311,7 +326,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Cat Series',
     motif: 'Calico Cat Stretching'
   },
@@ -322,7 +337,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Cat Series',
     motif: 'Curled Up Orange Tabby'
   },
@@ -333,7 +348,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Cat Series',
     motif: 'Twin Kitties Silhouette'
   },
@@ -344,7 +359,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Minimal Memo',
     motif: 'Clean Lined Memo Box'
   },
@@ -355,7 +370,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Grid Note',
     motif: 'Soft Blue Grid Pattern'
   },
@@ -366,7 +381,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Lined Note',
     motif: 'Blush Pink Lined Accent'
   },
@@ -377,7 +392,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Grid Note',
     motif: 'Soft Lavender Grid'
   },
@@ -388,7 +403,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Botanical',
     motif: 'Hand-drawn Wildflowers'
   },
@@ -399,7 +414,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Checklist',
     motif: 'Square Checkboxes & Lines'
   },
@@ -410,7 +425,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Essential',
     motif: '5mm Engineering Grid'
   },
@@ -421,7 +436,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Dot Grid',
     motif: 'Subtle Dot Matrix'
   },
@@ -432,7 +447,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Retro Style',
     motif: 'Vintage Serif Heading'
   },
@@ -443,7 +458,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Lined Note',
     motif: 'Featherweight Lines'
   },
@@ -454,12 +469,12 @@ const PRODUCT_CATALOG = [
     sizeName: 'Square Notepad (3 × 3 in)',
     dimensions: '3 × 3 in',
     sheets: 30,
-    price: 29.00,
+    price: 39.00,
     tag: 'Aesthetic',
     motif: 'Rising Sun Minimal Art'
   },
 
-  // A6 Notepads (4 × 5.8 in, 30 sheets, ₱49.00)
+  // A6 Notepads (4 × 5.8 in, 30 sheets, ₱59.00, free personalization)
   {
     code: 'NP_A6_Cinnamoroll',
     name: 'Cinnamoroll',
@@ -467,7 +482,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Character',
     motif: 'Fluffy Sky & Puppy Ears'
   },
@@ -478,7 +493,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Floral',
     motif: 'Elegantly Painted Blossom'
   },
@@ -489,7 +504,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Character',
     motif: 'Classic Red Bow & Whiskers'
   },
@@ -500,7 +515,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Character',
     motif: 'Jester Skull & Purple Accents'
   },
@@ -511,7 +526,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'To-Do List',
     motif: 'Top 3 Tasks + Bullet Checklist'
   },
@@ -522,7 +537,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Fruit Motif',
     motif: 'Watercolor Lemon Sprig'
   },
@@ -533,7 +548,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Vintage',
     motif: 'Parchment Scroll & Antique Script'
   },
@@ -544,7 +559,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Vintage',
     motif: 'Aged Cartography & Explorer Motif'
   },
@@ -555,12 +570,12 @@ const PRODUCT_CATALOG = [
     sizeName: 'A6 Notepad (4 × 5.8 in)',
     dimensions: '4 × 5.8 in',
     sheets: 30,
-    price: 49.00,
+    price: 59.00,
     tag: 'Botanical',
     motif: 'Vintage Newspaper & Botanical Flora'
   },
 
-  // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱99.00)
+  // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱109.00, free personalization)
   {
     code: 'Blue DP_A5',
     name: 'Cloud Nine Daily',
@@ -568,7 +583,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Daily Planner',
     motif: 'Time Blocks & Priority Columns'
   },
@@ -579,7 +594,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Daily Planner',
     motif: 'Schedule, Water Tracker & Notes'
   },
@@ -590,7 +605,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Daily Planner',
     motif: 'Daily Goals & Affirmations'
   },
@@ -601,7 +616,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: '7-Day Spread with Habit Loop'
   },
@@ -612,7 +627,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: 'Time Matrix Mon-Sun'
   },
@@ -623,7 +638,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: 'Weekly Wins & Next Priorities'
   },
@@ -634,7 +649,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: 'Ultra Clean Grid Layout'
   },
@@ -645,7 +660,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: 'Eisenhower Urgent/Important Quadrants'
   },
@@ -656,7 +671,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: 'Expanded Checklists for 7 Days'
   },
@@ -667,7 +682,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: 'Bullet Journal Dot Columns'
   },
@@ -678,7 +693,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Weekly Planner',
     motif: 'Sprint Goals & Project Tracking'
   },
@@ -689,7 +704,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Vintage',
     motif: 'Parchment Scroll & Antique Script'
   },
@@ -700,7 +715,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Vintage',
     motif: 'Aged Cartography & Explorer Motif'
   },
@@ -711,7 +726,7 @@ const PRODUCT_CATALOG = [
     sizeName: 'A5 Notepad (5.8 × 8.3 in)',
     dimensions: '5.8 × 8.3 in',
     sheets: 30,
-    price: 99.00,
+    price: 109.00,
     tag: 'Botanical',
     motif: 'Vintage Newspaper & Botanical Flora'
   },
@@ -1690,6 +1705,27 @@ const WEDDING_ENVELOPE_TITLES = {
   CME_08:DESIGN_TITLES.CC_08, CME_09:DESIGN_TITLES.CC_09
 };
 
+// After an item is added, clear the name box so the same design can be added again for someone else.
+const ADD_ANOTHER_LABEL = '+ Add another with a different name';
+function readyForAnotherName(button, nameInput) {
+  if (nameInput) {
+    nameInput.value = '';
+    nameInput.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  if (button) button.textContent = ADD_ANOTHER_LABEL;
+}
+
+// Live character counter for slider name boxes (".wme-counted" input + ".wme-char-count" in the same form).
+document.addEventListener('input', (e) => {
+  const el = e.target;
+  if (!el || !el.classList || !el.classList.contains('wme-counted')) return;
+  const form = el.closest('.wme-form');
+  const counter = form ? form.querySelector('.wme-char-count') : null;
+  if (!counter) return;
+  counter.textContent = `${el.value.length}/${el.maxLength}`;
+  counter.classList.toggle('at-limit', el.value.length >= el.maxLength);
+});
+
 function renderWeddingEnvelopeGallery() {
   if (!DOM.productGalleryGrid) return;
   DOM.productGalleryGrid.innerHTML = '';
@@ -1707,20 +1743,19 @@ function renderWeddingEnvelopeGallery() {
       <div class="wme-selected" aria-live="polite"></div>
       <div class="wme-thumbnails" aria-label="Choose envelope design"></div>
       <div class="wme-form">
-        <div class="wme-section-label">Paper quality</div>
+        <div class="wme-section-label">Paper</div>
         <div class="wme-paper-options">
-          <label><input type="radio" name="paper_${group.id}" value="premium" checked> Premium · 108 GSM · ₱79 / 5 pcs</label>
-          <label><input type="radio" name="paper_${group.id}" value="standard"> Standard · 80 GSM · ₱59 / 5 pcs</label>
+          <label><input type="radio" name="paper_${group.id}" value="premium" checked> Premium 108 gsm · ₱${ENVELOPE_PRICES.premium}</label>
+          <label><input type="radio" name="paper_${group.id}" value="standard"> Standard 80 gsm · ₱${ENVELOPE_PRICES.standard}</label>
         </div>
-        <div class="wme-section-label">Free personalization</div>
-        ${group.id === 'monogram' ? '<label class="wme-field">Preferred 2-letter monogram <input class="wme-monogram" maxlength="2" placeholder="e.g. JM" autocomplete="off" required></label>' : ''}
-        <label class="wme-field">${group.id === 'christmas' ? 'Preferred names (1 or 2 names)' : 'Preferred names'} <input class="wme-names" maxlength="100" placeholder="${group.id === 'christmas' ? 'e.g. Julia or Julia & Marco' : 'e.g. Julia & Marco'}" autocomplete="off" required></label>
+        ${group.id === 'monogram' ? '<label class="wme-field">Monogram (2 letters, free) <input class="wme-monogram" maxlength="2" placeholder="e.g. JM" autocomplete="off" required></label>' : ''}
+        <label class="wme-field">${group.id === 'christmas' ? 'Names (free, 1 or 2 names)' : 'Names (free)'} <input class="wme-names" maxlength="100" placeholder="${group.id === 'christmas' ? 'e.g. Julia or Julia & Marco' : 'e.g. Julia & Marco'}" autocomplete="off" required></label>
         ${group.id === 'christmas' ? '' : '<label class="wme-field">Wedding date <input class="wme-date" maxlength="80" placeholder="e.g. December 12, 2026" autocomplete="off" required></label>'}
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
-        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱79.00</div><small>Per pack of 5 envelopes</small></div>
-          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease packs">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Number of packs"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase packs">+</button></div>
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${ENVELOPE_PRICES.premium.toFixed(2)}</div><small>per envelope</small></div>
+          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease pieces">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="200" value="${ENVELOPE_MIN_PCS}" aria-label="Number of envelopes"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase pieces">+</button></div>
         </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
       </div>`;
     let index = 0;
@@ -1731,13 +1766,14 @@ function renderWeddingEnvelopeGallery() {
     const qty = card.querySelector('.wme-qty');
     const error = card.querySelector('.wme-error');
     const selectedPaper = () => card.querySelector(`input[name="paper_${group.id}"]:checked`).value;
-    const unitPrice = () => selectedPaper() === 'premium' ? 79 : 59;
+    const unitPrice = () => ENVELOPE_PRICES[selectedPaper()];
     function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
+      const addButton = card.querySelector('.wme-add'); if (addButton) addButton.textContent = '+ Add to Cart';
       const code = group.codes[index];
       image.src = `images/${code}.webp`;
       image.alt = WEDDING_ENVELOPE_TITLES[code];
-      title.textContent = `${WEDDING_ENVELOPE_TITLES[code]} — ${code} · Design ${index + 1} of ${group.codes.length}`;
+      title.textContent = `${WEDDING_ENVELOPE_TITLES[code]} (${code}) · ${index + 1} of ${group.codes.length}`;
       [...thumbs.children].forEach((button, i) => {
         button.classList.toggle('active', i === index);
         button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
@@ -1769,11 +1805,12 @@ function renderWeddingEnvelopeGallery() {
       openImageLightbox(`images/${code}.webp`, WEDDING_ENVELOPE_TITLES[code], code);
     });
     card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', () => { price.textContent = `₱${unitPrice().toFixed(2)}`; }));
-    const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
+    const clampQty = () => { qty.value = String(Math.min(200, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
     card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); });
-    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99,clampQty()+1); });
+    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(200,clampQty()+1); });
     qty.addEventListener('change',clampQty);
-    card.querySelector('.wme-add').addEventListener('click', () => {
+    const addBtn = card.querySelector('.wme-add');
+    addBtn.addEventListener('click', () => {
       const monogramInput = card.querySelector('.wme-monogram');
       const monogram = monogramInput ? monogramInput.value.trim().toUpperCase() : '';
       const names = card.querySelector('.wme-names').value.trim();
@@ -1796,15 +1833,16 @@ function renderWeddingEnvelopeGallery() {
       else appState.cart.push({
         id: 'wme_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), isCustomMade:false,
         categoryKey:'envelopes', categoryName:'Money Envelopes', sizeId:group.id === 'christmas' ? 'christmas-envelopes' : 'wedding-envelopes',
-        sizeName:`${paper === 'premium' ? 'Premium' : 'Standard'} · ${paper === 'premium' ? 108 : 80} GSM · 5 pcs / pack`,
+        sizeName:`Money Envelope · ${paper === 'premium' ? 'Premium 108' : 'Standard 80'} GSM`,
         shortName:WEDDING_ENVELOPE_TITLES[code], productTitle:WEDDING_ENVELOPE_TITLES[code],
-        dimensions:'5 money envelopes per pack', hasSheets:false, sheetCount:null, cardCount:null,
+        dimensions:'Sold per piece', hasSheets:false, sheetCount:null, cardCount:null,
         freePersonalization:true, designCode:code, imagePath:`images/${code}.webp`,
-        isCustomized:true, customText, monogram, preferredNames:names, weddingDate:date,
+        isCustomized:true, customText, nameLabel:[monogram, names, date].filter(Boolean).join(' · '), monogram, preferredNames:names, weddingDate:date,
         paperQuality:paper, isTba:false, unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
       });
       renderCart(); showCheckoutSection(false);
-      showToast(`Added ${count} pack(s) of ${WEDDING_ENVELOPE_TITLES[code]} (${code}) to order.`);
+      showToast(`Added ${count} pc(s) of ${WEDDING_ENVELOPE_TITLES[code]} (${code}) for "${names}" to order.`);
+      readyForAnotherName(addBtn, card.querySelector('.wme-names'));
     });
     selectDesign(0);
     DOM.productGalleryGrid.appendChild(card);
@@ -1839,18 +1877,16 @@ function renderHardboundGallery() {
       <div class="wme-selected" aria-live="polite"></div>
       <div class="wme-thumbnails" aria-label="Choose hardbound notepad design"></div>
       <div class="wme-form">
-        <div class="wme-section-label">Notepad size · 70 sheets</div>
+        <div class="wme-section-label">Size</div>
         <div class="wme-paper-options">
-          <label><input type="radio" name="hardbound_size_${groupIndex}" value="A6" checked> A6 · 70 sheets · ₱159.00</label>
-          <label><input type="radio" name="hardbound_size_${groupIndex}" value="A5"> A5 · 70 sheets · ₱259.00</label>
+          <label><input type="radio" name="hardbound_size_${groupIndex}" value="A6" checked> A6 · ₱159</label>
+          <label><input type="radio" name="hardbound_size_${groupIndex}" value="A5"> A5 · ₱259</label>
         </div>
-        <div class="wme-section-label">Free personalization</div>
-        <label class="wme-field">Preferred name / cover text <input class="hardbound-name" maxlength="100" placeholder="Enter name or text for cover" autocomplete="off" required></label>
-        <label class="wme-field"><span style="display:inline-flex;align-items:center;gap:8px"><input type="checkbox" class="hardbound-packaging" style="width:16px;min-width:16px;height:16px;padding:0;margin:0;flex:0 0 16px;accent-color:#111">Add gift packaging (+₱20.00 per notepad)</span><small>Includes corrugated box, ribbon, and onion paper</small></label>
+        <label class="wme-field">Name on cover (free) <input class="hardbound-name" maxlength="100" placeholder="Enter name or text for cover" autocomplete="off" required></label>
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
-        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱159.00</div><small>Per hardbound notepad · 70 sheets</small></div>
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱159.00</div><small>per notepad</small></div>
           <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease quantity">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Quantity"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase quantity">+</button></div>
         </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
       </div>`;
@@ -1862,15 +1898,15 @@ function renderHardboundGallery() {
     const qty = card.querySelector('.wme-qty');
     const error = card.querySelector('.wme-error');
     const selectedSize = () => card.querySelector(`input[name="hardbound_size_${groupIndex}"]:checked`).value;
-    const packaging = card.querySelector('.hardbound-packaging');
-    const unitPrice = () => (selectedSize() === 'A6' ? 159 : 259) + (packaging.checked ? 20 : 0);
+    const unitPrice = () => (selectedSize() === 'A6' ? 159 : 259);
     const updatePrice = () => { price.textContent = `₱${unitPrice().toFixed(2)}`; };
     function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
+      const addButton = card.querySelector('.wme-add'); if (addButton) addButton.textContent = '+ Add to Cart';
       const code = group.codes[index];
       image.src = `images/${code}.webp`;
       image.alt = HARDBOUND_TITLES[code];
-      selected.textContent = `${HARDBOUND_TITLES[code]} — ${code} · Design ${index + 1} of ${group.codes.length}`;
+      selected.textContent = `${HARDBOUND_TITLES[code]} (${code}) · ${index + 1} of ${group.codes.length}`;
       [...thumbs.children].forEach((button, i) => {
         button.classList.toggle('active', i === index);
         button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
@@ -1899,18 +1935,18 @@ function renderHardboundGallery() {
       const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, HARDBOUND_TITLES[code], code);
     });
     card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', updatePrice));
-    packaging.addEventListener('change', updatePrice);
     const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
     card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1, clampQty()-1); });
     card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99, clampQty()+1); });
     qty.addEventListener('change', clampQty);
-    card.querySelector('.wme-add').addEventListener('click', () => {
+    const addBtn = card.querySelector('.wme-add');
+    addBtn.addEventListener('click', () => {
       const input = card.querySelector('.hardbound-name');
       const names = input.value.trim();
       if (!names) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
       error.hidden = true;
       const code = group.codes[index], size = selectedSize(), count = clampQty();
-      const customText = `Cover personalization: ${names}${packaging.checked ? ' | Gift packaging: Corrugated Box, Ribbon, and Onion Paper (+₱20.00 per notepad)' : ''}`;
+      const customText = `Cover personalization: ${names}`;
       const existing = appState.cart.find(item => item.categoryKey === 'hardbound' && item.designCode === code && item.sizeId === `hardbound-${size.toLowerCase()}` && item.customText === customText);
       if (existing) { existing.quantity += count; existing.subtotal = existing.quantity * existing.unitPrice; }
       else appState.cart.push({
@@ -1919,11 +1955,12 @@ function renderHardboundGallery() {
         sizeName:`${size} Hardbound Notepad`, shortName:HARDBOUND_TITLES[code], productTitle:HARDBOUND_TITLES[code],
         dimensions:size === 'A6' ? 'A6' : 'A5', hasSheets:true, sheetCount:70, cardCount:null,
         freePersonalization:true, designCode:code, imagePath:`images/${code}.webp`,
-        isCustomized:true, customText, preferredNames:names, isTba:false,
+        isCustomized:true, customText, nameLabel:names, preferredNames:names, isTba:false,
         unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
       });
       renderCart(); showCheckoutSection(false);
-      showToast(`Added ${count} ${size} hardbound notepad(s) of ${HARDBOUND_TITLES[code]} (${code}) to order.`);
+      showToast(`Added ${count} ${size} hardbound notepad(s) of ${HARDBOUND_TITLES[code]} (${code}) for "${names}" to order.`);
+      readyForAnotherName(addBtn, input);
     });
     selectDesign(0); DOM.productGalleryGrid.appendChild(card);
   });
@@ -1980,13 +2017,12 @@ function renderNotecardSliderGallery(categoryKey) {
       <div class="wme-selected" aria-live="polite"></div>
       <div class="wme-thumbnails" aria-label="Choose notecard design"></div>
       <div class="wme-form">
-        <div class="wme-section-label">${sizeName} · 220 GSM · 24 pcs per pack</div>
-        <div class="wme-section-label">Free personalization</div>
-        <label class="wme-field">Preferred name / text <input class="notecard-slider-name" maxlength="${maxChars}" placeholder="${categoryKey === '2x3.5' ? 'e.g. Maria C.' : 'e.g. Maria Clara'}" autocomplete="off" required></label>
+        <label class="wme-field">Name to print (free) <input class="notecard-slider-name wme-counted" maxlength="${maxChars}" placeholder="${categoryKey === '2x3.5' ? 'e.g. Maria C.' : 'e.g. Maria Clara'}" autocomplete="off" required></label>
+        <div class="wme-char-count" aria-live="polite">0/${maxChars}</div>
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
-        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${pricePerPack.toFixed(2)}</div><small>Per pack of 24 notecards</small></div>
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${pricePerPack.toFixed(2)}</div><small>per pack of 24</small></div>
           <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease packs">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Number of packs"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase packs">+</button></div>
         </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
       </div>`;
@@ -1998,10 +2034,11 @@ function renderNotecardSliderGallery(categoryKey) {
     const error = card.querySelector('.wme-error');
     function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
+      const addButton = card.querySelector('.wme-add'); if (addButton) addButton.textContent = '+ Add to Cart';
       const code = group.codes[index];
       image.src = `images/${code}.webp`;
       image.alt = getTitle(code);
-      selected.textContent = `${getTitle(code)} — ${code} · Design ${index + 1} of ${group.codes.length}`;
+      selected.textContent = `${getTitle(code)} (${code}) · ${index + 1} of ${group.codes.length}`;
       [...thumbs.children].forEach((button, i) => {
         button.classList.toggle('active', i === index);
         button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
@@ -2033,7 +2070,8 @@ function renderNotecardSliderGallery(categoryKey) {
     card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); });
     card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99,clampQty()+1); });
     qty.addEventListener('change', clampQty);
-    card.querySelector('.wme-add').addEventListener('click', () => {
+    const addBtn = card.querySelector('.wme-add');
+    addBtn.addEventListener('click', () => {
       const input = card.querySelector('.notecard-slider-name');
       const text = input.value.trim();
       if (!text) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
@@ -2045,6 +2083,116 @@ function renderNotecardSliderGallery(categoryKey) {
         cardCount:24, price:pricePerPack, freePersonalization:true
       };
       addGalleryProductToCart(product, clampQty(), true, text);
+      readyForAnotherName(addBtn, input);
+    });
+    selectDesign(0);
+    DOM.productGalleryGrid.appendChild(card);
+  });
+}
+
+// Notepads: slider cards per size, grouped by series. Designs come from PRODUCT_CATALOG,
+// so newly added notepad designs appear automatically in the matching group.
+const NOTEPAD_NAME_LIMITS = { '3x3': 10, 'A6': 15, 'A5': 20 };
+const NOTEPAD_PRICES = { '3x3': 39, 'A6': 59, 'A5': 109 };
+function getNotepadSliderGroups(categoryKey) {
+  const items = PRODUCT_CATALOG.filter(p => p.category === categoryKey);
+  const split = (title1, test, title2) => {
+    const a = items.filter(test), b = items.filter(p => !test(p));
+    return [{ title: title1, items: a }, { title: title2, items: b }].filter(g => g.items.length > 0);
+  };
+  if (categoryKey === '3x3') return split('Cat Series', p => p.tag === 'Cat Series', 'Everyday Notes');
+  if (categoryKey === 'A5') return split('Planners', p => /Planner/i.test(p.tag || ''), 'Vintage & Botanical');
+  return [{ title: 'A6 Notepads', items }].filter(g => g.items.length > 0);
+}
+
+function renderNotepadSliderGallery(categoryKey) {
+  if (!DOM.productGalleryGrid) return;
+  DOM.productGalleryGrid.innerHTML = '';
+  DOM.productGalleryGrid.classList.add('wme-gallery');
+  const maxChars = NOTEPAD_NAME_LIMITS[categoryKey] || 15;
+  const placeholder = categoryKey === '3x3' ? 'e.g. Maria C.' : (categoryKey === 'A6' ? 'e.g. Maria Clara' : 'e.g. Maria Clara S.');
+  const groups = getNotepadSliderGroups(categoryKey);
+  if (groups.length === 0) {
+    DOM.productGalleryGrid.innerHTML = '<div class="gallery-empty-state"><div class="gallery-empty-title">No designs available</div><div class="gallery-empty-desc">Designs for this size will be available soon.</div></div>';
+    return;
+  }
+  groups.forEach(group => {
+    const products = group.items;
+    const imgSrc = p => `images/${encodeURIComponent(p.code)}.webp`;
+    const titleOf = p => DESIGN_TITLES[p.code] || p.name;
+    const unitPrice = products[0].price || NOTEPAD_PRICES[categoryKey];
+    const card = document.createElement('article');
+    card.className = 'product-card wme-card';
+    card.innerHTML = `
+      <div class="wme-heading"><h3>${group.title}</h3><span>${products.length} design${products.length === 1 ? '' : 's'}</span></div>
+      <div class="wme-preview">
+        <button type="button" class="wme-arrow wme-prev" aria-label="Previous design">‹</button>
+        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="${imgSrc(products[0])}" alt="${escapeHtml(titleOf(products[0]))}" loading="lazy"></button>
+        <button type="button" class="wme-arrow wme-next" aria-label="Next design">›</button>
+      </div>
+      <div class="wme-selected" aria-live="polite"></div>
+      <div class="wme-thumbnails" aria-label="Choose notepad design"></div>
+      <div class="wme-form">
+        <label class="wme-field">Name to print (free, optional) <input class="notepad-slider-name wme-counted" maxlength="${maxChars}" placeholder="${placeholder}" autocomplete="off"></label>
+        <div class="wme-char-count" aria-live="polite">0/${maxChars}</div>
+      </div>
+      <div class="product-card-footer">
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${unitPrice.toFixed(2)}</div><small>per notepad</small></div>
+          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease quantity">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Quantity"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase quantity">+</button></div>
+        </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
+      </div>`;
+    let index = 0;
+    const image = card.querySelector('.wme-image');
+    const selected = card.querySelector('.wme-selected');
+    const thumbs = card.querySelector('.wme-thumbnails');
+    const qty = card.querySelector('.wme-qty');
+    const addBtn = card.querySelector('.wme-add');
+    const nameInput = card.querySelector('.notepad-slider-name');
+    const setFallback = (img, p) => {
+      img.onerror = () => { img.onerror = null; img.src = getProductMockupSvg(p.code, p.name, p.category, p.tag); };
+    };
+    function selectDesign(next, revealThumbnail = false) {
+      index = (next + products.length) % products.length;
+      const p = products[index];
+      addBtn.textContent = '+ Add to Cart';
+      setFallback(image, p);
+      image.src = imgSrc(p);
+      image.alt = titleOf(p);
+      selected.textContent = `${titleOf(p)} (${p.code}) · ${index + 1} of ${products.length}`;
+      [...thumbs.children].forEach((button, i) => {
+        button.classList.toggle('active', i === index);
+        button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+      if (revealThumbnail && thumbs.children[index]) {
+        const active = thumbs.children[index];
+        const left = active.getBoundingClientRect().left - thumbs.getBoundingClientRect().left + thumbs.scrollLeft;
+        const right = left + active.offsetWidth;
+        if (left < thumbs.scrollLeft) thumbs.scrollLeft = left;
+        else if (right > thumbs.scrollLeft + thumbs.clientWidth) thumbs.scrollLeft = right - thumbs.clientWidth;
+      }
+    }
+    products.forEach((p, i) => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'wme-thumb';
+      button.title = `${titleOf(p)} (${p.code})`;
+      button.setAttribute('aria-label', `Select ${titleOf(p)}`);
+      const thumb = document.createElement('img'); thumb.alt = ''; thumb.loading = 'lazy';
+      setFallback(thumb, p); thumb.src = imgSrc(p);
+      button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i, true)); thumbs.appendChild(button);
+    });
+    card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1, true));
+    card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1, true));
+    card.querySelector('.wme-image-button').addEventListener('click', () => {
+      const p = products[index]; openImageLightbox(image.src, titleOf(p), p.code);
+    });
+    const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value, 10) || 1))); return Number(qty.value); };
+    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1, clampQty() - 1); });
+    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99, clampQty() + 1); });
+    qty.addEventListener('change', clampQty);
+    addBtn.addEventListener('click', () => {
+      const text = nameInput.value.trim().slice(0, maxChars);
+      addGalleryProductToCart(products[index], clampQty(), text.length > 0, text);
+      readyForAnotherName(addBtn, nameInput);
     });
     selectDesign(0);
     DOM.productGalleryGrid.appendChild(card);
@@ -2053,6 +2201,7 @@ function renderNotecardSliderGallery(categoryKey) {
 
 function renderProductGallery(categoryKey) {
   if (categoryKey === 'wedding-envelopes') { renderWeddingEnvelopeGallery(); return; }
+  if (categoryKey === '3x3' || categoryKey === 'A6' || categoryKey === 'A5') { renderNotepadSliderGallery(categoryKey); return; }
   if (categoryKey === 'hardbound') { renderHardboundGallery(); return; }
   if (categoryKey === '2x3.5' || categoryKey === '4x3') { renderNotecardSliderGallery(categoryKey); return; }
   if (!DOM.productGalleryGrid) return;
@@ -2096,11 +2245,12 @@ function renderProductGallery(categoryKey) {
 
     const fallbackSvg = getProductMockupSvg(product.code, product.name, product.category, product.tag);
     const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount && !product.envelopeCount));
-    const isCollection = (product.catalogType === 'collections' || product.category === 'christmas');
-    const hasFreePersonalization = Boolean(product.freePersonalization) || isNotecards || isCollection;
+    const isCollection = false; // Christmas Collections removed
+    const hasFreePersonalization = true; // personalization is FREE on every product
     const is2x35 = (product.category === '2x3.5' || product.code.startsWith('NCP_'));
-    const notecardMaxChars = product.maxChars || (isCollection ? 30 : (is2x35 ? 10 : 15));
+    const notecardMaxChars = product.maxChars || (isNotecards ? (is2x35 ? 10 : 15) : 30);
     const notecardPlaceholder = isCollection ? 'e.g. The Santos Family / Maria Clara' : (is2x35 ? 'e.g. Maria C.' : 'e.g. Maria Clara');
+    const nameHint = isNotecards ? '' : '<span class="card-custom-hint-text">Optional · leave blank for no name</span>';
 
     const customizationSectionHtml = isCollection ? `
       <!-- Always-visible Text Customization for Christmas Collections (MANDATORY FREE Personalization) -->
@@ -2150,6 +2300,7 @@ function renderProductGallery(categoryKey) {
             autocomplete="off"
           />
           <div class="card-custom-helper-row">
+            ${nameHint}
             <span class="card-custom-char-counter" id="charCount_${safeCode}">0/${notecardMaxChars}</span>
           </div>
         </div>
@@ -2405,6 +2556,7 @@ function renderProductGallery(categoryKey) {
 
         const quantity = parseInt(qtyInput ? qtyInput.value : '1', 10) || 1;
         addGalleryProductToCart(product, quantity, isCustomized, customText);
+        readyForAnotherName(addBtn, inputCustText);
       });
     }
 
@@ -2430,126 +2582,81 @@ function toggleMobileMenu(open) {
   document.body.style.overflow = shouldOpen ? 'hidden' : '';
 }
 
+const CATALOG_COPY = {
+  hardbound: {
+    title: 'Hardbound Notepads',
+    subtitle: 'Personalized hardbound notepads, 70 sheets. A6 ₱159 · A5 ₱259'
+  },
+  notepads: {
+    title: 'Notepads',
+    subtitle: 'Personalized tear-off notepads, 30 sheets. Square ₱39 · A6 ₱59 · A5 ₱109'
+  },
+  notecards: {
+    title: 'Notecards',
+    subtitle: 'Personalized cards, 24 pcs per pack. Great as gift tags. 2×3.5 in ₱89 · 4×3 in ₱129'
+  },
+  envelopes: {
+    title: 'Money Envelopes',
+    subtitle: `Personalized money envelopes, sold per piece. Premium ₱${ENVELOPE_PRICES.premium} · Standard ₱${ENVELOPE_PRICES.standard}. Minimum ${ENVELOPE_MIN_PCS} pcs per order, mix any design.`
+  }
+};
+
+// Highlight the active catalog in both the desktop nav and the mobile drawer.
+function setActiveCatalogNav(catalogType) {
+  document.querySelectorAll('[data-catalog]').forEach(btn => {
+    const isActive = btn.dataset.catalog === catalogType;
+    btn.classList.toggle('active', isActive);
+    if (btn.classList.contains('site-nav-link')) btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+}
+
+function setGalleryHeading(catalogType) {
+  const copy = CATALOG_COPY[catalogType];
+  if (!copy) return;
+  if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = copy.title;
+  if (DOM.gallerySectionSubtitle) { DOM.gallerySectionSubtitle.textContent = copy.subtitle; DOM.gallerySectionSubtitle.style.display = ''; }
+}
+
 function switchMainCatalog(catalogType) {
-  appState.currentCatalog = catalogType; // 'collections' | 'notepads' | 'notecards'
+  if (!CATALOG_COPY[catalogType]) catalogType = 'hardbound';
+  appState.currentCatalog = catalogType; // 'hardbound' | 'notepads' | 'notecards' | 'envelopes'
+  setActiveCatalogNav(catalogType);
+  setGalleryHeading(catalogType);
 
-  if (DOM.btnCatalogCollections && DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
-    DOM.btnCatalogCollections.classList.toggle('active', catalogType === 'collections');
-    DOM.btnCatalogCollections.setAttribute('aria-selected', catalogType === 'collections' ? 'true' : 'false');
-    DOM.btnCatalogNotepads.classList.toggle('active', catalogType === 'notepads');
-    DOM.btnCatalogNotepads.setAttribute('aria-selected', catalogType === 'notepads' ? 'true' : 'false');
-    DOM.btnCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
-    DOM.btnCatalogNotecards.setAttribute('aria-selected', catalogType === 'notecards' ? 'true' : 'false');
-  }
-
-  // Synchronize mobile drawer navigation items
-  if (DOM.btnMobileCatalogCollections && DOM.btnMobileCatalogNotepads && DOM.btnMobileCatalogNotecards) {
-    DOM.btnMobileCatalogCollections.classList.toggle('active', catalogType === 'collections');
-    DOM.btnMobileCatalogNotepads.classList.toggle('active', catalogType === 'notepads');
-    DOM.btnMobileCatalogNotecards.classList.toggle('active', catalogType === 'notecards');
-  }
-
-  if (DOM.btnCatalogEnvelopes) {
-    DOM.btnCatalogEnvelopes.classList.toggle('active', catalogType === 'envelopes');
-    DOM.btnCatalogEnvelopes.setAttribute('aria-selected', catalogType === 'envelopes' ? 'true' : 'false');
-  }
-  if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.classList.toggle('active', catalogType === 'envelopes');
-
-  if (DOM.btnCatalogHardbound) { DOM.btnCatalogHardbound.classList.toggle('active', catalogType === 'hardbound'); DOM.btnCatalogHardbound.setAttribute('aria-selected', catalogType === 'hardbound' ? 'true' : 'false'); }
-  if (DOM.btnMobileCatalogHardbound) DOM.btnMobileCatalogHardbound.classList.toggle('active', catalogType === 'hardbound');
+  const showTabs = (catalogType === 'notepads' || catalogType === 'notecards');
+  if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = showTabs ? 'flex' : 'none';
+  if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none'; // prices are in the heading
+  if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
+  const notepadTab = catalogType === 'notepads' ? 'inline-flex' : 'none';
+  const notecardTab = catalogType === 'notecards' ? 'inline-flex' : 'none';
+  if (DOM.tab3x3) DOM.tab3x3.style.display = notepadTab;
+  if (DOM.tabA6) DOM.tabA6.style.display = notepadTab;
+  if (DOM.tabA5) DOM.tabA5.style.display = notepadTab;
+  if (DOM.tab2x35) DOM.tab2x35.style.display = notecardTab;
+  if (DOM.tab4x3) DOM.tab4x3.style.display = notecardTab;
 
   if (catalogType === 'hardbound') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Hardbound Notepads';
-    if (DOM.gallerySectionSubtitle) { DOM.gallerySectionSubtitle.textContent = '70-sheet hardbound notepads with free cover personalization. A6 · ₱159.00 | A5 · ₱259.00'; DOM.gallerySectionSubtitle.style.display = ''; }
-    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
     appState.activeGalleryTab = 'hardbound';
     renderProductGallery('hardbound');
   } else if (catalogType === 'envelopes') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Money Envelopes Catalog';
-    if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Personalized wedding and Christmas money envelopes. Each pack includes 5 envelopes with free customization. Premium 108 GSM • ₱79.00 / pack | Standard 80 GSM • ₱59.00 / pack';
-      DOM.gallerySectionSubtitle.style.display = '';
-    }
-    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
     appState.activeGalleryTab = 'wedding-envelopes';
     renderProductGallery('wedding-envelopes');
-  } else if (catalogType === 'collections') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collections';
-    if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every set includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 inches Notecards, 24 pcs of 4 × 3 inches Notecards, and 5 Money Envelopes with FREE custom name personalization.';
-      DOM.gallerySectionSubtitle.style.display = '';
-    }
-    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'none';
-    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
-    if (DOM.tab3x3) DOM.tab3x3.style.display = 'none';
-    if (DOM.tabA6) DOM.tabA6.style.display = 'none';
-    if (DOM.tabA5) DOM.tabA5.style.display = 'none';
-    if (DOM.tab2x35) DOM.tab2x35.style.display = 'none';
-    if (DOM.tab4x3) DOM.tab4x3.style.display = 'none';
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
-    switchGalleryCategory('christmas');
   } else if (catalogType === 'notepads') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepads Collection';
-    if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Premium tear-off notepads crafted on smooth 80 gsm paper. Available in Square (3 × 3 in), A6, and A5 sizes — perfect for daily journaling, to-do lists, and desk notes.';
-      DOM.gallerySectionSubtitle.style.display = '';
-    }
-    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'flex';
-    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
-    if (DOM.tab3x3) DOM.tab3x3.style.display = 'inline-flex';
-    if (DOM.tabA6) DOM.tabA6.style.display = 'inline-flex';
-    if (DOM.tabA5) DOM.tabA5.style.display = 'inline-flex';
-    if (DOM.tab2x35) DOM.tab2x35.style.display = 'none';
-    if (DOM.tab4x3) DOM.tab4x3.style.display = 'none';
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
     switchGalleryCategory('3x3');
-  } else if (catalogType === 'notecards') {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notecards Collection';
-    if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Elegant 220 gsm flat stationery cards available in 2 × 3.5 in and 4 × 3 in sets (24 cards per pack). Ideal for personalized gift tags, gratitude notes, and holiday greetings with free personalization included.';
-      DOM.gallerySectionSubtitle.style.display = '';
-    }
-    if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = 'flex';
-    if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
-    if (DOM.tab3x3) DOM.tab3x3.style.display = 'none';
-    if (DOM.tabA6) DOM.tabA6.style.display = 'none';
-    if (DOM.tabA5) DOM.tabA5.style.display = 'none';
-    if (DOM.tab2x35) DOM.tab2x35.style.display = 'inline-flex';
-    if (DOM.tab4x3) DOM.tab4x3.style.display = 'inline-flex';
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
+  } else {
     switchGalleryCategory('2x3.5');
   }
 }
 
 function switchGalleryCategory(categoryKey) {
-  if (DOM.btnCatalogEnvelopes) { DOM.btnCatalogEnvelopes.classList.remove('active'); DOM.btnCatalogEnvelopes.setAttribute('aria-selected', 'false'); }
-  if (DOM.btnCatalogHardbound) { DOM.btnCatalogHardbound.classList.remove('active'); DOM.btnCatalogHardbound.setAttribute('aria-selected', 'false'); }
-  if (DOM.btnMobileCatalogHardbound) DOM.btnMobileCatalogHardbound.classList.remove('active');
-  if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.classList.remove('active');
   appState.activeGalleryTab = categoryKey;
-
-  const isCollection = (categoryKey === 'christmas');
   const isNotecard = (categoryKey === '2x3.5' || categoryKey === '4x3');
+  const catalogType = isNotecard ? 'notecards' : 'notepads';
+  appState.currentCatalog = catalogType;
+  setActiveCatalogNav(catalogType);
+  setGalleryHeading(catalogType);
+  if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
 
-  if (DOM.btnCatalogCollections && DOM.btnCatalogNotepads && DOM.btnCatalogNotecards) {
-    DOM.btnCatalogCollections.classList.toggle('active', isCollection);
-    DOM.btnCatalogCollections.setAttribute('aria-selected', isCollection ? 'true' : 'false');
-    DOM.btnCatalogNotepads.classList.toggle('active', !isCollection && !isNotecard);
-    DOM.btnCatalogNotepads.setAttribute('aria-selected', !isCollection && !isNotecard ? 'true' : 'false');
-    DOM.btnCatalogNotecards.classList.toggle('active', isNotecard);
-    DOM.btnCatalogNotecards.setAttribute('aria-selected', isNotecard ? 'true' : 'false');
-  }
-
-  // Synchronize mobile drawer navigation items
-  if (DOM.btnMobileCatalogCollections && DOM.btnMobileCatalogNotepads && DOM.btnMobileCatalogNotecards) {
-    DOM.btnMobileCatalogCollections.classList.toggle('active', isCollection);
-    DOM.btnMobileCatalogNotepads.classList.toggle('active', !isCollection && !isNotecard);
-    DOM.btnMobileCatalogNotecards.classList.toggle('active', isNotecard);
-  }
-
-  // Update tabs active state
   if (DOM.categoryTabs) {
     DOM.categoryTabs.forEach(tab => {
       const isCurrent = (tab.dataset.category === categoryKey);
@@ -2558,44 +2665,18 @@ function switchGalleryCategory(categoryKey) {
     });
   }
 
-  if (isCollection) {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Christmas Collections';
-    if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Complete holiday stationery gift sets for ₱299.00 each. Every set includes: 1 A6 Notepad (30 sheets), 24 pcs of 2 × 3.5 inches Notecards, 24 pcs of 4 × 3 inches Notecards, and 5 Money Envelopes with FREE custom name personalization.';
-      DOM.gallerySectionSubtitle.style.display = '';
-    }
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
-  } else if (!isNotecard) {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notepad Catalog';
-    if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Premium tear-off notepads crafted on smooth 80 gsm paper. Available in Square (3 × 3 in), A6, and A5 sizes — perfect for daily journaling, to-do lists, and desk notes.';
-      DOM.gallerySectionSubtitle.style.display = '';
-    }
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
-  } else {
-    if (DOM.gallerySectionTitle) DOM.gallerySectionTitle.textContent = 'Notecards Catalog';
-    if (DOM.gallerySectionSubtitle) {
-      DOM.gallerySectionSubtitle.textContent = 'Elegant 220 gsm flat stationery cards available in 2 × 3.5 in and 4 × 3 in sets (24 cards per pack). Ideal for personalized gift tags, gratitude notes, and holiday greetings with free personalization included.';
-      DOM.gallerySectionSubtitle.style.display = '';
-    }
-    if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
-  }
-
-  // Update spec badge info
   const spec = CATEGORY_SPECS[categoryKey];
   if (DOM.categorySpecText && spec) {
     DOM.categorySpecText.textContent = spec.specText;
   }
 
-  // Re-render cards
   renderProductGallery(categoryKey);
 }
 
 function addGalleryProductToCart(product, quantity = 1, isCustomized = false, customText = '') {
   const qty = Math.max(1, parseInt(quantity, 10) || 1);
   const trimmedText = isCustomized ? customText.trim() : '';
-  const custFee = (isCustomized && !product.freePersonalization) ? 10 : 0;
-  const unitPrice = product.price + custFee;
+  const unitPrice = product.price; // personalization is free
   const displayTitle = DESIGN_TITLES[product.code] || product.name;
   const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount && !product.envelopeCount));
   const isCollection = (product.catalogType === 'collections' || product.category === 'christmas');
@@ -2627,11 +2708,12 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
       hasSheets: !isNotecards && !isCollection,
       sheetCount: product.sheets || product.cardCount || 30,
       cardCount: product.cardCount || null,
-      freePersonalization: Boolean(product.freePersonalization),
+      freePersonalization: true,
       designCode: product.code,
       imagePath: 'images/' + encodeURIComponent(product.code) + '.webp',
       isCustomized: isCustomized,
       customText: trimmedText,
+      nameLabel: trimmedText,
       isTba: false,
       unitPrice: unitPrice,
       quantity: qty,
@@ -2642,7 +2724,7 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
 
   renderCart();
   showCheckoutSection(false);
-  const customNote = isCustomized ? ` with custom text "${trimmedText}"` : '';
+  const customNote = isCustomized ? ` for "${trimmedText}"` : '';
   showToast(`Added ${qty}× ${displayTitle} (${product.code})${customNote} to order.`);
 }
 
@@ -3372,26 +3454,112 @@ function removeCartItem(itemId) {
   showToast('Item removed from order.');
 }
 
+// ----------------------------------------------------------------------------
+// Order totals, free-tag promo and envelope minimum
+// ----------------------------------------------------------------------------
+function peso(n) {
+  return '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function computeOrderTotals() {
+  const productTotal = appState.cart.reduce((sum, item) => sum + (item.isTba ? 0 : (item.subtotal || 0)), 0);
+  const envelopePcs = appState.cart
+    .filter(item => item.categoryKey === 'envelopes')
+    .reduce((sum, item) => sum + (item.quantity || 0), 0);
+  const envelopeShort = (envelopePcs > 0 && envelopePcs < ENVELOPE_MIN_PCS) ? (ENVELOPE_MIN_PCS - envelopePcs) : 0;
+
+  let freeTags = 0;
+  let nextTier = null;
+  if (FREE_TAGS_PROMO_ON) {
+    const tier = FREE_TAG_TIERS.find(t => productTotal >= t.minTotal);
+    freeTags = tier ? tier.tags : 0;
+    const higher = FREE_TAG_TIERS
+      .filter(t => t.minTotal > productTotal)
+      .sort((a, b) => a.minTotal - b.minTotal)[0];
+    if (higher) nextTier = { gap: higher.minTotal - productTotal, tags: higher.tags };
+  }
+  return { productTotal, envelopePcs, envelopeShort, freeTags, nextTier };
+}
+
+// Lines with the same design, size and paper are shown together, with one row per name.
+function groupCartItems() {
+  const groups = [];
+  const byKey = {};
+  appState.cart.forEach(item => {
+    const key = [item.categoryKey, item.designCode, item.sizeId, item.paperQuality || '', item.unitPrice].join('|');
+    if (!byKey[key]) {
+      byKey[key] = { key, first: item, items: [], quantity: 0, subtotal: 0 };
+      groups.push(byKey[key]);
+    }
+    byKey[key].items.push(item);
+    byKey[key].quantity += item.quantity || 0;
+    byKey[key].subtotal += item.isTba ? 0 : (item.subtotal || 0);
+  });
+  return groups;
+}
+
+function cartItemNameLabel(item) {
+  const label = (item.nameLabel || (item.isCustomized ? item.customText : '') || '').trim();
+  return label;
+}
+
+function cartGroupSpec(item) {
+  if (item.categoryKey === 'envelopes') return `Sold per piece • ${peso(item.unitPrice)} / pc`;
+  if (item.categoryKey === 'hardbound') return `${item.dimensions} • 70 sheets • Free cover personalization`;
+  if (item.hasSheets) return `${item.dimensions} • ${item.sheetCount} sheets • Free personalization`;
+  if (item.cardCount || item.categoryKey === 'notecards') return `${item.dimensions || ''} • ${item.cardCount || 24} pcs (220 gsm) • Free personalization`;
+  return item.dimensions || '';
+}
+
+function renderPromoAndChecks(totals) {
+  const hint = document.getElementById('promoHint');
+  if (hint) {
+    let text = '';
+    if (FREE_TAGS_PROMO_ON && appState.cart.length > 0) {
+      if (totals.freeTags > 0 && totals.nextTier) {
+        text = `🎁 You get <strong>${totals.freeTags} FREE ${FREE_ITEM_NAME}</strong>. Add ${peso(totals.nextTier.gap)} more to get ${totals.nextTier.tags}.`;
+      } else if (totals.freeTags > 0) {
+        text = `🎁 You get <strong>${totals.freeTags} FREE ${FREE_ITEM_NAME}</strong> with this order!`;
+      } else if (totals.nextTier) {
+        text = `🎁 Add <strong>${peso(totals.nextTier.gap)} more</strong> to get ${totals.nextTier.tags} FREE ${FREE_ITEM_NAME}.`;
+      }
+    }
+    hint.innerHTML = text;
+    hint.style.display = text ? 'block' : 'none';
+  }
+
+  const warn = document.getElementById('envelopeMinWarning');
+  if (warn) {
+    if (totals.envelopeShort > 0) {
+      warn.innerHTML = `✉️ Money envelopes have a minimum of <strong>${ENVELOPE_MIN_PCS} pcs per order</strong>. You have ${totals.envelopePcs}. Please add ${totals.envelopeShort} more (any design or paper).`;
+      warn.style.display = 'block';
+    } else {
+      warn.innerHTML = '';
+      warn.style.display = 'none';
+    }
+  }
+}
+
 function renderCart() {
-  const totalItems = appState.cart.length;
   const totalUnits = appState.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const groups = groupCartItems();
+  const totals = computeOrderTotals();
 
-  if (DOM.headerCartCount) {
-    DOM.headerCartCount.textContent = totalUnits;
-  }
-
+  if (DOM.headerCartCount) DOM.headerCartCount.textContent = totalUnits;
   if (DOM.cartCountBadge) {
-    DOM.cartCountBadge.textContent = `${totalItems} Item${totalItems === 1 ? '' : 's'}${totalUnits > 0 ? ` (${totalUnits} pcs)` : ''}`;
+    DOM.cartCountBadge.textContent = `${groups.length} Item${groups.length === 1 ? '' : 's'}${totalUnits > 0 ? ` (${totalUnits} pcs)` : ''}`;
   }
 
-  if (totalItems === 0) {
+  renderPromoAndChecks(totals);
+
+  if (appState.cart.length === 0) {
     if (DOM.emptyCartState) DOM.emptyCartState.style.display = 'block';
     if (DOM.cartItemsList) {
       DOM.cartItemsList.style.display = 'none';
       DOM.cartItemsList.innerHTML = '';
     }
-    if (DOM.summarySubtotalAmount) DOM.summarySubtotalAmount.textContent = '₱0.00';
-    if (DOM.summaryGrandTotal) DOM.summaryGrandTotal.textContent = '₱0.00';
+    if (DOM.summarySubtotalAmount) DOM.summarySubtotalAmount.textContent = peso(0);
+    if (DOM.summaryGrandTotal) DOM.summaryGrandTotal.textContent = peso(0);
     return;
   }
 
@@ -3400,110 +3568,68 @@ function renderCart() {
     DOM.cartItemsList.style.display = 'flex';
     DOM.cartItemsList.innerHTML = '';
   }
+  if (DOM.checkoutSection) DOM.checkoutSection.style.display = 'block';
 
-  // Reveal checkout section when cart has items
-  if (DOM.checkoutSection) {
-    DOM.checkoutSection.style.display = 'block';
-  }
+  groups.forEach(group => {
+    const item = group.first;
+    const card = document.createElement('div');
+    card.className = 'cart-item-card cart-group-card';
 
-  let numericTotal = 0;
-
-  appState.cart.forEach(item => {
-    if (!item.isTba) {
-      numericTotal += item.subtotal;
-    }
-
-    const itemCard = document.createElement('div');
-    itemCard.className = 'cart-item-card';
-    itemCard.id = `cart-item-${item.id}`;
-
-    let specDetails = `${item.dimensions}`;
-    if (item.categoryKey === 'envelopes') specDetails = `${item.sizeName} • ${item.dimensions}`;
-    if (item.categoryKey === 'collections') {
-      specDetails = `${item.dimensions}`;
-    } else if (item.hasSheets) {
-      specDetails += ` • ${item.sheetCount} sheets`;
-      if (item.extraSheets && item.extraSheets > 0) {
-        specDetails += ` (+${item.extraSheets} extra @ ₱${item.rate.toFixed(2)}/sh)`;
-      }
-    } else if (item.cardCount || item.categoryKey === 'notecards') {
-      const count = item.cardCount || item.sheetCount || 24;
-      specDetails += ` • ${count} pcs (220 gsm)`;
-      if (item.extraCards && item.extraCards > 0) {
-        specDetails += ` (+${item.extraCards} extra @ ₱${item.rate.toFixed(2)}/card)`;
-      }
-    }
-
-    let customDetailsBadge = '';
-    if (item.isCustomMade) {
-      customDetailsBadge = `
-        <div class="cart-item-custom-badge" style="background: rgba(203, 108, 230, 0.12); color: var(--brand-purple-dark); border: 1px solid rgba(203, 108, 230, 0.3);">
-          <span>📝 Request: "${escapeHtml(item.instructions)}"</span>
-        </div>
-      `;
-    } else if (item.isCustomized) {
-      const badgeStyle = item.freePersonalization 
-        ? `background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9;`
-        : ``;
-      const badgeLabel = item.freePersonalization ? `✨ Free Personalization` : `✨ Custom`;
-      customDetailsBadge = `
-        <div class="cart-item-custom-badge" style="${badgeStyle}">
-          <span>${badgeLabel}: "${escapeHtml(item.customText)}"</span>
-        </div>
-      `;
-    }
-
-    const subtotalText = item.isTba ? '<span class="cart-item-subtotal tba">TBA</span>' : `<span class="cart-item-subtotal">₱${item.subtotal.toFixed(2)}</span>`;
-    const unitPriceText = item.isTba ? 'TBA' : `₱${item.unitPrice.toFixed(2)}`;
-
-    let thumbHtml = '';
-    if (item.isCustomMade) {
-      const icon = item.categoryKey === 'notecards' ? '💌' : '🎨';
-      thumbHtml = `<div class="cart-item-custom-thumb" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:1.75rem; background:rgba(203,108,230,0.15); border-radius:8px;">${icon}</div>`;
-    } else {
-      const fallbackSvg = getProductMockupSvg(item.designCode, item.shortName || item.designCode, item.sizeId, 'Floral');
-      thumbHtml = `<img src="images/${encodeURIComponent(item.designCode)}.webp" alt="${item.designCode}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${fallbackSvg}';">`;
-    }
-
+    const fallbackSvg = getProductMockupSvg(item.designCode, item.shortName || item.designCode, item.sizeId, 'Floral');
     const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';
-    const designBadgeHtml = item.isCustomMade
-      ? `<div class="cart-item-design-badge" style="background: var(--brand-black); color: var(--brand-yellow);">Design: Custom Layout Draft</div>`
-      : `<div class="cart-item-design-badge">Design: <strong>${escapeHtml(item.designCode)}</strong>${displayTitle ? ` — ${escapeHtml(displayTitle)}` : ''}</div>`;
 
-    itemCard.innerHTML = `
+    const nameRows = group.items.map(line => {
+      const label = cartItemNameLabel(line);
+      const labelHtml = label
+        ? `<span class="cart-name-label">✨ ${escapeHtml(label)}</span>`
+        : `<span class="cart-name-label cart-name-none">No name</span>`;
+      return `
+        <li class="cart-name-row">
+          ${labelHtml}
+          <span class="cart-name-qty">${line.quantity} × ${peso(line.unitPrice)}</span>
+          <span class="cart-name-sub">${peso(line.subtotal)}</span>
+          <button type="button" class="cart-name-remove" onclick="window.removeCartItem('${line.id}')" title="Remove this name" aria-label="Remove ${escapeHtml(label || 'this line')}">✕</button>
+        </li>`;
+    }).join('');
+
+    card.innerHTML = `
       <div class="cart-item-main">
         <div class="cart-item-thumb-wrapper">
-          ${thumbHtml}
+          <img src="images/${encodeURIComponent(item.designCode)}.webp" alt="${escapeHtml(item.designCode)}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${fallbackSvg}';">
         </div>
         <div class="cart-item-details">
-          <div class="cart-item-title">${escapeHtml(displayTitle ? `${displayTitle} (${item.sizeName})` : item.sizeName)}</div>
-          <div class="cart-item-spec-line">${escapeHtml(specDetails)}</div>
-          ${designBadgeHtml}
-          ${customDetailsBadge}
+          <div class="cart-item-title">${escapeHtml(item.sizeName)}</div>
+          <div class="cart-item-design-badge">Design: <strong>${escapeHtml(item.designCode)}</strong>${displayTitle ? ` — ${escapeHtml(displayTitle)}` : ''}</div>
+          <div class="cart-item-spec-line">${escapeHtml(cartGroupSpec(item))}</div>
         </div>
       </div>
+      <ul class="cart-name-list" aria-label="Names for this design">${nameRows}</ul>
       <div class="cart-item-footer">
-        <div class="cart-item-qty-price">
-          ${item.quantity} × ${unitPriceText}
-        </div>
-        <div style="display: flex; align-items: center; gap: 14px;">
-          ${subtotalText}
-          <button type="button" class="cart-item-remove-btn" onclick="window.removeCartItem('${item.id}')" title="Remove item">
-            ✕ Remove
-          </button>
-        </div>
+        <div class="cart-item-qty-price">${group.quantity} pc${group.quantity === 1 ? '' : 's'}${group.items.length > 1 ? ` · ${group.items.length} names` : ''}</div>
+        <span class="cart-item-subtotal">${peso(group.subtotal)}</span>
       </div>
     `;
-
-    DOM.cartItemsList.appendChild(itemCard);
+    DOM.cartItemsList.appendChild(card);
   });
 
-  if (DOM.summarySubtotalAmount) {
-    DOM.summarySubtotalAmount.textContent = `₱${numericTotal.toFixed(2)}`;
+  if (totals.freeTags > 0) {
+    const tagCard = document.createElement('div');
+    tagCard.className = 'cart-item-card cart-free-tags-card';
+    tagCard.innerHTML = `
+      <div class="cart-free-tags-main">
+        <span class="cart-free-tags-icon" aria-hidden="true">🎁</span>
+        <div>
+          <div class="cart-item-title">FREE ${FREE_ITEM_NAME} · ${totals.freeTags} pcs</div>
+          <div class="cart-item-spec-line">Christmas promo. We'll message you for the names.</div>
+        </div>
+      </div>
+      <span class="cart-item-subtotal">${peso(0)}</span>
+    `;
+    DOM.cartItemsList.appendChild(tagCard);
   }
-  if (DOM.summaryGrandTotal) {
-    DOM.summaryGrandTotal.textContent = `₱${numericTotal.toFixed(2)}`;
-  }
+
+  if (DOM.summarySubtotalAmount) DOM.summarySubtotalAmount.textContent = peso(totals.productTotal);
+  if (DOM.summaryGrandTotal) DOM.summaryGrandTotal.textContent = peso(totals.productTotal);
 }
 
 window.removeCartItem = removeCartItem;
@@ -3649,460 +3775,137 @@ function generateReferenceNumber() {
   return `PRNT-${currentYear}-${randomNum}`;
 }
 
-function buildJobOrderSlip(refNo) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-  DOM.joReferenceNumber.textContent = refNo;
-  DOM.joDateGenerated.textContent = `Generated on ${new Date().toLocaleDateString('en-US', options)}`;
-  
-  DOM.joCustomerName.textContent = appState.customer.fullName;
-  DOM.joCustomerContact.textContent = appState.customer.contactNumber;
-  DOM.joCustomerSocial.textContent = appState.customer.socialHandle;
-  DOM.joCourier.textContent = appState.customer.courier;
-  DOM.joCustomerAddress.textContent = appState.customer.address;
-  DOM.joPayment.textContent = appState.customer.payment;
-  if (DOM.joOrderType && appState.customer.orderType) {
-    DOM.joOrderType.textContent = appState.customer.orderType;
-  }
-  if (DOM.joCustomMadeDetailsRow && DOM.joCustomMadeDetails) {
-    if (appState.customer.isCustomMade) {
-      DOM.joCustomMadeDetailsRow.style.display = 'block';
-      const customItems = appState.cart.filter(i => i.isCustomMade);
-      if (customItems.length > 0) {
-        DOM.joCustomMadeDetails.innerHTML = customItems.map((ci, idx) => {
-          const unitSpec = ci.categoryKey === 'notecards'
-            ? `${ci.cardCount || 24} cards (220 gsm)${ci.extraCards > 0 ? `, +${ci.extraCards} extra` : ''}`
-            : `${ci.sheetCount} sheets${ci.extraSheets > 0 ? `, +${ci.extraSheets} extra @ ₱${ci.rate.toFixed(2)}/sh` : ''}`;
-          return `
-          <div style="margin-bottom: 6px;">
-            <strong>${escapeHtml(ci.categoryName)} #${idx + 1}:</strong> ${escapeHtml(ci.sizeName)} (${unitSpec})<br>
-            <strong>Instructions:</strong> ${escapeHtml(ci.instructions)}
-          </div>
-        `;
-        }).join('');
-      } else {
-        DOM.joCustomMadeDetails.innerHTML = `
-          <strong>Order Type:</strong> Custom Made Stationery Order
-        `;
-      }
-    } else {
-      DOM.joCustomMadeDetailsRow.style.display = 'none';
-    }
-  }
-
-  DOM.joTableBody.innerHTML = '';
-  let grandTotalNumeric = 0;
-
-  appState.cart.forEach(item => {
-    grandTotalNumeric += item.subtotal;
-
-    let personalizationText = '<span style="color:#6b7280; font-style:italic;">Standard (None)</span>';
-    if (item.isCustomMade) {
-      personalizationText = `<span style="color:#111827; font-weight:600;">Custom Layout: "${escapeHtml(item.instructions)}"</span>`;
-    } else if (item.isCustomized) {
-      const freeTag = item.freePersonalization
-        ? `<span style="display:inline-block; font-size:0.7rem; background:#e8f5e9; color:#1b5e20; padding:1px 6px; border-radius:4px; font-weight:800; margin-left:4px;">FREE</span>`
-        : `<span style="display:inline-block; font-size:0.7rem; background:#ffde59; color:#111827; padding:1px 6px; border-radius:4px; font-weight:800; margin-left:4px;">+₱10</span>`;
-      personalizationText = `<span style="color:#721c8a; font-weight:700;">"${escapeHtml(item.customText)}"</span> ${freeTag}`;
-    }
-
-    const priceCell = item.isTba ? '<span style="color:#b241ce; font-weight:700;">TBA</span>' : `₱${item.unitPrice.toFixed(2)}`;
-    const subtotalCell = item.isTba ? '<span style="color:#b241ce; font-weight:700;">TBA</span>' : `₱${item.subtotal.toFixed(2)}`;
-
-    const displayTitle = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';
-
-    const designCellHtml = item.isCustomMade
-      ? `<span class="jo-design-badge jo-design-badge-custom">CUSTOM</span>`
-      : `<span class="jo-design-badge">${escapeHtml(item.designCode)}</span>${displayTitle ? `<br><span style="font-size:0.75rem; color:#475569; font-weight:600; display:inline-block; margin-top:3px;">${escapeHtml(displayTitle)}</span>` : ''}`;
-
-    const itemTitleHtml = displayTitle
-      ? `<strong style="color:#111827; font-weight:700;">${escapeHtml(displayTitle)}</strong><br><span style="font-size:0.8rem; color:#4b5563; font-weight:600;">${escapeHtml(item.sizeName)}</span>`
-      : `<strong style="color:#111827; font-weight:700;">${escapeHtml(item.categoryName)} - ${escapeHtml(item.sizeName)}</strong>`;
-
-    let specLine = escapeHtml(item.dimensions);
-    if (item.categoryKey === 'envelopes') specLine = escapeHtml(`${item.sizeName} • ${item.dimensions}`);
-    if (item.categoryKey === 'collections') {
-      specLine = escapeHtml(item.dimensions);
-    } else if (item.hasSheets) {
-      specLine += ` • ${item.sheetCount} sheets` + (item.extraSheets > 0 ? ` (+${item.extraSheets} extra)` : '');
-    } else if (item.cardCount || item.categoryKey === 'notecards') {
-      const count = item.cardCount || item.sheetCount || 24;
-      specLine += ` • ${count} pcs (220 gsm)` + (item.extraCards > 0 ? ` (+${item.extraCards} extra)` : '');
-    }
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>
-        ${itemTitleHtml}<br>
-        <span style="font-size:0.775rem; color:#64748b;">${specLine}</span>
-      </td>
-      <td>
-        ${designCellHtml}
-      </td>
-      <td>${personalizationText}</td>
-      <td style="text-align: center; font-weight: 700; color:#111827;">${item.quantity}</td>
-      <td style="text-align: right; color:#334155; font-weight:600;">${priceCell}</td>
-      <td style="text-align: right; font-weight: 800; color:#111827;">${subtotalCell}</td>
-    `;
-    DOM.joTableBody.appendChild(row);
-  });
-
-  DOM.joModalGrandTotal.textContent = `₱${grandTotalNumeric.toFixed(2)}`;
-
-  DOM.paymentInstructionsText.innerHTML = `
-    <p>1. <strong>Payment Privacy:</strong> Official payment details and QR code will be shared separately and privately via your social handle (<strong>${escapeHtml(appState.customer.socialHandle)}</strong>) or contact number (<strong>${escapeHtml(appState.customer.contactNumber)}</strong>).</p>
-    <p>2. Please reference Job Order No. <strong>${escapeHtml(refNo)}</strong> when sending proof of payment.</p>
-    <p>3. Production starts upon payment confirmation. Standard lead time is 3–5 business days before courier dispatch (${escapeHtml(appState.customer.courier)}).</p>
-  `;
-
-  return grandTotalNumeric;
+function orderGroupNamesText(group) {
+  const named = group.items.filter(line => cartItemNameLabel(line));
+  if (named.length === 0) return '';
+  return group.items.map(line => {
+    const label = cartItemNameLabel(line) || 'No name';
+    return `${label} ×${line.quantity}`;
+  }).join(', ');
 }
 
-async function downloadJobOrderAsPdf() {
-  const downloadBtn = DOM.btnDownloadPdf || document.getElementById('btnDownloadPdf') || document.getElementById('btnDownloadImage');
-  const originalBtnText = downloadBtn ? downloadBtn.innerHTML : '';
-  
-  if (downloadBtn) {
-    downloadBtn.innerHTML = '<span>⏳ Generating PDF...</span>';
-    downloadBtn.disabled = true;
-  }
+// Builds the simplified order summary that is shown in the modal and saved as an image.
+function buildJobOrderSlip(refNo) {
+  const totals = computeOrderTotals();
+  const groups = groupCartItems();
+  const dateText = new Date().toLocaleString('en-PH', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  const c = appState.customer;
 
-  let offscreenContainer = null;
+  const itemRows = groups.map(group => {
+    const item = group.first;
+    const title = item.productTitle || DESIGN_TITLES[item.designCode] || item.shortName || '';
+    const names = group.items.map(line => {
+      const label = cartItemNameLabel(line);
+      return label ? `${escapeHtml(label)} <span class="os-muted">×${line.quantity}</span>` : `<span class="os-muted">No name ×${line.quantity}</span>`;
+    }).join('<br>');
+    return `
+      <tr>
+        <td><strong>${escapeHtml(item.sizeName)}</strong><br><span class="os-muted">${escapeHtml(item.designCode)}${title ? ` · ${escapeHtml(title)}` : ''}</span></td>
+        <td>${names}</td>
+        <td class="os-num">${group.quantity}</td>
+        <td class="os-num">${peso(group.subtotal)}</td>
+      </tr>`;
+  }).join('');
 
+  const freeRow = totals.freeTags > 0 ? `
+      <tr class="os-free-row">
+        <td><strong>🎁 FREE ${FREE_ITEM_NAME}</strong><br><span class="os-muted">Christmas promo</span></td>
+        <td><span class="os-muted">We'll message you for the names</span></td>
+        <td class="os-num">${totals.freeTags}</td>
+        <td class="os-num">${peso(0)}</td>
+      </tr>` : '';
+
+  const slip = DOM.printableJobOrderSlip || document.getElementById('printableJobOrderSlip');
+  slip.innerHTML = `
+    <div class="os-sheet" id="orderSummarySheet">
+      <div class="os-head">
+        <div class="os-brand brand-name-word">Printelio</div>
+        <div class="os-ref">
+          <div class="os-ref-label">Order Summary</div>
+          <div class="os-ref-num" id="joReferenceNumber">${escapeHtml(refNo)}</div>
+          <div class="os-muted">${escapeHtml(dateText)}</div>
+        </div>
+      </div>
+
+      <div class="os-customer">
+        <div><span>Name</span><strong>${escapeHtml(c.fullName)}</strong></div>
+        <div><span>Contact</span><strong>${escapeHtml(c.contactNumber)}</strong></div>
+        <div><span>Facebook / IG</span><strong>${escapeHtml(c.socialHandle)}</strong></div>
+        <div><span>Courier</span><strong>${escapeHtml(c.courier)}</strong></div>
+        <div><span>Payment</span><strong>${escapeHtml(c.payment)}</strong></div>
+        <div class="os-wide"><span>Address</span><strong>${escapeHtml(c.address)}</strong></div>
+      </div>
+
+      <table class="os-items">
+        <thead><tr><th>Item</th><th>Names</th><th class="os-num">Qty</th><th class="os-num">Amount</th></tr></thead>
+        <tbody>${itemRows}${freeRow}</tbody>
+      </table>
+
+      <div class="os-total"><span>Total</span><strong>${peso(totals.productTotal)}</strong></div>
+      <p class="os-ship">Shipping fee not yet included.</p>
+      <p class="os-pay">Payment details will be sent privately to your Facebook/IG or contact number. Please include <strong>${escapeHtml(refNo)}</strong> when you send your proof of payment. We start printing once payment is confirmed.</p>
+    </div>`;
+
+  return totals.productTotal;
+}
+
+// Saves the order summary as a PNG image (replaces the old PDF download).
+async function downloadOrderSummaryImage() {
+  const btn = document.getElementById('btnDownloadImage');
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) { btn.innerHTML = '⏳ Saving image...'; btn.disabled = true; }
+  let holder = null;
   try {
-    const slipElement = DOM.printableJobOrderSlip || document.getElementById('printableJobOrderSlip');
-    if (!slipElement) {
-      throw new Error('Slip element not found');
-    }
+    const sheet = document.getElementById('orderSummarySheet');
+    if (!sheet) throw new Error('Order summary not found');
+    if (typeof window.html2canvas === 'undefined') throw new Error('html2canvas is not loaded');
+    if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) { /* ignore */ } }
 
-    if (typeof window.html2canvas === 'undefined') {
-      throw new Error('html2canvas library is not loaded');
-    }
+    // Render a fixed-width copy off-screen so phones and desktops produce the same image.
+    holder = document.createElement('div');
+    holder.style.cssText = 'position:fixed;left:-10000px;top:0;width:600px;background:#ffffff;z-index:-1;';
+    const clone = sheet.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.classList.add('os-export');
+    holder.appendChild(clone);
+    document.body.appendChild(holder);
+    await new Promise(r => setTimeout(r, 100));
 
-    const jsPdfLib = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
-    if (!jsPdfLib) {
-      throw new Error('jsPDF library is not loaded');
-    }
-
-    // Ensure all custom web fonts ('Raleway', 'Playfair Display') are fully parsed and ready before render
-    if (document.fonts && document.fonts.ready) {
-      try {
-        await document.fonts.ready;
-      } catch (fontErr) {
-        console.warn('Font loading check:', fontErr);
-      }
-    }
-
-    // Create an offscreen wrapper with fixed desktop A4 dimensions (780px) positioned in document flow
-    offscreenContainer = document.createElement('div');
-    offscreenContainer.id = 'pdf-render-container';
-    offscreenContainer.style.position = 'fixed';
-    offscreenContainer.style.left = '0';
-    offscreenContainer.style.top = '0';
-    offscreenContainer.style.width = '780px';
-    offscreenContainer.style.minWidth = '780px';
-    offscreenContainer.style.maxWidth = '780px';
-    offscreenContainer.style.zIndex = '-9999';
-    offscreenContainer.style.background = '#ffffff';
-    offscreenContainer.style.opacity = '1';
-    offscreenContainer.style.pointerEvents = 'none';
-    offscreenContainer.style.overflow = 'visible';
-
-    // Clone the slip element and enforce desktop styling
-    const clone = slipElement.cloneNode(true);
-    clone.classList.add('pdf-render-mode');
-    clone.style.width = '780px';
-    clone.style.minWidth = '780px';
-    clone.style.maxWidth = '780px';
-    clone.style.padding = '28px';
-    clone.style.boxSizing = 'border-box';
-    clone.style.background = '#ffffff';
-    clone.style.color = '#111827';
-    clone.style.fontFamily = "'Raleway', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    clone.style.lineHeight = '1.5';
-    clone.style.display = 'block';
-
-    // 1. Force typography: enforce 'Raleway' universally, and 'Playfair Display' for the brand name
-    clone.querySelectorAll('*').forEach(el => {
-      if (el.classList.contains('brand-name-word') || el.closest('.brand-name-word')) {
-        el.style.fontFamily = "'Playfair Display', Georgia, serif";
-        el.style.fontStyle = 'italic';
-        el.style.fontWeight = '800';
-        el.style.color = '#111827';
-        el.style.webkitTextFillColor = '#111827';
-        el.style.fontSize = '1.75rem';
-      } else {
-        el.style.fontFamily = "'Raleway', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-      }
-    });
-
-    // 2. Header Pills: Yellow (Job Order No.), Purple (Date), Cyan (Status)
-    const headerBox = clone.querySelector('.job-order-header-box');
-    if (headerBox) {
-      headerBox.style.display = 'flex';
-      headerBox.style.justifyContent = 'space-between';
-      headerBox.style.alignItems = 'flex-start';
-      headerBox.style.paddingBottom = '18px';
-      headerBox.style.borderBottom = '2px solid #e2e8f0';
-      headerBox.style.marginBottom = '20px';
-    }
-
-    const refEl = clone.querySelector('.jo-ref-num');
-    if (refEl) {
-      refEl.style.background = '#ffde59';
-      refEl.style.color = '#111827';
-      refEl.style.border = '1px solid #e5c545';
-      refEl.style.padding = '5px 14px';
-      refEl.style.borderRadius = '6px';
-      refEl.style.fontWeight = '800';
-      refEl.style.fontSize = '1.2rem';
-      refEl.style.display = 'inline-block';
-      refEl.style.letterSpacing = '0.05em';
-    }
-
-    const badgesWrap = clone.querySelector('.jo-meta-badges-wrap');
-    if (badgesWrap) {
-      badgesWrap.style.display = 'flex';
-      badgesWrap.style.alignItems = 'center';
-      badgesWrap.style.gap = '8px';
-      badgesWrap.style.marginTop = '8px';
-    }
-
-    const dateEl = clone.querySelector('#joDateGenerated') || clone.querySelector('.jo-date-badge');
-    if (dateEl) {
-      dateEl.style.background = '#f5e6fb';
-      dateEl.style.color = '#721c8a';
-      dateEl.style.border = '1px solid #d8b4fe';
-      dateEl.style.padding = '4px 12px';
-      dateEl.style.borderRadius = '9999px';
-      dateEl.style.fontWeight = '700';
-      dateEl.style.fontSize = '0.75rem';
-      dateEl.style.display = 'inline-block';
-    }
-
-    const statusEl = clone.querySelector('#joStatusBadge') || clone.querySelector('.jo-status-badge');
-    if (statusEl) {
-      statusEl.style.background = '#e0fbfb';
-      statusEl.style.color = '#007c7c';
-      statusEl.style.border = '1px solid #5eead4';
-      statusEl.style.padding = '4px 12px';
-      statusEl.style.borderRadius = '9999px';
-      statusEl.style.fontWeight = '700';
-      statusEl.style.fontSize = '0.75rem';
-      statusEl.style.display = 'inline-block';
-    }
-
-    // 3. Customer Info Card: rounded container, light gray/purple background, uppercase headers
-    const custGrid = clone.querySelector('.customer-info-grid');
-    if (custGrid) {
-      custGrid.style.background = '#f8f6fc';
-      custGrid.style.border = '1.5px solid #ece7f6';
-      custGrid.style.borderRadius = '12px';
-      custGrid.style.padding = '18px 20px';
-      custGrid.style.display = 'grid';
-      custGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
-      custGrid.style.gap = '14px 16px';
-      custGrid.style.marginBottom = '20px';
-    }
-
-    clone.querySelectorAll('.info-item-label').forEach(lbl => {
-      lbl.style.fontSize = '0.72rem';
-      lbl.style.textTransform = 'uppercase';
-      lbl.style.letterSpacing = '0.06em';
-      lbl.style.color = '#6b7280';
-      lbl.style.fontWeight = '800';
-      lbl.style.marginBottom = '3px';
-    });
-
-    clone.querySelectorAll('.info-item-value').forEach(val => {
-      val.style.fontSize = '0.925rem';
-      val.style.fontWeight = '700';
-      val.style.color = '#111827';
-      val.style.wordBreak = 'break-word';
-    });
-
-    clone.querySelectorAll('.info-item[style*="grid-column"]').forEach(item => {
-      item.style.gridColumn = '1 / -1';
-    });
-
-    // 4. Product Table: dark navy/black header row (#1A202C), white bold text, badges, row borders
-    const tableWrap = clone.querySelector('.jo-table-wrapper');
-    if (tableWrap) {
-      tableWrap.style.overflow = 'visible';
-      tableWrap.style.width = '100%';
-      tableWrap.style.border = '1.5px solid #e2e8f0';
-      tableWrap.style.borderRadius = '10px';
-      tableWrap.style.marginBottom = '16px';
-      tableWrap.style.background = '#ffffff';
-    }
-
-    const table = clone.querySelector('.jo-table');
-    if (table) {
-      table.style.width = '100%';
-      table.style.borderCollapse = 'collapse';
-    }
-
-    clone.querySelectorAll('.jo-table th').forEach(th => {
-      th.style.background = '#1A202C';
-      th.style.color = '#ffffff';
-      th.style.padding = '12px 14px';
-      th.style.fontWeight = '800';
-      th.style.fontSize = '0.78rem';
-      th.style.textTransform = 'uppercase';
-      th.style.letterSpacing = '0.05em';
-      th.style.border = 'none';
-    });
-
-    clone.querySelectorAll('.jo-table tbody td').forEach(td => {
-      td.style.padding = '12px 14px';
-      td.style.borderBottom = '1px solid #e2e8f0';
-      td.style.fontSize = '0.85rem';
-      td.style.color = '#1e293b';
-      td.style.verticalAlign = 'middle';
-    });
-
-    clone.querySelectorAll('.jo-design-badge').forEach(badge => {
-      if (badge.classList.contains('jo-design-badge-custom') || badge.textContent.includes('CUSTOM')) {
-        badge.style.background = '#721c8a';
-        badge.style.color = '#ffffff';
-      } else {
-        badge.style.background = '#000000';
-        badge.style.color = '#ffde59';
-      }
-      badge.style.padding = '3px 10px';
-      badge.style.borderRadius = '6px';
-      badge.style.fontWeight = '800';
-      badge.style.fontSize = '0.75rem';
-      badge.style.letterSpacing = '0.04em';
-      badge.style.display = 'inline-block';
-    });
-
-    clone.querySelectorAll('.jo-table tfoot td').forEach(td => {
-      td.style.padding = '14px 16px';
-      td.style.background = '#f8fafc';
-      td.style.borderTop = '2px solid #e2e8f0';
-      td.style.fontWeight = '800';
-    });
-
-    const totalVal = clone.querySelector('#joModalGrandTotal');
-    if (totalVal) {
-      totalVal.style.fontWeight = '800';
-      totalVal.style.fontSize = '1.25rem';
-      totalVal.style.color = '#111827';
-    }
-
-    // 5. Notice Cards: shipping banner (light yellow) & payment notice (solid black with yellow header)
-    const shipBanner = clone.querySelector('.shipping-disclaimer-banner');
-    if (shipBanner) {
-      shipBanner.style.background = '#fffbeb';
-      shipBanner.style.color = '#92400e';
-      shipBanner.style.border = '1.5px solid #fde68a';
-      shipBanner.style.borderRadius = '8px';
-      shipBanner.style.padding = '12px 16px';
-      shipBanner.style.fontWeight = '700';
-      shipBanner.style.fontSize = '0.85rem';
-      shipBanner.style.marginBottom = '16px';
-    }
-
-    const payBox = clone.querySelector('.payment-guidelines-box');
-    if (payBox) {
-      payBox.style.background = '#111827';
-      payBox.style.color = '#ffffff';
-      payBox.style.border = '1px solid #374151';
-      payBox.style.borderRadius = '12px';
-      payBox.style.padding = '20px';
-    }
-
-    const payTitle = clone.querySelector('.payment-guidelines-title');
-    if (payTitle) {
-      payTitle.style.color = '#ffde59';
-      payTitle.style.fontWeight = '800';
-      payTitle.style.fontSize = '0.95rem';
-      payTitle.style.textTransform = 'uppercase';
-      payTitle.style.letterSpacing = '0.05em';
-      payTitle.style.marginBottom = '10px';
-    }
-
-    const payList = clone.querySelector('.payment-details-list');
-    if (payList) {
-      payList.style.color = 'rgba(255, 255, 255, 0.9)';
-      payList.style.fontSize = '0.85rem';
-      payList.style.lineHeight = '1.65';
-    }
-
-    clone.querySelectorAll('.payment-details-list strong').forEach(st => {
-      st.style.color = '#ffffff';
-      st.style.fontWeight = '700';
-    });
-
-    offscreenContainer.appendChild(clone);
-    document.body.appendChild(offscreenContainer);
-
-    // Brief paint pause so browser finishes layout and typography paint
-    await new Promise(resolve => setTimeout(resolve, 150));
-
-    // Capture offscreen desktop layout using html2canvas
-    const canvas = await window.html2canvas(clone, {
-      scale: 2,
-      useCORS: true,
-      logging: false,
-      backgroundColor: '#ffffff',
-      width: 780,
-      windowWidth: 1024,
-      scrollX: 0,
-      scrollY: 0
-    });
-
-    const imgData = canvas.toDataURL('image/jpeg', 0.95);
-    const refNo = (DOM.joReferenceNumber ? DOM.joReferenceNumber.textContent.trim() : '') || 'JobOrder';
-    const fileName = `Printelio_Job_Order_${refNo}.pdf`;
-
-    const pdf = new jsPdfLib({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4'
-    });
-
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    
-    // Fit canvas aspect ratio to A4 page width with 8mm margins
-    const margin = 8;
-    const contentWidth = pdfWidth - (margin * 2);
-    const contentHeight = (canvas.height * contentWidth) / canvas.width;
-
-    if (contentHeight <= (pdfHeight - margin * 2)) {
-      pdf.addImage(imgData, 'JPEG', margin, margin, contentWidth, contentHeight);
-    } else {
-      let heightLeft = contentHeight;
-      let position = margin;
-      
-      pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
-      heightLeft -= (pdfHeight - margin * 2);
-
-      while (heightLeft > 0) {
-        position = heightLeft - contentHeight + margin;
-        pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
-        heightLeft -= (pdfHeight - margin * 2);
-      }
-    }
-
-    // Save and prompt download for both Desktop and Mobile devices
-    pdf.save(fileName);
-    showToast('Job Order PDF generated successfully!');
-
+    const canvas = await window.html2canvas(clone, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false, width: 600, windowWidth: 1024 });
+    const refNo = (sheet.querySelector('.os-ref-num')?.textContent || 'Order').trim();
+    const fileName = `Printelio_Order_${refNo}.png`;
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    if (!blob) throw new Error('Image could not be created');
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    showToast('Order summary saved as an image.');
   } catch (err) {
-    console.error('Error generating PDF:', err);
-    showToast('Could not save PDF automatically. Please screenshot your order slip.');
+    console.error('Error saving image:', err);
+    showToast('Could not save the image automatically. Please take a screenshot of your order summary.');
   } finally {
-    if (offscreenContainer && document.body.contains(offscreenContainer)) {
-      document.body.removeChild(offscreenContainer);
-    }
-    if (downloadBtn) {
-      downloadBtn.innerHTML = originalBtnText;
-      downloadBtn.disabled = false;
-    }
+    if (holder && holder.parentNode) holder.parentNode.removeChild(holder);
+    if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
   }
+}
+
+// Plain-text lines for the Google Sheet "orderItems" column (names and free tags included).
+function buildSheetOrderItemsText(totals) {
+  const lines = groupCartItems().map((group, idx) => {
+    const item = group.first;
+    const title = item.productTitle || DESIGN_TITLES[item.designCode] || '';
+    const names = orderGroupNamesText(group);
+    return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${title ? ` ("${title}")` : ''}${names ? ` | Names: ${names}` : ''} | Qty: ${group.quantity} | ${peso(group.subtotal)}`;
+  });
+  if (totals.freeTags > 0) {
+    lines.push(`${lines.length + 1}. FREE ${FREE_ITEM_NAME} (promo, ask buyer for names) | Qty: ${totals.freeTags} | ${peso(0)}`);
+  }
+  return lines.join('\n');
 }
 
 async function submitJobOrder() {
@@ -4112,28 +3915,12 @@ async function submitJobOrder() {
     return;
   }
 
-  // Ensure no customized items in cart have empty custom text
-  const emptyCustomizedCartItem = appState.cart.find(
-    item => item.isCustomized && (!item.customText || !item.customText.trim())
-  );
-  if (emptyCustomizedCartItem) {
-    showToast('A customized item is missing custom text. Please check your order details.');
-    if (DOM.checkoutSection) DOM.checkoutSection.scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-
-  // Also verify if any active product card has customization checked but empty text
-  const checkedEmptyInput = document.querySelector('.card-customization-box.active .card-custom-input');
-  if (checkedEmptyInput && !checkedEmptyInput.value.trim()) {
-    checkedEmptyInput.classList.add('has-error');
-    const parentBox = checkedEmptyInput.closest('.card-customization-box');
-    if (parentBox) {
-      const errMsg = parentBox.querySelector('.card-custom-error-msg');
-      if (errMsg) errMsg.style.display = 'block';
-      parentBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    checkedEmptyInput.focus();
-    showToast('Please enter the custom name or text to print, or uncheck the customization option.');
+  const totals = computeOrderTotals();
+  if (totals.envelopeShort > 0) {
+    renderPromoAndChecks(totals);
+    showToast(`Money envelopes need at least ${ENVELOPE_MIN_PCS} pcs per order. Please add ${totals.envelopeShort} more.`);
+    const warn = document.getElementById('envelopeMinWarning');
+    if (warn) warn.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
 
@@ -4144,8 +3931,6 @@ async function submitJobOrder() {
     return;
   }
 
-  // Update State from Form
-  const isCustomMade = DOM.selectOrderType ? DOM.selectOrderType.value.includes('Custom Made') : false;
   appState.customer = {
     fullName: DOM.inputFullName.value.trim(),
     contactNumber: DOM.inputContactNumber.value.trim(),
@@ -4153,17 +3938,12 @@ async function submitJobOrder() {
     courier: DOM.selectCourier.value,
     address: DOM.inputAddress.value.trim(),
     payment: DOM.selectPayment.value,
-    orderType: DOM.selectOrderType ? DOM.selectOrderType.value : 'Regular Purchase (Standard design, size & sheets)',
-    isCustomMade: isCustomMade,
-    customDimensions: (isCustomMade && DOM.inputCustomDimensions) ? DOM.inputCustomDimensions.value.trim() : '',
-    customSheetCount: (isCustomMade && DOM.inputCustomSheetCount) ? DOM.inputCustomSheetCount.value : '',
-    customInstructions: (isCustomMade && DOM.textareaCustomInstructions) ? DOM.textareaCustomInstructions.value.trim() : ''
+    orderType: 'Regular Purchase',
+    isCustomMade: false
   };
 
   const refNo = generateReferenceNumber();
   const grandTotal = buildJobOrderSlip(refNo);
-
-  // Show the modal slip to user immediately
   DOM.jobOrderModal.classList.add('active');
 
   const originalSubmitText = DOM.btnSubmitOrder ? DOM.btnSubmitOrder.innerHTML : '';
@@ -4173,32 +3953,10 @@ async function submitJobOrder() {
   }
 
   try {
-    // 1. Format plain-text itemized summary for sheet
-    const itemizedSummaryText = appState.cart.map((item, idx) => {
-      if (item.isCustomMade) {
-        return `${idx + 1}. [Custom Made] ${item.sizeName} (${item.sheetCount} sheets${item.extraSheets > 0 ? `, +${item.extraSheets} extra @ ₱${item.rate.toFixed(2)}/sh` : ''}) - Instructions: "${item.instructions}" | Qty: ${item.quantity} | ₱${item.subtotal.toFixed(2)}`;
-      }
-      const titleStr = (item.productTitle || DESIGN_TITLES[item.designCode]) ? ` ("${item.productTitle || DESIGN_TITLES[item.designCode]}")` : '';
-      const customStr = item.isCustomized ? ` [Custom: "${item.customText}"]` : '';
-      const sheetStr = item.hasSheets ? ` (${item.sheetCount} sheets)` : '';
-      const priceStr = item.isTba ? 'TBA' : `₱${item.subtotal.toFixed(2)}`;
-      return `${idx + 1}. ${item.sizeName} - Design: ${item.designCode}${titleStr}${sheetStr}${customStr} | Qty: ${item.quantity} | ${priceStr}`;
-    }).join('\n');
-
-    // 2. Extract selected design codes
     const uniqueDesignCodes = [...new Set(appState.cart.map(item => {
       const title = item.productTitle || DESIGN_TITLES[item.designCode];
       return title ? `${item.designCode} (${title})` : item.designCode;
     }))].join(', ');
-
-    // 3. Prepare Google Sheets Payload
-    const customItems = appState.cart.filter(i => i.isCustomMade);
-    const customDetailsSummary = appState.customer.isCustomMade
-      ? (customItems.length > 0
-          ? customItems.map(i => `[Custom Item] Size: ${i.sizeName} | Sheets: ${i.sheetCount} (+${i.extraSheets || 0} extra) | Instructions: ${i.instructions}`).join('; ')
-          : `[Custom Made] Size: ${DOM.selectCustomNotepadSize ? DOM.selectCustomNotepadSize.options[DOM.selectCustomNotepadSize.selectedIndex].text : ''} | Sheets: ${DOM.inputCustomSheetCount ? DOM.inputCustomSheetCount.value : 30} | Instructions: ${DOM.textareaCustomInstructions ? DOM.textareaCustomInstructions.value.trim() : ''}`
-        )
-      : 'Regular Purchase';
 
     const sheetPayload = {
       fullName: appState.customer.fullName,
@@ -4207,32 +3965,28 @@ async function submitJobOrder() {
       courier: appState.customer.courier,
       address: appState.customer.address,
       paymentMethod: appState.customer.payment,
-      orderType: appState.customer.orderType,
-      customSpecifications: customDetailsSummary,
+      orderType: `Regular Purchase | Ref: ${refNo}`,
+      customSpecifications: totals.freeTags > 0 ? `FREE ${FREE_ITEM_NAME}: ${totals.freeTags}` : '',
       designMotif: uniqueDesignCodes,
-      orderItems: itemizedSummaryText,
-      totalPrice: `₱${grandTotal.toFixed(2)}`
+      orderItems: `Ref: ${refNo}\n` + buildSheetOrderItemsText(totals),
+      totalPrice: peso(grandTotal)
     };
 
-    // 4. Send directly to Google Sheets Web App
     await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(sheetPayload)
     });
 
-    showToast(`Order submitted successfully! Your order has been recorded.`);
-
+    showToast('Order submitted! Please save your order summary image.');
   } catch (sheetError) {
     console.error('Google Sheets submission error:', sheetError);
-    showToast(`Job Order ${refNo} generated! Please download or screenshot your slip.`);
+    showToast(`Order ${refNo} created. Please save or screenshot your order summary.`);
   } finally {
     if (DOM.btnSubmitOrder) {
       DOM.btnSubmitOrder.disabled = false;
-      DOM.btnSubmitOrder.innerHTML = originalSubmitText || 'Submit Job Order';
+      DOM.btnSubmitOrder.innerHTML = originalSubmitText || 'Submit Order';
     }
   }
 }
@@ -4301,9 +4055,10 @@ function startNewOrder() {
   if (DOM.customerForm) DOM.customerForm.reset();
   if (DOM.checkoutSection) DOM.checkoutSection.style.display = 'none';
   switchToCatalogView();
+  switchMainCatalog(appState.currentCatalog || 'hardbound');
   syncCustomerSummaryDisplay();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  showToast('Ready for a new custom stationery order.');
+  showToast('Ready for a new order.');
 }
 
 // ============================================================================
@@ -4542,9 +4297,9 @@ function initEventListeners() {
     DOM.btnDoneOrder.addEventListener('click', startNewOrder);
   }
   
-  const downloadBtn = DOM.btnDownloadPdf || document.getElementById('btnDownloadPdf') || document.getElementById('btnDownloadImage');
+  const downloadBtn = document.getElementById('btnDownloadImage');
   if (downloadBtn) {
-    downloadBtn.addEventListener('click', downloadJobOrderAsPdf);
+    downloadBtn.addEventListener('click', downloadOrderSummaryImage);
   }
 
   if (DOM.jobOrderModal) {
@@ -4594,11 +4349,15 @@ function initEventListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialize gallery view with default Collections catalog & Christmas collection
-  switchMainCatalog('collections');
+  // 1. Landing page: Hardbound Notepads
+  switchMainCatalog('hardbound');
 
-  // 2. Initialize custom pricing formulas and preview
-  updateCustomPriceAndPreview();
+  // 2. Promo banner (FREE notecards)
+  const promoBanner = document.getElementById('promoBanner');
+  if (promoBanner) {
+    promoBanner.textContent = PROMO_BANNER_TEXT;
+    promoBanner.style.display = FREE_TAGS_PROMO_ON ? '' : 'none';
+  }
 
   // 3. Render cart (updates badge count and sets up initial view)
   renderCart();

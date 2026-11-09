@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Stylesheet. IMPORTANT: change the ?v= number on every deploy so phones load the newest file. -->
-  <link rel="stylesheet" href="style.css?v=20261109-3">
+  <link rel="stylesheet" href="style.css?v=20261110-1">
 </head>
 <body>
 
@@ -102,19 +102,19 @@
           <div class="category-tabs-container" id="categoryTabsContainer" style="display: none;">
             <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Catalog Size Categories">
               <button type="button" class="tab-btn active" id="tab3x3" data-category="3x3" role="tab" aria-selected="true" aria-controls="productGalleryGrid">
-                Square Notepad
+                Square
               </button>
               <button type="button" class="tab-btn" id="tabA6" data-category="A6" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                A6 Notepad
+                A6
               </button>
               <button type="button" class="tab-btn" id="tabA5" data-category="A5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                A5 Notepad
+                A5
               </button>
               <button type="button" class="tab-btn" id="tab2x35" data-category="2x3.5" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                Portrait Notecards
+                2×3.5 inches
               </button>
               <button type="button" class="tab-btn" id="tab4x3" data-category="4x3" role="tab" aria-selected="false" aria-controls="productGalleryGrid">
-                Landscape Notecards
+                4×3 inches
               </button>
             </div>
             
@@ -153,7 +153,7 @@
 
       <div class="cart-pane-footer" id="orderTotalsCard">
         <div class="promo-hint" id="promoHint" style="display: none;"></div>
-        <div class="envelope-min-warning" id="envelopeMinWarning" role="alert" style="display: none;"></div>
+        <div class="envelope-min-warning" id="envelopeMinWarning" aria-live="polite" style="display: none;"></div>
         <div class="totals-row grand-total-row" id="grandTotalRow">
           <span>Total</span>
           <span class="grand-total-amount" id="summaryGrandTotal">₱0.00</span>
@@ -331,6 +331,6 @@
 
   <!-- JavaScript -->
   <!-- IMPORTANT: change the ?v= number on every deploy (same number as style.css above). -->
-  <script src="script.js?v=20261109-3"></script>
+  <script src="script.js?v=20261110-1"></script>
 </body>
 </html>

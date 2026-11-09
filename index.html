@@ -8,76 +8,54 @@
   <meta property="og:title" content="Printelio - Custom Stationery Order Request">
   <meta property="og:description" content="Mobile-responsive custom stationery order-taking web application for Printelio with dynamic design code mockups, dynamic pricing, and job order generation.">
   
-  <!-- Browser Caching Hints for Static Assets -->
-  <meta http-equiv="Cache-Control" content="max-age=31536000, public">
 
   <!-- Preconnect & DNS-Prefetch Hints for External CDN Dependencies -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
-  <!-- External Script Libraries: html2canvas (order summary image) & EmailJS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-  <!-- Google Fonts: Playfair Display (Italic for *Printelio*) & Raleway (Clean sans-serif for all other UI) -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <!-- Google Fonts: Montserrat for all text. The Printelio logo is an image (images/printelio-logo-*.png). -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Stylesheet. IMPORTANT: change the ?v= number on every deploy so phones load the newest file. -->
+  <link rel="stylesheet" href="style.css?v=20261109-2">
 </head>
 <body>
 
   <!-- Top Full-Width Storefront Header -->
   <header class="site-header" id="siteHeader">
     <div class="site-header-inner">
-      <!-- TOP ROW: Desktop [Left: Custom Order | Center: Printelio | Right: Cart] / Mobile [Left: Hamburger | Center: Printelio | Right: Cart] -->
-      <div class="header-top-row" id="headerTopRow">
-        <!-- TOP LEFT: Desktop Custom Order OR Mobile Menu Toggle -->
-        <div class="header-top-left" id="headerTopLeft">
-          <button type="button" class="btn-mobile-menu-toggle" id="btnMobileMenuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
-            <svg class="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-        </div>
+      <!-- ONE ROW: [Menu (phone only)] [Printelio] [Product tabs] ........ [Facebook] [Instagram] [Cart] -->
+      <div class="header-row" id="headerRow">
+        <button type="button" class="btn-mobile-menu-toggle" id="btnMobileMenuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg class="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
 
-        <!-- TOP CENTER: Printelio Logo Wordmark -->
-        <div class="header-brand-container" id="headerBrandContainer">
-          <a href="#gallerySection" class="header-brand-link" id="mainBrandTitle" aria-label="Printelio Home">
-            <span class="brand-name-word">Printelio</span>
-          </a>
-        </div>
+        <a href="#gallerySection" class="header-brand-link" id="mainBrandTitle" aria-label="Printelio Home">
+          <img class="brand-logo" src="images/printelio-logo-white.png" alt="Printelio" width="900" height="198">
+        </a>
 
-        <!-- TOP RIGHT: Cart Action -->
-        <div class="header-top-right" id="headerTopRight">
-          <button type="button" class="header-cart-pill" id="btnHeaderCart" aria-label="View Order Summary and Cart">
+        <nav class="site-nav desktop-site-nav" id="catalogModeSwitcher" role="navigation" aria-label="Catalog Navigation">
+          <button type="button" class="site-nav-link active" id="btnCatalogHardbound" data-catalog="hardbound" aria-selected="true"><span class="nav-text">Hardbound Notepads</span><span class="catalog-mode-badge">NEW</span></button>
+          <button type="button" class="site-nav-link" id="btnCatalogNotepads" data-catalog="notepads" aria-selected="false"><span class="nav-text">Notepads</span></button>
+          <button type="button" class="site-nav-link" id="btnCatalogNotecards" data-catalog="notecards" aria-selected="false"><span class="nav-text">Notecards</span></button>
+          <button type="button" class="site-nav-link" id="btnCatalogEnvelopes" data-catalog="envelopes" aria-selected="false"><span class="nav-text">Money Envelopes</span></button>
+        </nav>
+
+        <div class="header-actions">
+          <a class="header-social" href="https://www.facebook.com/profile.php?id=61590360977892" target="_blank" rel="noopener" aria-label="Printelio on Facebook" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.5V21h3z"/></svg></a>
+          <a class="header-social" href="https://www.instagram.com/printelio_/" target="_blank" rel="noopener" aria-label="Printelio on Instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <button type="button" class="header-cart-pill" id="btnHeaderCart" aria-label="View cart">
             <span class="cart-icon">🛒</span>
             <span class="cart-text">Cart</span>
             <span class="cart-badge-pill" id="headerCartCount">0</span>
           </button>
         </div>
-      </div>
-
-      <!-- SECOND ROW: Centered Primary Navigation on Desktop (Hidden on Mobile) -->
-      <div class="header-bottom-row" id="headerBottomRow">
-        <nav class="site-nav desktop-site-nav" id="catalogModeSwitcher" role="navigation" aria-label="Catalog Navigation">
-          <button type="button" class="site-nav-link active" id="btnCatalogHardbound" data-catalog="hardbound" aria-selected="true"><span class="nav-text">Hardbound Notepads</span><span class="catalog-mode-badge">NEW</span></button>
-          <button type="button" class="site-nav-link" id="btnCatalogNotepads" data-catalog="notepads" aria-selected="false">
-            <span class="nav-text">Notepads</span>
-          </button>
-          <button type="button" class="site-nav-link" id="btnCatalogNotecards" data-catalog="notecards" aria-selected="false">
-            <span class="nav-text">Notecards</span>
-          </button>
-          <button type="button" class="site-nav-link" id="btnCatalogEnvelopes" data-catalog="envelopes" aria-selected="false"><span class="nav-text">Money Envelopes</span></button>
-        </nav>
       </div>
     </div>
 
@@ -85,7 +63,7 @@
     <div class="mobile-nav-backdrop" id="mobileNavBackdrop" aria-hidden="true"></div>
     <div class="mobile-nav-drawer" id="mobileNavDrawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation" aria-hidden="true">
       <div class="mobile-nav-header">
-        <span class="mobile-nav-brand">Printelio</span>
+        <img class="mobile-nav-logo" src="images/printelio-logo-white.png" alt="Printelio" width="900" height="198">
         <button type="button" class="btn-mobile-nav-close" id="btnMobileNavClose" aria-label="Close navigation menu">&times;</button>
       </div>
       <nav class="mobile-nav-menu" id="mobileNavMenu" role="navigation">
@@ -98,16 +76,19 @@
         </button>
         <button type="button" class="mobile-nav-link" id="btnMobileCatalogEnvelopes" data-catalog="envelopes"><span class="mobile-nav-text">Money Envelopes</span></button>
       </nav>
+      <div class="mobile-nav-socials">
+        <a href="https://www.facebook.com/profile.php?id=61590360977892" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.5V21h3z"/></svg><span>Facebook</span></a>
+        <a href="https://www.instagram.com/printelio_/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a>
+      </div>
     </div>
   </header>
 
-  <div class="promo-banner" id="promoBanner" role="note">🎁 FREE 2×3.5 notecards on orders ₱199+ · Available only until December 12</div>
+  <div class="promo-banner" id="promoBanner" role="note" style="display:none;"></div>
 
-  <div class="app-container" id="appRoot">
-    <!-- Main Content Area -->
-    <main class="main-content" id="mainContent">
+  <div class="app-container shop-layout" id="appRoot">
+    <!-- LEFT: product sliders -->
+    <main class="main-content catalog-pane" id="mainContent">
 
-      <!-- SECTION 1: Product Gallery View (Front & Center) -->
       <section class="gallery-section" id="gallerySection">
         <div class="gallery-header-box" id="galleryHeaderBox">
           <div class="gallery-title-wrap">
@@ -150,82 +131,64 @@
         </div>
       </section>
 
-      <!-- SECTION 4: Final Checkout / Order Summary Section (Hidden initially, revealed after adding to cart or clicking cart) -->
-      <section class="checkout-workflow-section" id="checkoutSection" style="display: none;">
-        <div class="checkout-section-header">
-          <div class="card-title-group">
-            <div class="step-indicator" id="checkoutStepIndicator">🛒</div>
-            <div>
-              <h2 class="card-title" id="checkoutSectionTitle">Review Order &amp; Checkout</h2>
-              <p class="card-subtitle">Review items in your order, enter delivery details, and submit your job order request</p>
-            </div>
-          </div>
+    </main>
+
+    <!-- RIGHT: cart panel (sticky column on desktop, slide-in panel on phones) -->
+    <aside class="cart-pane" id="cartPanel" aria-label="Your cart">
+      <div class="cart-pane-header">
+        <h2 class="cart-pane-title">Your Cart <span class="cart-items-count-badge" id="cartCountBadge">0 Items</span></h2>
+        <button type="button" class="cart-pane-close" id="btnCloseCartPanel" aria-label="Close cart">&times;</button>
+      </div>
+
+      <div class="cart-pane-body">
+        <!-- Empty Cart Notice -->
+        <div class="empty-cart-state" id="emptyCartState">
+          <div class="empty-cart-title">Your cart is empty</div>
+          <p class="empty-cart-text">Pick a design, type the name to print, then tap "+ Add to Cart".</p>
         </div>
 
-        <div class="checkout-layout-grid">
-          <!-- Left Column: Itemized Order Summary -->
-          <div class="checkout-column checkout-order-col">
-            <div class="card" id="orderSummaryCard">
-              <div class="card-header" id="summaryCardHeader">
-                <div class="card-title-group">
-                  <h3 class="card-title" id="summaryCardTitle" style="font-size: 1.15rem;">Selected Items</h3>
-                </div>
-                <div class="cart-header-actions" id="cartHeaderActions">
-                  <span class="cart-items-count-badge" id="cartCountBadge">0 Items</span>
-                </div>
-              </div>
+        <!-- Cart lines (rendered by script.js) -->
+        <div class="cart-items-container" id="cartItemsList" style="display: none;"></div>
+      </div>
 
-              <!-- Empty Cart Notice -->
-              <div class="empty-cart-state" id="emptyCartState">
-                <div class="empty-cart-title">Your Order is Empty</div>
-                <p class="empty-cart-text">Click "+ Add to Cart" on any product above to start your order.</p>
-              </div>
+      <div class="cart-pane-footer" id="orderTotalsCard">
+        <div class="promo-hint" id="promoHint" style="display: none;"></div>
+        <div class="envelope-min-warning" id="envelopeMinWarning" role="alert" style="display: none;"></div>
+        <div class="totals-row grand-total-row" id="grandTotalRow">
+          <span>Total</span>
+          <span class="grand-total-amount" id="summaryGrandTotal">₱0.00</span>
+        </div>
+        <div class="cart-ship-note">Shipping fee not yet included.</div>
+        <button type="button" class="btn btn-primary btn-checkout" id="btnCheckout" disabled>Checkout</button>
+      </div>
+    </aside>
+  </div>
 
-              <!-- Itemized Table / Cards Container -->
-              <div class="cart-items-container" id="cartItemsList" style="display: none;">
-                <!-- Rendered by JavaScript -->
-              </div>
+  <!-- Dark layer behind the cart panel on phones -->
+  <div class="cart-backdrop" id="cartBackdrop" aria-hidden="true"></div>
 
-              <!-- Calculated Total Display & Prominent Shipping Disclaimer -->
-              <div class="order-totals-card" id="orderTotalsCard">
-                <div class="promo-hint" id="promoHint" style="display: none;"></div>
-                <div class="envelope-min-warning" id="envelopeMinWarning" role="alert" style="display: none;"></div>
-                <div class="totals-row" id="subtotalRow">
-                  <span>Total Amount in Cart:</span>
-                  <span id="summarySubtotalAmount">₱0.00</span>
-                </div>
-                <div class="totals-row" id="shippingMethodRow">
-                  <span>Selected Courier:</span>
-                  <span id="summaryCourierDisplay" style="color: var(--brand-cyan);">Not Selected</span>
-                </div>
-                <div class="totals-row" id="paymentMethodRow">
-                  <span>Payment Mode:</span>
-                  <span id="summaryPaymentDisplay" style="color: var(--brand-yellow);">Not Selected</span>
-                </div>
-                
-                <div class="totals-row grand-total-row" id="grandTotalRow">
-                  <span>Calculated Total:</span>
-                  <span class="grand-total-amount" id="summaryGrandTotal">₱0.00</span>
-                </div>
+  <!-- Phone-only bottom cart bar -->
+  <div class="mobile-cart-bar" id="mobileCartBar">
+    <button type="button" class="mobile-cart-summary" id="btnMobileCartOpen" aria-label="View cart">
+      <span class="mcb-icon">🛒</span>
+      <span class="mcb-text"><strong id="mobileCartCount">0 items</strong><span id="mobileCartTotal">₱0.00</span></span>
+    </button>
+    <button type="button" class="btn btn-primary mobile-cart-checkout" id="btnMobileCheckout">Checkout</button>
+  </div>
 
-                <!-- Mandatory Prominent Shipping Fee Disclaimer -->
-                <div class="shipping-disclaimer-banner" id="shippingDisclaimerBanner">
-                  ⚠️ Note: Shipping fee is not yet included.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Customer & Delivery Information Form -->
-          <div class="checkout-column checkout-customer-col">
-            <div class="card" id="customerDetailsCard">
-              <div class="card-header" id="customerCardHeader">
-                <div class="card-title-group">
-                  <h3 class="card-title" id="customerCardTitle" style="font-size: 1.15rem;">Customer &amp; Delivery Details</h3>
-                </div>
-              </div>
-
-              <form id="customerForm" class="form-grid two-col" novalidate>
+  <!-- CHECKOUT POP-UP: customer & delivery details -->
+  <div class="modal-backdrop checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+    <div class="modal-dialog checkout-dialog">
+      <div class="checkout-modal-header">
+        <div>
+          <h2 id="checkoutModalTitle">Customer &amp; Delivery Details</h2>
+          <p>Order total: <strong id="checkoutModalTotal">₱0.00</strong> <span class="checkout-modal-muted">(shipping not included)</span></p>
+          <p class="checkout-modal-promo" id="checkoutModalPromo" style="display:none;"></p>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnCloseCheckout" aria-label="Close">&times;</button>
+      </div>
+      <div class="card" id="customerDetailsCard">
+        <form id="customerForm" class="form-grid two-col" novalidate>
                 <!-- Full Name -->
                 <div class="form-group grid-full" id="groupFullName">
                   <label for="inputFullName" class="form-label">
@@ -299,47 +262,50 @@
                   <span class="form-error-msg" id="errorAddress">Complete delivery address is required.</span>
                 </div>
 
-                <!-- Submit Job Order Button -->
-                <div class="form-group grid-full" style="margin-top: 12px;">
+                <div class="form-group grid-full checkout-submit-row">
+                  <p class="checkout-submit-error" id="checkoutSubmitError" role="alert" hidden></p>
                   <button type="button" class="btn btn-primary btn-large" id="btnSubmitOrder" style="width: 100%;">
                     Submit Order
                   </button>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <!-- Order Summary Modal -->
+  <!-- ORDER SUBMITTED POP-UP -->
   <div class="modal-backdrop" id="jobOrderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-dialog" id="jobOrderDialog">
-      <div class="modal-header" id="modalHeader">
-        <div>
-          <div class="brand-header-banner" style="padding: 2px 14px; margin-bottom: 4px; box-shadow: none; border-color: rgba(203,108,230,0.5);">
-            <span class="brand-name-word" style="font-size: 1.1rem;">Printelio</span>
-          </div>
-          <h2 class="card-title" id="modalTitle" style="color: #ffffff; font-size: 1.15rem; margin-top: 2px;">Your Order Summary</h2>
+    <div class="modal-dialog confirm-dialog" id="jobOrderDialog">
+      <div class="confirm-head">
+        <img class="confirm-logo" src="images/printelio-logo-black.png" alt="Printelio" width="900" height="198">
+        <div class="confirm-check" aria-hidden="true">✓</div>
+        <h2 id="modalTitle">Order submitted!</h2>
+        <p>Thank you for your order.</p>
+      </div>
+
+      <!-- Text order summary, filled by buildJobOrderSlip() in script.js -->
+      <div class="confirm-summary" id="printableJobOrderSlip"></div>
+
+      <div class="confirm-steps">
+        <div class="confirm-step"><span>1</span><p>Tap <strong>Save as Image</strong> to keep a copy of this summary.</p></div>
+        <div class="confirm-step"><span>2</span><p>Send this image to Printelio (FB or IG) or to your contact person.</p></div>
+      </div>
+
+      <!-- Shown on phones when the image can't be saved automatically -->
+      <div class="confirm-image-fallback" id="confirmImageFallback" hidden>
+        <p><strong>Press and hold the image below</strong>, then tap <strong>Save to Photos</strong> (iPhone) or <strong>Download image</strong> (Android).</p>
+        <img id="confirmImagePreview" alt="Your Printelio order summary">
+      </div>
+
+      <div class="confirm-actions">
+        <button type="button" class="btn btn-primary" id="btnDownloadImage">🖼️ Save as Image</button>
+        <a class="btn btn-outline btn-messenger" id="btnMessenger" href="https://m.me/61590360977892" target="_blank" rel="noopener">💬 Message us on Messenger</a>
+        <div class="confirm-socials">
+          <a href="https://www.facebook.com/profile.php?id=61590360977892" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/printelio_/" target="_blank" rel="noopener">Instagram</a>
         </div>
-        <button type="button" class="modal-close-btn" id="btnCloseModal" aria-label="Close modal">&times;</button>
+        <button type="button" class="btn btn-link-back" id="btnDoneOrder">← Back to Printelio</button>
       </div>
-
-      <div class="job-order-slip-body" id="printableJobOrderSlip">
-        <!-- Simplified order summary, built by buildJobOrderSlip() in script.js -->
-      </div>
-
-      <div class="modal-footer" id="modalFooter">
-        <button type="button" class="btn btn-outline" id="btnDownloadImage">
-          🖼️ Save as Image
-        </button>
-        <button type="button" class="btn btn-primary" id="btnDoneOrder">
-          Finish &amp; Start New Order
-        </button>
-      </div>
-
     </div>
   </div>
 
@@ -360,10 +326,11 @@
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
-  <div class="toast-container" id="toastContainer"></div>
+  <!-- Pop-up notifications (center of the screen) -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- JavaScript -->
-  <script src="script.js"></script>
+  <!-- IMPORTANT: change the ?v= number on every deploy (same number as style.css above). -->
+  <script src="script.js?v=20261109-2"></script>
 </body>
 </html>

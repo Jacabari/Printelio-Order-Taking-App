@@ -4476,3 +4476,62 @@ body { font-family: var(--font-main); font-variant-numeric: lining-nums; }
     .catalog-pane .product-gallery-grid.wme-gallery .wme-form { align-self: start; }
   }
 }
+
+/* ==========================================================================
+   NOV 9, 2026 UPDATE (round 3) — everything fits on one screen on desktop/laptop.
+   The product picture only uses the space left over (it never pushes the boxes taller),
+   and on shorter screens the boxes get more compact.
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .catalog-pane { overflow-y: auto; } /* scrolls only on very short screens, where it can't all fit */
+  .catalog-pane .gallery-section { flex: 1 1 auto; min-height: 0; }
+  .catalog-pane .product-gallery-grid.wme-gallery { flex: 1 1 auto; min-height: 0; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-preview {
+    position: relative; flex: 1 1 0; height: auto; min-height: 90px; padding: 0; overflow: hidden;
+  }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-image-button {
+    position: absolute; inset: 6px 42px; width: auto; height: auto;
+  }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-image {
+    width: 100%; height: 100%; min-height: 0; max-height: none; object-fit: contain;
+  }
+  @supports (grid-template-rows: subgrid) {
+    .catalog-pane .product-gallery-grid.wme-gallery { grid-auto-rows: auto minmax(90px, 1fr) auto auto auto auto; }
+    .catalog-pane .product-gallery-grid.wme-gallery .wme-preview { min-height: 90px; }
+  }
+}
+
+/* Shorter laptop screens: tighter spacing so all fields and buttons stay visible */
+@media (min-width: 1024px) and (max-height: 860px) {
+  .shop-layout.app-container { padding-top: 10px; padding-bottom: 10px; gap: 14px; }
+  .promo-banner { padding: 5px 16px; font-size: 0.8rem; }
+  .site-header-inner { padding-top: 6px; padding-bottom: 6px; }
+  .catalog-pane .gallery-header-box { padding: 6px 12px; margin-bottom: 8px; }
+  .catalog-pane .gallery-section-title { font-size: 1.1rem; }
+  .catalog-pane .gallery-section-subtitle { font-size: 0.76rem; }
+  .catalog-pane .category-tabs-container .tab-btn { min-height: 28px; padding: 4px 10px; font-size: 0.76rem; }
+  .catalog-pane .product-gallery-grid.wme-gallery { gap: 10px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-heading { padding: 7px 12px 3px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-heading h3 { font-size: 0.9rem; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-selected { padding: 3px 8px 0; font-size: 0.74rem; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-thumbnails { padding: 3px 10px 4px; gap: 5px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-thumb { flex-basis: 32px; width: 32px; height: 38px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-form { padding: 3px 12px; gap: 3px; }
+  .catalog-pane .wme-paper-options label { font-size: 0.74rem; }
+  .catalog-pane .wme-field { font-size: 0.74rem; gap: 2px; }
+  .catalog-pane .wme-field input { padding: 5px 9px; font-size: 0.82rem; }
+  .catalog-pane .wme-char-count { font-size: 0.68rem; margin-top: -1px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .product-card-footer { padding: 5px 12px 9px; gap: 5px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .product-price { font-size: 0.98rem; }
+  .catalog-pane .btn-card-add { padding: 7px 10px; font-size: 0.8rem; }
+  .cart-pane-header { padding: 9px 14px; }
+  .cart-pane-footer { padding: 9px 14px 11px; }
+  .btn-checkout { padding: 11px 16px; }
+}
+/* Very short screens: price and "per notepad" on one line, smaller thumbnails */
+@media (min-width: 1024px) and (max-height: 700px) {
+  .catalog-pane .product-card-footer small { display: none; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-thumb { flex-basis: 28px; width: 28px; height: 32px; }
+  .catalog-pane .gallery-section-subtitle { display: none; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-heading span { display: none; }
+}

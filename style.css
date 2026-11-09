@@ -4535,3 +4535,7 @@ body { font-family: var(--font-main); font-variant-numeric: lining-nums; }
   .catalog-pane .gallery-section-subtitle { display: none; }
   .catalog-pane .product-gallery-grid.wme-gallery .wme-heading span { display: none; }
 }
+
+/* Money envelope 5+ price tip in the cart (information, not an error) */
+.cart-pane-footer .envelope-min-warning { background: #f4ecfa; color: #4a1d5a; border-color: #e2c8ef; font-weight: 600; }
+.cart-pane-footer .envelope-min-warning strong { color: #2b0f36; }

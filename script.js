@@ -169,8 +169,30 @@ function promoItemsText(items) {
 }
 
 // Money envelopes are sold per piece, minimum 5 pieces per order (premium and standard can be mixed).
-const ENVELOPE_PRICES = { premium: 15, standard: 12 };
-const ENVELOPE_MIN_PCS = 5;
+// Money envelopes are sold per piece, no minimum order.
+// Volume price: 5 or more pieces of the SAME paper (any designs/names combined) get the lower price per piece.
+const ENVELOPE_PRICES = { premium: 20, standard: 15 };          // regular price per piece
+const ENVELOPE_BULK_PRICES = { premium: 16, standard: 12 };     // price per piece at 5+ pcs
+const ENVELOPE_BULK_MIN = 5;
+const ENVELOPE_MIN_PCS = 1; // no minimum order
+const ENVELOPE_PAPER_LABEL = { premium: 'Premium', standard: 'Standard' };
+
+function envelopePcsByPaper() {
+  const pcs = { premium: 0, standard: 0 };
+  appState.cart.forEach(item => { if (item.categoryKey === 'envelopes') pcs[item.paperQuality] = (pcs[item.paperQuality] || 0) + (item.quantity || 0); });
+  return pcs;
+}
+// Recomputes envelope prices in the cart (called on every cart change, so adding/removing updates the discount).
+function applyEnvelopePricing() {
+  const pcs = envelopePcsByPaper();
+  appState.cart.forEach(item => {
+    if (item.categoryKey !== 'envelopes') return;
+    const bulk = pcs[item.paperQuality] >= ENVELOPE_BULK_MIN;
+    item.unitPrice = bulk ? ENVELOPE_BULK_PRICES[item.paperQuality] : ENVELOPE_PRICES[item.paperQuality];
+    item.bulkPrice = bulk;
+    item.subtotal = item.unitPrice * item.quantity;
+  });
+}
 const CHRISTMAS_COLLECTION_PRICE = 299.00; // ₱299.00 per complete Christmas Collection set
 
 // ============================================================================
@@ -1749,8 +1771,11 @@ document.addEventListener('input', (e) => {
   counter.classList.toggle('over-limit', el.value.length > el.maxLength);
 });
 
+let envelopeCardUpdaters = []; // refresh each envelope card's price when the cart changes
+function refreshEnvelopeCardPrices() { envelopeCardUpdaters.forEach(fn => fn()); }
 function renderWeddingEnvelopeGallery() {
   if (!DOM.productGalleryGrid) return;
+  envelopeCardUpdaters = [];
   DOM.productGalleryGrid.innerHTML = '';
   DOM.productGalleryGrid.classList.add('wme-gallery');
   WEDDING_ENVELOPE_GROUPS.forEach(group => {
@@ -1768,8 +1793,8 @@ function renderWeddingEnvelopeGallery() {
       <div class="wme-form">
         <div class="wme-section-label">Paper</div>
         <div class="wme-paper-options">
-          <label><input type="radio" name="paper_${group.id}" value="premium" checked> Premium 108 gsm · ₱${ENVELOPE_PRICES.premium}</label>
-          <label><input type="radio" name="paper_${group.id}" value="standard"> Standard 80 gsm · ₱${ENVELOPE_PRICES.standard}</label>
+          <label><input type="radio" name="paper_${group.id}" value="premium" checked> Premium 108 gsm · ₱${ENVELOPE_PRICES.premium} (₱${ENVELOPE_BULK_PRICES.premium} for 5+)</label>
+          <label><input type="radio" name="paper_${group.id}" value="standard"> Standard 80 gsm · ₱${ENVELOPE_PRICES.standard} (₱${ENVELOPE_BULK_PRICES.standard} for 5+)</label>
         </div>
         ${group.id === 'monogram' ? '<label class="wme-field">Monogram (2 letters, free) <input class="wme-monogram" maxlength="2" placeholder="e.g. JM" autocomplete="off" required></label>' : ''}
         <label class="wme-field">${group.id === 'christmas' ? 'Names (free, 1 or 2 names)' : 'Names (free)'} <input class="wme-names wme-counted" maxlength="${ENVELOPE_NAME_LIMIT}" placeholder="${group.id === 'christmas' ? 'e.g. Julia or Julia & Marco' : 'e.g. Julia & Marco'}" autocomplete="off" required></label>
@@ -1778,8 +1803,8 @@ function renderWeddingEnvelopeGallery() {
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
-        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${ENVELOPE_PRICES.premium.toFixed(2)}</div><small>per envelope</small></div>
-          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease pieces">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="200" value="${ENVELOPE_MIN_PCS}" aria-label="Number of envelopes"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase pieces">+</button></div>
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${ENVELOPE_PRICES.premium.toFixed(2)}</div><small class="wme-price-note">per piece · ₱${ENVELOPE_BULK_PRICES.premium} each for 5+</small></div>
+          <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease pieces">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="200" value="1" aria-label="Number of envelopes"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase pieces">+</button></div>
         </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
       </div>`;
     let index = 0;
@@ -1828,11 +1853,22 @@ function renderWeddingEnvelopeGallery() {
       const code = group.codes[index];
       openImageLightbox(`images/${code}.webp`, WEDDING_ENVELOPE_TITLES[code], code);
     });
-    card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', () => { price.textContent = `₱${unitPrice().toFixed(2)}`; }));
+    const priceNote = card.querySelector('.wme-price-note');
+    // Card price: regular price, or the 5+ price when this quantity (plus what's already in the cart for this paper) reaches 5.
+    const updateEnvelopePrice = () => {
+      const paper = selectedPaper();
+      const total = (parseInt(qty.value, 10) || 1) + (envelopePcsByPaper()[paper] || 0);
+      const bulk = total >= ENVELOPE_BULK_MIN;
+      price.textContent = `₱${(bulk ? ENVELOPE_BULK_PRICES[paper] : ENVELOPE_PRICES[paper]).toFixed(2)}`;
+      priceNote.textContent = bulk ? `per piece · 5+ price` : `per piece · ₱${ENVELOPE_BULK_PRICES[paper]} each for 5+`;
+    };
+    envelopeCardUpdaters.push(() => { if (card.isConnected) updateEnvelopePrice(); });
+    card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', updateEnvelopePrice));
     const clampQty = () => { qty.value = String(Math.min(200, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
-    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); });
-    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(200,clampQty()+1); });
-    qty.addEventListener('change',clampQty);
+    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); updateEnvelopePrice(); });
+    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(200,clampQty()+1); updateEnvelopePrice(); });
+    qty.addEventListener('change', () => { clampQty(); updateEnvelopePrice(); });
+    qty.addEventListener('input', updateEnvelopePrice);
     const addBtn = card.querySelector('.wme-add');
     addBtn.addEventListener('click', () => {
       const monogramInput = card.querySelector('.wme-monogram');
@@ -1854,7 +1890,7 @@ function renderWeddingEnvelopeGallery() {
       const code = group.codes[index], paper = selectedPaper(), count = clampQty();
       const customText = [monogram ? `Monogram: ${monogram}` : '', `Names: ${names}`, dateInput ? `Wedding date: ${date}` : ''].filter(Boolean).join(' | ');
       const existing = appState.cart.find(item => item.categoryKey === 'envelopes' && item.designCode === code && item.paperQuality === paper && item.customText === customText);
-      if (existing) { existing.quantity += count; existing.subtotal = existing.quantity * existing.unitPrice; }
+      if (existing) { existing.quantity += count; }
       else appState.cart.push({
         id: 'wme_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), isCustomMade:false,
         categoryKey:'envelopes', categoryName:'Money Envelopes', sizeId:group.id === 'christmas' ? 'christmas-envelopes' : 'wedding-envelopes',
@@ -1866,8 +1902,13 @@ function renderWeddingEnvelopeGallery() {
         paperQuality:paper, isTba:false, unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
       });
       renderCart(); showCheckoutSection(false);
-      showToast(`Added ${count} pc(s) of ${WEDDING_ENVELOPE_TITLES[code]} (${code}) for "${names}" to order.`);
+      const paperPcs = envelopePcsByPaper()[paper];
+      const tip = paperPcs < ENVELOPE_BULK_MIN
+        ? ` Tip: get ${ENVELOPE_BULK_MIN - paperPcs} more ${ENVELOPE_PAPER_LABEL[paper]} to pay only ₱${ENVELOPE_BULK_PRICES[paper]} each.`
+        : ` 5+ price applied: ₱${ENVELOPE_BULK_PRICES[paper]} each.`;
+      showToast(`Added ${count} pc(s) of ${WEDDING_ENVELOPE_TITLES[code]} (${code}) for "${names}" to order.${tip}`);
       readyForAnotherName(addBtn, card.querySelector('.wme-names'));
+      updateEnvelopePrice();
     });
     selectDesign(0);
     DOM.productGalleryGrid.appendChild(card);
@@ -2034,7 +2075,7 @@ function renderNotecardSliderGallery(categoryKey) {
   DOM.productGalleryGrid.innerHTML = '';
   DOM.productGalleryGrid.classList.add('wme-gallery');
   const pricePerPack = categoryKey === '2x3.5' ? 89 : 129;
-  const sizeName = categoryKey === '2x3.5' ? '2 × 3.5 in Notecards (Portrait)' : '4 × 3 in Notecards (Landscape)';
+  const sizeName = categoryKey === '2x3.5' ? '2 × 3.5 in Notecards' : '4 × 3 in Notecards';
   const maxChars = NOTECARD_NAME_LIMITS[categoryKey] || 15;
   groups.forEach((group, groupIndex) => {
     const card = document.createElement('article');
@@ -2629,7 +2670,7 @@ const CATALOG_COPY = {
   },
   envelopes: {
     title: 'Money Envelopes',
-    subtitle: `Personalized money envelopes, sold per piece. Premium ₱${ENVELOPE_PRICES.premium} · Standard ₱${ENVELOPE_PRICES.standard}. Minimum ${ENVELOPE_MIN_PCS} pcs per order, mix any design.`
+    subtitle: `Personalized money envelopes, sold per piece. Premium ₱${ENVELOPE_PRICES.premium} (₱${ENVELOPE_BULK_PRICES.premium} each for 5+) · Standard ₱${ENVELOPE_PRICES.standard} (₱${ENVELOPE_BULK_PRICES.standard} each for 5+).`
   }
 };
 
@@ -3530,7 +3571,7 @@ function cartItemNameLabel(item) {
 }
 
 function cartGroupSpec(item) {
-  if (item.categoryKey === 'envelopes') return `Sold per piece • ${peso(item.unitPrice)} / pc`;
+  if (item.categoryKey === 'envelopes') return `Per piece • ${peso(item.unitPrice)} / pc${item.bulkPrice ? ' (5+ price)' : ''}`;
   if (item.categoryKey === 'hardbound') return `${item.dimensions} • 70 sheets • Free cover personalization`;
   if (item.hasSheets) return `${item.dimensions} • ${item.sheetCount} sheets • Free personalization`;
   if (item.cardCount || item.categoryKey === 'notecards') return `${item.dimensions || ''} • ${item.cardCount || 24} pcs (220 gsm) • Free personalization`;
@@ -3556,8 +3597,11 @@ function renderPromoAndChecks(totals) {
 
   const warn = document.getElementById('envelopeMinWarning');
   if (warn) {
-    if (totals.envelopeShort > 0) {
-      warn.innerHTML = `✉️ Money envelopes have a minimum of <strong>${ENVELOPE_MIN_PCS} pcs per order</strong>. You have ${totals.envelopePcs}. Please add ${totals.envelopeShort} more (any design or paper).`;
+    const pcs = envelopePcsByPaper();
+    const tips = Object.keys(pcs).filter(paper => pcs[paper] > 0 && pcs[paper] < ENVELOPE_BULK_MIN).map(paper =>
+      `✉️ Add <strong>${ENVELOPE_BULK_MIN - pcs[paper]} more ${ENVELOPE_PAPER_LABEL[paper]}</strong> envelope${ENVELOPE_BULK_MIN - pcs[paper] === 1 ? '' : 's'} (any design) to pay only <strong>₱${ENVELOPE_BULK_PRICES[paper]} each</strong> instead of ₱${ENVELOPE_PRICES[paper]}.`);
+    if (tips.length) {
+      warn.innerHTML = tips.join('<br>');
       warn.style.display = 'block';
     } else {
       warn.innerHTML = '';
@@ -3567,6 +3611,8 @@ function renderPromoAndChecks(totals) {
 }
 
 function renderCart() {
+  applyEnvelopePricing();
+  refreshEnvelopeCardPrices();
   const totalUnits = appState.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
   const groups = groupCartItems();
   const totals = computeOrderTotals();

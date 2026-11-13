@@ -143,6 +143,17 @@ const DESIGN_TITLES = {
   'NP_A6_Kuromi': 'Kuromi',
   'NP_A6_ToDoList': 'Tulip Blossom',
   'NP_A6_Lemon': 'Lemony Fresh',
+  'NP_A6_FLR_1': 'Wildflower Border',
+  'NP_A6_FLR_2': 'Midnight Blooms',
+  'NP_A6_FLR_3': 'Dusty Blue Leaves',
+  'NP_A6_PET_4': 'Ginger Kitty',
+  'NP_A6_PET_5': 'Meow Kitty Pile',
+  'NP_A6_PET_6': 'Lilac Puppies',
+  'NP_A6_PET_7': 'Corgi Donut',
+  'NP_A6_PET_8': 'Boho Puppy',
+  'NP_A6_PET_9': 'Hamster Hideout',
+  'NP_A6_PET_10': 'Pink Gingham Kitty',
+  'NP_A6_PET_11': 'Calico Banner',
   'NP_NHD_A6_01': 'Vintage Parchment Scroll',
   'NP_NHD_A6_02': "Explorer's Parchment",
   'NP_NHD_A6_03': 'Gazette Botanical',
@@ -477,6 +488,128 @@ const PRODUCT_CATALOG = [
     price: 59.00,
     tag: 'Botanical',
     motif: 'Vintage Newspaper & Botanical Flora'
+  },
+
+  {
+    code: 'NP_A6_FLR_1',
+    name: 'Wildflower Border',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Floral',
+    motif: 'Colorful Wildflower Frame'
+  },
+  {
+    code: 'NP_A6_FLR_2',
+    name: 'Midnight Blooms',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Floral',
+    motif: 'Navy Floral Header'
+  },
+  {
+    code: 'NP_A6_FLR_3',
+    name: 'Dusty Blue Leaves',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Floral',
+    motif: 'Dusty Blue Leaf Trim'
+  },
+  {
+    code: 'NP_A6_PET_4',
+    name: 'Ginger Kitty',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Orange Tabby Kitten'
+  },
+  {
+    code: 'NP_A6_PET_5',
+    name: 'Meow Kitty Pile',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Stacked Kittens & Meow Lettering'
+  },
+  {
+    code: 'NP_A6_PET_6',
+    name: 'Lilac Puppies',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Two Puppies on Lavender & Pink'
+  },
+  {
+    code: 'NP_A6_PET_7',
+    name: 'Corgi Donut',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Corgi in a Pink Donut'
+  },
+  {
+    code: 'NP_A6_PET_8',
+    name: 'Boho Puppy',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Earthy Boho Abstract Puppy'
+  },
+  {
+    code: 'NP_A6_PET_9',
+    name: 'Hamster Hideout',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Peeking Hamster'
+  },
+  {
+    code: 'NP_A6_PET_10',
+    name: 'Pink Gingham Kitty',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Pink Gingham & White Kitty'
+  },
+  {
+    code: 'NP_A6_PET_11',
+    name: 'Calico Banner',
+    category: 'A6',
+    sizeName: 'A6 Notepad (4 × 5.8 in)',
+    dimensions: '4 × 5.8 in',
+    sheets: 30,
+    price: 59.00,
+    tag: 'Pets',
+    motif: 'Calico Cat & Yellow Notes Banner'
   },
 
   // A5 Notepads (5.8 × 8.3 in, 30 sheets, ₱109.00, free personalization)
@@ -1685,6 +1818,17 @@ function getNotepadSliderGroups(categoryKey) {
   };
   if (categoryKey === '3x3') return split('Cat Series', p => p.tag === 'Cat Series', 'Everyday Notes');
   if (categoryKey === 'A5') return split('Planners', p => /Planner/i.test(p.tag || ''), 'Vintage & Botanical');
+  if (categoryKey === 'A6') {
+    const byCode = new Map(items.map(p => [p.code, p]));
+    const groups = [
+      { title: 'Characters', codes: ['NP_A6_Cinnamoroll', 'NP_A6_HelloKitty', 'NP_A6_Kuromi'] },
+      { title: 'Kitty Corner', codes: ['NP_A6_PET_4', 'NP_A6_PET_5', 'NP_A6_PET_10', 'NP_A6_PET_11'] },
+      { title: 'Pups & Pals', codes: ['NP_A6_PET_6', 'NP_A6_PET_7', 'NP_A6_PET_8', 'NP_A6_PET_9'] },
+      { title: 'Florals & Fresh', codes: ['NP_A6_FLR_1', 'NP_A6_FLR_2', 'NP_A6_FLR_3', 'NP_A6_Flower', 'NP_A6_ToDoList', 'NP_A6_Lemon'] },
+      { title: 'Vintage', codes: ['NP_NHD_A6_01', 'NP_NHD_A6_02', 'NP_NHD_A6_03'] }
+    ];
+    return groups.map(g => ({ title: g.title, items: g.codes.map(c => byCode.get(c)).filter(Boolean) })).filter(g => g.items.length > 0);
+  }
   return [{ title: 'A6 Notepads', items }].filter(g => g.items.length > 0);
 }
 

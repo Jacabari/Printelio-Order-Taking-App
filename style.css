@@ -4539,3 +4539,34 @@ body { font-family: var(--font-main); font-variant-numeric: lining-nums; }
 /* Money envelope 5+ price tip in the cart (information, not an error) */
 .cart-pane-footer .envelope-min-warning { background: #f4ecfa; color: #4a1d5a; border-color: #e2c8ef; font-weight: 600; }
 .cart-pane-footer .envelope-min-warning strong { color: #2b0f36; }
+
+/* ==========================================================================
+   NOV 14, 2026 UPDATE — slider cards keep their ORIGINAL size no matter how many groups there are.
+   Desktop & laptop: 2 boxes per row, big picture. More groups just make the product area scroll down.
+   (This replaces the Nov 9 "shrink everything to fit one screen" behaviour for the slider pages.)
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .catalog-pane .gallery-section { flex: 0 0 auto; min-height: auto; }
+  .catalog-pane .product-gallery-grid.wme-gallery {
+    flex: 0 0 auto; min-height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto; row-gap: 20px; column-gap: 20px; align-items: stretch;
+  }
+  .catalog-pane .product-gallery-grid.wme-gallery > .wme-card {
+    display: flex; flex-direction: column; grid-row: auto; grid-template-rows: none; height: auto; min-height: 0;
+  }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-heading { padding: 12px 16px 6px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-heading h3 { font-size: 1.05rem; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-preview {
+    position: relative; flex: 0 0 400px; height: 400px; min-height: 400px; padding: 0; overflow: hidden;
+  }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-image-button { position: absolute; inset: 8px 44px; width: auto; height: auto; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-image { width: 100%; height: 100%; min-height: 0; max-height: none; object-fit: contain; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-arrow { width: 34px; height: 40px; font-size: 26px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-selected { min-height: 44px; padding: 8px 12px 4px; font-size: 0.88rem; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-thumbnails { padding: 6px 16px 10px; gap: 8px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-thumb { flex: 0 0 52px; width: 52px; height: 60px; padding: 3px; border-radius: 8px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-form { padding: 8px 16px; gap: 6px; flex: 0 0 auto; align-self: auto; }
+  .catalog-pane .product-gallery-grid.wme-gallery .product-card-footer { padding: 10px 16px 14px; gap: 8px; margin-top: auto; }
+  .catalog-pane .product-gallery-grid.wme-gallery .product-price { font-size: 1.15rem; }
+}

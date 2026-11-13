@@ -14,133 +14,6 @@ const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63
 // 1. Data Models & Constants
 // ============================================================================
 
-// Exact A5 Notepad Design Codes
-const A5_NOTEPAD_DESIGNS = [
-  'Blue DP_A5',
-  'Pink DP_A5',
-  'Yellow DP_A5',
-  'WP1_A5',
-  'WP2_A5',
-  'WP3_A5',
-  'WP4_A5',
-  'WP5_A5',
-  'WP6_A5',
-  'WP7_A5',
-  'WP8_A5',
-  'NP_NHD_A5_01',
-  'NP_NHD_A5_02',
-  'NP_NHD_A5_03'
-];
-
-// Product Catalog & Pricing Matrix
-const PRODUCTS_DATA = {
-  notepads: {
-    categoryName: 'Notepads',
-    hasSheets: true,
-    isTba: false,
-    sizes: [
-      {
-        id: 'np-square',
-        name: 'Square Notepad (3 × 3 in) • 30 sheets',
-        shortName: 'Square Notepad',
-        dimensions: '3 × 3 in',
-        prices: { '30': 39 },
-        designs: [
-          'NP_SQ_CAT01',
-          'NP_SQ_CAT02',
-          'NP_SQ_CAT03',
-          'NP_SQ_CAT04',
-          'NP_SQ_CAT05',
-          'NP_SQ_CAT06',
-          'NP_SQ_MEMO',
-          'NP_SQ_MS_Blue',
-          'NP_SQ_MS_Pink',
-          'NP_SQ_MS_Purple',
-          'NP_SQ_NOTES1',
-          'NP_SQ_NOTES2',
-          'NP_SQ01',
-          'NP_SQ02',
-          'NP_SQ03',
-          'NP_SQ04',
-          'NP_SQ05'
-        ]
-      },
-      {
-        id: 'np-a6',
-        name: 'A6 Notepad (4 × 5.8 in) • 30 sheets',
-        shortName: 'A6 Notepad',
-        dimensions: '4 × 5.8 in',
-        prices: { '30': 59 },
-        designs: [
-          'NP_A6_Cinnamoroll',
-          'NP_A6_Flower',
-          'NP_A6_HelloKitty',
-          'NP_A6_Kuromi',
-          'NP_A6_ToDoList',
-          'NP_A6_Lemon',
-          'NP_NHD_A6_01',
-          'NP_NHD_A6_02',
-          'NP_NHD_A6_03'
-        ]
-      },
-      {
-        id: 'np-a5',
-        name: 'A5 Notepad (5.8 × 8.3 in) • 30 sheets',
-        shortName: 'A5 Notepad',
-        dimensions: '5.8 × 8.3 in',
-        prices: { '30': 109 },
-        designs: A5_NOTEPAD_DESIGNS
-      }
-    ]
-  },
-  notecards: {
-    categoryName: 'Notecards',
-    hasSheets: false,
-    isTba: false,
-    sizes: [
-      {
-        id: 'nc-portrait',
-        name: '2 x 3.5 in (24 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
-        shortName: '2 x 3.5 in Notecard',
-        dimensions: '2 × 3.5 in',
-        prices: { '24': 89 },
-        designs: [
-          'NCP_BLOOM_01', 'NCP_BLOOM_02', 'NCP_BLOOM_03', 'NCP_BLOOM_04', 'NCP_BLOOM_05',
-          'NCP_BLOOM_06', 'NCP_BLOOM_07', 'NCP_BLOOM_08', 'NCP_BLOOM_09', 'NCP_BLOOM_10'
-        ]
-      },
-      {
-        id: 'nc-landscape',
-        name: '4 x 3 in (24 pcs per pack | 220 gsm | FREE PERSONALIZATION)',
-        shortName: '4 x 3 in Notecard',
-        dimensions: '4 × 3 in',
-        prices: { '24': 129 },
-        designs: [
-          'NCL_BLOOM_01', 'NCL_BLOOM_02', 'NCL_BLOOM_03', 'NCL_BLOOM_04', 'NCL_BLOOM_05',
-          'NCL_BLOOM_06', 'NCL_BLOOM_07', 'NCL_BLOOM_08', 'NCL_BLOOM_09', 'NCL_BLOOM_10'
-        ]
-      }
-    ]
-  },
-  envelopes: {
-    categoryName: 'Money Envelopes',
-    hasSheets: false,
-    isTba: true,
-    sizes: [
-      {
-        id: 'me-standard',
-        name: 'Standard Size (3.5 x 6.5 in)',
-        shortName: 'Standard Money Envelope',
-        dimensions: '3.5 × 6.5 in',
-        prices: null,
-        designs: ['ME-001', 'ME-002', 'ME-003', 'ME-004']
-      }
-    ]
-  }
-};
-
-const CUSTOMIZATION_FEE = 0; // Personalization is now FREE on every product (kept at 0 for legacy code paths)
-
 // ---------------------------------------------------------------------------
 // Christmas promo (free items based on the product total, shipping not included).
 // - Set FREE_PROMO_ON to false to switch it off right away.
@@ -193,19 +66,12 @@ function applyEnvelopePricing() {
     item.subtotal = item.unitPrice * item.quantity;
   });
 }
-const CHRISTMAS_COLLECTION_PRICE = 299.00; // ₱299.00 per complete Christmas Collection set
 
 // ============================================================================
 // 1b. Gallery Catalog & Category Specifications
 // ============================================================================
 
 const CATEGORY_SPECS = {
-  'christmas': {
-    title: 'Christmas Collection',
-    specText: '🎄 Holiday Collection Set • 1 Notepad (30 sh) + 2 Notecards (48 pcs) + 5 Money Envelopes • FREE Personalization • ₱299.00 / set',
-    price: CHRISTMAS_COLLECTION_PRICE,
-    catalog: 'collections'
-  },
   '3x3': {
     title: 'Square Notepad (3 × 3 in)',
     specText: '3 × 3 inches • 30 Sheets • FREE personalization • ₱39.00 / pad',
@@ -239,7 +105,7 @@ const CATEGORY_SPECS = {
 };
 
 const DESIGN_TITLES = {
-  // Christmas Collection
+  // Christmas designs (shared by the Christmas notecards and Christmas money envelopes)
   'CC_00': 'Arctic',
   'CC_01': 'Poinsettia',
   'CC_02': 'Woodland',
@@ -770,180 +636,6 @@ const PRODUCT_CATALOG = [
   },
 
   // ==========================================================================
-  // CHRISTMAS COLLECTION (1 Notepad + Notecards in 2 sizes + 5 Money Envelopes)
-  // ==========================================================================
-  {
-    code: 'CC_00',
-    name: 'Arctic',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Arctic Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_01',
-    name: 'Poinsettia',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Poinsettia Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_02',
-    name: 'Woodland',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Woodland Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_03',
-    name: 'Pine',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Pine Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_04',
-    name: 'Cane',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Cane Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_05',
-    name: 'Peppermint',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Peppermint Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_06',
-    name: 'Mittens',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Mittens Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_07',
-    name: 'Frosty',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Frosty Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_08',
-    name: 'Bows',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Bows Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-  {
-    code: 'CC_09',
-    name: 'Dots',
-    category: 'christmas',
-    catalogType: 'collections',
-    sizeName: 'Christmas Collection Set',
-    dimensions: '1 A6 Notepad (30 sh) • 2 × 3.5 in Notecard Set (24 pcs) • 4 × 3 in Notecard Set (24 pcs) • 5 envelopes',
-    sheets: 30,
-    cardCount: 48,
-    envelopeCount: 5,
-    price: CHRISTMAS_COLLECTION_PRICE,
-    freePersonalization: true,
-    tag: 'Christmas Set',
-    motif: 'Dots Holiday Stationery Collection',
-    isNewArrival: true,
-    collection: 'christmas'
-  },
-
-  // ==========================================================================
   // NOTECARDS: 2x3.5 inches (24 pcs per pack | 220 gsm | FREE PERSONALIZATION) - ₱89
   // ==========================================================================
   {
@@ -1297,29 +989,14 @@ const PRODUCT_CATALOG = [
 // ============================================================================
 
 const appState = {
-  currentCatalog: 'collections',
-  activeGalleryTab: 'christmas', // 'christmas' (default), '3x3', 'A6', 'A5', '2x3.5', '4x3'
-  currentCategory: 'notepads',
-  selectedSizeId: 'np-square',
-  selectedSheetCount: '30',
-  selectedDesignCode: '',
-  isCustomized: false,
-  customText: '',
-  quantity: 1,
+  currentCatalog: 'hardbound', // 'hardbound' | 'notepads' | 'notecards' | 'envelopes'
+  activeGalleryTab: 'hardbound', // 'hardbound' | '3x3' | 'A6' | 'A5' | '2x3.5' | '4x3' | 'wedding-envelopes'
   cart: [],
-  customer: {
-    fullName: '',
-    contactNumber: '',
-    socialHandle: '',
-    courier: '',
-    address: '',
-    payment: '',
-    orderType: '',
-    isCustomMade: false,
-    customDimensions: '',
-    customSheetCount: 30,
-    customInstructions: ''
-  }
+  customer: {},
+  lastOrder: null,
+  orderImage: null,
+  pendingOrder: null, // same order being retried after a failed send (keeps its reference number)
+  submitting: false
 };
 
 // ============================================================================
@@ -1327,165 +1004,53 @@ const appState = {
 // ============================================================================
 
 const DOM = {
-  // Gallery Section & Category Tabs Navigation
-  gallerySection: document.getElementById('gallerySection'),
-  gallerySectionTitle: document.getElementById('gallerySectionTitle'),
-  gallerySectionSubtitle: document.getElementById('gallerySectionSubtitle'),
-  catalogModeSwitcher: document.getElementById('catalogModeSwitcher'),
-  btnCatalogCollections: document.getElementById('btnCatalogCollections'),
-  btnCatalogNotepads: document.getElementById('btnCatalogNotepads'),
-  btnCatalogNotecards: document.getElementById('btnCatalogNotecards'),
   btnCatalogEnvelopes: document.getElementById('btnCatalogEnvelopes'),
-  btnMobileCatalogEnvelopes: document.getElementById('btnMobileCatalogEnvelopes'),
   btnCatalogHardbound: document.getElementById('btnCatalogHardbound'),
-  btnMobileCatalogHardbound: document.getElementById('btnMobileCatalogHardbound'),
-  categoryTabsContainer: document.getElementById('categoryTabsContainer'),
-  categoryTabs: document.querySelectorAll('#categoryTabs .tab-btn'),
-  tabChristmas: document.getElementById('tabChristmas'),
-  tab3x3: document.getElementById('tab3x3'),
-  tabA6: document.getElementById('tabA6'),
-  tabA5: document.getElementById('tabA5'),
-  tab2x35: document.getElementById('tab2x35'),
-  tab4x3: document.getElementById('tab4x3'),
-  categorySpecPill: document.getElementById('categorySpecPill'),
-  categorySpecIcon: document.getElementById('categorySpecIcon'),
-  categorySpecText: document.getElementById('categorySpecText'),
-  productGalleryGrid: document.getElementById('productGalleryGrid'),
-
-  // Custom CTA Banner & Section
-  customOrderCtaBanner: document.getElementById('customOrderCtaBanner'),
-  btnOpenCustomOrder: document.getElementById('btnOpenCustomOrder'),
-  btnCloseCustomSection: document.getElementById('btnCloseCustomSection'),
-  btnBackToCatalog: document.getElementById('btnBackToCatalog'),
-  customOrderingSection: document.getElementById('customOrderingSection'),
-  customTermsBanner: document.getElementById('customTermsBanner'),
-  customSectionTitle: document.getElementById('customSectionTitle'),
-  selectCustomCategory: document.getElementById('selectCustomCategory'),
-  labelCustomSize: document.getElementById('labelCustomSize'),
-  labelCustomCount: document.getElementById('labelCustomCount'),
-  customTermsList: document.getElementById('customTermsList'),
-
-  // Header Actions
-  btnHeaderCustom: document.getElementById('btnHeaderCustom'),
+  btnCatalogNotecards: document.getElementById('btnCatalogNotecards'),
+  btnCatalogNotepads: document.getElementById('btnCatalogNotepads'),
+  btnCloseImageLightbox: document.getElementById('btnCloseImageLightbox'),
+  btnDoneOrder: document.getElementById('btnDoneOrder'),
   btnHeaderCart: document.getElementById('btnHeaderCart'),
-  headerCartCount: document.getElementById('headerCartCount'),
-
-  // Mobile Navigation Drawer Controls
+  btnMobileCatalogEnvelopes: document.getElementById('btnMobileCatalogEnvelopes'),
+  btnMobileCatalogHardbound: document.getElementById('btnMobileCatalogHardbound'),
+  btnMobileCatalogNotecards: document.getElementById('btnMobileCatalogNotecards'),
+  btnMobileCatalogNotepads: document.getElementById('btnMobileCatalogNotepads'),
   btnMobileMenuToggle: document.getElementById('btnMobileMenuToggle'),
   btnMobileNavClose: document.getElementById('btnMobileNavClose'),
-  mobileNavDrawer: document.getElementById('mobileNavDrawer'),
-  mobileNavBackdrop: document.getElementById('mobileNavBackdrop'),
-  btnMobileCatalogCollections: document.getElementById('btnMobileCatalogCollections'),
-  btnMobileCatalogNotepads: document.getElementById('btnMobileCatalogNotepads'),
-  btnMobileCatalogNotecards: document.getElementById('btnMobileCatalogNotecards'),
-  btnMobileCustomOrder: document.getElementById('btnMobileCustomOrder'),
-
-  // Product Selection Card & Groups (Legacy / fallback references)
-  productSelectionCard: document.getElementById('productSelectionCard'),
-  sizeOptionsContainer: document.getElementById('sizeOptionsContainer'),
-  designSelectionBox: document.getElementById('designSelectionBox'),
-  itemActionBar: document.getElementById('itemActionBar'),
-  tabNotepads: document.getElementById('tabNotepads'),
-  tabNotecards: document.getElementById('tabNotecards'),
-  tabEnvelopes: document.getElementById('tabEnvelopes'),
-  categoryBadge: document.getElementById('categoryBadge'),
-  sizeCardsGrid: document.getElementById('sizeCardsGrid'),
-  sheetCountGroup: document.getElementById('sheetCountGroup'),
-  radioSheet30: document.getElementById('radioSheet30'),
-  radioSheet50: document.getElementById('radioSheet50'),
-  selectDesignCode: document.getElementById('selectDesignCode'),
-  designDescriptionText: document.getElementById('designDescriptionText'),
-  designPreviewCaption: document.getElementById('designPreviewCaption'),
-  designMockupImg: document.getElementById('designMockupImg'),
-  customizationContainer: document.getElementById('customizationContainer'),
-  checkCustomization: document.getElementById('checkCustomization'),
-  customInputsCollapse: document.getElementById('customInputsCollapse'),
-  inputCustomText: document.getElementById('inputCustomText'),
-  currentUnitPrice: document.getElementById('currentUnitPrice'),
-  currentPriceBreakdown: document.getElementById('currentPriceBreakdown'),
-  inputQuantity: document.getElementById('inputQuantity'),
-  btnQtyMinus: document.getElementById('btnQtyMinus'),
-  btnQtyPlus: document.getElementById('btnQtyPlus'),
-  btnAddToCart: document.getElementById('btnAddToCart'),
-  standardOrderingSection: document.getElementById('standardOrderingSection'),
-  productCardTitle: document.getElementById('productCardTitle'),
-  productCardSubtitle: document.getElementById('productCardSubtitle'),
-
-  // Custom Made Form Controls & 1:1 Live Preview (Preserved)
-  selectCustomNotepadSize: document.getElementById('selectCustomNotepadSize'),
-  inputCustomSheetCount: document.getElementById('inputCustomSheetCount'),
-  textareaCustomInstructions: document.getElementById('textareaCustomInstructions'),
-  customSizeRateHint: document.getElementById('customSizeRateHint'),
-  customSheetCountHint: document.getElementById('customSheetCountHint'),
-  customMockupPreviewWrapper: document.getElementById('customMockupPreviewWrapper'),
-  customPreviewSizeBadge: document.getElementById('customPreviewSizeBadge'),
-  customPreviewSheetsBadge: document.getElementById('customPreviewSheetsBadge'),
-  customPreviewInstructionsText: document.getElementById('customPreviewInstructionsText'),
-  customPreviewPriceTag: document.getElementById('customPreviewPriceTag'),
-  customUnitPriceDisplay: document.getElementById('customUnitPriceDisplay'),
-  customPriceBreakdownDisplay: document.getElementById('customPriceBreakdownDisplay'),
-  inputCustomQuantity: document.getElementById('inputCustomQuantity'),
-  btnCustomQtyMinus: document.getElementById('btnCustomQtyMinus'),
-  btnCustomQtyPlus: document.getElementById('btnCustomQtyPlus'),
-  btnAddCustomToCart: document.getElementById('btnAddCustomToCart'),
-
-  // Checkout Section & Customer Form
-  checkoutSection: document.getElementById('checkoutSection'),
-  customerDetailsCard: document.getElementById('customerDetailsCard'),
-  customerForm: document.getElementById('customerForm'),
-  inputFullName: document.getElementById('inputFullName'),
-  inputContactNumber: document.getElementById('inputContactNumber'),
-  inputSocialHandle: document.getElementById('inputSocialHandle'),
-  selectCourier: document.getElementById('selectCourier'),
-  inputAddress: document.getElementById('inputAddress'),
-  selectPayment: document.getElementById('selectPayment'),
-  selectOrderType: document.getElementById('selectOrderType'),
-  customMadeContainer: document.getElementById('customMadeContainer'),
-  inputCustomDimensions: document.getElementById('inputCustomDimensions'),
-  
-  // Cart & Order Summary
-  emptyCartState: document.getElementById('emptyCartState'),
-  cartItemsList: document.getElementById('cartItemsList'),
-  cartCountBadge: document.getElementById('cartCountBadge'),
-  summarySubtotalAmount: document.getElementById('summarySubtotalAmount'),
-  summaryCourierDisplay: document.getElementById('summaryCourierDisplay'),
-  summaryPaymentDisplay: document.getElementById('summaryPaymentDisplay'),
-  summaryOrderTypeDisplay: document.getElementById('summaryOrderTypeDisplay'),
-  summaryGrandTotal: document.getElementById('summaryGrandTotal'),
   btnSubmitOrder: document.getElementById('btnSubmitOrder'),
-  
-  // Modal & Slip Elements
-  jobOrderModal: document.getElementById('jobOrderModal'),
-  printableJobOrderSlip: document.getElementById('printableJobOrderSlip'),
-  btnCloseModal: document.getElementById('btnCloseModal'),
-  btnDownloadPdf: document.getElementById('btnDownloadPdf') || document.getElementById('btnDownloadImage'),
-  btnDoneOrder: document.getElementById('btnDoneOrder'),
-  joReferenceNumber: document.getElementById('joReferenceNumber'),
-  joDateGenerated: document.getElementById('joDateGenerated'),
-  joCustomerName: document.getElementById('joCustomerName'),
-  joCustomerContact: document.getElementById('joCustomerContact'),
-  joCustomerSocial: document.getElementById('joCustomerSocial'),
-  joCourier: document.getElementById('joCourier'),
-  joCustomerAddress: document.getElementById('joCustomerAddress'),
-  joPayment: document.getElementById('joPayment'),
-  joOrderType: document.getElementById('joOrderType'),
-  joCustomMadeDetailsRow: document.getElementById('joCustomMadeDetailsRow'),
-  joCustomMadeDetails: document.getElementById('joCustomMadeDetails'),
-  joTableBody: document.getElementById('joTableBody'),
-  joModalGrandTotal: document.getElementById('joModalGrandTotal'),
-  paymentInstructionsText: document.getElementById('paymentInstructionsText'),
-  toastContainer: document.getElementById('toastContainer'),
-
-  // Image Preview Lightbox Modal Elements
-  imageLightboxModal: document.getElementById('imageLightboxModal'),
+  cartCountBadge: document.getElementById('cartCountBadge'),
+  cartItemsList: document.getElementById('cartItemsList'),
+  categorySpecPill: document.getElementById('categorySpecPill'),
+  categorySpecText: document.getElementById('categorySpecText'),
+  categoryTabs: document.querySelectorAll('#categoryTabs .tab-btn'),
+  categoryTabsContainer: document.getElementById('categoryTabsContainer'),
+  customerForm: document.getElementById('customerForm'),
+  emptyCartState: document.getElementById('emptyCartState'),
+  gallerySectionSubtitle: document.getElementById('gallerySectionSubtitle'),
+  gallerySectionTitle: document.getElementById('gallerySectionTitle'),
+  headerCartCount: document.getElementById('headerCartCount'),
   imageLightboxBackdrop: document.getElementById('imageLightboxBackdrop'),
-  btnCloseImageLightbox: document.getElementById('btnCloseImageLightbox'),
-  imageLightboxContainer: document.getElementById('imageLightboxContainer'),
-  imageLightboxContent: document.getElementById('imageLightboxContent'),
-  lightboxPreviewImage: document.getElementById('lightboxPreviewImage'),
-  lightboxCaption: document.getElementById('lightboxCaption'),
+  imageLightboxModal: document.getElementById('imageLightboxModal'),
+  inputAddress: document.getElementById('inputAddress'),
+  inputContactNumber: document.getElementById('inputContactNumber'),
+  inputFullName: document.getElementById('inputFullName'),
+  inputSocialHandle: document.getElementById('inputSocialHandle'),
+  jobOrderModal: document.getElementById('jobOrderModal'),
   lightboxCode: document.getElementById('lightboxCode'),
-  lightboxTitle: document.getElementById('lightboxTitle')
+  lightboxPreviewImage: document.getElementById('lightboxPreviewImage'),
+  lightboxTitle: document.getElementById('lightboxTitle'),
+  mobileNavBackdrop: document.getElementById('mobileNavBackdrop'),
+  mobileNavDrawer: document.getElementById('mobileNavDrawer'),
+  productGalleryGrid: document.getElementById('productGalleryGrid'),
+  selectCourier: document.getElementById('selectCourier'),
+  selectPayment: document.getElementById('selectPayment'),
+  summaryGrandTotal: document.getElementById('summaryGrandTotal'),
+  tab2x35: document.getElementById('tab2x35'),
+  tab3x3: document.getElementById('tab3x3'),
+  tab4x3: document.getElementById('tab4x3'),
+  tabA5: document.getElementById('tabA5'),
+  tabA6: document.getElementById('tabA6'),
+  toastContainer: document.getElementById('toastContainer')
 };
 
 // ============================================================================
@@ -1570,61 +1135,6 @@ function getProductMockupSvg(code, name, category, tag) {
     return 'data:image/svg+xml;utf8,' + encodeURIComponent(notecardSvg).replace(/'/g, '%27');
   }
 
-  // Check for Christmas Collections
-  if (category === 'christmas' || code.startsWith('CC_')) {
-    const christmasSvg = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="100%" height="100%">
-  <defs>
-    <linearGradient id="xmasGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#fff8f8"/>
-    </linearGradient>
-    <filter id="xmasShadow" x="-10%" y="-10%" width="125%" height="125%">
-      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1b1822" flood-opacity="0.12"/>
-    </filter>
-  </defs>
-  <rect width="320" height="320" fill="#fcf4f4"/>
-  
-  <g filter="url(#xmasShadow)">
-    <rect x="28" y="26" width="264" height="268" rx="10" fill="url(#xmasGrad)" stroke="#eed5d5" stroke-width="1.5"/>
-    <rect x="28" y="26" width="264" height="28" rx="6" fill="#1b1822"/>
-    
-    <!-- Top Header -->
-    <text x="160" y="45" font-family="Raleway, -apple-system, sans-serif" font-size="9.5" font-weight="800" fill="#ffde59" text-anchor="middle" letter-spacing="1.5">
-      PRINTELIO • CHRISTMAS COLLECTION
-    </text>
-    
-    <!-- Holiday Badge & Motif -->
-    <circle cx="68" cy="88" r="22" fill="#c9184a" fill-opacity="0.15"/>
-    <text x="68" y="96" font-size="22" text-anchor="middle">🎄</text>
-    
-    <text x="100" y="80" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#c9184a" letter-spacing="1">
-      HOLIDAY COLLECTION SET
-    </text>
-    <text x="100" y="98" font-family="Playfair Display, Georgia, serif" font-size="16" font-weight="700" fill="#1b1822">
-      ${name}
-    </text>
-    <text x="100" y="113" font-family="Raleway, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#756f86" letter-spacing="1">
-      ${code}
-    </text>
-
-    <!-- Collection Contents Checklist -->
-    <rect x="42" y="126" width="236" height="96" rx="8" fill="#ffffff" stroke="#f0e2e2" stroke-width="1"/>
-    <text x="54" y="146" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#2d6a4f">✓ 1 Notepad (30 sheets)</text>
-    <text x="54" y="166" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#2d6a4f">✓ Notecards in 2 sizes (24 pcs each)</text>
-    <text x="54" y="186" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#2d6a4f">✓ 5 Money Envelopes</text>
-    <text x="54" y="206" font-family="Raleway, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#b241ce">✨ FREE Personalization Included</text>
-
-    <!-- Bottom Specs Pill -->
-    <rect x="42" y="234" width="236" height="26" rx="6" fill="#f8f4f9" stroke="#e8d8ee" stroke-width="1"/>
-    <text x="160" y="251" font-family="Raleway, -apple-system, sans-serif" font-size="9.5" font-weight="800" fill="#721c8a" text-anchor="middle">
-      Complete Christmas Stationery Set
-    </text>
-  </g>
-</svg>`.trim();
-    return 'data:image/svg+xml;utf8,' + encodeURIComponent(christmasSvg).replace(/'/g, '%27');
-  }
-
   let headerColor = '#cb6ce6';
   let accentBadge = '#ffde59';
   let iconEmoji = '📝';
@@ -1632,7 +1142,7 @@ function getProductMockupSvg(code, name, category, tag) {
   if (tag.includes('Teacher') || code.includes('_TD')) {
     iconEmoji = '🍎';
     headerColor = '#e76f51';
-  } else if (tag.includes('Christmas') || code.startsWith('CC_')) {
+  } else if (tag.includes('Christmas')) {
     iconEmoji = '🎄';
     headerColor = '#c9184a';
   } else if (tag.includes('Cat')) {
@@ -1892,7 +1402,7 @@ function renderWeddingEnvelopeGallery() {
       const existing = appState.cart.find(item => item.categoryKey === 'envelopes' && item.designCode === code && item.paperQuality === paper && item.customText === customText);
       if (existing) { existing.quantity += count; }
       else appState.cart.push({
-        id: 'wme_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), isCustomMade:false,
+        id: 'wme_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
         categoryKey:'envelopes', categoryName:'Money Envelopes', sizeId:group.id === 'christmas' ? 'christmas-envelopes' : 'wedding-envelopes',
         sizeName:`Money Envelope · ${paper === 'premium' ? 'Premium 108' : 'Standard 80'} GSM`,
         shortName:WEDDING_ENVELOPE_TITLES[code], productTitle:WEDDING_ENVELOPE_TITLES[code],
@@ -2024,7 +1534,7 @@ function renderHardboundGallery() {
       const existing = appState.cart.find(item => item.categoryKey === 'hardbound' && item.designCode === code && item.sizeId === `hardbound-${size.toLowerCase()}` && item.customText === customText);
       if (existing) { existing.quantity += count; existing.subtotal = existing.quantity * existing.unitPrice; }
       else appState.cart.push({
-        id: 'hbn_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), isCustomMade:false,
+        id: 'hbn_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
         categoryKey:'hardbound', categoryName:'Hardbound Notepads', sizeId:`hardbound-${size.toLowerCase()}`,
         sizeName:`${size} Hardbound Notepad`, shortName:HARDBOUND_TITLES[code], productTitle:HARDBOUND_TITLES[code],
         dimensions:size === 'A6' ? 'A6' : 'A5', hasSheets:true, sheetCount:70, cardCount:null,
@@ -2699,7 +2209,6 @@ function switchMainCatalog(catalogType) {
   const showTabs = (catalogType === 'notepads' || catalogType === 'notecards');
   if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = showTabs ? 'flex' : 'none';
   if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none'; // prices are in the heading
-  if (DOM.tabChristmas) DOM.tabChristmas.style.display = 'none';
   const notepadTab = catalogType === 'notepads' ? 'inline-flex' : 'none';
   const notecardTab = catalogType === 'notecards' ? 'inline-flex' : 'none';
   if (DOM.tab3x3) DOM.tab3x3.style.display = notepadTab;
@@ -2752,10 +2261,9 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
   const unitPrice = product.price; // personalization is free
   const displayTitle = DESIGN_TITLES[product.code] || product.name;
   const isNotecards = (product.catalogType === 'notecards' || Boolean(product.cardCount && !product.envelopeCount));
-  const isCollection = (product.catalogType === 'collections' || product.category === 'christmas');
 
   const existingIndex = appState.cart.findIndex(
-    item => !item.isCustomMade && 
+    item =>
             item.designCode === product.code && 
             item.sizeId === product.category &&
             Boolean(item.isCustomized) === Boolean(isCustomized) &&
@@ -2770,15 +2278,14 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
   } else {
     const cartItem = {
       id: 'gallery_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-      isCustomMade: false,
-      categoryKey: isCollection ? 'collections' : (isNotecards ? 'notecards' : 'notepads'),
-      categoryName: isCollection ? 'Christmas Collection' : (isNotecards ? 'Notecards' : 'Notepads'),
+      categoryKey: isNotecards ? 'notecards' : 'notepads',
+      categoryName: isNotecards ? 'Notecards' : 'Notepads',
       sizeId: product.category,
       sizeName: product.sizeName,
       shortName: displayTitle,
       productTitle: displayTitle,
       dimensions: product.dimensions,
-      hasSheets: !isNotecards && !isCollection,
+      hasSheets: !isNotecards,
       sheetCount: product.sheets || product.cardCount || 30,
       cardCount: product.cardCount || null,
       freePersonalization: true,
@@ -2806,201 +2313,21 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
 // View-Switching Logic (Notepad Catalog vs. Custom Made Specification Form)
 // --------------------------------------------------------------------------
 
-function switchToCustomView() {
-  // 1. Completely hide the Notepad Catalog view and CTA banner
-  if (DOM.gallerySection) {
-    DOM.gallerySection.style.display = 'none';
-  }
-  if (DOM.customOrderCtaBanner) {
-    DOM.customOrderCtaBanner.style.display = 'none';
-  }
 
-  // 2. Display the Custom Made configuration form
-  if (DOM.customOrderingSection) {
-    DOM.customOrderingSection.style.display = 'block';
-  }
 
-  // 3. Ensure custom quantity starts at MOQ (3 pads)
-  if (DOM.inputCustomQuantity && (!DOM.inputCustomQuantity.value || parseInt(DOM.inputCustomQuantity.value, 10) < 3)) {
-    DOM.inputCustomQuantity.value = '3';
-  }
-
-  updateCustomPriceAndPreview();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function switchToCatalogView() {
-  // 1. Hide the Custom Made configuration form
-  if (DOM.customOrderingSection) {
-    DOM.customOrderingSection.style.display = 'none';
-  }
-
-  // 2. Restore the Notepad Catalog view (keep bottom CTA banner hidden)
-  if (DOM.gallerySection) {
-    DOM.gallerySection.style.display = '';
-  }
-  if (DOM.customOrderCtaBanner) {
-    DOM.customOrderCtaBanner.style.display = 'none';
-  }
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-const openCustomOrderSection = switchToCustomView;
-const closeCustomOrderSection = switchToCatalogView;
 
 // ============================================================================
 // 4. Dynamic Design Code Dropdown Population & Image Preview
 // ============================================================================
 
-function getDesignCodesForCurrentSelection() {
-  const categoryData = PRODUCTS_DATA[appState.currentCategory];
-  if (!categoryData) return [];
 
-  const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId);
-  if (sizeObj && sizeObj.designs) {
-    return sizeObj.designs;
-  }
 
-  if (appState.currentCategory === 'notepads' && appState.selectedSizeId === 'np-a5') {
-    return A5_NOTEPAD_DESIGNS;
-  }
-
-  return [];
-}
-
-function populateDesignDropdown() {
-  const designCodes = getDesignCodesForCurrentSelection();
-  
-  DOM.selectDesignCode.innerHTML = '';
-
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.textContent = '-- Select Design Code --';
-  DOM.selectDesignCode.appendChild(defaultOption);
-
-  designCodes.forEach(code => {
-    const opt = document.createElement('option');
-    opt.value = code;
-    opt.textContent = code;
-    DOM.selectDesignCode.appendChild(opt);
-  });
-
-  if (designCodes.includes(appState.selectedDesignCode)) {
-    DOM.selectDesignCode.value = appState.selectedDesignCode;
-  } else {
-    appState.selectedDesignCode = '';
-    DOM.selectDesignCode.value = '';
-  }
-
-  updatePreviewImage();
-}
-
-function updatePreviewImage() {
-  const selectedCode = appState.selectedDesignCode;
-
-  if (!DOM.designMockupImg) return;
-
-  DOM.designMockupImg.loading = 'lazy';
-  DOM.designMockupImg.decoding = 'async';
-
-  if (!selectedCode) {
-    DOM.designMockupImg.src = '';
-    DOM.designMockupImg.alt = 'Select a design code to view preview';
-    if (DOM.designDescriptionText) {
-      DOM.designDescriptionText.textContent = 'Please select a design code to load the preview image.';
-    }
-    if (DOM.designPreviewCaption) {
-      DOM.designPreviewCaption.textContent = 'Select a design code to preview';
-    }
-    return;
-  }
-
-  if (DOM.designDescriptionText) {
-    DOM.designDescriptionText.textContent = `Previewing design code: ${selectedCode}`;
-  }
-  if (DOM.designPreviewCaption) {
-    DOM.designPreviewCaption.textContent = `Design: ${selectedCode}`;
-  }
-
-  DOM.designMockupImg.alt = `Design Preview: ${selectedCode}`;
-
-  DOM.designMockupImg.onerror = function() {
-    this.onerror = null;
-    this.alt = 'Image not found';
-    if (DOM.designDescriptionText) {
-      DOM.designDescriptionText.textContent = `Preview image for "${selectedCode}" could not be loaded.`;
-    }
-    if (DOM.designPreviewCaption) {
-      DOM.designPreviewCaption.textContent = `Image not found for "${selectedCode}"`;
-    }
-  };
-
-  DOM.designMockupImg.src = 'images/' + encodeURIComponent(selectedCode) + '.webp';
-}
 
 // ============================================================================
 // 5. Category & Size Selection
 // ============================================================================
 
-function switchCategory(categoryKey) {
-  if (!PRODUCTS_DATA[categoryKey]) return;
-  
-  appState.currentCategory = categoryKey;
-  const categoryData = PRODUCTS_DATA[categoryKey];
-  
-  DOM.categoryTabs.forEach(tab => {
-    const isCurrent = tab.dataset.category === categoryKey;
-    tab.classList.toggle('active', isCurrent);
-    tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
-  });
 
-  if (DOM.categoryBadge) {
-    DOM.categoryBadge.textContent = categoryData.categoryName;
-  }
-
-  if (DOM.sheetCountGroup) {
-    DOM.sheetCountGroup.style.display = 'none';
-  }
-
-  renderSizeOptions();
-  populateDesignDropdown();
-  updatePricePreview();
-}
-
-function renderSizeOptions() {
-  const categoryData = PRODUCTS_DATA[appState.currentCategory];
-  DOM.sizeCardsGrid.innerHTML = '';
-
-  if (!categoryData.sizes.some(s => s.id === appState.selectedSizeId)) {
-    appState.selectedSizeId = categoryData.sizes[0].id;
-  }
-
-  DOM.sizeCardsGrid.className = `cards-grid ${categoryData.sizes.length === 3 ? 'three-col' : categoryData.sizes.length === 2 ? 'two-col' : ''}`;
-
-  categoryData.sizes.forEach(size => {
-    const isChecked = size.id === appState.selectedSizeId;
-    
-    const cardHtml = `
-      <label class="radio-card-label" for="size-${size.id}">
-        <input type="radio" name="sizeOption" id="size-${size.id}" value="${size.id}" class="radio-card-input" ${isChecked ? 'checked' : ''}>
-        <div class="radio-card-content">
-          <div class="spec-name">${size.name}</div>
-        </div>
-      </label>
-    `;
-
-    DOM.sizeCardsGrid.insertAdjacentHTML('beforeend', cardHtml);
-  });
-
-  DOM.sizeCardsGrid.querySelectorAll('input[name="sizeOption"]').forEach(input => {
-    input.addEventListener('change', (e) => {
-      appState.selectedSizeId = e.target.value;
-      populateDesignDropdown();
-      updatePricePreview();
-    });
-  });
-}
 
 // ============================================================================
 // 6. Dynamic Price Calculation Engine
@@ -3054,464 +2381,17 @@ const CUSTOM_NOTECARD_CONFIG = {
   }
 };
 
-function calculateCustomNotepadPrice(sizeKey, sheetCount) {
-  const config = CUSTOM_NOTEPAD_CONFIG[sizeKey] || CUSTOM_NOTEPAD_CONFIG.square;
-  const count = parseInt(sheetCount, 10);
-  const validCount = (!isNaN(count) && count >= 30) ? count : 30;
-  const extraSheets = Math.max(0, validCount - 30);
-  const extraCost = extraSheets * config.perSheetRate;
-  const totalPrice = config.basePrice + extraCost;
 
-  let breakdown = `Base: ₱${config.basePrice.toFixed(2)} (30 sheets)`;
-  if (extraSheets > 0) {
-    breakdown += ` + ${extraSheets} extra sheets (₱${config.perSheetRate.toFixed(2)}/sh = ₱${extraCost.toFixed(2)})`;
-  }
 
-  return {
-    config,
-    sheetCount: validCount,
-    extraSheets,
-    basePrice: config.basePrice,
-    perSheetRate: config.perSheetRate,
-    extraCost,
-    totalPrice,
-    breakdownText: breakdown
-  };
-}
 
-function calculateCustomNotecardPrice(sizeKey, cardCount) {
-  const config = (sizeKey === 'nc-4x3' || sizeKey === '4x3') ? CUSTOM_NOTECARD_CONFIG['nc-4x3'] : CUSTOM_NOTECARD_CONFIG['nc-2x35'];
-  const count = parseInt(cardCount, 10);
-  const validCount = (!isNaN(count) && count >= config.baseCount) ? count : config.baseCount;
-  const extraCards = Math.max(0, validCount - config.baseCount);
-  const extraCost = extraCards * config.perCardRate;
-  const totalPrice = config.basePrice + extraCost;
 
-  let breakdown = `Base: ₱${config.basePrice.toFixed(2)} (${config.baseCount} pcs)`;
-  if (extraCards > 0) {
-    breakdown += ` + ${extraCards} extra cards (₱${config.perCardRate.toFixed(2)}/card = ₱${extraCost.toFixed(2)})`;
-  }
 
-  return {
-    config,
-    cardCount: validCount,
-    extraCards,
-    basePrice: config.basePrice,
-    perCardRate: config.perCardRate,
-    extraCost,
-    totalPrice,
-    breakdownText: breakdown
-  };
-}
-
-function handleCustomCategoryChange() {
-  const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
-  const sizeSelect = DOM.selectCustomNotepadSize;
-  const countInput = DOM.inputCustomSheetCount;
-
-  if (category === 'notecards') {
-    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Order Specification';
-    if (DOM.labelCustomSize) DOM.labelCustomSize.innerHTML = 'NOTECARD SIZE FORMAT <span class="required-star">*</span>';
-    if (DOM.labelCustomCount) DOM.labelCustomCount.innerHTML = 'CARD COUNT (MIN. 24 PCS) <span class="required-star">*</span>';
-
-    if (sizeSelect) {
-      sizeSelect.innerHTML = `
-        <option value="nc-2x35" selected>2×3.5 Inches (24 pcs per pack | 220 gsm) — ₱89.00</option>
-        <option value="nc-4x3">4×3 Inches (24 pcs per pack | 220 gsm) — ₱129.00</option>
-      `;
-    }
-
-    if (countInput) {
-      countInput.min = '24';
-      countInput.value = '24';
-      countInput.placeholder = 'Minimum 24 cards';
-    }
-
-    if (DOM.customTermsList) {
-      DOM.customTermsList.innerHTML = `
-        <li><strong>Minimum Order Quantity (MOQ):</strong> 3 packs per size per design.</li>
-        <li><strong>Lead Time:</strong> 2-3 business days production upon payment confirmation.</li>
-        <li><strong>Custom Layout Fee:</strong> ₱100.00 / revision (quoted separately for complex branding or custom illustrations).</li>
-        <li><strong>Premium Cardstock:</strong> 220 gsm heavy textured stationery cardstock with free personalization.</li>
-        <li><strong>Free Customization:</strong> Names, monograms, initials, or occasion text printed on every card at no surcharge.</li>
-        <li><strong>Strict Payment Terms:</strong> 100% full payment is required before customized printing commences.</li>
-      `;
-    }
-  } else {
-    if (DOM.customSectionTitle) DOM.customSectionTitle.textContent = 'Custom Order Specification';
-    if (DOM.labelCustomSize) DOM.labelCustomSize.innerHTML = 'NOTEPAD SIZE FORMAT <span class="required-star">*</span>';
-    if (DOM.labelCustomCount) DOM.labelCustomCount.innerHTML = 'PREFERRED SHEET COUNT <span class="required-star">*</span>';
-
-    if (sizeSelect) {
-      sizeSelect.innerHTML = `
-        <option value="square" selected>Square Notepad (3 × 3 Inches) — Base: ₱29 (30 sheets)</option>
-        <option value="a6">A6 Notepad (4 × 5.8 Inches) — Base: ₱49 (30 sheets)</option>
-        <option value="a5">A5 Notepad (5.8 × 8.3 Inches) — Base: ₱99 (30 sheets)</option>
-      `;
-    }
-
-    if (countInput) {
-      countInput.min = '30';
-      countInput.value = '30';
-      countInput.placeholder = 'Minimum 30 sheets';
-    }
-
-    if (DOM.customTermsList) {
-      DOM.customTermsList.innerHTML = `
-        <li><strong>Minimum Order Quantity (MOQ):</strong> 3 pads per size per design.</li>
-        <li><strong>Lead Time:</strong> 2-3 business days production upon payment confirmation.</li>
-        <li><strong>Custom Layout Fee:</strong> ₱100.00 / revision (quoted separately for complex branding or custom illustrations).</li>
-        <li><strong>Strict Payment Terms:</strong> 100% full payment is required before customized printing commences.</li>
-      `;
-    }
-  }
-
-  updateCustomPriceAndPreview();
-}
-
-function updateCustomPriceAndPreview() {
-  if (!DOM.selectCustomNotepadSize) return;
-
-  const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
-  const sizeKey = DOM.selectCustomNotepadSize.value || (category === 'notecards' ? 'nc-2x35' : 'square');
-  const rawCount = DOM.inputCustomSheetCount ? DOM.inputCustomSheetCount.value : (category === 'notecards' ? '24' : '30');
-  const instructions = DOM.textareaCustomInstructions ? DOM.textareaCustomInstructions.value.trim() : '';
-
-  if (category === 'notecards') {
-    const priceCalc = calculateCustomNotecardPrice(sizeKey, rawCount);
-
-    // Update Dynamic Pricing Preview
-    if (DOM.customUnitPriceDisplay) {
-      DOM.customUnitPriceDisplay.textContent = `₱${priceCalc.totalPrice.toFixed(2)}`;
-    }
-    if (DOM.customPriceBreakdownDisplay) {
-      DOM.customPriceBreakdownDisplay.textContent = priceCalc.breakdownText;
-    }
-    if (DOM.customSizeRateHint) {
-      DOM.customSizeRateHint.textContent = `Extra cards: +₱${priceCalc.perCardRate.toFixed(2)} per card beyond ${priceCalc.config.baseCount} cards`;
-    }
-    if (DOM.customSheetCountHint) {
-      if (priceCalc.extraCards > 0) {
-        DOM.customSheetCountHint.textContent = `${priceCalc.config.baseCount} base + ${priceCalc.extraCards} extra cards (+₱${priceCalc.extraCost.toFixed(2)})`;
-      } else {
-        DOM.customSheetCountHint.textContent = `Base pack includes ${priceCalc.config.baseCount} cards (220 gsm)`;
-      }
-    }
-
-    // Update 1:1 Live Preview Canvas
-    if (DOM.customPreviewSizeBadge) {
-      DOM.customPreviewSizeBadge.textContent = priceCalc.config.name;
-    }
-    if (DOM.customPreviewSheetsBadge) {
-      DOM.customPreviewSheetsBadge.textContent = `${priceCalc.cardCount} Cards (220 gsm)${priceCalc.extraCards > 0 ? ` (+${priceCalc.extraCards})` : ''}`;
-    }
-    if (DOM.customPreviewInstructionsText) {
-      if (instructions) {
-        DOM.customPreviewInstructionsText.textContent = `"${instructions}"`;
-        DOM.customPreviewInstructionsText.style.fontStyle = 'normal';
-        DOM.customPreviewInstructionsText.style.color = 'var(--brand-black)';
-      } else {
-        DOM.customPreviewInstructionsText.textContent = 'Enter your notecard design motif, name/monogram personalization, font styles, or reference details...';
-        DOM.customPreviewInstructionsText.style.fontStyle = 'italic';
-        DOM.customPreviewInstructionsText.style.color = '#888888';
-      }
-    }
-    if (DOM.customPreviewPriceTag) {
-      DOM.customPreviewPriceTag.textContent = `₱${priceCalc.totalPrice.toFixed(2)} / pack`;
-    }
-  } else {
-    const priceCalc = calculateCustomNotepadPrice(sizeKey, rawCount);
-
-    // Update Dynamic Pricing Preview
-    if (DOM.customUnitPriceDisplay) {
-      DOM.customUnitPriceDisplay.textContent = `₱${priceCalc.totalPrice.toFixed(2)}`;
-    }
-    if (DOM.customPriceBreakdownDisplay) {
-      DOM.customPriceBreakdownDisplay.textContent = priceCalc.breakdownText;
-    }
-    if (DOM.customSizeRateHint) {
-      DOM.customSizeRateHint.textContent = `Extra sheets: +₱${priceCalc.perSheetRate.toFixed(2)} per sheet beyond 30 sheets`;
-    }
-    if (DOM.customSheetCountHint) {
-      if (priceCalc.extraSheets > 0) {
-        DOM.customSheetCountHint.textContent = `30 base + ${priceCalc.extraSheets} extra sheets (+₱${priceCalc.extraCost.toFixed(2)})`;
-      } else {
-        DOM.customSheetCountHint.textContent = `Base includes 30 sheets`;
-      }
-    }
-
-    // Update 1:1 Live Preview Canvas
-    if (DOM.customPreviewSizeBadge) {
-      DOM.customPreviewSizeBadge.textContent = priceCalc.config.name;
-    }
-    if (DOM.customPreviewSheetsBadge) {
-      DOM.customPreviewSheetsBadge.textContent = `${priceCalc.sheetCount} Sheets${priceCalc.extraSheets > 0 ? ` (+${priceCalc.extraSheets})` : ''}`;
-    }
-    if (DOM.customPreviewInstructionsText) {
-      if (instructions) {
-        DOM.customPreviewInstructionsText.textContent = `"${instructions}"`;
-        DOM.customPreviewInstructionsText.style.fontStyle = 'normal';
-        DOM.customPreviewInstructionsText.style.color = 'var(--brand-black)';
-      } else {
-        DOM.customPreviewInstructionsText.textContent = 'Enter your design motif, color preferences, font styles, text, or reference details...';
-        DOM.customPreviewInstructionsText.style.fontStyle = 'italic';
-        DOM.customPreviewInstructionsText.style.color = '#888888';
-      }
-    }
-    if (DOM.customPreviewPriceTag) {
-      DOM.customPreviewPriceTag.textContent = `₱${priceCalc.totalPrice.toFixed(2)} / pc`;
-    }
-  }
-}
-
-function calculateCurrentItemPrice() {
-  const categoryData = PRODUCTS_DATA[appState.currentCategory];
-  
-  if (categoryData.isTba) {
-    return {
-      isTba: true,
-      unitPrice: 0,
-      breakdownText: 'Price: To Be Announced (Custom Quotation)',
-      displayPrice: 'TBA'
-    };
-  }
-
-  const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId);
-  if (!sizeObj || !sizeObj.prices) {
-    return {
-      isTba: false,
-      isPendingSelection: true,
-      unitPrice: 0,
-      breakdownText: 'Please select a size format',
-      displayPrice: 'Select Size'
-    };
-  }
-
-  const sheetCount = '30';
-  appState.selectedSheetCount = '30';
-  const basePrice = sizeObj.prices['30'];
-
-  if (basePrice === undefined) {
-    return {
-      isTba: false,
-      isPendingSelection: true,
-      unitPrice: 0,
-      breakdownText: 'Please select a size format',
-      displayPrice: 'Select Size'
-    };
-  }
-  
-  const customFee = appState.isCustomized ? CUSTOMIZATION_FEE : 0;
-  const finalUnitPrice = basePrice + customFee;
-
-  let breakdown = `Base: ₱${basePrice.toFixed(2)} (${sheetCount} sheets)`;
-  if (appState.isCustomized) {
-    breakdown += ` + Personalization: ₱${CUSTOMIZATION_FEE.toFixed(2)}`;
-  }
-
-  return {
-    isTba: false,
-    isPendingSelection: false,
-    basePrice: basePrice,
-    customFee: customFee,
-    unitPrice: finalUnitPrice,
-    breakdownText: breakdown,
-    displayPrice: `₱${finalUnitPrice.toFixed(2)}`
-  };
-}
-
-function updatePricePreview() {
-  const priceInfo = calculateCurrentItemPrice();
-  
-  if (priceInfo.isTba) {
-    DOM.currentUnitPrice.textContent = 'TBA';
-    DOM.currentUnitPrice.className = 'price-preview-value tba';
-    DOM.currentPriceBreakdown.textContent = priceInfo.breakdownText;
-  } else if (priceInfo.isPendingSelection) {
-    DOM.currentUnitPrice.textContent = priceInfo.displayPrice;
-    DOM.currentUnitPrice.className = 'price-preview-value awaiting';
-    DOM.currentPriceBreakdown.textContent = priceInfo.breakdownText;
-  } else {
-    DOM.currentUnitPrice.textContent = priceInfo.displayPrice;
-    DOM.currentUnitPrice.className = 'price-preview-value';
-    DOM.currentPriceBreakdown.textContent = priceInfo.breakdownText;
-  }
-}
 
 // ============================================================================
 // 7. Order Item Cart Management
 // ============================================================================
 
-function addCustomItemToCart() {
-  const category = DOM.selectCustomCategory ? DOM.selectCustomCategory.value : 'notepads';
-  const sizeKey = DOM.selectCustomNotepadSize ? DOM.selectCustomNotepadSize.value : (category === 'notecards' ? 'nc-2x35' : 'square');
-  const countInput = DOM.inputCustomSheetCount ? parseInt(DOM.inputCustomSheetCount.value, 10) : (category === 'notecards' ? 24 : 30);
-  const instructions = DOM.textareaCustomInstructions ? DOM.textareaCustomInstructions.value.trim() : '';
-  let qty = DOM.inputCustomQuantity ? parseInt(DOM.inputCustomQuantity.value, 10) : 3;
 
-  if (category === 'notecards') {
-    const minCards = 24;
-    if (isNaN(countInput) || countInput < minCards) {
-      showToast(`Preferred card count must be at least ${minCards} cards.`);
-      if (DOM.inputCustomSheetCount) {
-        DOM.inputCustomSheetCount.focus();
-        const parent = document.getElementById('groupCustomSheetCount');
-        if (parent) parent.classList.add('has-error');
-      }
-      return;
-    }
-  } else {
-    if (isNaN(countInput) || countInput < 30) {
-      showToast('Preferred sheet count must be at least 30 sheets.');
-      if (DOM.inputCustomSheetCount) {
-        DOM.inputCustomSheetCount.focus();
-        const parent = document.getElementById('groupCustomSheetCount');
-        if (parent) parent.classList.add('has-error');
-      }
-      return;
-    }
-  }
-
-  if (!instructions) {
-    showToast('Please provide design/layout instructions before adding to order.');
-    if (DOM.textareaCustomInstructions) {
-      DOM.textareaCustomInstructions.focus();
-      const parent = document.getElementById('groupCustomInstructions');
-      if (parent) parent.classList.add('has-error');
-    }
-    return;
-  }
-
-  // Minimum Order Quantity (MOQ): 3 packs per size per design
-  if (isNaN(qty) || qty < 3) {
-    qty = 3;
-    if (DOM.inputCustomQuantity) {
-      DOM.inputCustomQuantity.value = '3';
-    }
-  }
-
-  if (category === 'notecards') {
-    const priceCalc = calculateCustomNotecardPrice(sizeKey, countInput);
-
-    const customCartItem = {
-      id: 'custom_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-      isCustomMade: true,
-      categoryKey: 'notecards',
-      categoryName: 'Custom Notecard',
-      sizeId: sizeKey,
-      sizeName: priceCalc.config.name,
-      shortName: `Custom ${priceCalc.config.name.split('(')[0].trim()}`,
-      dimensions: priceCalc.config.dimensions,
-      hasSheets: false,
-      sheetCount: priceCalc.cardCount,
-      cardCount: priceCalc.cardCount,
-      extraCards: priceCalc.extraCards,
-      rate: priceCalc.perCardRate,
-      instructions: instructions,
-      designCode: 'CUSTOM_NOTECARD',
-      isCustomized: true,
-      freePersonalization: true,
-      customText: instructions,
-      isTba: false,
-      unitPrice: priceCalc.totalPrice,
-      quantity: qty,
-      subtotal: priceCalc.totalPrice * qty
-    };
-
-    appState.cart.push(customCartItem);
-    renderCart();
-    showCheckoutSection(false);
-    showToast(`Added ${qty}× ${customCartItem.sizeName} (${priceCalc.cardCount} cards) to order.`);
-  } else {
-    const priceCalc = calculateCustomNotepadPrice(sizeKey, countInput);
-
-    const customCartItem = {
-      id: 'custom_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-      isCustomMade: true,
-      categoryKey: 'notepads',
-      categoryName: 'Custom Notepad',
-      sizeId: sizeKey,
-      sizeName: priceCalc.config.name,
-      shortName: `Custom ${priceCalc.config.name.split('(')[0].trim()}`,
-      dimensions: priceCalc.config.dimensions,
-      hasSheets: true,
-      sheetCount: priceCalc.sheetCount,
-      extraSheets: priceCalc.extraSheets,
-      rate: priceCalc.perSheetRate,
-      instructions: instructions,
-      designCode: 'CUSTOM_LAYOUT',
-      isCustomized: false,
-      customText: instructions,
-      isTba: false,
-      unitPrice: priceCalc.totalPrice,
-      quantity: qty,
-      subtotal: priceCalc.totalPrice * qty
-    };
-
-    appState.cart.push(customCartItem);
-    renderCart();
-    showCheckoutSection(false);
-    showToast(`Added ${qty}× ${customCartItem.sizeName} (${priceCalc.sheetCount} sheets) to order.`);
-  }
-
-  if (DOM.inputCustomQuantity) {
-    DOM.inputCustomQuantity.value = '3';
-  }
-}
-
-function addItemToCart() {
-  if (!appState.selectedDesignCode) {
-    showToast('Please select a Design Code before adding to order.');
-    if (DOM.selectDesignCode) DOM.selectDesignCode.focus();
-    return;
-  }
-
-  const categoryData = PRODUCTS_DATA[appState.currentCategory];
-  const sizeObj = categoryData.sizes.find(s => s.id === appState.selectedSizeId) || categoryData.sizes[0];
-  const priceInfo = calculateCurrentItemPrice();
-  const qty = parseInt(DOM.inputQuantity.value, 10) || 1;
-
-  if (qty <= 0) {
-    showToast('Please enter a valid quantity of 1 or more.');
-    return;
-  }
-
-  if (appState.isCustomized && !DOM.inputCustomText.value.trim()) {
-    showToast('Please enter the custom name/text to be printed.');
-    DOM.inputCustomText.focus();
-    return;
-  }
-
-  const displayTitle = DESIGN_TITLES[appState.selectedDesignCode] || sizeObj.shortName || sizeObj.name;
-
-  const cartItem = {
-    id: 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-    categoryKey: appState.currentCategory,
-    categoryName: categoryData.categoryName,
-    sizeId: sizeObj.id,
-    sizeName: sizeObj.name,
-    shortName: displayTitle,
-    productTitle: displayTitle,
-    dimensions: sizeObj.dimensions,
-    hasSheets: categoryData.hasSheets,
-    sheetCount: categoryData.hasSheets ? appState.selectedSheetCount : null,
-    designCode: appState.selectedDesignCode,
-    imagePath: 'images/' + encodeURIComponent(appState.selectedDesignCode) + '.webp',
-    isCustomized: appState.isCustomized,
-    customText: appState.isCustomized ? DOM.inputCustomText.value.trim() : '',
-    isTba: priceInfo.isTba,
-    unitPrice: priceInfo.unitPrice,
-    quantity: qty,
-    subtotal: priceInfo.isTba ? 0 : (priceInfo.unitPrice * qty)
-  };
-
-  appState.cart.push(cartItem);
-  renderCart();
-  showCheckoutSection(false);
-  showToast(`Added ${qty}× ${cartItem.shortName} (${cartItem.designCode}) to order.`);
-
-  DOM.inputQuantity.value = '1';
-}
 
 function removeCartItem(itemId) {
   appState.cart = appState.cart.filter(item => item.id !== itemId);
@@ -3639,7 +2519,6 @@ function renderCart() {
       DOM.cartItemsList.style.display = 'none';
       DOM.cartItemsList.innerHTML = '';
     }
-    if (DOM.summarySubtotalAmount) DOM.summarySubtotalAmount.textContent = peso(0);
     if (DOM.summaryGrandTotal) DOM.summaryGrandTotal.textContent = peso(0);
     return;
   }
@@ -3707,7 +2586,6 @@ function renderCart() {
     DOM.cartItemsList.appendChild(tagCard);
   }
 
-  if (DOM.summarySubtotalAmount) DOM.summarySubtotalAmount.textContent = peso(totals.productTotal);
   if (DOM.summaryGrandTotal) DOM.summaryGrandTotal.textContent = peso(totals.productTotal);
 }
 
@@ -3717,67 +2595,7 @@ window.removeCartItem = removeCartItem;
 // 8. Customer Form Validation & Sync
 // ============================================================================
 
-function syncCustomerSummaryDisplay() {
-  const courierVal = DOM.selectCourier ? DOM.selectCourier.value : '';
-  if (DOM.summaryCourierDisplay) DOM.summaryCourierDisplay.textContent = courierVal ? courierVal : 'Not Selected';
 
-  const paymentVal = DOM.selectPayment ? DOM.selectPayment.value : '';
-  if (DOM.summaryPaymentDisplay) DOM.summaryPaymentDisplay.textContent = paymentVal ? paymentVal : 'Not Selected';
-
-  if (DOM.summaryOrderTypeDisplay && DOM.selectOrderType) {
-    const val = DOM.selectOrderType.value;
-    if (!val || val === 'Select Order Type') {
-      DOM.summaryOrderTypeDisplay.textContent = 'Not Selected';
-    } else if (val.includes('Custom Made')) {
-      DOM.summaryOrderTypeDisplay.textContent = 'Custom Made';
-    } else {
-      DOM.summaryOrderTypeDisplay.textContent = 'Regular Purchase';
-    }
-  }
-}
-
-function updateOrderTypeVisibility() {
-  if (!DOM.selectOrderType) return;
-
-  const val = DOM.selectOrderType.value;
-  const isCustom = val.includes('Custom Made');
-  const isRegular = val.includes('Regular Purchase');
-  const isUnselected = !val || val === 'Select Order Type';
-
-  if (isUnselected) {
-    // Hide ALL product specification fields, custom fields, quantity selectors, and preview sections.
-    // Only customer information / order details above this field should remain visible.
-    if (DOM.productSelectionCard) DOM.productSelectionCard.style.display = 'none';
-    if (DOM.standardOrderingSection) DOM.standardOrderingSection.style.display = 'none';
-    if (DOM.customOrderingSection) DOM.customOrderingSection.style.display = 'none';
-  } else if (isRegular) {
-    // Reveal standard order form (Notepad Size, Design Code dropdown, 1:1 Square Design Preview, Quantity, Courier, Payment Method).
-    // Hide all custom-made input fields and the custom terms banner.
-    if (DOM.productSelectionCard) DOM.productSelectionCard.style.display = 'block';
-    if (DOM.standardOrderingSection) DOM.standardOrderingSection.style.display = 'block';
-    if (DOM.customOrderingSection) DOM.customOrderingSection.style.display = 'none';
-
-    if (DOM.productCardTitle) DOM.productCardTitle.textContent = 'Product & Design Selection';
-    if (DOM.productCardSubtitle) DOM.productCardSubtitle.textContent = 'Choose stationery category, size format, motif, and personalization';
-  } else if (isCustom) {
-    // Reveal custom ordering form (Custom Notepad Size, Preferred Sheets, Instructions, 1:1 Square Preview, Dynamic Price, Quantity, Add to Cart).
-    // Hide all standard-only form sections.
-    if (DOM.productSelectionCard) DOM.productSelectionCard.style.display = 'block';
-    if (DOM.standardOrderingSection) DOM.standardOrderingSection.style.display = 'none';
-    if (DOM.customOrderingSection) DOM.customOrderingSection.style.display = 'block';
-
-    if (DOM.productCardTitle) DOM.productCardTitle.textContent = 'Custom Made Notepad Specification';
-    if (DOM.productCardSubtitle) DOM.productCardSubtitle.textContent = 'Configure custom size, sheets, layout instructions, and preview';
-
-    if (DOM.inputCustomQuantity && (!DOM.inputCustomQuantity.value || parseInt(DOM.inputCustomQuantity.value, 10) < 3)) {
-      DOM.inputCustomQuantity.value = '3';
-    }
-
-    updateCustomPriceAndPreview();
-  }
-
-  syncCustomerSummaryDisplay();
-}
 
 function validateCustomerForm() {
   let isValid = true;
@@ -3788,8 +2606,7 @@ function validateCustomerForm() {
     { el: DOM.inputSocialHandle, group: 'groupSocialHandle', validator: val => val.trim().length > 1 },
     { el: DOM.selectCourier, group: 'groupCourier', validator: val => Boolean(val) },
     { el: DOM.inputAddress, group: 'groupAddress', validator: val => val.trim().length > 5 },
-    { el: DOM.selectPayment, group: 'groupPayment', validator: val => Boolean(val) },
-    { el: DOM.selectOrderType, group: 'groupOrderType', validator: val => Boolean(val) && val !== 'Select Order Type' }
+    { el: DOM.selectPayment, group: 'groupPayment', validator: val => Boolean(val) }
   ];
 
   fields.forEach(field => {
@@ -3816,10 +2633,7 @@ function attachValidationClearListeners() {
     { el: DOM.inputSocialHandle, group: 'groupSocialHandle' },
     { el: DOM.selectCourier, group: 'groupCourier' },
     { el: DOM.inputAddress, group: 'groupAddress' },
-    { el: DOM.selectPayment, group: 'groupPayment' },
-    { el: DOM.selectOrderType, group: 'groupOrderType' },
-    { el: DOM.inputCustomSheetCount, group: 'groupCustomSheetCount' },
-    { el: DOM.textareaCustomInstructions, group: 'groupCustomInstructions' }
+    { el: DOM.selectPayment, group: 'groupPayment' }
   ];
 
   inputs.forEach(item => {
@@ -3827,7 +2641,6 @@ function attachValidationClearListeners() {
     const handler = () => {
       const parent = document.getElementById(item.group);
       if (parent) parent.classList.remove('has-error');
-      syncCustomerSummaryDisplay();
     };
     item.el.addEventListener('input', handler);
     item.el.addEventListener('change', handler);
@@ -3942,6 +2755,7 @@ function openCheckoutModal() {
   }
   const err = document.getElementById('checkoutSubmitError');
   if (err) err.hidden = true;
+  if (DOM.btnSubmitOrder && !appState.submitting) DOM.btnSubmitOrder.innerHTML = 'Submit Order';
   closeCartPanel();
   document.getElementById('checkoutModal').classList.add('active');
   updateBodyScrollLock();
@@ -3981,8 +2795,7 @@ function buildJobOrderSlip(order) {
       ${order.freeText ? row('Free promo items', order.freeText) : ''}
     </div>
     <div class="cs-total"><span>Total</span><strong>${peso(order.total)}</strong></div>
-    <p class="cs-note">Shipping fee is not yet included. Payment details will be sent to you privately. Please include <strong>${escapeHtml(order.refNo)}</strong> when you send your proof of payment.</p>
-    ${order.sendFailed ? `<p class="cs-warn">⚠️ We couldn't confirm that your order reached us (connection problem). Please make sure to save this image and send it to Printelio so we can record your order.</p>` : ''}`;
+    <p class="cs-note">Shipping fee is not yet included. Payment details will be sent to you privately. Please include <strong>${escapeHtml(order.refNo)}</strong> when you send your proof of payment.</p>`;
   return order.total;
 }
 
@@ -4218,11 +3031,16 @@ async function submitJobOrder() {
     courier: DOM.selectCourier.value,
     address: DOM.inputAddress.value.trim(),
     payment: DOM.selectPayment.value,
-    orderType: 'Regular Purchase',
-    isCustomMade: false
+    orderType: 'Regular Purchase'
   };
 
-  const refNo = generateReferenceNumber();
+  // Reuse the same reference number when the customer taps "Try again" with the SAME order,
+  // so the server can tell it's a retry and never saves the order twice.
+  const orderSignature = JSON.stringify([appState.customer, appState.cart.map(i => [i.designCode, i.sizeId, i.quantity, i.unitPrice, i.nameLabel || i.customText || ''])]);
+  if (!appState.pendingOrder || appState.pendingOrder.signature !== orderSignature) {
+    appState.pendingOrder = { signature: orderSignature, refNo: generateReferenceNumber() };
+  }
+  const refNo = appState.pendingOrder.refNo;
   const groups = groupCartItems();
   const pcs = appState.cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
   const order = {
@@ -4243,8 +3061,7 @@ async function submitJobOrder() {
         amount: group.subtotal
       };
     }),
-    total: totals.productTotal,
-    sendFailed: false
+    total: totals.productTotal
   };
 
   const uniqueDesignCodes = [...new Set(appState.cart.map(item => {
@@ -4274,26 +3091,52 @@ async function submitJobOrder() {
   if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<span>⏳ Submitting order...</span>'; }
   const closeBtn = document.getElementById('btnCloseCheckout');
   if (closeBtn) closeBtn.disabled = true;
+  const errorBox = document.getElementById('checkoutSubmitError');
+  if (errorBox) errorBox.hidden = true;
 
+  // Send the order and READ the reply, so we only say "submitted" when it was really saved.
+  let saved = false;
+  let failReason = '';
+  let timer = null;
   try {
-    const body = JSON.stringify(sheetPayload);
     const controller = window.AbortController ? new AbortController() : null;
-    const timer = controller ? setTimeout(() => controller.abort(), 20000) : null;
-    await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+    timer = controller ? setTimeout(() => controller.abort(), 25000) : null;
+    const response = await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body,
-      keepalive: body.length < 60000,
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // plain text avoids a CORS pre-check
+      body: JSON.stringify(sheetPayload),
       signal: controller ? controller.signal : undefined
     });
-    if (timer) clearTimeout(timer);
+    const result = await response.json();
+    if (result && result.result === 'success') {
+      saved = true;
+    } else {
+      failReason = 'server';
+      console.error('Order was not saved:', result);
+    }
   } catch (sheetError) {
-    console.error('Google Sheets submission error:', sheetError);
-    order.sendFailed = true;
+    failReason = (sheetError && sheetError.name === 'AbortError') ? 'timeout' : 'network';
+    console.error('Order submission error:', sheetError);
+  } finally {
+    if (timer) clearTimeout(timer);
   }
 
-  // Order is done: clear the cart so it can't be submitted twice, then show the confirmation.
+  if (!saved) {
+    // Keep the cart and the form exactly as they are so the customer can simply try again.
+    appState.submitting = false;
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = 'Try again'; }
+    if (closeBtn) closeBtn.disabled = false;
+    if (errorBox) {
+      errorBox.textContent = failReason === 'server'
+        ? "Sorry, we couldn't save your order. Please tap Try again. If it keeps happening, message us on Facebook or Instagram."
+        : "We couldn't send your order. Please check your internet connection, then tap Try again. Your details are still here.";
+      errorBox.hidden = false;
+    }
+    return;
+  }
+
+  // Order is saved: clear the cart so it can't be submitted twice, then show the confirmation.
+  appState.pendingOrder = null;
   appState.lastOrder = order;
   appState.cart = [];
   renderCart();
@@ -4380,9 +3223,7 @@ function startNewOrder() {
   if (DOM.customerForm) DOM.customerForm.reset();
   document.querySelectorAll('#customerForm .has-error').forEach(el => el.classList.remove('has-error'));
   closeCartPanel();
-  switchToCatalogView();
   switchMainCatalog('hardbound');
-  syncCustomerSummaryDisplay();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4420,20 +3261,14 @@ function showToast(message) {
 // ============================================================================
 
 function initEventListeners() {
-  // Main Catalog Switcher (Collections vs Notepads vs Notecards)
-  if (DOM.btnCatalogCollections) {
-    DOM.btnCatalogCollections.addEventListener('click', () => switchMainCatalog('collections'));
-  }
-  if (DOM.btnCatalogNotepads) {
-    DOM.btnCatalogNotepads.addEventListener('click', () => switchMainCatalog('notepads'));
-  }
-  if (DOM.btnCatalogNotecards) {
-    DOM.btnCatalogNotecards.addEventListener('click', () => switchMainCatalog('notecards'));
-  }
-  if (DOM.btnCatalogEnvelopes) DOM.btnCatalogEnvelopes.addEventListener('click', () => switchMainCatalog('envelopes'));
-  if (DOM.btnCatalogHardbound) DOM.btnCatalogHardbound.addEventListener('click', () => switchMainCatalog('hardbound'));
+  // Main catalog switcher (desktop nav + phone drawer)
+  const catalogButtons = [
+    [DOM.btnCatalogHardbound, 'hardbound'], [DOM.btnCatalogNotepads, 'notepads'],
+    [DOM.btnCatalogNotecards, 'notecards'], [DOM.btnCatalogEnvelopes, 'envelopes']
+  ];
+  catalogButtons.forEach(([btn, catalog]) => { if (btn) btn.addEventListener('click', () => switchMainCatalog(catalog)); });
 
-  // Mobile Navigation Drawer Toggle and Links
+  // Phone navigation drawer
   if (DOM.btnMobileMenuToggle) {
     DOM.btnMobileMenuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -4446,64 +3281,19 @@ function initEventListeners() {
       toggleMobileMenu(false);
     });
   }
-  if (DOM.mobileNavBackdrop) {
-    DOM.mobileNavBackdrop.addEventListener('click', () => {
-      toggleMobileMenu(false);
-    });
-  }
-  if (DOM.btnMobileCatalogCollections) {
-    DOM.btnMobileCatalogCollections.addEventListener('click', () => {
-      switchMainCatalog('collections');
-      toggleMobileMenu(false);
-    });
-  }
-  if (DOM.btnMobileCatalogNotepads) {
-    DOM.btnMobileCatalogNotepads.addEventListener('click', () => {
-      switchMainCatalog('notepads');
-      toggleMobileMenu(false);
-    });
-  }
-  if (DOM.btnMobileCatalogNotecards) {
-    DOM.btnMobileCatalogNotecards.addEventListener('click', () => {
-      switchMainCatalog('notecards');
-      toggleMobileMenu(false);
-    });
-  }
-  if (DOM.btnMobileCatalogEnvelopes) DOM.btnMobileCatalogEnvelopes.addEventListener('click', () => { switchMainCatalog('envelopes'); toggleMobileMenu(false); });
-  if (DOM.btnMobileCatalogHardbound) DOM.btnMobileCatalogHardbound.addEventListener('click', () => { switchMainCatalog('hardbound'); toggleMobileMenu(false); });
-  if (DOM.btnMobileCustomOrder) {
-    DOM.btnMobileCustomOrder.addEventListener('click', () => {
-      switchToCustomView();
-      toggleMobileMenu(false);
-    });
-  }
+  if (DOM.mobileNavBackdrop) DOM.mobileNavBackdrop.addEventListener('click', () => toggleMobileMenu(false));
+  const mobileCatalogButtons = [
+    [DOM.btnMobileCatalogHardbound, 'hardbound'], [DOM.btnMobileCatalogNotepads, 'notepads'],
+    [DOM.btnMobileCatalogNotecards, 'notecards'], [DOM.btnMobileCatalogEnvelopes, 'envelopes']
+  ];
+  mobileCatalogButtons.forEach(([btn, catalog]) => {
+    if (btn) btn.addEventListener('click', () => { switchMainCatalog(catalog); toggleMobileMenu(false); });
+  });
 
-  // Gallery Category Tabs (Christmas for Collections | 3x3, A6, A5 for Notepads | 2x3.5, 4x3 for Notecards)
-  if (DOM.tabChristmas) {
-    DOM.tabChristmas.addEventListener('click', () => switchGalleryCategory('christmas'));
-  }
-  if (DOM.tab3x3) {
-    DOM.tab3x3.addEventListener('click', () => switchGalleryCategory('3x3'));
-  }
-  if (DOM.tabA6) {
-    DOM.tabA6.addEventListener('click', () => switchGalleryCategory('A6'));
-  }
-  if (DOM.tabA5) {
-    DOM.tabA5.addEventListener('click', () => switchGalleryCategory('A5'));
-  }
-  if (DOM.tab2x35) {
-    DOM.tab2x35.addEventListener('click', () => switchGalleryCategory('2x3.5'));
-  }
-  if (DOM.tab4x3) {
-    DOM.tab4x3.addEventListener('click', () => switchGalleryCategory('4x3'));
-  }
+  // Size tabs (Notepads: Square, A6, A5 | Notecards: 2x3.5, 4x3)
+  [[DOM.tab3x3, '3x3'], [DOM.tabA6, 'A6'], [DOM.tabA5, 'A5'], [DOM.tab2x35, '2x3.5'], [DOM.tab4x3, '4x3']]
+    .forEach(([tab, key]) => { if (tab) tab.addEventListener('click', () => switchGalleryCategory(key)); });
 
-  // Header Actions
-  if (DOM.btnHeaderCustom) {
-    DOM.btnHeaderCustom.addEventListener('click', () => {
-      switchToCustomView();
-    });
-  }
   if (DOM.btnHeaderCart) DOM.btnHeaderCart.addEventListener('click', openCartPanel);
 
   // Cart panel, phone cart bar and checkout pop-up
@@ -4518,126 +3308,10 @@ function initEventListeners() {
   if (checkoutModal) checkoutModal.addEventListener('click', (e) => { if (e.target === checkoutModal) closeCheckoutModal(); });
   window.addEventListener('resize', () => { if (!isPhoneLayout()) closeCartPanel(); });
 
-  // Custom CTA Banner & Navigation Controls
-  if (DOM.btnOpenCustomOrder) {
-    DOM.btnOpenCustomOrder.addEventListener('click', () => {
-      switchToCustomView();
-    });
-  }
-  if (DOM.btnBackToCatalog) {
-    DOM.btnBackToCatalog.addEventListener('click', () => {
-      switchToCatalogView();
-    });
-  }
-  if (DOM.btnCloseCustomSection) {
-    DOM.btnCloseCustomSection.addEventListener('click', () => {
-      switchToCatalogView();
-    });
-  }
-
-  // Legacy Tabs & Controls (Safely guarded)
-  if (DOM.tabNotepads) DOM.tabNotepads.addEventListener('click', () => switchCategory('notepads'));
-  if (DOM.tabNotecards) DOM.tabNotecards.addEventListener('click', () => switchCategory('notecards'));
-  if (DOM.tabEnvelopes) DOM.tabEnvelopes.addEventListener('click', () => switchCategory('envelopes'));
-
-  if (DOM.radioSheet30) {
-    DOM.radioSheet30.addEventListener('change', () => {
-      appState.selectedSheetCount = '30';
-      updatePricePreview();
-    });
-  }
-
-  if (DOM.selectDesignCode) {
-    DOM.selectDesignCode.addEventListener('change', (e) => {
-      appState.selectedDesignCode = e.target.value;
-      updatePreviewImage();
-    });
-  }
-
-  if (DOM.checkCustomization) {
-    DOM.checkCustomization.addEventListener('change', (e) => {
-      appState.isCustomized = e.target.checked;
-      DOM.customizationContainer.classList.toggle('active', appState.isCustomized);
-      DOM.customInputsCollapse.classList.toggle('show', appState.isCustomized);
-      updatePricePreview();
-    });
-  }
-
-  if (DOM.btnQtyMinus) {
-    DOM.btnQtyMinus.addEventListener('click', () => {
-      let current = parseInt(DOM.inputQuantity.value, 10) || 1;
-      if (current > 1) {
-        DOM.inputQuantity.value = current - 1;
-      }
-    });
-  }
-
-  if (DOM.btnQtyPlus) {
-    DOM.btnQtyPlus.addEventListener('click', () => {
-      let current = parseInt(DOM.inputQuantity.value, 10) || 1;
-      DOM.inputQuantity.value = current + 1;
-    });
-  }
-
-  if (DOM.btnAddToCart) {
-    DOM.btnAddToCart.addEventListener('click', addItemToCart);
-  }
   if (DOM.btnSubmitOrder) {
     DOM.btnSubmitOrder.addEventListener('click', submitJobOrder);
   }
 
-  // Custom Made Form Event Listeners (Preserved & Expanded)
-  if (DOM.selectCustomCategory) {
-    DOM.selectCustomCategory.addEventListener('change', handleCustomCategoryChange);
-  }
-  if (DOM.selectCustomNotepadSize) {
-    DOM.selectCustomNotepadSize.addEventListener('change', updateCustomPriceAndPreview);
-  }
-  if (DOM.inputCustomSheetCount) {
-    DOM.inputCustomSheetCount.addEventListener('input', updateCustomPriceAndPreview);
-    DOM.inputCustomSheetCount.addEventListener('change', updateCustomPriceAndPreview);
-  }
-  if (DOM.textareaCustomInstructions) {
-    DOM.textareaCustomInstructions.addEventListener('input', updateCustomPriceAndPreview);
-  }
-  if (DOM.btnCustomQtyMinus) {
-    DOM.btnCustomQtyMinus.addEventListener('click', () => {
-      let current = parseInt(DOM.inputCustomQuantity.value, 10) || 3;
-      if (current > 3) {
-        DOM.inputCustomQuantity.value = current - 1;
-      } else {
-        DOM.inputCustomQuantity.value = 3;
-      }
-    });
-  }
-  if (DOM.btnCustomQtyPlus) {
-    DOM.btnCustomQtyPlus.addEventListener('click', () => {
-      let current = parseInt(DOM.inputCustomQuantity.value, 10) || 3;
-      if (current < 3) current = 3;
-      DOM.inputCustomQuantity.value = current + 1;
-    });
-  }
-  if (DOM.inputCustomQuantity) {
-    DOM.inputCustomQuantity.addEventListener('change', () => {
-      let current = parseInt(DOM.inputCustomQuantity.value, 10);
-      if (isNaN(current) || current < 3) {
-        DOM.inputCustomQuantity.value = 3;
-      }
-    });
-  }
-  if (DOM.btnAddCustomToCart) {
-    DOM.btnAddCustomToCart.addEventListener('click', addCustomItemToCart);
-  }
-
-  if (DOM.selectOrderType) {
-    DOM.selectOrderType.addEventListener('change', () => {
-      updateOrderTypeVisibility();
-    });
-  }
-
-  if (DOM.btnCloseModal) {
-    DOM.btnCloseModal.addEventListener('click', closeModal);
-  }
   if (DOM.btnDoneOrder) {
     DOM.btnDoneOrder.addEventListener('click', startNewOrder);
   }

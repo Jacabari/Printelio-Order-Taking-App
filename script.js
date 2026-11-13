@@ -8,6 +8,10 @@
 // 0. Google Sheets Web App Endpoint Configuration
 // ============================================================================
 
+// Product photo version: change this number whenever you replace a photo that keeps the same file name,
+// so returning visitors download the new picture instead of an old cached one.
+const IMG_VERSION = '20261114-2';
+
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
 // ============================================================================
@@ -1428,7 +1432,7 @@ function renderWeddingEnvelopeGallery() {
       <div class="wme-heading"><h3>${group.title}</h3><span>${group.codes.length} designs</span></div>
       <div class="wme-preview">
         <button type="button" class="wme-arrow wme-prev" aria-label="Previous design">‹</button>
-        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp" alt="${WEDDING_ENVELOPE_TITLES[group.codes[0]]}" loading="lazy"></button>
+        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp?v=${IMG_VERSION}" alt="${WEDDING_ENVELOPE_TITLES[group.codes[0]]}" loading="lazy"></button>
         <button type="button" class="wme-arrow wme-next" aria-label="Next design">›</button>
       </div>
       <div class="wme-selected" aria-live="polite"></div>
@@ -1463,7 +1467,7 @@ function renderWeddingEnvelopeGallery() {
       index = (next + group.codes.length) % group.codes.length;
       const addButton = card.querySelector('.wme-add'); if (addButton) addButton.textContent = '+ Add to Cart';
       const code = group.codes[index];
-      image.src = `images/${code}.webp`;
+      image.src = `images/${code}.webp?v=${IMG_VERSION}`;
       image.alt = WEDDING_ENVELOPE_TITLES[code];
       title.textContent = `${WEDDING_ENVELOPE_TITLES[code]} (${code}) · ${index + 1} of ${group.codes.length}`;
       [...thumbs.children].forEach((button, i) => {
@@ -1485,7 +1489,7 @@ function renderWeddingEnvelopeGallery() {
       button.type = 'button'; button.className = 'wme-thumb';
       button.title = `${WEDDING_ENVELOPE_TITLES[code]} (${code})`;
       button.setAttribute('aria-label', `Select ${WEDDING_ENVELOPE_TITLES[code]}`);
-      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = '';
+      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp?v=${IMG_VERSION}`; thumb.alt = '';
       thumb.loading = 'lazy'; button.appendChild(thumb);
       button.addEventListener('click', () => selectDesign(i, true));
       thumbs.appendChild(button);
@@ -1494,7 +1498,7 @@ function renderWeddingEnvelopeGallery() {
     card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1, true));
     card.querySelector('.wme-image-button').addEventListener('click', () => {
       const code = group.codes[index];
-      openImageLightbox(`images/${code}.webp`, WEDDING_ENVELOPE_TITLES[code], code);
+      openImageLightbox(`images/${code}.webp?v=${IMG_VERSION}`, WEDDING_ENVELOPE_TITLES[code], code);
     });
     const priceNote = card.querySelector('.wme-price-note');
     // Card price: regular price, or the 5+ price when this quantity (plus what's already in the cart for this paper) reaches 5.
@@ -1540,7 +1544,7 @@ function renderWeddingEnvelopeGallery() {
         sizeName:`Money Envelope · ${paper === 'premium' ? 'Premium 108' : 'Standard 80'} GSM`,
         shortName:WEDDING_ENVELOPE_TITLES[code], productTitle:WEDDING_ENVELOPE_TITLES[code],
         dimensions:'Sold per piece', hasSheets:false, sheetCount:null, cardCount:null,
-        freePersonalization:true, designCode:code, imagePath:`images/${code}.webp`,
+        freePersonalization:true, designCode:code, imagePath:`images/${code}.webp?v=${IMG_VERSION}`,
         isCustomized:true, customText, nameLabel:[monogram, names, date].filter(Boolean).join(' · '), monogram, preferredNames:names, weddingDate:date,
         paperQuality:paper, isTba:false, unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
       });
@@ -1580,7 +1584,7 @@ function renderHardboundGallery() {
       <div class="wme-heading"><h3>${group.title}</h3><span>${group.codes.length} designs</span></div>
       <div class="wme-preview">
         <button type="button" class="wme-arrow wme-prev" aria-label="Previous design">‹</button>
-        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp" alt="${HARDBOUND_TITLES[group.codes[0]]}" loading="lazy"></button>
+        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp?v=${IMG_VERSION}" alt="${HARDBOUND_TITLES[group.codes[0]]}" loading="lazy"></button>
         <button type="button" class="wme-arrow wme-next" aria-label="Next design">›</button>
       </div>
       <div class="wme-selected" aria-live="polite"></div>
@@ -1614,7 +1618,7 @@ function renderHardboundGallery() {
       index = (next + group.codes.length) % group.codes.length;
       const addButton = card.querySelector('.wme-add'); if (addButton) addButton.textContent = '+ Add to Cart';
       const code = group.codes[index];
-      image.src = `images/${code}.webp`;
+      image.src = `images/${code}.webp?v=${IMG_VERSION}`;
       image.alt = HARDBOUND_TITLES[code];
       selected.textContent = `${HARDBOUND_TITLES[code]} (${code}) · ${index + 1} of ${group.codes.length}`;
       [...thumbs.children].forEach((button, i) => {
@@ -1636,13 +1640,13 @@ function renderHardboundGallery() {
       button.type = 'button'; button.className = 'wme-thumb';
       button.title = `${HARDBOUND_TITLES[code]} (${code})`;
       button.setAttribute('aria-label', `Select ${HARDBOUND_TITLES[code]}`);
-      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = ''; thumb.loading = 'lazy';
+      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp?v=${IMG_VERSION}`; thumb.alt = ''; thumb.loading = 'lazy';
       button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i, true)); thumbs.appendChild(button);
     });
     card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1, true));
     card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1, true));
     card.querySelector('.wme-image-button').addEventListener('click', () => {
-      const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, HARDBOUND_TITLES[code], code);
+      const code = group.codes[index]; openImageLightbox(`images/${code}.webp?v=${IMG_VERSION}`, HARDBOUND_TITLES[code], code);
     });
     const nameBox = card.querySelector('.hardbound-name');
     const updateNameLimit = () => {
@@ -1671,7 +1675,7 @@ function renderHardboundGallery() {
         categoryKey:'hardbound', categoryName:'Hardbound Notepads', sizeId:`hardbound-${size.toLowerCase()}`,
         sizeName:`${size} Hardbound Notepad`, shortName:HARDBOUND_TITLES[code], productTitle:HARDBOUND_TITLES[code],
         dimensions:size === 'A6' ? 'A6' : 'A5', hasSheets:true, sheetCount:70, cardCount:null,
-        freePersonalization:true, designCode:code, imagePath:`images/${code}.webp`,
+        freePersonalization:true, designCode:code, imagePath:`images/${code}.webp?v=${IMG_VERSION}`,
         isCustomized:true, customText, nameLabel:names, preferredNames:names, isTba:false,
         unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
       });
@@ -1728,7 +1732,7 @@ function renderNotecardSliderGallery(categoryKey) {
       <div class="wme-heading"><h3>${group.title}</h3><span>${group.codes.length} designs</span></div>
       <div class="wme-preview">
         <button type="button" class="wme-arrow wme-prev" aria-label="Previous design">‹</button>
-        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp" alt="${getTitle(group.codes[0])}" loading="lazy"></button>
+        <button type="button" class="wme-image-button" aria-label="Enlarge selected design"><img class="wme-image" src="images/${group.codes[0]}.webp?v=${IMG_VERSION}" alt="${getTitle(group.codes[0])}" loading="lazy"></button>
         <button type="button" class="wme-arrow wme-next" aria-label="Next design">›</button>
       </div>
       <div class="wme-selected" aria-live="polite"></div>
@@ -1753,7 +1757,7 @@ function renderNotecardSliderGallery(categoryKey) {
       index = (next + group.codes.length) % group.codes.length;
       const addButton = card.querySelector('.wme-add'); if (addButton) addButton.textContent = '+ Add to Cart';
       const code = group.codes[index];
-      image.src = `images/${code}.webp`;
+      image.src = `images/${code}.webp?v=${IMG_VERSION}`;
       image.alt = getTitle(code);
       selected.textContent = `${getTitle(code)} (${code}) · ${index + 1} of ${group.codes.length}`;
       [...thumbs.children].forEach((button, i) => {
@@ -1775,13 +1779,13 @@ function renderNotecardSliderGallery(categoryKey) {
       button.type = 'button'; button.className = 'wme-thumb';
       button.title = `${getTitle(code)} (${code})`;
       button.setAttribute('aria-label', `Select ${getTitle(code)}`);
-      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp`; thumb.alt = ''; thumb.loading = 'lazy';
+      const thumb = document.createElement('img'); thumb.src = `images/${code}.webp?v=${IMG_VERSION}`; thumb.alt = ''; thumb.loading = 'lazy';
       button.appendChild(thumb); button.addEventListener('click', () => selectDesign(i, true)); thumbs.appendChild(button);
     });
     card.querySelector('.wme-prev').addEventListener('click', () => selectDesign(index - 1, true));
     card.querySelector('.wme-next').addEventListener('click', () => selectDesign(index + 1, true));
     card.querySelector('.wme-image-button').addEventListener('click', () => {
-      const code = group.codes[index]; openImageLightbox(`images/${code}.webp`, getTitle(code), code);
+      const code = group.codes[index]; openImageLightbox(`images/${code}.webp?v=${IMG_VERSION}`, getTitle(code), code);
     });
     const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
     card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); });
@@ -1845,7 +1849,7 @@ function renderNotepadSliderGallery(categoryKey) {
   }
   groups.forEach(group => {
     const products = group.items;
-    const imgSrc = p => `images/${encodeURIComponent(p.code)}.webp`;
+    const imgSrc = p => `images/${encodeURIComponent(p.code)}.webp?v=${IMG_VERSION}`;
     const titleOf = p => DESIGN_TITLES[p.code] || p.name;
     const unitPrice = products[0].price || NOTEPAD_PRICES[categoryKey];
     const card = document.createElement('article');
@@ -2082,7 +2086,7 @@ function renderProductGallery(categoryKey) {
         <span class="product-card-badge">${product.code}</span>
         <span class="product-card-motif-tag">${product.tag}</span>
         <img 
-          src="images/${encodeURIComponent(product.code)}.webp" 
+          src="images/${encodeURIComponent(product.code)}.webp?v=${IMG_VERSION}" 
           alt="${product.name}" 
           class="product-card-img" 
           loading="lazy"
@@ -2130,7 +2134,7 @@ function renderProductGallery(categoryKey) {
     if (imgWrap) {
       imgWrap.addEventListener('click', (e) => {
         e.stopPropagation();
-        const currentSrc = (cardImg && cardImg.src) ? cardImg.src : `images/${encodeURIComponent(product.code)}.webp`;
+        const currentSrc = (cardImg && cardImg.src) ? cardImg.src : `images/${encodeURIComponent(product.code)}.webp?v=${IMG_VERSION}`;
         openImageLightbox(currentSrc, product.name, product.code);
       });
     }
@@ -2434,7 +2438,7 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
       cardCount: product.cardCount || null,
       freePersonalization: true,
       designCode: product.code,
-      imagePath: 'images/' + encodeURIComponent(product.code) + '.webp',
+      imagePath: 'images/' + encodeURIComponent(product.code) + '.webp?v=' + IMG_VERSION,
       isCustomized: isCustomized,
       customText: trimmedText,
       nameLabel: trimmedText,
@@ -2697,7 +2701,7 @@ function renderCart() {
     card.innerHTML = `
       <div class="cart-item-main">
         <div class="cart-item-thumb-wrapper">
-          <img src="images/${encodeURIComponent(item.designCode)}.webp" alt="${escapeHtml(item.designCode)}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${fallbackSvg}';">
+          <img src="images/${encodeURIComponent(item.designCode)}.webp?v=${IMG_VERSION}" alt="${escapeHtml(item.designCode)}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${fallbackSvg}';">
         </div>
         <div class="cart-item-details">
           <div class="cart-item-title">${escapeHtml(item.sizeName)}</div>

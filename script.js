@@ -10,7 +10,7 @@
 
 // Product photo version: change this number whenever you replace a photo that keeps the same file name,
 // so returning visitors download the new picture instead of an old cached one.
-const IMG_VERSION = '20261114-3';
+const IMG_VERSION = '20261116-2';
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
@@ -1393,6 +1393,8 @@ const WEDDING_ENVELOPE_TITLES = {
 // After an item is added, clear the name box so the same design can be added again for someone else.
 // Name length limits (characters) for the text printed on each product.
 const HARDBOUND_NAME_LIMITS = { A6: 15, A5: 20 };
+// A5 hardbound is temporarily sold out (a new size is coming). Set to false to sell A5 again.
+const HARDBOUND_A5_SOLD_OUT = true;
 const NOTEPAD_NAME_LIMITS = { '3x3': 10, 'A6': 10, 'A5': 10 };
 const NOTECARD_NAME_LIMITS = { '2x3.5': 15, '4x3': 20 };
 const ENVELOPE_NAME_LIMIT = 20;
@@ -1593,7 +1595,7 @@ function renderHardboundGallery() {
         <div class="wme-section-label">Size</div>
         <div class="wme-paper-options">
           <label><input type="radio" name="hardbound_size_${groupIndex}" value="A6" checked> A6 · ₱159</label>
-          <label><input type="radio" name="hardbound_size_${groupIndex}" value="A5"> A5 · ₱259</label>
+          <label class="${HARDBOUND_A5_SOLD_OUT ? 'is-sold-out' : ''}"><input type="radio" name="hardbound_size_${groupIndex}" value="A5"${HARDBOUND_A5_SOLD_OUT ? ' disabled aria-disabled="true"' : ''}> <span class="size-text">A5 · ₱259</span>${HARDBOUND_A5_SOLD_OUT ? ' <span class="sold-out-badge">Sold out</span>' : ''}</label>
         </div>
         <label class="wme-field">Name on cover (free) <input class="hardbound-name wme-counted" maxlength="${HARDBOUND_NAME_LIMITS.A6}" placeholder="e.g. Maria Clara" autocomplete="off" required></label>
         <div class="wme-char-count" aria-live="polite">0/${HARDBOUND_NAME_LIMITS.A6}</div>
@@ -1665,6 +1667,7 @@ function renderHardboundGallery() {
       if (!names) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
       const nameLimit = HARDBOUND_NAME_LIMITS[selectedSize()];
       if (names.length > nameLimit) { error.hidden = false; error.textContent = `The ${selectedSize()} cover fits up to ${nameLimit} characters. Please shorten the name.`; input.focus(); return; }
+      if (HARDBOUND_A5_SOLD_OUT && selectedSize() === 'A5') { error.hidden = false; error.textContent = 'A5 hardbound notepads are sold out for now. Please choose A6.'; return; }
       error.hidden = true;
       const code = group.codes[index], size = selectedSize(), count = clampQty();
       const customText = `Cover personalization: ${names}`;
@@ -2316,7 +2319,7 @@ function toggleMobileMenu(open) {
 const CATALOG_COPY = {
   hardbound: {
     title: 'Hardbound Notepads',
-    subtitle: 'Personalized hardbound notepads, 70 sheets. A6 ₱159 · A5 ₱259'
+    subtitle: 'Personalized hardbound notepads, 70 sheets. A6 ₱159 · A5 sold out for now'
   },
   notepads: {
     title: 'Notepads',

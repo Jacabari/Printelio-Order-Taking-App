@@ -4570,3 +4570,12 @@ body { font-family: var(--font-main); font-variant-numeric: lining-nums; }
   .catalog-pane .product-gallery-grid.wme-gallery .product-card-footer { padding: 10px 16px 14px; gap: 8px; margin-top: auto; }
   .catalog-pane .product-gallery-grid.wme-gallery .product-price { font-size: 1.15rem; }
 }
+
+/* Sold-out size option (e.g. A5 hardbound): struck through, greyed out and not selectable. */
+.wme-paper-options label.is-sold-out { cursor: not-allowed; opacity: 0.85; }
+.wme-paper-options label.is-sold-out input { cursor: not-allowed; }
+.wme-paper-options label.is-sold-out .size-text { text-decoration: line-through; color: #8a8a93; }
+.sold-out-badge {
+  display: inline-block; font-size: 0.64rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+  color: #b42318; background: #fdecea; border: 1px solid #f5c2bd; border-radius: 999px; padding: 1px 8px; line-height: 1.5;
+}

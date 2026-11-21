@@ -10,7 +10,7 @@
 
 // Product photo version: change this number whenever you replace a photo that keeps the same file name,
 // so returning visitors download the new picture instead of an old cached one.
-const IMG_VERSION = '20261121-1';
+const IMG_VERSION = '20261121-2';
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
@@ -1400,6 +1400,8 @@ const HARDBOUND_A5_SOLD_OUT = true;
 const HARDBOUND_PRICES = { A6: 199, A5: 299 };
 const HARDBOUND_BULK_PRICE = 189;
 const HARDBOUND_BULK_MIN = 4;
+let hardboundCardUpdaters = []; // refresh each hardbound card's price when the cart changes
+function refreshHardboundCardPrices() { hardboundCardUpdaters.forEach(fn => fn()); }
 function hardboundA6Pcs() {
   return appState.cart.filter(item => item.categoryKey === 'hardbound' && item.sizeId === 'hardbound-a6')
     .reduce((sum, item) => sum + (item.quantity || 0), 0);
@@ -1596,6 +1598,7 @@ const HARDBOUND_TITLES = {
 };
 function renderHardboundGallery() {
   if (!DOM.productGalleryGrid) return;
+  hardboundCardUpdaters = [];
   DOM.productGalleryGrid.innerHTML = '';
   DOM.productGalleryGrid.classList.add('wme-gallery');
   HARDBOUND_GROUPS.forEach((group, groupIndex) => {
@@ -1621,7 +1624,7 @@ function renderHardboundGallery() {
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
-        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${HARDBOUND_PRICES.A6.toFixed(2)}</div><small>per notepad</small></div>
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${HARDBOUND_PRICES.A6.toFixed(2)}</div><small class="wme-price-note">per notepad · ₱${HARDBOUND_BULK_PRICE} each for ${HARDBOUND_BULK_MIN}+</small></div>
           <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease quantity">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Quantity"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase quantity">+</button></div>
         </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
       </div>`;
@@ -1634,7 +1637,17 @@ function renderHardboundGallery() {
     const error = card.querySelector('.wme-error');
     const selectedSize = () => card.querySelector(`input[name="hardbound_size_${groupIndex}"]:checked`).value;
     const unitPrice = () => HARDBOUND_PRICES[selectedSize()];
-    const updatePrice = () => { price.textContent = `₱${unitPrice().toFixed(2)}`; };
+    const priceNote = card.querySelector('.wme-price-note');
+    // Card price: regular price, or the 4+ price when this quantity (plus the A6 hardbound already in the cart) reaches 4.
+    const updatePrice = () => {
+      if (selectedSize() !== 'A6') { price.textContent = `₱${unitPrice().toFixed(2)}`; priceNote.textContent = 'per notepad'; return; }
+      const total = (parseInt(qty.value, 10) || 1) + hardboundA6Pcs();
+      const bulk = total >= HARDBOUND_BULK_MIN;
+      price.textContent = `₱${(bulk ? HARDBOUND_BULK_PRICE : HARDBOUND_PRICES.A6).toFixed(2)}`;
+      priceNote.textContent = bulk ? `per notepad · ${HARDBOUND_BULK_MIN}+ price` : `per notepad · ₱${HARDBOUND_BULK_PRICE} each for ${HARDBOUND_BULK_MIN}+`;
+    };
+    hardboundCardUpdaters.push(() => { if (card.isConnected) updatePrice(); });
+    updatePrice(); // right away, in case the cart already has A6 hardbound notepads
     function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
       const addButton = card.querySelector('.wme-add'); if (addButton) addButton.textContent = '+ Add to Cart';
@@ -1676,9 +1689,10 @@ function renderHardboundGallery() {
     };
     card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', () => { updatePrice(); updateNameLimit(); }));
     const clampQty = () => { qty.value = String(Math.min(99, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
-    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1, clampQty()-1); });
-    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99, clampQty()+1); });
-    qty.addEventListener('change', clampQty);
+    card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1, clampQty()-1); updatePrice(); });
+    card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(99, clampQty()+1); updatePrice(); });
+    qty.addEventListener('change', () => { clampQty(); updatePrice(); });
+    qty.addEventListener('input', updatePrice);
     const addBtn = card.querySelector('.wme-add');
     addBtn.addEventListener('click', () => {
       const input = card.querySelector('.hardbound-name');
@@ -2669,6 +2683,7 @@ function renderCart() {
   applyEnvelopePricing();
   applyHardboundPricing();
   refreshEnvelopeCardPrices();
+  refreshHardboundCardPrices();
   const totalUnits = appState.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
   const groups = groupCartItems();
   const totals = computeOrderTotals();

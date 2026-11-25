@@ -10,7 +10,7 @@
 
 // Product photo version: change this number whenever you replace a photo that keeps the same file name,
 // so returning visitors download the new picture instead of an old cached one.
-const IMG_VERSION = '20261121-2';
+const IMG_VERSION = '20261126-1';
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
@@ -36,7 +36,7 @@ const PROMO_TIERS = [
     { qty: 12, unit: 'pcs', name: '2×3.5 notecards' }
   ] }
 ];
-const PROMO_BANNER_TEXT = '🎁 FREE 12 pcs 2×3.5 notecards on orders ₱299+ · ₱999+ also gets 8 pcs 4×3 notecards + 1 A6 notepad · Until December 12';
+const PROMO_BANNER_TEXT = '🎁 FREE 12 pcs 2×3.5 notecards on ₱299+ · ₱999+ gets even more · Until Dec 12';
 
 function isPromoActive() {
   return FREE_PROMO_ON && Date.now() <= PROMO_END_DATE.getTime();
@@ -78,31 +78,31 @@ function applyEnvelopePricing() {
 const CATEGORY_SPECS = {
   '3x3': {
     title: 'Square Notepad (3 × 3 in)',
-    specText: '3 × 3 inches • 30 Sheets • FREE personalization • ₱39.00 / pad',
+    specText: 'Square · 3 × 3 in · 30 sheets · your name is free',
     price: 39.00,
     catalog: 'notepads'
   },
   'A6': {
     title: 'A6 Notepad (4 × 5.8 in)',
-    specText: '4 × 5.8 inches • 30 Sheets • FREE personalization • ₱59.00 / pad',
+    specText: 'A6 · 4 × 5.8 in · 30 sheets · your name is free',
     price: 59.00,
     catalog: 'notepads'
   },
   'A5': {
     title: 'A5 Notepad (5.8 × 8.3 in)',
-    specText: '5.8 × 8.3 inches • 30 Sheets • FREE personalization • ₱109.00 / pad',
+    specText: 'A5 · 5.8 × 8.3 in · 30 sheets · your name is free',
     price: 109.00,
     catalog: 'notepads'
   },
   '2x3.5': {
     title: '2 × 3.5 in Notecards (Portrait)',
-    specText: '2 × 3.5 inches • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱89.00 / pack',
+    specText: '2 × 3.5 in · 24 pcs a pack · 220 gsm · your name is free',
     price: 89.00,
     catalog: 'notecards'
   },
   '4x3': {
     title: '4 × 3 in Notecards (Landscape)',
-    specText: '4 × 3 inches • 24 pcs / pack • 220 gsm • FREE PERSONALIZATION • ₱129.00 / pack',
+    specText: '4 × 3 in · 24 pcs a pack · 220 gsm · your name is free',
     price: 129.00,
     catalog: 'notecards'
   }
@@ -2026,7 +2026,7 @@ function renderProductGallery(categoryKey) {
           <label class="card-custom-input-label" for="inputCustText_${safeCode}">
             CUSTOM NAME / TEXT TO PRINT <span class="required-star">*</span>
           </label>
-          <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE personalization</span>
+          <span class="card-custom-price-pill" style="background:#fff; color:#1A1A1A; border:1px solid #E4DCCF;">✨ FREE personalization</span>
         </div>
         <div class="card-custom-input-wrap card-custom-input-wrap-visible" id="wrapCustInput_${safeCode}">
           <input 
@@ -2055,7 +2055,7 @@ function renderProductGallery(categoryKey) {
           <label class="card-custom-input-label" for="inputCustText_${safeCode}">
             CUSTOM NAME / TEXT TO PRINT
           </label>
-          <span class="card-custom-price-pill" style="background:#e8f5e9; color:#1b5e20; border:1px solid #c8e6c9;">✨ FREE personalization</span>
+          <span class="card-custom-price-pill" style="background:#fff; color:#1A1A1A; border:1px solid #E4DCCF;">✨ FREE personalization</span>
         </div>
         <div class="card-custom-input-wrap card-custom-input-wrap-visible" id="wrapCustInput_${safeCode}">
           <input 
@@ -2386,13 +2386,14 @@ function setGalleryHeading(catalogType) {
 
 function switchMainCatalog(catalogType) {
   if (!CATALOG_COPY[catalogType]) catalogType = 'hardbound';
+  setAppView('shop');
   appState.currentCatalog = catalogType; // 'hardbound' | 'notepads' | 'notecards' | 'envelopes'
   setActiveCatalogNav(catalogType);
   setGalleryHeading(catalogType);
 
   const showTabs = (catalogType === 'notepads' || catalogType === 'notecards');
   if (DOM.categoryTabsContainer) DOM.categoryTabsContainer.style.display = showTabs ? 'flex' : 'none';
-  if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none'; // prices are in the heading
+  if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none'; // shown again by switchGalleryCategory for sized catalogs
   const notepadTab = catalogType === 'notepads' ? 'inline-flex' : 'none';
   const notecardTab = catalogType === 'notecards' ? 'inline-flex' : 'none';
   if (DOM.tab3x3) DOM.tab3x3.style.display = notepadTab;
@@ -2415,13 +2416,14 @@ function switchMainCatalog(catalogType) {
 }
 
 function switchGalleryCategory(categoryKey) {
+  setAppView('shop');
   appState.activeGalleryTab = categoryKey;
   const isNotecard = (categoryKey === '2x3.5' || categoryKey === '4x3');
   const catalogType = isNotecard ? 'notecards' : 'notepads';
   appState.currentCatalog = catalogType;
   setActiveCatalogNav(catalogType);
   setGalleryHeading(catalogType);
-  if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = 'none';
+  if (DOM.categorySpecPill) DOM.categorySpecPill.style.display = '';
 
   if (DOM.categoryTabs) {
     DOM.categoryTabs.forEach(tab => {
@@ -2946,7 +2948,7 @@ function openCheckoutModal() {
   }
   const err = document.getElementById('checkoutSubmitError');
   if (err) err.hidden = true;
-  if (DOM.btnSubmitOrder && !appState.submitting) DOM.btnSubmitOrder.innerHTML = 'Submit Order';
+  if (DOM.btnSubmitOrder && !appState.submitting) DOM.btnSubmitOrder.innerHTML = 'Place order';
   closeCartPanel();
   document.getElementById('checkoutModal').classList.add('active');
   updateBodyScrollLock();
@@ -2986,7 +2988,9 @@ function buildJobOrderSlip(order) {
       ${order.freeText ? row('Free promo items', order.freeText) : ''}
     </div>
     <div class="cs-total"><span>Total</span><strong>${peso(order.total)}</strong></div>
-    <p class="cs-note">Shipping fee is not yet included. Payment details will be sent to you privately. Please include <strong>${escapeHtml(order.refNo)}</strong> when you send your proof of payment.</p>`;
+    <p class="cs-note">Shipping fee is not included. We'll tell you the fee in chat before you pay. Please include <strong>${escapeHtml(order.refNo)}</strong> when you send your proof of order.</p>`;
+  const refText = document.getElementById('confirmRefText');
+  if (refText) refText.textContent = order.refNo;
   return order.total;
 }
 
@@ -3005,11 +3009,12 @@ function loadOrderImageLogo() {
   return orderImageLogoPromise;
 }
 
-// Draws the order summary (black and white, with the full item breakdown) straight onto a canvas.
+// Draws the order summary (brand look: Cream background, Ink text, Playfair title) straight onto a canvas.
 // Same image on computers, tablets and phones. Height grows with the number of items.
 function drawOrderSummaryCanvas(order, logoImg) {
   const W = 1080, PAD = 64, S = 'Montserrat, "Helvetica Neue", Arial, sans-serif';
-  const BLACK = '#000000', GREY = '#555555', LINE = '#d4d4d4';
+  const BLACK = '#1A1A1A', GREY = '#5A5A5A', LINE = '#DDD4C6', CREAM = '#F6F1EA';
+  const DISPLAY = '"Playfair Display", Georgia, serif';
   const measureCanvas = document.createElement('canvas');
   const mctx = measureCanvas.getContext('2d');
 
@@ -3041,8 +3046,11 @@ function drawOrderSummaryCanvas(order, logoImg) {
     } else {
       text('Printelio', PAD, y + 4, 'italic 700 60px Georgia, serif', BLACK);
     }
-    text('ORDER SUMMARY', W - PAD, y + 22, `800 26px ${S}`, BLACK, 'right');
-    y += 100; rule(y, 4, BLACK); y += 30;
+    text('Order summary', W - PAD, y + 12, `500 44px ${DISPLAY}`, BLACK, 'right');
+    y += 100; rule(y, 4, BLACK);
+    // three small brand dots at the end of the rule (Soft Cyan, Dusty Magenta, Buttercream)
+    if (draw) { [['#7FC8D6', 0], ['#D98BB0', 1], ['#F2D98A', 2]].forEach(([c2, i2]) => { ctx.fillStyle = c2; ctx.beginPath(); ctx.arc(PAD + 9 + i2 * 26, y + 30, 8, 0, Math.PI * 2); ctx.fill(); }); }
+    y += 76;
 
     // Reference
     text('ORDER REFERENCE', PAD, y, `700 22px ${S}`, GREY);
@@ -3092,9 +3100,9 @@ function drawOrderSummaryCanvas(order, logoImg) {
     y += 76; rule(y, 4, BLACK); y += 28;
 
     // Notes
-    [[`Shipping fee is not yet included.`, `700 25px ${S}`],
-     [`Send this image to Printelio (FB or IG) or to your contact person.`, `700 25px ${S}`],
-     [`Payment details will be sent privately. Please include ${order.refNo} when you send your proof of payment.`, `500 23px ${S}`]]
+    [[`Shipping fee is not included. We'll tell you the fee in chat before you pay.`, `700 25px ${S}`],
+     [`Send this image to Printelio on Messenger.`, `700 25px ${S}`],
+     [`Please include ${order.refNo} when you send your proof of order.`, `500 23px ${S}`]]
       .forEach(([note, font]) => {
         wrap(ctx, note, font, W - PAD * 2).forEach(ln => { text(ln, PAD, y, font, BLACK); y += 34; });
         y += 10;
@@ -3106,7 +3114,7 @@ function drawOrderSummaryCanvas(order, logoImg) {
   const canvas = document.createElement('canvas');
   canvas.width = W; canvas.height = height;
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, height);
+  ctx.fillStyle = '#F6F1EA'; ctx.fillRect(0, 0, W, height);
   render(ctx, true);
   return canvas;
 }
@@ -3117,7 +3125,7 @@ async function prepareOrderImage(order) {
   try {
     if (document.fonts && document.fonts.load) {
       await Promise.race([
-        Promise.all([document.fonts.load('500 23px Montserrat'), document.fonts.load('600 28px Montserrat'), document.fonts.load('700 27px Montserrat'), document.fonts.load('800 50px Montserrat')]),
+        Promise.all([document.fonts.load('500 23px Montserrat'), document.fonts.load('600 28px Montserrat'), document.fonts.load('700 27px Montserrat'), document.fonts.load('800 50px Montserrat'), document.fonts.load('500 44px "Playfair Display"')]),
         new Promise(r => setTimeout(r, 1500)) // never wait more than 1.5s for fonts
       ]);
     }
@@ -3133,6 +3141,14 @@ async function prepareOrderImage(order) {
   appState.orderImage = { refNo: order.refNo, dataUrl, file };
   return appState.orderImage;
 }
+
+// Step 3 happens in two quick moves: save the image, then open Messenger.
+// Messenger stays locked until the image is saved (or the customer taps "I've saved it" where saves can't be detected).
+function setImageSavedState(saved) {
+  const guide = document.getElementById('confirmGuide');
+  if (guide) guide.dataset.state = saved ? 'saved' : 'save';
+}
+function markImageSaved() { setImageSavedState(true); }
 
 function showOrderImageFallback() {
   const box = document.getElementById('confirmImageFallback');
@@ -3177,6 +3193,7 @@ async function downloadOrderSummaryImage() {
     if (canShareFile) {
       try {
         await navigator.share({ files: [img.file], title: `Printelio order ${order.refNo}` });
+        markImageSaved(); // the phone's share sheet finished: unlock Messenger
       } catch (err) {
         if (!err || err.name !== 'AbortError') showOrderImageFallback(); // share failed: press-and-hold instead
       }
@@ -3193,6 +3210,7 @@ async function downloadOrderSummaryImage() {
   link.click();
   link.remove();
   showToast('Order summary saved as an image.');
+  markImageSaved();
 }
 
 async function submitJobOrder() {
@@ -3332,7 +3350,7 @@ async function submitJobOrder() {
   appState.cart = [];
   renderCart();
   appState.submitting = false;
-  if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalSubmitText || 'Submit Order'; }
+  if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalSubmitText || 'Place order'; }
   if (closeBtn) closeBtn.disabled = false;
   document.getElementById('checkoutModal').classList.remove('active');
 
@@ -3341,6 +3359,7 @@ async function submitJobOrder() {
   buildJobOrderSlip(order);
   const fallback = document.getElementById('confirmImageFallback');
   if (fallback) fallback.hidden = true;
+  setImageSavedState(false);
   DOM.jobOrderModal.classList.add('active');
   const dialog = document.getElementById('jobOrderDialog');
   if (dialog) dialog.scrollTop = 0;
@@ -3404,7 +3423,7 @@ function closeImageLightbox() {
   updateBodyScrollLock();
 }
 
-// "Back to Printelio": clears everything and returns to the landing page (Hardbound Notepads).
+// "Back to Printelio": clears everything and returns to the first screen (How to order + product choices).
 function startNewOrder() {
   closeModal();
   appState.cart = [];
@@ -3414,8 +3433,75 @@ function startNewOrder() {
   if (DOM.customerForm) DOM.customerForm.reset();
   document.querySelectorAll('#customerForm .has-error').forEach(el => el.classList.remove('has-error'));
   closeCartPanel();
+  setImageSavedState(false);
   switchMainCatalog('hardbound');
+  setAppView('arrive');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================================
+// 9c. Guided flow: first screen, step guide, direct links (display only)
+// ============================================================================
+
+// 'arrive' = How to order + product choices; 'shop' = the catalogs.
+function setAppView(view) {
+  const root = document.getElementById('appRoot');
+  if (!root || root.dataset.view === view) { updateGuide(); return; }
+  root.dataset.view = view;
+  updateGuide();
+  if (view === 'arrive') window.scrollTo({ top: 0 });
+}
+
+const GUIDE_STEPS = ['Pick a design', 'Place your order', 'Send proof of order', 'Send the deposit'];
+function updateGuide() {
+  const strip = document.getElementById('guideStrip');
+  if (!strip) return;
+  const root = document.getElementById('appRoot');
+  const isArrive = !root || root.dataset.view === 'arrive';
+  const checkoutOpen = document.getElementById('checkoutModal') && document.getElementById('checkoutModal').classList.contains('active');
+  const confirmOpen = DOM.jobOrderModal && DOM.jobOrderModal.classList.contains('active');
+  const cartOpen = document.body.classList.contains('cart-open');
+  let step = 1;
+  if (confirmOpen) step = 3;
+  else if (checkoutOpen || cartOpen) step = 2;
+  strip.hidden = isArrive && !confirmOpen && !checkoutOpen && !cartOpen;
+  const text = document.getElementById('guideStripText');
+  if (text) text.textContent = 'Step ' + step + ' of 4 · ' + GUIDE_STEPS[step - 1];
+  const dots = document.querySelectorAll('#guideDots i');
+  dots.forEach((d, i) => d.classList.toggle('cur', i === step - 1));
+}
+
+// Direct links, e.g. ?p=notepads&size=A6 opens that product (links we can send in chat).
+function openFromLink() {
+  let params;
+  try { params = new URLSearchParams(window.location.search); } catch (e) { return false; }
+  const p = params.get('p');
+  if (!p || !CATALOG_COPY[p]) return false;
+  const sizeMap = { '3x3': '3x3', 'square': '3x3', 'a6': 'A6', 'a5': 'A5', '2x3.5': '2x3.5', '4x3': '4x3' };
+  const size = sizeMap[String(params.get('size') || '').toLowerCase()];
+  const okSize = (p === 'notepads' && ['3x3', 'A6', 'A5'].includes(size)) || (p === 'notecards' && ['2x3.5', '4x3'].includes(size));
+  switchMainCatalog(p);
+  if (okSize) switchGalleryCategory(size);
+  return true;
+}
+
+function initGuide() {
+  document.querySelectorAll('[data-go]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchMainCatalog(btn.dataset.go);
+      window.scrollTo({ top: 0 });
+    });
+  });
+  const back = document.getElementById('btnAllProducts');
+  if (back) back.addEventListener('click', () => setAppView('arrive'));
+  const saved = document.getElementById('btnImageSaved');
+  if (saved) saved.addEventListener('click', markImageSaved);
+  const again = document.getElementById('btnSaveAgain');
+  if (again) again.addEventListener('click', () => { setImageSavedState(false); downloadOrderSummaryImage(); });
+  const watch = new MutationObserver(updateGuide);
+  [document.getElementById('checkoutModal'), DOM.jobOrderModal].forEach(el => { if (el) watch.observe(el, { attributes: true, attributeFilter: ['class'] }); });
+  watch.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  updateGuide();
 }
 
 // ============================================================================
@@ -3555,8 +3641,9 @@ function initEventListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Landing page: Hardbound Notepads
+  // 1. Catalog is prepared as before; the first screen is 'How to order' unless a direct link was opened
   switchMainCatalog('hardbound');
+  if (!openFromLink()) setAppView('arrive');
 
   // 2. Promo banner (FREE notecards)
   const promoBanner = document.getElementById('promoBanner');
@@ -3570,4 +3657,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Attach event listeners
   initEventListeners();
+  initGuide();
 });

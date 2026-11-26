@@ -10,7 +10,7 @@
 
 // Product photo version: change this number whenever you replace a photo that keeps the same file name,
 // so returning visitors download the new picture instead of an old cached one.
-const IMG_VERSION = '20261126-1';
+const IMG_VERSION = '20261126-2';
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
@@ -3448,6 +3448,8 @@ function setAppView(view) {
   const root = document.getElementById('appRoot');
   if (!root || root.dataset.view === view) { updateGuide(); return; }
   root.dataset.view = view;
+  document.querySelectorAll('[data-home]').forEach(b => b.classList.toggle('active', view === 'arrive'));
+  if (view === 'arrive') document.querySelectorAll('[data-catalog]').forEach(b => { b.classList.remove('active'); if (b.classList.contains('site-nav-link')) b.setAttribute('aria-selected', 'false'); });
   updateGuide();
   if (view === 'arrive') window.scrollTo({ top: 0 });
 }
@@ -3492,6 +3494,12 @@ function initGuide() {
       window.scrollTo({ top: 0 });
     });
   });
+  document.querySelectorAll('[data-home]').forEach(el => el.addEventListener('click', (e) => {
+    e.preventDefault();
+    setAppView('arrive');
+    if (typeof toggleMobileMenu === 'function') toggleMobileMenu(false);
+    window.scrollTo({ top: 0 });
+  }));
   const back = document.getElementById('btnAllProducts');
   if (back) back.addEventListener('click', () => setAppView('arrive'));
   const saved = document.getElementById('btnImageSaved');

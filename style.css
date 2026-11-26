@@ -4790,3 +4790,65 @@ body { background: var(--cream); background-image: none; color: var(--ink); }
 
 button, input, select, textarea { font-family: var(--font-main); }
 .cart-pane-close, #btnCloseCartPanel, #btnCloseCheckout, .checkout-close, .btn-mobile-nav-close { min-width: 44px !important; min-height: 44px !important; }
+
+/* ==========================================================================
+   NOV 26, 2026 (2) — desktop rebuild, photos never clipped, clearer navigation
+   ========================================================================== */
+/* Photos show whole, in their own proportions (nothing cut off) */
+.wme-card .wme-preview .wme-image { aspect-ratio: auto !important; object-fit: contain !important; height: auto !important; }
+
+/* Cart button: no box */
+.header-cart-pill { border: 0 !important; background: transparent !important; box-shadow: none !important; padding: 6px 8px; }
+.header-cart-pill:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Navigation: Home tab + clearer "All products" */
+.back-link { border: 1.5px solid var(--ink); border-radius: 999px; padding: 0 16px; text-decoration: none; background: #fff; font-size: 1rem; font-weight: 700; }
+.back-link:hover { background: var(--ink); color: #fff; }
+.header-brand-link { cursor: pointer; }
+.mobile-nav-link.active { background: rgba(255, 255, 255, 0.12); }
+
+/* Arrive screen centered (no empty cart column) */
+#appRoot[data-view="arrive"].shop-layout.app-container { grid-template-columns: minmax(0, 1fr); }
+
+/* The strip's content lines up with the page column */
+.guide-strip { padding-left: max(16px, calc((100% - 1232px) / 2)); padding-right: max(16px, calc((100% - 1232px) / 2)); }
+
+@media (min-width: 1024px) {
+  /* A normal scrolling page, not a frame with its own scroll */
+  html, body { height: auto; }
+  body { display: block; overflow: visible; }
+  .site-header { position: sticky; top: 0; z-index: 60; }
+  .shop-layout.app-container { max-width: 1280px; margin: 0 auto; padding: 20px 24px 48px; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+  #appRoot[data-view="arrive"].shop-layout.app-container { grid-template-columns: minmax(0, 1fr); }
+  .catalog-pane { overflow: visible; padding-right: 0; }
+  .cart-pane { position: sticky; top: 88px; max-height: calc(100vh - 104px); }
+
+  /* Catalog heading stacks: back, title, details, size chips */
+  .catalog-pane .gallery-header-box { flex-direction: column; align-items: flex-start; gap: 6px; padding: 0 0 8px; margin-bottom: 8px; }
+  .catalog-pane .gallery-title-wrap { flex: none; width: 100%; }
+  .catalog-pane .gallery-section-title { font-size: 2.2rem; line-height: 1.1; }
+  .catalog-pane .gallery-section-subtitle { font-size: 1rem; margin-top: 6px; }
+  .catalog-pane .category-tabs-container { width: 100%; }
+  .catalog-pane .category-tabs-container .tab-btn { min-height: 44px; padding: 8px 18px; font-size: 1rem; }
+
+  /* Three cards a row, readable text, photos whole */
+  .catalog-pane .product-gallery-grid.wme-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
+  .catalog-pane .product-gallery-grid.wme-gallery > .wme-card { height: auto; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-heading { padding: 14px 16px 6px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-heading h3 { font-size: 1.2rem; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-preview { height: auto !important; min-height: 0 !important; flex: none !important; padding: 0 !important; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-image { height: auto !important; width: 100% !important; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-arrow { width: 44px; height: 44px; font-size: 24px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-selected { font-size: 1rem; padding: 8px 14px 2px; min-height: 0; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-thumbnails { padding: 8px 14px; gap: 8px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-thumb { flex: 0 0 48px; width: 48px; height: 56px; }
+  .catalog-pane .product-gallery-grid.wme-gallery .wme-form { padding: 8px 14px; }
+  .catalog-pane .wme-section-label, .catalog-pane .wme-paper-options label, .catalog-pane .wme-field { font-size: 0.95rem; }
+  .catalog-pane .wme-field input { padding: 10px 12px; font-size: 1rem; min-height: 44px; }
+  .catalog-pane .wme-char-count, .catalog-pane .wme-error { font-size: 0.9rem; }
+  .catalog-pane .product-gallery-grid.wme-gallery .product-card-footer { padding: 10px 14px 16px; }
+}
+.wme-card .wme-preview .wme-image-button { position: relative !important; inset: auto !important; display: block; width: 100% !important; height: auto !important; margin: 0; }
+.category-tabs-container, .category-tabs-container .category-tabs, .category-tabs { justify-content: flex-start !important; }
+.catalog-pane .category-tabs-container { align-items: flex-start; }
+@media (max-width: 520px) { .header-social { display: none !important; } }

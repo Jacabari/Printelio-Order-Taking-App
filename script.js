@@ -10,7 +10,7 @@
 
 // Product photo version: change this number whenever you replace a photo that keeps the same file name,
 // so returning visitors download the new picture instead of an old cached one.
-const IMG_VERSION = '20261126-2';
+const IMG_VERSION = '20261126-4';
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
@@ -1395,11 +1395,8 @@ const WEDDING_ENVELOPE_TITLES = {
 const HARDBOUND_NAME_LIMITS = { A6: 15, A5: 20 };
 // A5 hardbound is temporarily sold out (a new size is coming). Set to false to sell A5 again.
 const HARDBOUND_A5_SOLD_OUT = true;
-// Hardbound prices. A6: ₱199 each, and ₱189 each for every piece once the order has 4 or more A6 hardbound
-// notepads in total (any designs and names combined). A5 is sold out for now (₱299 each).
+// Hardbound prices: A6 ₱199 each (no quantity discount). A5 is sold out for now (₱299 each).
 const HARDBOUND_PRICES = { A6: 199, A5: 299 };
-const HARDBOUND_BULK_PRICE = 189;
-const HARDBOUND_BULK_MIN = 4;
 let hardboundCardUpdaters = []; // refresh each hardbound card's price when the cart changes
 function refreshHardboundCardPrices() { hardboundCardUpdaters.forEach(fn => fn()); }
 function hardboundA6Pcs() {
@@ -1408,11 +1405,10 @@ function hardboundA6Pcs() {
 }
 // Recomputes hardbound prices in the cart (called on every cart change, so adding/removing updates the discount).
 function applyHardboundPricing() {
-  const bulk = hardboundA6Pcs() >= HARDBOUND_BULK_MIN;
   appState.cart.forEach(item => {
     if (item.categoryKey !== 'hardbound' || item.sizeId !== 'hardbound-a6') return;
-    item.unitPrice = bulk ? HARDBOUND_BULK_PRICE : HARDBOUND_PRICES.A6;
-    item.bulkPrice = bulk;
+    item.unitPrice = HARDBOUND_PRICES.A6;
+    item.bulkPrice = false;
     item.subtotal = item.unitPrice * item.quantity;
   });
 }
@@ -1624,7 +1620,7 @@ function renderHardboundGallery() {
         <p class="wme-error" role="alert" hidden></p>
       </div>
       <div class="product-card-footer">
-        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${HARDBOUND_PRICES.A6.toFixed(2)}</div><small class="wme-price-note">per notepad · ₱${HARDBOUND_BULK_PRICE} each for ${HARDBOUND_BULK_MIN}+</small></div>
+        <div class="product-card-footer-top"><div><div class="product-price wme-price">₱${HARDBOUND_PRICES.A6.toFixed(2)}</div><small class="wme-price-note">per notepad</small></div>
           <div class="card-qty-stepper"><button type="button" class="card-qty-btn wme-minus" aria-label="Decrease quantity">−</button><input class="card-qty-input wme-qty" type="number" min="1" max="99" value="1" aria-label="Quantity"><button type="button" class="card-qty-btn wme-plus" aria-label="Increase quantity">+</button></div>
         </div><button type="button" class="btn-card-add wme-add">+ Add to Cart</button>
       </div>`;
@@ -1638,14 +1634,8 @@ function renderHardboundGallery() {
     const selectedSize = () => card.querySelector(`input[name="hardbound_size_${groupIndex}"]:checked`).value;
     const unitPrice = () => HARDBOUND_PRICES[selectedSize()];
     const priceNote = card.querySelector('.wme-price-note');
-    // Card price: regular price, or the 4+ price when this quantity (plus the A6 hardbound already in the cart) reaches 4.
-    const updatePrice = () => {
-      if (selectedSize() !== 'A6') { price.textContent = `₱${unitPrice().toFixed(2)}`; priceNote.textContent = 'per notepad'; return; }
-      const total = (parseInt(qty.value, 10) || 1) + hardboundA6Pcs();
-      const bulk = total >= HARDBOUND_BULK_MIN;
-      price.textContent = `₱${(bulk ? HARDBOUND_BULK_PRICE : HARDBOUND_PRICES.A6).toFixed(2)}`;
-      priceNote.textContent = bulk ? `per notepad · ${HARDBOUND_BULK_MIN}+ price` : `per notepad · ₱${HARDBOUND_BULK_PRICE} each for ${HARDBOUND_BULK_MIN}+`;
-    };
+    // Card price: one flat price per size.
+    const updatePrice = () => { price.textContent = `₱${unitPrice().toFixed(2)}`; priceNote.textContent = 'per notepad'; };
     hardboundCardUpdaters.push(() => { if (card.isConnected) updatePrice(); });
     updatePrice(); // right away, in case the cart already has A6 hardbound notepads
     function selectDesign(next, revealThumbnail = false) {
@@ -1966,7 +1956,9 @@ function renderNotepadSliderGallery(categoryKey) {
   });
 }
 
+const GALLERY_FRAMES = { 'hardbound': '1151 / 1367', 'wedding-envelopes': '1151 / 1367', 'A6': '1200 / 1490', 'A5': '4 / 5', '3x3': '1 / 1', '2x3.5': '1 / 1', '4x3': '1 / 1' };
 function renderProductGallery(categoryKey) {
+  if (DOM.productGalleryGrid) DOM.productGalleryGrid.style.setProperty('--frame', GALLERY_FRAMES[categoryKey] || '1 / 1');
   if (categoryKey === 'wedding-envelopes') { renderWeddingEnvelopeGallery(); return; }
   if (categoryKey === '3x3' || categoryKey === 'A6' || categoryKey === 'A5') { renderNotepadSliderGallery(categoryKey); return; }
   if (categoryKey === 'hardbound') { renderHardboundGallery(); return; }
@@ -2638,7 +2630,7 @@ function cartItemNameLabel(item) {
 
 function cartGroupSpec(item) {
   if (item.categoryKey === 'envelopes') return `Per piece • ${peso(item.unitPrice)} / pc${item.bulkPrice ? ' (5+ price)' : ''}`;
-  if (item.categoryKey === 'hardbound') return `${item.dimensions} • 70 sheets • Free cover personalization${item.bulkPrice ? ` • ${peso(item.unitPrice)} each (4+ price)` : ''}`;
+  if (item.categoryKey === 'hardbound') return `${item.dimensions} • 70 sheets • Free cover personalization`;
   if (item.hasSheets) return `${item.dimensions} • ${item.sheetCount} sheets • Free personalization`;
   if (item.cardCount || item.categoryKey === 'notecards') return `${item.dimensions || ''} • ${item.cardCount || 24} pcs (220 gsm) • Free personalization`;
   return item.dimensions || '';
@@ -2666,11 +2658,6 @@ function renderPromoAndChecks(totals) {
     const pcs = envelopePcsByPaper();
     const tips = Object.keys(pcs).filter(paper => pcs[paper] > 0 && pcs[paper] < ENVELOPE_BULK_MIN).map(paper =>
       `✉️ Add <strong>${ENVELOPE_BULK_MIN - pcs[paper]} more ${ENVELOPE_PAPER_LABEL[paper]}</strong> envelope${ENVELOPE_BULK_MIN - pcs[paper] === 1 ? '' : 's'} (any design) to pay only <strong>₱${ENVELOPE_BULK_PRICES[paper]} each</strong> instead of ₱${ENVELOPE_PRICES[paper]}.`);
-    const hbPcs = hardboundA6Pcs();
-    if (hbPcs > 0 && hbPcs < HARDBOUND_BULK_MIN) {
-      const more = HARDBOUND_BULK_MIN - hbPcs;
-      tips.push(`📓 Add <strong>${more} more A6 hardbound notepad${more === 1 ? '' : 's'}</strong> (any design) to pay only <strong>₱${HARDBOUND_BULK_PRICE} each</strong> instead of ₱${HARDBOUND_PRICES.A6}.`);
-    }
     if (tips.length) {
       warn.innerHTML = tips.join('<br>');
       warn.style.display = 'block';
@@ -2898,7 +2885,7 @@ function buildSheetOrderItemsText(totals) {
 // ----------------------------------------------------------------------------
 // Cart panel (phones), checkout pop-up and page scroll lock
 // ----------------------------------------------------------------------------
-const PHONE_LAYOUT_QUERY = '(max-width: 1023px)';
+const PHONE_LAYOUT_QUERY = '(max-width: 1023px)'; // below this width the cart is a slide-over drawer; on desktop it stays in the sidebar
 function isPhoneLayout() { return window.matchMedia && window.matchMedia(PHONE_LAYOUT_QUERY).matches; }
 
 function updateBodyScrollLock() {

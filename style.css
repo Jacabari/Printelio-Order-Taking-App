@@ -3995,7 +3995,6 @@ select.form-control {
   }
   .catalog-pane { overflow-y: auto; min-height: 0; padding-right: 4px; scrollbar-width: thin; }
   .cart-pane { min-height: 0; max-height: 100%; }
-  .mobile-cart-bar, .cart-backdrop, .cart-pane-close { display: none !important; }
 }
 
 /* Compact catalog heading: title + prices on the left, size tabs on the right */
@@ -4818,10 +4817,11 @@ button, input, select, textarea { font-family: var(--font-main); }
   html, body { height: auto; }
   body { display: block; overflow: visible; }
   .site-header { position: sticky; top: 0; z-index: 60; }
-  .shop-layout.app-container { max-width: 1280px; margin: 0 auto; padding: 20px 24px 48px; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+  .shop-layout.app-container { max-width: 1280px; margin: 0 auto; padding: 20px 24px 48px; grid-template-columns: minmax(0, 1fr) 380px; gap: 28px; align-items: start; }
   #appRoot[data-view="arrive"].shop-layout.app-container { grid-template-columns: minmax(0, 1fr); }
   .catalog-pane { overflow: visible; padding-right: 0; }
-  .cart-pane { position: sticky; top: 88px; max-height: calc(100vh - 104px); }
+  .cart-pane { position: sticky; top: 88px; max-height: calc(100vh - 104px); align-self: start; }
+  .mobile-cart-bar, .cart-backdrop, .cart-pane-close { display: none !important; }
 
   /* Catalog heading stacks: back, title, details, size chips */
   .catalog-pane .gallery-header-box { flex-direction: column; align-items: flex-start; gap: 6px; padding: 0 0 8px; margin-bottom: 8px; }
@@ -4852,3 +4852,64 @@ button, input, select, textarea { font-family: var(--font-main); }
 .category-tabs-container, .category-tabs-container .category-tabs, .category-tabs { justify-content: flex-start !important; }
 .catalog-pane .category-tabs-container { align-items: flex-start; }
 @media (max-width: 520px) { .header-social { display: none !important; } }
+
+
+/* ==========================================================================
+   NOV 26, 2026 (3) — CARDS v2: every card in a row shares the same row lines
+   (heading, photo, thumbnails, design name, options, price + Add) so nothing is misaligned.
+   Photos are shown whole in one frame shape per category (--frame, set in script.js).
+   ========================================================================== */
+.catalog-pane .product-gallery-grid.wme-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; row-gap: 0; align-items: stretch; }
+@media (max-width: 1099px) { .catalog-pane .product-gallery-grid.wme-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .catalog-pane .product-gallery-grid.wme-gallery { grid-template-columns: minmax(0, 1fr); } }
+.catalog-pane .product-gallery-grid.wme-gallery > .wme-card {
+  display: grid; grid-row: span 6; grid-template-rows: subgrid; grid-template-columns: minmax(0, 1fr);
+  margin: 0 0 28px; padding: 0; height: auto; overflow: hidden; border-radius: 18px;
+}
+.wme-card .wme-heading { display: flex; align-items: flex-start; padding: 18px 20px 12px; min-height: 0; }
+.wme-card .wme-heading h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; line-height: 1.2; margin: 0; }
+.wme-card .wme-heading span { display: none; }
+.wme-card .wme-preview { position: relative; aspect-ratio: var(--frame, 1 / 1); height: auto !important; min-height: 0 !important; flex: none !important; padding: 0 !important; background: var(--cream); overflow: hidden; }
+.wme-card .wme-preview .wme-image-button { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.wme-card .wme-preview .wme-image { width: 100% !important; height: 100% !important; max-width: none; aspect-ratio: auto !important; object-fit: contain !important; }
+.wme-card .wme-preview .wme-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; font-size: 24px; }
+.wme-card .wme-thumbnails { display: flex; gap: 8px; overflow-x: auto; padding: 12px 20px 8px; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent); }
+.wme-card .wme-thumbnails::-webkit-scrollbar { display: none; }
+.wme-card .wme-thumb { flex: 0 0 56px; width: 56px; height: 66px; }
+.wme-card .wme-selected { text-align: left; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.35; padding: 6px 20px 10px; min-height: 0; display: block; }
+.wme-card .wme-form { padding: 4px 20px 8px; display: flex; flex-direction: column; gap: 10px; align-content: start; }
+.wme-card .wme-section-label { font-size: 1rem; font-weight: 800; }
+.wme-card .wme-paper-options { display: flex; flex-direction: column; gap: 2px; }
+.wme-card .wme-paper-options label { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 1rem; line-height: 1.3; padding: 0; border: 0; background: none; }
+.wme-card .wme-paper-options input { width: 20px; height: 20px; flex: 0 0 20px; }
+.wme-card .wme-field { font-size: 1rem; font-weight: 700; display: flex; flex-direction: column; gap: 6px; }
+.wme-card .wme-field input { font-size: 1rem; min-height: 48px; padding: 10px 14px; font-weight: 500; }
+.wme-card .wme-char-count { font-size: 1rem; color: var(--ink-70); text-align: right; margin-top: -4px; }
+.wme-card .wme-error { font-size: 1rem; margin: 0; }
+.wme-card .product-card-footer { padding: 12px 20px 20px; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--line); margin-top: 0; }
+.wme-card .product-card-footer-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.wme-card .product-price { font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
+.wme-card .product-card-footer small, .wme-card .wme-price-note { display: block; font-size: 1rem; line-height: 1.35; color: var(--ink-70); margin-top: 2px; }
+.wme-card .card-qty-stepper { display: inline-flex; align-items: center; flex: 0 0 auto; }
+.wme-card .card-qty-input { width: 56px; text-align: center; font-size: 1rem; }
+.wme-card .btn-card-add { width: 100%; min-height: 48px; font-size: 1rem; font-weight: 800; }
+.catalog-pane .product-gallery-grid.wme-gallery .wme-thumbnails { scrollbar-width: none !important; overflow-y: hidden; }
+.catalog-pane .product-gallery-grid.wme-gallery .wme-thumbnails::-webkit-scrollbar { display: none !important; height: 0; }
+
+/* Envelope card: monogram, date and names stack in one column (readable at every card width) */
+.catalog-pane .wme-card .wme-form:has(.wme-monogram) { display: flex; flex-direction: column; gap: 10px; }
+.catalog-pane .wme-card .wme-form:has(.wme-monogram) > * { grid-column: auto; }
+.catalog-pane .wme-card .wme-form:has(.wme-monogram) > .wme-char-count { align-self: flex-end; }
+.catalog-pane .wme-card .wme-form:has(.wme-monogram) > label { align-self: stretch; }
+.wme-card .btn-card-add { white-space: normal; line-height: 1.2; padding: 10px 14px; }
+
+/* Desktop: the cart stays in the sidebar, so the cards get two columns (wide enough to read) */
+@media (min-width: 1024px) {
+  .catalog-pane .product-gallery-grid.wme-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Narrow desktops (1024-1199px): keep the header on one clean row */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .header-social { display: none !important; }
+  .site-nav-link { padding-left: 8px; padding-right: 8px; font-size: 0.9rem; }
+}

@@ -10,7 +10,7 @@
 
 // Product photo version: change this number whenever you replace a photo that keeps the same file name,
 // so returning visitors download the new picture instead of an old cached one.
-const IMG_VERSION = '20261126-4';
+const IMG_VERSION = '20261126-6';
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
@@ -36,7 +36,7 @@ const PROMO_TIERS = [
     { qty: 12, unit: 'pcs', name: '2×3.5 notecards' }
   ] }
 ];
-const PROMO_BANNER_TEXT = '🎁 FREE 12 pcs 2×3.5 notecards on ₱299+ · ₱999+ gets even more · Until Dec 12';
+const PROMO_BANNER_TEXT = '🎁 Free 12 notecards (2×3.5) when you spend ₱299 · Spend ₱999 for even more · Until Dec 12';
 
 function isPromoActive() {
   return FREE_PROMO_ON && Date.now() <= PROMO_END_DATE.getTime();
@@ -45,17 +45,16 @@ function promoItemsText(items) {
   return items.map(it => `${it.qty}${it.unit ? ' ' + it.unit : ''} ${it.name}`).join(' + ');
 }
 
-// Money envelopes are sold per piece, minimum 5 pieces per order (premium and standard can be mixed).
-// Money envelopes are sold per piece, no minimum order.
-// Volume price: 5 or more pieces of the SAME paper (any designs/names combined) get the lower price per piece.
-const ENVELOPE_PRICES = { premium: 20, standard: 15 };          // regular price per piece
-const ENVELOPE_BULK_PRICES = { premium: 16, standard: 12 };     // price per piece at 5+ pcs
+// Money envelopes are sold per piece, no minimum order. One paper only: 108 gsm.
+// Volume price: 5 or more pieces (any designs/names combined) get the lower price per piece.
+const ENVELOPE_PRICES = { premium: 20 };          // regular price per piece
+const ENVELOPE_BULK_PRICES = { premium: 16 };     // price per piece at 5+ pcs
 const ENVELOPE_BULK_MIN = 5;
 const ENVELOPE_MIN_PCS = 1; // no minimum order
-const ENVELOPE_PAPER_LABEL = { premium: 'Premium', standard: 'Standard' };
+const ENVELOPE_PAPER_LABEL = { premium: '108 gsm' };
 
 function envelopePcsByPaper() {
-  const pcs = { premium: 0, standard: 0 };
+  const pcs = { premium: 0 };
   appState.cart.forEach(item => { if (item.categoryKey === 'envelopes') pcs[item.paperQuality] = (pcs[item.paperQuality] || 0) + (item.quantity || 0); });
   return pcs;
 }
@@ -1376,9 +1375,9 @@ function isProductNewArrival(product) {
 
 // Wedding envelope catalog: independent manual sliders and order configurations.
 const WEDDING_ENVELOPE_GROUPS = [
-  { id: 'monogram', title: 'Wedding 1 Designs', codes: ['WME_00','WME_01','WME_02','WME_03','WME_04'] },
-  { id: 'wedding', title: 'Wedding 2 Designs', codes: ['WME_05','WME_06','WME_07','WME_08'] },
-  { id: 'christmas', title: 'Christmas Designs', codes: ['CME_00','CME_01','CME_02','CME_03','CME_04','CME_05','CME_06','CME_07','CME_08','CME_09'] }
+  { id: 'christmas', title: 'Christmas Designs', codes: ['CME_00','CME_01','CME_02','CME_03','CME_04','CME_05','CME_06','CME_07','CME_08','CME_09'] },
+  { id: 'monogram', title: 'Wedding with monogram', codes: ['WME_00','WME_01','WME_02','WME_03','WME_04'] },
+  { id: 'wedding', title: 'Wedding with names and date', codes: ['WME_05','WME_06','WME_07','WME_08'] }
 ];
 const WEDDING_ENVELOPE_TITLES = {
   WME_00:'Timeless', WME_01:'Modern', WME_02:'Devotion', WME_03:'Tranquility', WME_04:'Elegance',
@@ -1457,11 +1456,7 @@ function renderWeddingEnvelopeGallery() {
       <div class="wme-selected" aria-live="polite"></div>
       <div class="wme-thumbnails" aria-label="Choose envelope design"></div>
       <div class="wme-form">
-        <div class="wme-section-label">Paper</div>
-        <div class="wme-paper-options">
-          <label><input type="radio" name="paper_${group.id}" value="premium" checked> Premium 108 gsm · ₱${ENVELOPE_PRICES.premium} (₱${ENVELOPE_BULK_PRICES.premium} for 5+)</label>
-          <label><input type="radio" name="paper_${group.id}" value="standard"> Standard 80 gsm · ₱${ENVELOPE_PRICES.standard} (₱${ENVELOPE_BULK_PRICES.standard} for 5+)</label>
-        </div>
+        <div class="wme-paper-note">108 gsm paper</div>
         ${group.id === 'monogram' ? '<label class="wme-field">Monogram (2 letters, free) <input class="wme-monogram" maxlength="2" placeholder="e.g. JM" autocomplete="off" required></label>' : ''}
         <label class="wme-field">${group.id === 'christmas' ? 'Names (free, 1 or 2 names)' : 'Names (free)'} <input class="wme-names wme-counted" maxlength="${ENVELOPE_NAME_LIMIT}" placeholder="${group.id === 'christmas' ? 'e.g. Julia or Julia & Marco' : 'e.g. Julia & Marco'}" autocomplete="off" required></label>
         <div class="wme-char-count" aria-live="polite">0/${ENVELOPE_NAME_LIMIT}</div>
@@ -1480,7 +1475,7 @@ function renderWeddingEnvelopeGallery() {
     const price = card.querySelector('.wme-price');
     const qty = card.querySelector('.wme-qty');
     const error = card.querySelector('.wme-error');
-    const selectedPaper = () => card.querySelector(`input[name="paper_${group.id}"]:checked`).value;
+    const selectedPaper = () => 'premium';
     const unitPrice = () => ENVELOPE_PRICES[selectedPaper()];
     function selectDesign(next, revealThumbnail = false) {
       index = (next + group.codes.length) % group.codes.length;
@@ -1529,7 +1524,6 @@ function renderWeddingEnvelopeGallery() {
       priceNote.textContent = bulk ? `per piece · 5+ price` : `per piece · ₱${ENVELOPE_BULK_PRICES[paper]} each for 5+`;
     };
     envelopeCardUpdaters.push(() => { if (card.isConnected) updateEnvelopePrice(); });
-    card.querySelectorAll('.wme-paper-options input').forEach(radio => radio.addEventListener('change', updateEnvelopePrice));
     const clampQty = () => { qty.value = String(Math.min(200, Math.max(1, parseInt(qty.value,10) || 1))); return Number(qty.value); };
     card.querySelector('.wme-minus').addEventListener('click', () => { qty.value = Math.max(1,clampQty()-1); updateEnvelopePrice(); });
     card.querySelector('.wme-plus').addEventListener('click', () => { qty.value = Math.min(200,clampQty()+1); updateEnvelopePrice(); });
@@ -1549,7 +1543,7 @@ function renderWeddingEnvelopeGallery() {
       if (invalid) {
         error.hidden = false;
         error.textContent = invalid === monogramInput ? 'Please enter exactly two letters for the monogram.'
-          : (invalid.classList.contains('wme-names') && names.length > ENVELOPE_NAME_LIMIT ? `Names can be up to ${ENVELOPE_NAME_LIMIT} characters only.` : 'Please complete all personalization fields.');
+          : (invalid.classList.contains('wme-names') && names.length > ENVELOPE_NAME_LIMIT ? `Names can be up to ${ENVELOPE_NAME_LIMIT} characters only.` : 'Please fill in all the fields.');
         invalid.focus(); return;
       }
       error.hidden = true;
@@ -1560,7 +1554,7 @@ function renderWeddingEnvelopeGallery() {
       else appState.cart.push({
         id: 'wme_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
         categoryKey:'envelopes', categoryName:'Money Envelopes', sizeId:group.id === 'christmas' ? 'christmas-envelopes' : 'wedding-envelopes',
-        sizeName:`Money Envelope · ${paper === 'premium' ? 'Premium 108' : 'Standard 80'} GSM`,
+        sizeName:'Money Envelope · 108 GSM',
         shortName:WEDDING_ENVELOPE_TITLES[code], productTitle:WEDDING_ENVELOPE_TITLES[code],
         dimensions:'Sold per piece', hasSheets:false, sheetCount:null, cardCount:null,
         freePersonalization:true, designCode:code, imagePath:`images/${code}.webp?v=${IMG_VERSION}`,
@@ -1570,9 +1564,9 @@ function renderWeddingEnvelopeGallery() {
       renderCart(); showCheckoutSection(false);
       const paperPcs = envelopePcsByPaper()[paper];
       const tip = paperPcs < ENVELOPE_BULK_MIN
-        ? ` Tip: get ${ENVELOPE_BULK_MIN - paperPcs} more ${ENVELOPE_PAPER_LABEL[paper]} to pay only ₱${ENVELOPE_BULK_PRICES[paper]} each.`
+        ? ` Tip: add ${ENVELOPE_BULK_MIN - paperPcs} more envelopes to pay ₱${ENVELOPE_BULK_PRICES[paper]} each instead of ₱${ENVELOPE_PRICES[paper]}.`
         : ` 5+ price applied: ₱${ENVELOPE_BULK_PRICES[paper]} each.`;
-      showToast(`Added ${count} pc(s) of ${WEDDING_ENVELOPE_TITLES[code]} (${code}) for "${names}" to order.${tip}`);
+      showToast(`Added: ${count} × ${WEDDING_ENVELOPE_TITLES[code]} (${code}) for "${names}".${tip}`);
       readyForAnotherName(addBtn, card.querySelector('.wme-names'));
       updateEnvelopePrice();
     });
@@ -1687,7 +1681,7 @@ function renderHardboundGallery() {
     addBtn.addEventListener('click', () => {
       const input = card.querySelector('.hardbound-name');
       const names = input.value.trim();
-      if (!names) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
+      if (!names) { error.hidden = false; error.textContent = 'Please type the name to print.'; input.focus(); return; }
       const nameLimit = HARDBOUND_NAME_LIMITS[selectedSize()];
       if (names.length > nameLimit) { error.hidden = false; error.textContent = `The ${selectedSize()} cover fits up to ${nameLimit} characters. Please shorten the name.`; input.focus(); return; }
       if (HARDBOUND_A5_SOLD_OUT && selectedSize() === 'A5') { error.hidden = false; error.textContent = 'A5 hardbound notepads are sold out for now. Please choose A6.'; return; }
@@ -1706,7 +1700,7 @@ function renderHardboundGallery() {
         unitPrice:unitPrice(), quantity:count, subtotal:unitPrice()*count
       });
       renderCart(); showCheckoutSection(false);
-      showToast(`Added ${count} ${size} hardbound notepad(s) of ${HARDBOUND_TITLES[code]} (${code}) for "${names}" to order.`);
+      showToast(`Added: ${count} × ${HARDBOUND_TITLES[code]} (${code}) for "${names}".`);
       readyForAnotherName(addBtn, input);
     });
     selectDesign(0); DOM.productGalleryGrid.appendChild(card);
@@ -1821,7 +1815,7 @@ function renderNotecardSliderGallery(categoryKey) {
     addBtn.addEventListener('click', () => {
       const input = card.querySelector('.notecard-slider-name');
       const text = input.value.trim();
-      if (!text) { error.hidden = false; error.textContent = 'Please enter your preferred personalization text.'; input.focus(); return; }
+      if (!text) { error.hidden = false; error.textContent = 'Please type the name to print.'; input.focus(); return; }
       error.hidden = true;
       const code = group.codes[index];
       const product = {
@@ -2356,7 +2350,7 @@ const CATALOG_COPY = {
   },
   envelopes: {
     title: 'Money Envelopes',
-    subtitle: `Personalized money envelopes, sold per piece. Premium ₱${ENVELOPE_PRICES.premium} (₱${ENVELOPE_BULK_PRICES.premium} each for 5+) · Standard ₱${ENVELOPE_PRICES.standard} (₱${ENVELOPE_BULK_PRICES.standard} each for 5+).`
+    subtitle: `Personalized money envelopes on 108 gsm paper, sold per piece. ₱${ENVELOPE_PRICES.premium} each, or ₱${ENVELOPE_BULK_PRICES.premium} each when you order 5 or more.`
   }
 };
 
@@ -2483,7 +2477,7 @@ function addGalleryProductToCart(product, quantity = 1, isCustomized = false, cu
   renderCart();
   showCheckoutSection(false);
   const customNote = isCustomized ? ` for "${trimmedText}"` : '';
-  showToast(`Added ${qty}× ${displayTitle} (${product.code})${customNote} to order.`);
+  showToast(`Added ${qty}× ${displayTitle} (${product.code})${customNote} to your cart.`);
 }
 
 
@@ -2574,7 +2568,7 @@ const CUSTOM_NOTECARD_CONFIG = {
 function removeCartItem(itemId) {
   appState.cart = appState.cart.filter(item => item.id !== itemId);
   renderCart();
-  showToast('Item removed from order.');
+  showToast('Item removed from your cart.');
 }
 
 // ----------------------------------------------------------------------------
@@ -2642,11 +2636,11 @@ function renderPromoAndChecks(totals) {
     let text = '';
     if (isPromoActive() && appState.cart.length > 0) {
       if (totals.hasFreeItems && totals.nextTier) {
-        text = `🎁 You get <strong>FREE ${totals.freeText}</strong>! Add <strong>${peso(totals.nextTier.gap)} more</strong> to get the ₱${totals.nextTier.minTotal} bundle: ${promoItemsText(totals.nextTier.items)}.`;
+        text = `🎁 You get <strong>FREE ${totals.freeText}</strong>! Spend <strong>${peso(totals.nextTier.gap)} more</strong> (₱${totals.nextTier.minTotal} total) to get even more FREE items: ${promoItemsText(totals.nextTier.items)}.`;
       } else if (totals.hasFreeItems) {
         text = `🎁 You get <strong>FREE ${totals.freeText}</strong> with this order!`;
       } else if (totals.nextTier) {
-        text = `🎁 Add <strong>${peso(totals.nextTier.gap)} more</strong> to get FREE ${promoItemsText(totals.nextTier.items)}.`;
+        text = `🎁 Spend <strong>${peso(totals.nextTier.gap)} more</strong> to get FREE ${promoItemsText(totals.nextTier.items)}.`;
       }
     }
     hint.innerHTML = text;
@@ -2657,7 +2651,7 @@ function renderPromoAndChecks(totals) {
   if (warn) {
     const pcs = envelopePcsByPaper();
     const tips = Object.keys(pcs).filter(paper => pcs[paper] > 0 && pcs[paper] < ENVELOPE_BULK_MIN).map(paper =>
-      `✉️ Add <strong>${ENVELOPE_BULK_MIN - pcs[paper]} more ${ENVELOPE_PAPER_LABEL[paper]}</strong> envelope${ENVELOPE_BULK_MIN - pcs[paper] === 1 ? '' : 's'} (any design) to pay only <strong>₱${ENVELOPE_BULK_PRICES[paper]} each</strong> instead of ₱${ENVELOPE_PRICES[paper]}.`);
+      `✉️ Add <strong>${ENVELOPE_BULK_MIN - pcs[paper]} more envelope${ENVELOPE_BULK_MIN - pcs[paper] === 1 ? '' : 's'}</strong> (any design) to pay only <strong>₱${ENVELOPE_BULK_PRICES[paper]} each</strong> instead of ₱${ENVELOPE_PRICES[paper]}.`);
     if (tips.length) {
       warn.innerHTML = tips.join('<br>');
       warn.style.display = 'block';
@@ -2758,7 +2752,7 @@ function renderCart() {
         <span class="cart-free-tags-icon" aria-hidden="true">🎁</span>
         <div>
           <div class="cart-item-title">FREE: ${escapeHtml(totals.freeText)}</div>
-          <div class="cart-item-spec-line">Christmas promo. We'll message you for the names and designs.</div>
+          <div class="cart-item-spec-line">Free with your order. We'll ask you for the names and designs in chat.</div>
         </div>
       </div>
       <span class="cart-item-subtotal">${peso(0)}</span>
@@ -2960,7 +2954,7 @@ function buildJobOrderSlip(order) {
   const slip = document.getElementById('printableJobOrderSlip');
   slip.innerHTML = `
     <div class="cs-ref">
-      <span>Order reference</span>
+      <span>Order number</span>
       <strong id="joReferenceNumber">${escapeHtml(order.refNo)}</strong>
       <small>${escapeHtml(order.dateText)}</small>
     </div>
@@ -2975,7 +2969,7 @@ function buildJobOrderSlip(order) {
       ${order.freeText ? row('Free promo items', order.freeText) : ''}
     </div>
     <div class="cs-total"><span>Total</span><strong>${peso(order.total)}</strong></div>
-    <p class="cs-note">Shipping fee is not included. We'll tell you the fee in chat before you pay. Please include <strong>${escapeHtml(order.refNo)}</strong> when you send your proof of order.</p>`;
+    <p class="cs-note">Shipping fee is not included. We'll tell you the fee in chat before you pay. Please include <strong>${escapeHtml(order.refNo)}</strong> when you send your order summary.</p>`;
   const refText = document.getElementById('confirmRefText');
   if (refText) refText.textContent = order.refNo;
   return order.total;
@@ -3040,7 +3034,7 @@ function drawOrderSummaryCanvas(order, logoImg) {
     y += 76;
 
     // Reference
-    text('ORDER REFERENCE', PAD, y, `700 22px ${S}`, GREY);
+    text('ORDER NUMBER', PAD, y, `700 22px ${S}`, GREY);
     text(order.dateText, W - PAD, y, `600 22px ${S}`, GREY, 'right');
     y += 34;
     text(order.refNo, PAD, y, `800 50px ${S}`, BLACK);
@@ -3088,8 +3082,8 @@ function drawOrderSummaryCanvas(order, logoImg) {
 
     // Notes
     [[`Shipping fee is not included. We'll tell you the fee in chat before you pay.`, `700 25px ${S}`],
-     [`Send this image to Printelio on Messenger.`, `700 25px ${S}`],
-     [`Please include ${order.refNo} when you send your proof of order.`, `500 23px ${S}`]]
+     [`Send your order number (or this image) to Printelio on Messenger.`, `700 25px ${S}`],
+     [`Please include ${order.refNo} when you send your order summary.`, `500 23px ${S}`]]
       .forEach(([note, font]) => {
         wrap(ctx, note, font, W - PAD * 2).forEach(ln => { text(ln, PAD, y, font, BLACK); y += 34; });
         y += 10;
@@ -3136,6 +3130,42 @@ function setImageSavedState(saved) {
   if (guide) guide.dataset.state = saved ? 'saved' : 'save';
 }
 function markImageSaved() { setImageSavedState(true); }
+
+// "Open Messenger": copies a ready-to-paste message with the order number, then opens Messenger.
+// On phones it tries the Messenger app first (skips the browser page); the plain link stays as a fallback.
+const MESSENGER_PAGE_ID = '61590360977892';
+function orderMessengerText() {
+  const o = appState.lastOrder;
+  if (!o) return 'Hi Printelio! I just placed an order on your website.';
+  const name = (o.customer && (o.customer.fullName || o.customer.name)) || '';
+  return `Hi Printelio! I just placed order ${o.refNo}${name ? ' (' + name + ')' : ''}, total ${peso(o.total)}.`;
+}
+async function copyTextSafely(text) {
+  try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; } } catch (e) {}
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+    const ok = document.execCommand('copy'); ta.remove(); return ok;
+  } catch (e) { return false; }
+}
+function initMessengerButton() {
+  const btn = document.getElementById('btnMessenger');
+  if (!btn) return;
+  btn.addEventListener('click', async (e) => {
+    const copied = await copyTextSafely(orderMessengerText());
+    const note = document.getElementById('messengerCopied');
+    if (note) { note.hidden = !copied; }
+    const ua = navigator.userAgent || '';
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+    const inApp = /FBAN|FBAV|FB_IAB|FBIOS|Instagram|Messenger/i.test(ua);
+    if (!isMobile || inApp) return; // normal link: opens straight in Messenger / on the web
+    e.preventDefault();
+    const started = Date.now();
+    window.location.href = 'fb-messenger://user-thread/' + MESSENGER_PAGE_ID;
+    setTimeout(() => { if (!document.hidden && Date.now() - started < 3000) window.open(btn.href, '_blank'); }, 1600);
+  });
+}
 
 function showOrderImageFallback() {
   const box = document.getElementById('confirmImageFallback');
@@ -3214,7 +3244,7 @@ async function submitJobOrder() {
     return;
   }
   if (!validateCustomerForm()) {
-    showToast('Please complete all required customer details.');
+    showToast('Please fill in the highlighted fields.');
     const firstError = document.querySelector('#customerForm .has-error');
     if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
@@ -3441,7 +3471,7 @@ function setAppView(view) {
   if (view === 'arrive') window.scrollTo({ top: 0 });
 }
 
-const GUIDE_STEPS = ['Pick a design', 'Place your order', 'Send proof of order', 'Send the deposit'];
+const GUIDE_STEPS = ['Pick a design', 'Place your order', 'Send order summary', 'Send the deposit'];
 function updateGuide() {
   const strip = document.getElementById('guideStrip');
   if (!strip) return;
@@ -3491,6 +3521,7 @@ function initGuide() {
   if (back) back.addEventListener('click', () => setAppView('arrive'));
   const saved = document.getElementById('btnImageSaved');
   if (saved) saved.addEventListener('click', markImageSaved);
+  initMessengerButton();
   const again = document.getElementById('btnSaveAgain');
   if (again) again.addEventListener('click', () => { setImageSavedState(false); downloadOrderSummaryImage(); });
   const watch = new MutationObserver(updateGuide);

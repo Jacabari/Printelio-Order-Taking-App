@@ -4913,3 +4913,10 @@ button, input, select, textarea { font-family: var(--font-main); }
   .header-social { display: none !important; }
   .site-nav-link { padding-left: 8px; padding-right: 8px; font-size: 0.9rem; }
 }
+
+/* Release 5: one paper note on envelope cards, optional image step, size options stacked */
+.wme-card .wme-paper-note { font-size: 1rem; font-weight: 700; color: var(--ink); }
+.confirm-copied { color: var(--ink); font-weight: 700; margin: 8px 0 0; }
+.confirm-sub + .confirm-sub { border-top: 1px solid var(--line); margin-top: 12px; }
+#confirmGuide[data-state="save"] #confirmSubDone { display: none; }
+#confirmGuide[data-state="saved"] #confirmSubSave { display: none; }

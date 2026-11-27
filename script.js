@@ -10,7 +10,7 @@
 
 // Product photo version: change this number whenever you replace a photo that keeps the same file name,
 // so returning visitors download the new picture instead of an old cached one.
-const IMG_VERSION = '20261126-6';
+const IMG_VERSION = '20261126-7';
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQ63JdM0NYWq62f1ps1yv3CH6WvjKBW4nnKtxeaLuglPb-zg171kAjerHR86Nnh5OmJQ/exec";
 
@@ -1415,7 +1415,7 @@ const NOTEPAD_NAME_LIMITS = { '3x3': 10, 'A6': 10, 'A5': 10 };
 const NOTECARD_NAME_LIMITS = { '2x3.5': 15, '4x3': 20 };
 const ENVELOPE_NAME_LIMIT = 20;
 
-const ADD_ANOTHER_LABEL = '+ Add another with a different name';
+const ADD_ANOTHER_LABEL = '+ Add another name';
 function readyForAnotherName(button, nameInput) {
   if (nameInput) {
     nameInput.value = '';
@@ -3149,6 +3149,30 @@ async function copyTextSafely(text) {
     const ok = document.execCommand('copy'); ta.remove(); return ok;
   } catch (e) { return false; }
 }
+// Courier and payment: big tap choices that fill the (hidden) select, so nothing animates or hides the options.
+function syncChoiceGroups() {
+  document.querySelectorAll('.choice-group').forEach(group => {
+    const select = document.getElementById(group.dataset.for);
+    group.querySelectorAll('.choice-btn').forEach(btn => btn.setAttribute('aria-checked', select && select.value === btn.dataset.value ? 'true' : 'false'));
+  });
+}
+function initChoiceGroups() {
+  document.querySelectorAll('.choice-group').forEach(group => {
+    const select = document.getElementById(group.dataset.for);
+    if (!select) return;
+    group.addEventListener('click', (e) => {
+      const btn = e.target.closest('.choice-btn');
+      if (!btn) return;
+      select.value = btn.dataset.value;
+      select.dispatchEvent(new Event('input', { bubbles: true }));
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      syncChoiceGroups();
+    });
+  });
+  const form = document.getElementById('customerForm');
+  if (form) form.addEventListener('reset', () => setTimeout(syncChoiceGroups, 0));
+  syncChoiceGroups();
+}
 function initMessengerButton() {
   const btn = document.getElementById('btnMessenger');
   if (!btn) return;
@@ -3482,7 +3506,7 @@ function updateGuide() {
   const cartOpen = document.body.classList.contains('cart-open');
   let step = 1;
   if (confirmOpen) step = 3;
-  else if (checkoutOpen || cartOpen) step = 2;
+  else if (checkoutOpen || cartOpen || document.body.classList.contains('has-cart-items')) step = 2;
   strip.hidden = isArrive && !confirmOpen && !checkoutOpen && !cartOpen;
   const text = document.getElementById('guideStripText');
   if (text) text.textContent = 'Step ' + step + ' of 4 · ' + GUIDE_STEPS[step - 1];
@@ -3522,6 +3546,7 @@ function initGuide() {
   const saved = document.getElementById('btnImageSaved');
   if (saved) saved.addEventListener('click', markImageSaved);
   initMessengerButton();
+  initChoiceGroups();
   const again = document.getElementById('btnSaveAgain');
   if (again) again.addEventListener('click', () => { setImageSavedState(false); downloadOrderSummaryImage(); });
   const watch = new MutationObserver(updateGuide);
